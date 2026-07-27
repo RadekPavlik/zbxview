@@ -269,13 +269,23 @@ section { padding: 72px 0; }
   background: var(--card); border: 1px solid var(--line); border-radius: 10px;
   padding: 11px 14px; outline: none; transition: border-color .15s;
 }
-.ent-form input:focus, .ent-form textarea:focus { border-color: var(--red-soft); }
+.ent-form select {
+  width: 100%; font: inherit; color: var(--text);
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 11px 14px; outline: none; cursor: pointer; transition: border-color .15s;
+}
+.ent-form input:focus, .ent-form textarea:focus, .ent-form select:focus { border-color: var(--red-soft); }
 .ent-form textarea { resize: vertical; min-height: 96px; }
 .ent-form .btn { align-self: flex-start; border: none; cursor: pointer; }
 .ent-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
 .ent-form-status { font-size: 14px; margin: 0; }
 .ent-form-alt { text-align: center; color: var(--muted); font-size: 13px; margin-top: 14px; }
 .ent-form-alt a { color: var(--red-soft); }
+/* contact form inside the About section (left-aligned, not centered) */
+.about-contact { margin-top: 26px; }
+.about-contact h3 { font-size: 16px; margin-bottom: 12px; }
+.about-contact .ent-form { margin: 0; max-width: 480px; }
+@media (max-width: 640px) { .about-contact .ent-form { margin: 0 auto; } }
 
 /* about me */
 .about { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: center; max-width: 820px; margin: 0 auto; }
