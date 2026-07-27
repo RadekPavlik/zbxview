@@ -258,9 +258,24 @@ section { padding: 72px 0; }
 .edition li { font-size: 14px; color: var(--muted); display: flex; gap: 10px; }
 .edition li::before { content: "✓"; color: var(--ok); font-weight: 700; }
 
-/* enterprise CTA */
+/* enterprise CTA + enquiry form */
 .ent-cta { text-align: center; margin-top: 34px; }
-.ent-cta p { color: var(--muted); margin-bottom: 14px; font-size: 15px; }
+.ent-cta > p { color: var(--muted); margin-bottom: 16px; font-size: 15px; }
+.ent-form { max-width: 520px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; text-align: left; }
+.ent-form-row { display: flex; gap: 12px; }
+@media (max-width: 480px) { .ent-form-row { flex-direction: column; } }
+.ent-form input, .ent-form textarea {
+  width: 100%; font: inherit; color: var(--text);
+  background: var(--card); border: 1px solid var(--line); border-radius: 10px;
+  padding: 11px 14px; outline: none; transition: border-color .15s;
+}
+.ent-form input:focus, .ent-form textarea:focus { border-color: var(--red-soft); }
+.ent-form textarea { resize: vertical; min-height: 96px; }
+.ent-form .btn { align-self: flex-start; border: none; cursor: pointer; }
+.ent-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
+.ent-form-status { font-size: 14px; margin: 0; }
+.ent-form-alt { text-align: center; color: var(--muted); font-size: 13px; margin-top: 14px; }
+.ent-form-alt a { color: var(--red-soft); }
 
 /* about me */
 .about { display: grid; grid-template-columns: 180px 1fr; gap: 34px; align-items: center; max-width: 820px; margin: 0 auto; }

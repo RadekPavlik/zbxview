@@ -145,8 +145,23 @@
         <div class="feat"><div class="ico">🛡️</div><h3 data-i18n="ent4_h">Bez reklam &amp; podpora</h3><p data-i18n="ent4_p">Enterprise buildy jsou bez reklam, s prioritní podporou a řízenými aktualizacemi.</p></div>
       </div>
       <div class="ent-cta">
-        <p data-i18n="ent_cta_p">Máte zájem o firemní nasazení?</p>
-        <a class="btn btn-primary" href="mailto:pavlikradek@gmail.com?subject=ZbxView%20Enterprise" data-i18n="ent_cta_btn">Nezávazná poptávka</a>
+        <p data-i18n="ent_cta_p">Máte zájem o firemní nasazení? Napište nám nezávaznou poptávku.</p>
+        <form class="ent-form" id="entForm" novalidate>
+          <!-- Web3Forms access key — zaregistruj e-mail na https://web3forms.com,
+               přijde ti klíč, a nahraď jím tuto hodnotu (pak funguje odesílání). -->
+          <input type="hidden" name="access_key" value="WEB3FORMS_ACCESS_KEY" />
+          <input type="hidden" name="subject" value="ZbxView Enterprise – poptávka z webu" />
+          <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" />
+          <div class="ent-form-row">
+            <input type="text" name="name" required data-i18n-ph="f_name" placeholder="Jméno" />
+            <input type="email" name="email" required data-i18n-ph="f_email" placeholder="E-mail" />
+          </div>
+          <input type="text" name="company" data-i18n-ph="f_company" placeholder="Firma (nepovinné)" />
+          <textarea name="message" rows="4" required data-i18n-ph="f_msg" placeholder="Zpráva – počet zařízení, MDM, dotazy…"></textarea>
+          <button type="submit" class="btn btn-primary" data-i18n="f_send">Odeslat poptávku</button>
+          <p class="ent-form-status" id="entStatus" hidden></p>
+        </form>
+        <p class="ent-form-alt"><span data-i18n="f_or">nebo napište přímo na</span> <a href="mailto:pavlikradek@gmail.com?subject=ZbxView%20Enterprise">pavlikradek@gmail.com</a></p>
       </div>
     </div>
   </section>
@@ -228,7 +243,10 @@
       ent2_h: 'Intune / MDM deployment', ent2_p: 'Distribute privately via Managed Google Play and roll ZbxView out to devices with Microsoft Intune (or another MDM).',
       ent3_h: 'Managed configuration', ent3_p: 'Pre-fill Zabbix servers and settings centrally via managed config — no manual setup on each device.',
       ent4_h: 'Ad-free &amp; support', ent4_p: 'Enterprise builds have no ads, with priority support and managed updates.',
-      ent_cta_p: 'Interested in a company-wide rollout?', ent_cta_btn: 'Get in touch',
+      ent_cta_p: 'Interested in a company-wide rollout? Send us a non-binding enquiry.',
+      f_name: 'Name', f_email: 'E-mail', f_company: 'Company (optional)',
+      f_msg: 'Message – number of devices, MDM, questions…',
+      f_send: 'Send enquiry', f_or: 'or e-mail us directly at',
       about_tag: 'About', about_role: 'IT technician · monitoring · Zabbix Certified Professional 7.0',
       about_p1: 'I’m 40. I work in IT as a technician focused on monitoring and have long-time experience with Zabbix (<strong>Zabbix Certified Professional 7.0</strong> certification).',
       about_p2: '<strong>ZbxView is my private, independent project</strong>, developed entirely in my own free time (evenings and weekends). It is not made to order, on behalf of, or with the resources of my employer, and has nothing to do with its internal systems — it was born purely out of personal experience with Zabbix.',
@@ -251,6 +269,12 @@
         var el = nodes[i], key = el.getAttribute('data-i18n');
         if (el.__cs == null) el.__cs = el.innerHTML;
         el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      var ph = document.querySelectorAll('[data-i18n-ph]');
+      for (var p = 0; p < ph.length; p++) {
+        var pe = ph[p], pk = pe.getAttribute('data-i18n-ph');
+        if (pe.__csPh == null) pe.__csPh = pe.getAttribute('placeholder') || '';
+        pe.setAttribute('placeholder', (dict && dict[pk] != null) ? dict[pk] : pe.__csPh);
       }
       document.title = (lang === 'en') ? EN.__title : htmlEl.__csTitle;
       if (descEl) descEl.setAttribute('content', (lang === 'en') ? EN.__desc : htmlEl.__csDesc);
@@ -461,6 +485,37 @@
 
       selectGroup(groups[0]);
     })();
+  })();
+  </script>
+
+  <!-- Enterprise enquiry form → Web3Forms (serverless, works on static hosting). -->
+  <script>
+  (function () {
+    var form = document.getElementById('entForm');
+    if (!form) return;
+    var status = document.getElementById('entStatus');
+    var MSG = {
+      sending: { cs: 'Odesílám…', en: 'Sending…' },
+      ok: { cs: 'Děkujeme! Ozveme se co nejdříve.', en: 'Thanks! We’ll get back to you soon.' },
+      err: { cs: 'Odeslání selhalo. Napište prosím na e-mail níže.', en: 'Sending failed. Please e-mail us below.' },
+      nokey: { cs: 'Formulář zatím není propojený — napište prosím na e-mail níže.', en: 'The form isn’t connected yet — please e-mail us below.' }
+    };
+    function lang() { return window.__zbxLang ? window.__zbxLang() : 'cs'; }
+    function say(kind, color) { status.hidden = false; status.textContent = MSG[kind][lang()]; status.style.color = color; }
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var key = (form.querySelector('[name=access_key]') || {}).value || '';
+      if (key.indexOf('WEB3FORMS') === 0 || key.length < 10) { say('nokey', 'var(--warn)'); return; }
+      if (!form.checkValidity()) { form.reportValidity(); return; }
+      say('sending', 'var(--muted)');
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: { 'Accept': 'application/json' },
+        body: new FormData(form)
+      }).then(function (r) { return r.json(); })
+        .then(function (j) { if (j.success) { form.reset(); say('ok', 'var(--ok)'); } else { say('err', 'var(--red-soft)'); } })
+        .catch(function () { say('err', 'var(--red-soft)'); });
+    });
   })();
   </script>
 
