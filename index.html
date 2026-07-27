@@ -334,9 +334,9 @@
     // Display order + how each group is rendered. `key` is the filename suffix:
     // shot<N>_<key>.(jpg|png). Add a group here to support a new suffix.
     var GROUPS = [
-      { key: 'tv', label: { cs: 'TV', en: 'TV' }, frame: 'tv' },
       { key: 'mobile', label: { cs: 'Telefon', en: 'Phone' }, frame: 'phone' },
-      { key: 'tablet', label: { cs: 'Tablet', en: 'Tablet' }, frame: 'tablet' }
+      { key: 'tablet', label: { cs: 'Tablet', en: 'Tablet' }, frame: 'tablet' },
+      { key: 'tv', label: { cs: 'TV', en: 'TV' }, frame: 'tv' }
     ];
     function L(grp) { var l = (window.__zbxLang ? window.__zbxLang() : 'cs'); return grp.label[l] || grp.label.cs; }
 
