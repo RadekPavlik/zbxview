@@ -154,13 +154,32 @@ section { padding: 72px 0; }
 .shot-tab.active { color: #fff; background: var(--red); border-color: var(--red); box-shadow: 0 6px 18px rgba(212,0,0,.32); }
 .shots-empty { text-align: center; color: var(--muted); font-family: var(--mono); font-size: 13px; }
 
-/* screenshots — horizontal gallery of device frames; grab & drag, no scrollbar */
-.shots { display: flex; gap: 26px; overflow-x: auto; padding: 6px 4px 20px; align-items: flex-end; cursor: grab; scrollbar-width: none; -ms-overflow-style: none; }
-.shots::-webkit-scrollbar { display: none; }
-.shots.dragging { cursor: grabbing; }
-.frame { margin: 0; flex: 0 0 auto; }
+/* screenshots — single-image carousel: grab & drag / swipe, arrows, dots, no scrollbar */
+.carousel { display: flex; align-items: center; justify-content: center; gap: 10px; }
+.car-stage { flex: 1 1 auto; display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 10px; touch-action: pan-y; }
+.car-stage .frame { cursor: grab; transition: transform .25s ease; will-change: transform; }
+.car-stage.dragging .frame { cursor: grabbing; }
+.frame { margin: 0; }
 .frame-screen { overflow: hidden; background: #000; }
 .frame-screen img { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; }
+/* per-device sizing inside the carousel */
+.car-stage .frame-phone { width: 250px; }
+.car-stage .frame-tablet { width: min(86vw, 620px); }
+.car-stage .frame-tv { width: min(90vw, 680px); }
+/* nav arrows */
+.car-nav {
+  flex: none; width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+  border: 1px solid var(--line); background: var(--card); color: var(--text);
+  font-size: 24px; line-height: 1; display: grid; place-items: center; transition: color .15s, border-color .15s;
+}
+.car-nav:hover { border-color: var(--red-soft); color: var(--red-soft); }
+.car-nav[hidden] { display: none; }
+/* dots */
+.car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
+.car-dots[hidden] { display: none; }
+.car-dot { width: 9px; height: 9px; padding: 0; border: none; border-radius: 50%; cursor: pointer; background: var(--line); transition: background .15s, transform .15s; }
+.car-dot:hover { background: var(--muted); }
+.car-dot.active { background: var(--red); transform: scale(1.3); }
 
 /* tablet: landscape 16:10 slab with a front-camera dot on the bezel */
 .frame-tablet {
@@ -181,6 +200,12 @@ section { padding: 72px 0; }
 }
 .frame-phone .frame-screen { aspect-ratio: 1080 / 2520; border-radius: 20px; }
 .frame-phone::before { content: ""; position: absolute; top: 20px; left: 50%; transform: translateX(-50%); width: 56px; height: 5px; border-radius: 3px; background: #3a4552; z-index: 2; }
+
+/* hero phone: real shot26 screenshot, anchored to the top so the bottom ~11%
+   (AdMob banner + Android navigation bar) is cropped out of view. */
+.hero-phone { justify-self: center; width: 250px; }
+.hero-phone .frame-screen { aspect-ratio: 1080 / 2250; }
+.hero-phone .frame-screen img { object-position: top; }
 
 /* tv: 16:9 panel on a stand */
 .frame-tv { flex-basis: min(90vw, 580px); text-align: center; }
