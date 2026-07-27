@@ -265,16 +265,19 @@ section { padding: 72px 0; }
 .ent-form-row { display: flex; gap: 12px; }
 @media (max-width: 480px) { .ent-form-row { flex-direction: column; } }
 .ent-form input, .ent-form textarea {
-  width: 100%; font: inherit; color: var(--text);
+  width: 100%; font: inherit; font-size: 16px; color: var(--text);
   background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-  padding: 11px 14px; outline: none; transition: border-color .15s;
+  padding: 13px 15px; outline: none; transition: border-color .15s;
 }
 .ent-form select {
-  width: 100%; font: inherit; color: var(--text);
+  width: 100%; font: inherit; font-size: 16px; color: var(--text);
   background: var(--card); border: 1px solid var(--line); border-radius: 10px;
-  padding: 11px 14px; outline: none; cursor: pointer; transition: border-color .15s;
+  padding: 13px 15px; outline: none; cursor: pointer; transition: border-color .15s;
 }
+/* dark dropdown list (honoured by Chrome/Firefox on most platforms) */
+.ent-form select option { background: var(--card-2); color: var(--text); }
 .ent-form input:focus, .ent-form textarea:focus, .ent-form select:focus { border-color: var(--red-soft); }
+.ent-form .btn { font-size: 16px; }
 .ent-form textarea { resize: vertical; min-height: 96px; }
 .ent-form .btn { align-self: flex-start; border: none; cursor: pointer; }
 .ent-form .hp { position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; }
