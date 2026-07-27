@@ -85,11 +85,7 @@
            stránky). Screenshoty pojmenuj shot<N>_<skupina>.jpg do assets/,
            kde <skupina> je tv | phone | tablet. Skupina bez souborů se skryje. -->
       <div class="shot-tabs" id="shotTabs"></div>
-      <div class="carousel" id="carousel">
-        <button class="car-nav car-prev" id="carPrev" aria-label="Předchozí" hidden>‹</button>
-        <div class="car-stage" id="carStage"></div>
-        <button class="car-nav car-next" id="carNext" aria-label="Další" hidden>›</button>
-      </div>
+      <div class="car-stage" id="carStage"></div>
       <div class="car-dots" id="carDots"></div>
       <p class="shots-empty" id="shotsEmpty" hidden>Screenshoty se připravují.</p>
     </div>
@@ -250,10 +246,7 @@
       var tabsEl = document.getElementById('shotTabs');
       var stage = document.getElementById('carStage');
       var dotsEl = document.getElementById('carDots');
-      var prevBtn = document.getElementById('carPrev');
-      var nextBtn = document.getElementById('carNext');
       var emptyEl = document.getElementById('shotsEmpty');
-      var carousel = document.getElementById('carousel');
 
       var groups = [];
       for (var g = 0; g < GROUPS.length; g++) {
@@ -261,7 +254,7 @@
         if (imgs.length) groups.push(Object.assign({}, GROUPS[g], { imgs: imgs }));
       }
       if (!groups.length) {
-        tabsEl.hidden = true; carousel.hidden = true; dotsEl.hidden = true;
+        tabsEl.hidden = true; stage.hidden = true; dotsEl.hidden = true;
         emptyEl.hidden = false; return;
       }
 
@@ -269,7 +262,7 @@
       var cur = groups[0], idx = 0, timer = null;
       var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
-      function startAuto() { stopAuto(); if (!reduce && cur.imgs.length > 1) timer = setInterval(function () { go(idx + 1); }, 4500); }
+      function startAuto() { stopAuto(); if (!reduce && cur.imgs.length > 1) timer = setInterval(function () { go(idx + 1); }, 4000); }
 
       function renderFrame() {
         stage.innerHTML = frameHTML(cur.frame, cur.imgs[idx],
@@ -294,8 +287,7 @@
         Array.prototype.forEach.call(tabsEl.children, function (b) {
           b.classList.toggle('active', b.dataset.key === grp.key);
         });
-        var multi = cur.imgs.length > 1;
-        prevBtn.hidden = nextBtn.hidden = dotsEl.hidden = !multi;
+        dotsEl.hidden = cur.imgs.length <= 1;
         renderFrame(); renderDots(); startAuto();
       }
 
@@ -306,47 +298,17 @@
       Array.prototype.forEach.call(tabsEl.children, function (b, i) {
         b.addEventListener('click', function () { selectGroup(groups[i]); });
       });
-      prevBtn.addEventListener('click', function () { go(idx - 1); });
-      nextBtn.addEventListener('click', function () { go(idx + 1); });
       dotsEl.addEventListener('click', function (e) {
         var d = e.target.closest('.car-dot'); if (d) go(+d.dataset.i);
       });
-
-      // grab & drag (mouse) / swipe (touch) on the stage
-      var down = false, sx = 0, moved = false, frameEl = null;
-      stage.addEventListener('pointerdown', function (e) {
-        stopAuto();
-        down = true; moved = false; sx = e.clientX;
-        frameEl = stage.firstElementChild;
-        if (frameEl) frameEl.style.transition = 'none';
-        stage.classList.add('dragging'); stage.setPointerCapture(e.pointerId);
-      });
-      stage.addEventListener('pointermove', function (e) {
-        if (!down) return;
-        var dx = e.clientX - sx;
-        if (Math.abs(dx) > 6) moved = true;
-        if (frameEl) frameEl.style.transform = 'translateX(' + dx + 'px)';
-      });
-      function endDrag(e) {
-        if (!down) return;
-        down = false; stage.classList.remove('dragging');
-        var dx = e.clientX - sx;
-        if (frameEl) { frameEl.style.transition = ''; frameEl.style.transform = ''; }
-        if (dx <= -50) go(idx + 1);
-        else if (dx >= 50) go(idx - 1);
-        else startAuto();
-      }
-      stage.addEventListener('pointerup', endDrag);
-      stage.addEventListener('pointercancel', endDrag);
-      stage.addEventListener('dragstart', function (e) { e.preventDefault(); });
+      // click a screenshot to enlarge it
       stage.addEventListener('click', function (e) {
         var img = e.target.closest('img');
-        if (!img || moved) return;
-        openLightbox(img.currentSrc || img.src, img.alt);
+        if (img) openLightbox(img.currentSrc || img.src, img.alt);
       });
-
-      carousel.addEventListener('mouseenter', stopAuto);
-      carousel.addEventListener('mouseleave', startAuto);
+      // pause auto-rotation while hovering the preview
+      stage.addEventListener('mouseenter', stopAuto);
+      stage.addEventListener('mouseleave', startAuto);
 
       selectGroup(groups[0]);
     })();
