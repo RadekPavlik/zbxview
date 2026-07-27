@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZbxView — Zabbix monitoring in your pocket</title>
+  <meta name="description" content="ZbxView je mobilní klient pro Zabbix. Sledujte problémy v reálném čase, potvrzujte a zavírejte události, mapu hostů a dashboardy — přímo z telefonu." />
+  <meta property="og:title" content="ZbxView — Zabbix na dlani" />
+  <meta property="og:description" content="Mobilní klient pro Zabbix monitoring. Problémy v reálném čase, geomapa, dashboardy, TV kiosk režim." />
+  <meta property="og:type" content="website" />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <header class="nav">
+    <div class="wrap">
+      <a class="brand" href="#top"><img src="assets/icon.png" alt="ZbxView" />Zbx<b>View</b></a>
+      <nav>
+        <a href="#features">Funkce</a>
+        <a href="#screens">Náhledy</a>
+        <a href="#editions">Verze</a>
+        <a href="#about">O mně</a>
+        <a href="privacy.html">Soukromí</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero" id="top">
+    <div class="wrap">
+      <div>
+        <span class="eyebrow"><span class="dot"></span> mobilní klient pro Zabbix</span>
+        <h1>Tvůj monitoring<br /><span>vždy po ruce.</span></h1>
+        <p class="lead">ZbxView připojí tvůj Zabbix server přímo do telefonu — problémy v reálném čase, potvrzování a zavírání událostí, mapa hostů i dashboardy. Rychle, přehledně, kdekoliv.</p>
+        <div class="cta">
+          <!-- TODO: až bude appka na Google Play, doplň sem odkaz na listing -->
+          <a class="btn btn-primary" href="#editions">▶ Získat ZbxView <small>brzy na&nbsp;Google&nbsp;Play</small></a>
+          <a class="btn btn-ghost" href="#features">Prohlédnout funkce</a>
+        </div>
+      </div>
+
+      <!-- phone mockup -->
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="bar"><img src="assets/icon.png" alt="" /> Problémy</div>
+          <div class="rows">
+            <div class="prow disaster"><div class="t">Web server nedostupný</div><div class="m">web01 · disaster · 2m</div></div>
+            <div class="prow high"><div class="t">Vysoké zatížení CPU</div><div class="m">db-prod · high · 11m</div></div>
+            <div class="prow average"><div class="t">Málo místa na disku</div><div class="m">nfs02 · average · 34m</div></div>
+            <div class="prow warning"><div class="t">Latence nad prahem</div><div class="m">edge03 · warning · 1h</div></div>
+            <div class="prow info"><div class="t">Služba restartována</div><div class="m">app12 · info · 2h</div></div>
+            <div class="prow high"><div class="t">Certifikát brzy vyprší</div><div class="m">lb01 · high · 3h</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="tag">Funkce</div>
+        <h2>Vše, co od terénního dohledu čekáš</h2>
+        <p>Postaveno na Zabbix API — jen pro čtení plus potvrzení a zavření událostí. Nic v produkci omylem nerozbiješ.</p>
+      </div>
+      <div class="grid">
+        <div class="feat"><div class="ico">🚨</div><h3>Problémy v reálném čase</h3><p>Živý přehled událostí s barvami podle závažnosti přesně jako ve webovém Zabbixu.</p></div>
+        <div class="feat"><div class="ico">✅</div><h3>Potvrzení &amp; zavření</h3><p>Acknowledge i close událostí přímo z mobilu, včetně komentáře.</p></div>
+        <div class="feat"><div class="ico">🗺️</div><h3>Geomapa hostů</h3><p>Hosty na mapě s clusterováním podle přiblížení. Offline i bez dlaždic.</p></div>
+        <div class="feat"><div class="ico">📊</div><h3>Dashboardy</h3><p>Tvoje Zabbix dashboardy a widgety na displeji telefonu i tabletu.</p></div>
+        <div class="feat"><div class="ico">📺</div><h3>TV / kiosk režim</h3><p>Celoobrazovkový dashboard s trvale zapnutou obrazovkou — ideální na nástěnný panel.</p></div>
+        <div class="feat"><div class="ico">🖥️</div><h3>Více serverů</h3><p>Přepínej mezi několika Zabbix instancemi jedním klepnutím.</p></div>
+        <div class="feat"><div class="ico">🔔</div><h3>Widget na plochu</h3><p>Počet otevřených problémů rovnou na domovské obrazovce.</p></div>
+        <div class="feat"><div class="ico">📤</div><h3>Sdílení problému</h3><p>Pošli událost do Teams, WhatsAppu nebo e-mailem přímo ze systémového sheetu.</p></div>
+        <div class="feat"><div class="ico">🌙</div><h3>Tmavý režim</h3><p>Šetrný k očím při nočních službách a k baterii na OLED.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCREENSHOTS -->
+  <section id="screens" style="background:var(--bg-2);">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="tag">Náhledy</div>
+        <h2>Podívej se dovnitř</h2>
+        <p>Nahraj screenshoty do <code>assets/</code> a odkaz vyměň — sloty níže jsou připravené.</p>
+      </div>
+      <div class="shots">
+        <!-- Až budou screenshoty: nahraď <div class="slot"> tagem <img src="assets/shot1.png" alt="" /> -->
+        <div class="slot">screenshot 1<br />(seznam problémů)</div>
+        <div class="slot">screenshot 2<br />(detail události)</div>
+        <div class="slot">screenshot 3<br />(geomapa)</div>
+        <div class="slot">screenshot 4<br />(dashboard)</div>
+        <div class="slot">screenshot 5<br />(TV kiosk)</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDITIONS -->
+  <section id="editions">
+    <div class="wrap">
+      <div class="section-head">
+        <div class="tag">Verze</div>
+        <h2>Zdarma, s možností Pro</h2>
+        <p>Začni zadarmo. Pro odemče verzi bez reklam jednorázovým nákupem.</p>
+      </div>
+      <div class="editions">
+        <div class="edition">
+          <h3>Free</h3>
+          <div class="price">0 Kč</div>
+          <ul>
+            <li>Všechny funkce dohledu</li>
+            <li>Neomezený počet serverů</li>
+            <li>Nenápadný banner (AdMob)</li>
+          </ul>
+        </div>
+        <div class="edition pro">
+          <span class="badge">DOPORUČENO</span>
+          <h3>Pro</h3>
+          <div class="price">jednorázově <small>/ odemčení</small></div>
+          <ul>
+            <li>Vše z Free</li>
+            <li>Bez reklam</li>
+            <li>Podpora dalšího vývoje</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT ME -->
+  <section id="about" style="background:var(--bg-2);">
+    <div class="wrap">
+      <div class="about">
+        <img src="assets/dev_logo.png" alt="Radek Pavlík" />
+        <div>
+          <div class="tag" style="font-family:var(--mono);color:var(--red-soft);font-size:12px;letter-spacing:2px;text-transform:uppercase;">O mně</div>
+          <h2>Radek Pavlík</h2>
+          <div class="role">IT &amp; monitoring · vývoj</div>
+          <p>ZbxView vyvíjím jako nezávislý projekt vedle práce v IT. Se Zabbixem pracuji dennodenně a chtěl jsem klienta, který zvládne to podstatné rychle a přímo z kapsy — bez zbytečností.</p>
+          <p>Zpětná vazba i nápady na funkce jsou vítané. Ozvi se!</p>
+          <div class="links">
+            <a class="chip" href="mailto:pavlikradek@gmail.com">✉️ pavlikradek@gmail.com</a>
+            <a class="chip" href="privacy.html">🔒 Zásady soukromí</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <a class="brand" href="#top"><img src="assets/icon.png" alt="" style="width:26px;height:26px;border-radius:6px;" /> Zbx<b style="color:var(--red-soft);">View</b></a>
+      <div class="fl">
+        <a href="#features">Funkce</a>
+        <a href="#editions">Verze</a>
+        <a href="privacy.html">Zásady soukromí</a>
+        <a href="mailto:pavlikradek@gmail.com">Kontakt</a>
+      </div>
+      <div class="cp">© 2026 Radek Pavlík. ZbxView.</div>
+      <div class="disc">ZbxView je nezávislý klient a není spojen, schvalován ani sponzorován společností Zabbix SIA. „Zabbix“ je ochranná známka Zabbix SIA. Google Play a logo Google Play jsou ochranné známky Google LLC.</div>
+    </div>
+  </footer>
+
+</body>
+</html>

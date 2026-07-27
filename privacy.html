@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZbxView — Zásady ochrany osobních údajů</title>
+  <meta name="description" content="Zásady ochrany osobních údajů aplikace ZbxView (mobilní klient pro Zabbix)." />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="doc">
+    <a class="back" href="index.html">← zpět na ZbxView</a>
+    <h1>Zásady ochrany osobních údajů</h1>
+    <div class="updated">Aplikace: ZbxView · Poslední aktualizace: 27. 7. 2026</div>
+
+    <p>Tyto zásady popisují, jak mobilní aplikace <strong>ZbxView</strong> („aplikace“) nakládá s údaji. Aplikaci vyvíjí a provozuje <strong>Radek Pavlík</strong> („vývojář“). Používáním aplikace souhlasíte s těmito zásadami.</p>
+
+    <h2>1. Shrnutí</h2>
+    <p>ZbxView je klient pro monitorovací systém Zabbix. Aplikace se připojuje výhradně k Zabbix serverům, které si sami nastavíte. <strong>Vývojář nesbírá, neukládá ani nepřijímá žádné vaše osobní údaje ani monitorovací data.</strong> Vaše přihlašovací údaje a nastavení zůstávají uložené pouze ve vašem zařízení.</p>
+
+    <h2>2. Údaje ukládané v zařízení</h2>
+    <p>Aplikace ukládá lokálně na vašem zařízení tyto údaje, potřebné pro svou funkci:</p>
+    <ul>
+      <li><strong>Přístup k serveru</strong> — adresa (URL) vašeho Zabbix serveru, uživatelské jméno a přihlašovací token nebo heslo. Citlivé údaje jsou ukládány do zabezpečeného úložiště systému Android (Android Keystore / EncryptedSharedPreferences).</li>
+      <li><strong>Nastavení aplikace</strong> — např. motiv vzhledu, interval obnovování, zvolený dashboard.</li>
+    </ul>
+    <p>Tyto údaje se z vašeho zařízení neodesílají vývojáři ani žádné třetí straně. Odstraníte je odinstalováním aplikace nebo smazáním serveru v nastavení.</p>
+
+    <h2>3. Připojení k Zabbix serveru</h2>
+    <p>Aplikace komunikuje přímo s Zabbix serverem, který zadáte. Veškerá monitorovací data (hosty, problémy, grafy) se načítají z tohoto serveru a zobrazují pouze v aplikaci. Zpracování dat na straně serveru se řídí zásadami provozovatele daného serveru, nikoli těmito zásadami.</p>
+
+    <h2>4. Reklamy (verze zdarma)</h2>
+    <p>Bezplatná verze zobrazuje reklamy prostřednictvím služby <strong>Google AdMob</strong>. AdMob může pro zobrazování a měření reklam shromažďovat určité údaje (např. reklamní identifikátor zařízení, přibližnou polohu odvozenou z IP adresy a údaje o zařízení) v souladu se zásadami společnosti Google. Více informací:</p>
+    <ul>
+      <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásady ochrany soukromí Google</a></li>
+      <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">Jak Google používá data z partnerských aplikací</a></li>
+    </ul>
+    <p>Zakoupením verze <strong>Pro</strong> se reklamy vypnou a AdMob se přestane inicializovat.</p>
+
+    <h2>5. Nákupy v aplikaci</h2>
+    <p>Nákup „Pro“ (odstranění reklam) zpracovává <strong>Google Play</strong>. Platební údaje zpracovává Google; vývojář k nim nemá přístup. Řídí se <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">zásadami Google</a>.</p>
+
+    <h2>6. Oprávnění</h2>
+    <p>Aplikace využívá přístup k internetu pro připojení k vašemu Zabbix serveru a (ve verzi zdarma) k načítání reklam. Aplikace nepožaduje přístup ke kontaktům, fotografiím ani přesné poloze.</p>
+
+    <h2>7. Děti</h2>
+    <p>Aplikace je určena správcům IT a není zaměřena na děti mladší 13 let.</p>
+
+    <h2>8. Změny</h2>
+    <p>Tyto zásady mohou být čas od času aktualizovány. Aktuální znění je vždy dostupné na této stránce s uvedeným datem poslední aktualizace.</p>
+
+    <h2>9. Kontakt</h2>
+    <p>Dotazy k ochraně soukromí směřujte na: <a href="mailto:pavlikradek@gmail.com">pavlikradek@gmail.com</a></p>
+
+    <a class="back" href="index.html" style="margin-top:32px;">← zpět na ZbxView</a>
+  </div>
+</body>
+</html>
