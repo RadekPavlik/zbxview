@@ -10,50 +10,121 @@
 </head>
 <body>
   <div class="doc">
-    <a class="back" href="index.html">← zpět na ZbxView</a>
-    <h1>Zásady ochrany osobních údajů</h1>
-    <div class="updated">Aplikace: ZbxView · Poslední aktualizace: 27. 7. 2026</div>
+    <div class="doc-top">
+      <a class="back" href="index.html" data-i18n="back">← zpět na ZbxView</a>
+      <div class="lang-switch">
+        <button class="lang-opt" data-lang="cs">CZ</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
+    </div>
+    <h1 data-i18n="title">Zásady ochrany osobních údajů</h1>
+    <div class="updated" data-i18n="updated">Aplikace: ZbxView · Poslední aktualizace: 27. 7. 2026</div>
 
-    <p>Tyto zásady popisují, jak mobilní aplikace <strong>ZbxView</strong> („aplikace“) nakládá s údaji. Aplikaci vyvíjí a provozuje <strong>Radek Pavlík</strong> („vývojář“). Používáním aplikace souhlasíte s těmito zásadami.</p>
+    <p data-i18n="intro">Tyto zásady popisují, jak mobilní aplikace <strong>ZbxView</strong> („aplikace“) nakládá s údaji. Aplikaci vyvíjí a provozuje <strong>Radek Pavlík</strong> („vývojář“). Používáním aplikace souhlasíte s těmito zásadami.</p>
 
-    <h2>1. Shrnutí</h2>
-    <p>ZbxView je klient pro monitorovací systém Zabbix. Aplikace se připojuje výhradně k Zabbix serverům, které si sami nastavíte. <strong>Vývojář nesbírá, neukládá ani nepřijímá žádné vaše osobní údaje ani monitorovací data.</strong> Vaše přihlašovací údaje a nastavení zůstávají uložené pouze ve vašem zařízení.</p>
+    <h2 data-i18n="s1_h">1. Shrnutí</h2>
+    <p data-i18n="s1_p">ZbxView je klient pro monitorovací systém Zabbix. Aplikace se připojuje výhradně k Zabbix serverům, které si sami nastavíte. <strong>Vývojář nesbírá, neukládá ani nepřijímá žádné vaše osobní údaje ani monitorovací data.</strong> Vaše přihlašovací údaje a nastavení zůstávají uložené pouze ve vašem zařízení.</p>
 
-    <h2>2. Údaje ukládané v zařízení</h2>
-    <p>Aplikace ukládá lokálně na vašem zařízení tyto údaje, potřebné pro svou funkci:</p>
+    <h2 data-i18n="s2_h">2. Údaje ukládané v zařízení</h2>
+    <p data-i18n="s2_p">Aplikace ukládá lokálně na vašem zařízení tyto údaje, potřebné pro svou funkci:</p>
     <ul>
-      <li><strong>Přístup k serveru</strong> — adresa (URL) vašeho Zabbix serveru, uživatelské jméno a přihlašovací token nebo heslo. Citlivé údaje jsou ukládány do zabezpečeného úložiště systému Android (Android Keystore / EncryptedSharedPreferences).</li>
-      <li><strong>Nastavení aplikace</strong> — např. motiv vzhledu, interval obnovování, zvolený dashboard.</li>
+      <li data-i18n="s2_li1"><strong>Přístup k serveru</strong> — adresa (URL) vašeho Zabbix serveru, uživatelské jméno a přihlašovací token nebo heslo. Citlivé údaje jsou ukládány do zabezpečeného úložiště systému Android (Android Keystore / EncryptedSharedPreferences).</li>
+      <li data-i18n="s2_li2"><strong>Nastavení aplikace</strong> — např. motiv vzhledu, interval obnovování, zvolený dashboard.</li>
     </ul>
-    <p>Tyto údaje se z vašeho zařízení neodesílají vývojáři ani žádné třetí straně. Odstraníte je odinstalováním aplikace nebo smazáním serveru v nastavení.</p>
+    <p data-i18n="s2_p2">Tyto údaje se z vašeho zařízení neodesílají vývojáři ani žádné třetí straně. Odstraníte je odinstalováním aplikace nebo smazáním serveru v nastavení.</p>
 
-    <h2>3. Připojení k Zabbix serveru</h2>
-    <p>Aplikace komunikuje přímo s Zabbix serverem, který zadáte. Veškerá monitorovací data (hosty, problémy, grafy) se načítají z tohoto serveru a zobrazují pouze v aplikaci. Zpracování dat na straně serveru se řídí zásadami provozovatele daného serveru, nikoli těmito zásadami.</p>
+    <h2 data-i18n="s3_h">3. Připojení k Zabbix serveru</h2>
+    <p data-i18n="s3_p">Aplikace komunikuje přímo s Zabbix serverem, který zadáte. Veškerá monitorovací data (hosty, problémy, grafy) se načítají z tohoto serveru a zobrazují pouze v aplikaci. Zpracování dat na straně serveru se řídí zásadami provozovatele daného serveru, nikoli těmito zásadami.</p>
 
-    <h2>4. Reklamy (verze zdarma)</h2>
-    <p>Bezplatná verze zobrazuje reklamy prostřednictvím služby <strong>Google AdMob</strong>. AdMob může pro zobrazování a měření reklam shromažďovat určité údaje (např. reklamní identifikátor zařízení, přibližnou polohu odvozenou z IP adresy a údaje o zařízení) v souladu se zásadami společnosti Google. Více informací:</p>
+    <h2 data-i18n="s4_h">4. Reklamy (verze zdarma)</h2>
+    <p data-i18n="s4_p">Bezplatná verze zobrazuje reklamy prostřednictvím služby <strong>Google AdMob</strong>. AdMob může pro zobrazování a měření reklam shromažďovat určité údaje (např. reklamní identifikátor zařízení, přibližnou polohu odvozenou z IP adresy a údaje o zařízení) v souladu se zásadami společnosti Google. Více informací:</p>
     <ul>
-      <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Zásady ochrany soukromí Google</a></li>
-      <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener">Jak Google používá data z partnerských aplikací</a></li>
+      <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener" data-i18n="s4_li1">Zásady ochrany soukromí Google</a></li>
+      <li><a href="https://support.google.com/admob/answer/6128543" target="_blank" rel="noopener" data-i18n="s4_li2">Jak Google používá data z partnerských aplikací</a></li>
     </ul>
-    <p>Zakoupením verze <strong>Pro</strong> se reklamy vypnou a AdMob se přestane inicializovat.</p>
+    <p data-i18n="s4_p2">Zakoupením verze <strong>Pro</strong> se reklamy vypnou a AdMob se přestane inicializovat.</p>
 
-    <h2>5. Nákupy v aplikaci</h2>
-    <p>Nákup „Pro“ (odstranění reklam) zpracovává <strong>Google Play</strong>. Platební údaje zpracovává Google; vývojář k nim nemá přístup. Řídí se <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">zásadami Google</a>.</p>
+    <h2 data-i18n="s5_h">5. Nákupy v aplikaci</h2>
+    <p data-i18n="s5_p">Nákup „Pro“ (odstranění reklam) zpracovává <strong>Google Play</strong>. Platební údaje zpracovává Google; vývojář k nim nemá přístup. Řídí se <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">zásadami Google</a>.</p>
 
-    <h2>6. Oprávnění</h2>
-    <p>Aplikace využívá přístup k internetu pro připojení k vašemu Zabbix serveru a (ve verzi zdarma) k načítání reklam. Aplikace nepožaduje přístup ke kontaktům, fotografiím ani přesné poloze.</p>
+    <h2 data-i18n="s6_h">6. Oprávnění</h2>
+    <p data-i18n="s6_p">Aplikace využívá přístup k internetu pro připojení k vašemu Zabbix serveru a (ve verzi zdarma) k načítání reklam. Aplikace nepožaduje přístup ke kontaktům, fotografiím ani přesné poloze.</p>
 
-    <h2>7. Děti</h2>
-    <p>Aplikace je určena správcům IT a není zaměřena na děti mladší 13 let.</p>
+    <h2 data-i18n="s7_h">7. Děti</h2>
+    <p data-i18n="s7_p">Aplikace je určena správcům IT a není zaměřena na děti mladší 13 let.</p>
 
-    <h2>8. Změny</h2>
-    <p>Tyto zásady mohou být čas od času aktualizovány. Aktuální znění je vždy dostupné na této stránce s uvedeným datem poslední aktualizace.</p>
+    <h2 data-i18n="s8_h">8. Změny</h2>
+    <p data-i18n="s8_p">Tyto zásady mohou být čas od času aktualizovány. Aktuální znění je vždy dostupné na této stránce s uvedeným datem poslední aktualizace.</p>
 
-    <h2>9. Kontakt</h2>
-    <p>Dotazy k ochraně soukromí směřujte na: <a href="mailto:pavlikradek@gmail.com">pavlikradek@gmail.com</a></p>
+    <h2 data-i18n="s9_h">9. Kontakt</h2>
+    <p data-i18n="s9_p">Dotazy k ochraně soukromí směřujte na: <a href="mailto:pavlikradek@gmail.com">pavlikradek@gmail.com</a></p>
 
-    <a class="back" href="index.html" style="margin-top:32px;">← zpět na ZbxView</a>
+    <a class="back" href="index.html" style="margin-top:32px;" data-i18n="back">← zpět na ZbxView</a>
   </div>
+
+  <!-- Language switch (CZ default in HTML, EN via dictionary), same as the landing page. -->
+  <script>
+  (function () {
+    var EN = {
+      back: '← back to ZbxView',
+      title: 'Privacy Policy',
+      updated: 'App: ZbxView · Last updated: 27 July 2026',
+      intro: 'This policy describes how the <strong>ZbxView</strong> mobile app (the “app”) handles data. The app is developed and operated by <strong>Radek Pavlík</strong> (the “developer”). By using the app you agree to this policy.',
+      s1_h: '1. Summary',
+      s1_p: 'ZbxView is a client for the Zabbix monitoring system. The app connects only to the Zabbix servers you configure yourself. <strong>The developer does not collect, store or receive any of your personal data or monitoring data.</strong> Your credentials and settings stay only on your device.',
+      s2_h: '2. Data stored on your device',
+      s2_p: 'The app stores the following data locally on your device, needed for it to work:',
+      s2_li1: '<strong>Server access</strong> — the URL of your Zabbix server, username and login token or password. Sensitive values are kept in the Android secure storage (Android Keystore / EncryptedSharedPreferences).',
+      s2_li2: '<strong>App settings</strong> — e.g. theme, refresh interval, selected dashboard.',
+      s2_p2: 'This data is not sent from your device to the developer or any third party. You remove it by uninstalling the app or deleting the server in settings.',
+      s3_h: '3. Connecting to your Zabbix server',
+      s3_p: 'The app communicates directly with the Zabbix server you enter. All monitoring data (hosts, problems, graphs) is loaded from that server and shown only in the app. Server-side processing is governed by the policies of that server’s operator, not by this policy.',
+      s4_h: '4. Ads (free version)',
+      s4_p: 'The free version shows ads via <strong>Google AdMob</strong>. To serve and measure ads, AdMob may collect certain data (e.g. the device advertising identifier, approximate location derived from the IP address, and device data) in line with Google’s policies. Learn more:',
+      s4_li1: 'Google Privacy Policy',
+      s4_li2: 'How Google uses data from partner apps',
+      s4_p2: 'Buying the <strong>Pro</strong> version turns ads off and AdMob is no longer initialised.',
+      s5_h: '5. In-app purchases',
+      s5_p: 'The “Pro” purchase (removing ads) is processed by <strong>Google Play</strong>. Payment details are handled by Google; the developer has no access to them. Governed by <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Google’s policies</a>.',
+      s6_h: '6. Permissions',
+      s6_p: 'The app uses internet access to connect to your Zabbix server and (in the free version) to load ads. The app does not request access to contacts, photos or precise location.',
+      s7_h: '7. Children',
+      s7_p: 'The app is intended for IT administrators and is not directed at children under 13.',
+      s8_h: '8. Changes',
+      s8_p: 'This policy may be updated from time to time. The current version is always available on this page with the last-updated date shown.',
+      s9_h: '9. Contact',
+      s9_p: 'Privacy questions: <a href="mailto:pavlikradek@gmail.com">pavlikradek@gmail.com</a>',
+      __title: 'ZbxView — Privacy Policy',
+      __desc: 'Privacy policy of the ZbxView app (a mobile Zabbix client).'
+    };
+    var htmlEl = document.documentElement;
+    var descEl = document.querySelector('meta[name="description"]');
+    htmlEl.__csTitle = document.title;
+    htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
+
+    function apply(lang) {
+      var dict = lang === 'en' ? EN : null;
+      var nodes = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i], key = el.getAttribute('data-i18n');
+        if (el.__cs == null) el.__cs = el.innerHTML;
+        el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      document.title = (lang === 'en') ? EN.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', (lang === 'en') ? EN.__desc : htmlEl.__csDesc);
+      htmlEl.lang = lang;
+      try { localStorage.setItem('zbxlang', lang); } catch (e) {}
+      var opts = document.querySelectorAll('.lang-opt');
+      for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
+    }
+    var opts = document.querySelectorAll('.lang-opt');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
+    }
+    var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
+    var lang = saved || ((navigator.language || '').slice(0, 2).toLowerCase() === 'cs' ? 'cs' : 'en');
+    apply(lang);
+  })();
+  </script>
 </body>
 </html>

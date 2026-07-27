@@ -290,3 +290,5 @@ footer .disc { width: 100%; color: #5c6675; font-size: 11px; line-height: 1.5; }
 .doc a { color: var(--red-soft); text-decoration: underline; }
 .back { display: inline-block; margin-bottom: 24px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
 .back:hover { color: var(--text); }
+.doc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.doc-top .back { margin-bottom: 0; }
