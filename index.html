@@ -264,9 +264,16 @@
       function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
       function startAuto() { stopAuto(); if (!reduce && cur.imgs.length > 1) timer = setInterval(function () { go(idx + 1); }, 4000); }
 
+      var VISIBLE = 3; // how many previews to show side by side
       function renderFrame() {
-        stage.innerHTML = frameHTML(cur.frame, cur.imgs[idx],
-          'ZbxView ' + cur.label + ' – náhled ' + (idx + 1));
+        var n = Math.min(VISIBLE, cur.imgs.length);
+        var html = '';
+        for (var k = 0; k < n; k++) {
+          var j = (idx + k) % cur.imgs.length;
+          html += frameHTML(cur.frame, cur.imgs[j],
+            'ZbxView ' + cur.label + ' – náhled ' + (j + 1));
+        }
+        stage.innerHTML = html;
       }
       function renderDots() {
         dotsEl.innerHTML = cur.imgs.map(function (_, i) {

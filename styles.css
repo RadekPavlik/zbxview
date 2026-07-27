@@ -154,8 +154,8 @@ section { padding: 72px 0; }
 .shot-tab.active { color: #fff; background: var(--red); border-color: var(--red); box-shadow: 0 6px 18px rgba(212,0,0,.32); }
 .shots-empty { text-align: center; color: var(--muted); font-family: var(--mono); font-size: 13px; }
 
-/* screenshots — small auto-rotating preview; click a shot to enlarge (lightbox) */
-.car-stage { display: flex; justify-content: center; align-items: center; min-height: 10px; }
+/* screenshots — small auto-rotating preview (up to 3 at once); click to enlarge */
+.car-stage { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; min-height: 10px; }
 .car-stage .frame { margin: 0; animation: shotfade .35s ease; }
 @keyframes shotfade { from { opacity: 0; } to { opacity: 1; } }
 .frame { margin: 0; }
@@ -219,6 +219,9 @@ section { padding: 72px 0; }
   opacity: 0; transition: opacity .18s;
 }
 .lightbox.open { opacity: 1; }
+/* must override the author display:grid above, else the invisible overlay
+   covers the page and swallows every click */
+.lightbox[hidden] { display: none; }
 .lightbox img { max-width: 96vw; max-height: 92vh; border-radius: 10px; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
 .lightbox-close {
   position: absolute; top: 18px; right: 22px; width: 44px; height: 44px;
