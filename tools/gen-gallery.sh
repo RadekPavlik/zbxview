@@ -7,7 +7,7 @@ cd "$(dirname "$0")/.."
 
 mkdir -p assets/thumbs
 
-declare -A GROUPS   # group -> lines "N|full|thumb"
+declare -A BYGRP   # group -> lines "N|full|thumb"
 
 for f in assets/shot*_*.*; do
   [ -e "$f" ] || continue
@@ -21,7 +21,7 @@ for f in assets/shot*_*.*; do
       convert "$f" -auto-orient -strip -resize 480x480\> -quality 72 "$thumb"
       echo "thumb: $thumb"
     fi
-    GROUPS[$grp]+="$n|$f|$thumb"$'\n'
+    BYGRP[$grp]+="$n|$f|$thumb"$'\n'
   fi
 done
 
@@ -35,8 +35,8 @@ done
 # build JSON manifest
 json="{"
 first=1
-for grp in "${!GROUPS[@]}"; do
-  entries="$(printf '%s' "${GROUPS[$grp]}" | sort -t'|' -k1,1n)"
+for grp in "${!BYGRP[@]}"; do
+  entries="$(printf '%s' "${BYGRP[$grp]}" | sort -t'|' -k1,1n)"
   arr=""; ef=1
   while IFS='|' read -r n full thumb; do
     [ -z "${n:-}" ] && continue
