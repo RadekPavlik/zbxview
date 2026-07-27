@@ -173,15 +173,18 @@
   (function () {
     var ICON = {
       tv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9"/><path d="M16 3l-4 4l-4 -4"/></svg>',
-      phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14"/><path d="M11 4h2"/><path d="M12 17v.01"/></svg>',
+      mobile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14"/><path d="M11 4h2"/><path d="M12 17v.01"/></svg>',
       tablet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1v-16"/><path d="M11 17a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/></svg>'
     };
+    // Display order + how each group is rendered. `key` is the filename suffix:
+    // shot<N>_<key>.(jpg|png). Add a group here to support a new suffix.
     var GROUPS = [
-      { key: 'tv', label: 'TV' },
-      { key: 'phone', label: 'Telefon' },
-      { key: 'tablet', label: 'Tablet' }
+      { key: 'tv', label: 'TV', frame: 'tv' },
+      { key: 'mobile', label: 'Telefon', frame: 'phone' },
+      { key: 'tablet', label: 'Tablet', frame: 'tablet' }
     ];
-    var MAX = 40, GAP = 3;
+    var EXT = ['jpg', 'png', 'jpeg', 'webp'];
+    var MAX = 60; // highest shot number probed per group
 
     function exists(src) {
       return new Promise(function (res) {
@@ -191,23 +194,80 @@
         im.src = src;
       });
     }
+    // Resolve the first extension that exists for assets/shot<i>_<key>.
+    function resolve(base) {
+      return EXT.reduce(function (p, ext) {
+        return p.then(function (hit) {
+          if (hit) return hit;
+          var src = base + '.' + ext;
+          return exists(src).then(function (ok) { return ok ? src : null; });
+        });
+      }, Promise.resolve(null));
+    }
+    // Probe shot1..MAX for a group in parallel; numbering may start anywhere
+    // and have gaps. Returns the existing files sorted by number.
     async function probe(key) {
-      var found = [], miss = 0;
+      var tasks = [];
       for (var i = 1; i <= MAX; i++) {
-        var src = 'assets/shot' + i + '_' + key + '.jpg';
-        if (await exists(src)) { found.push(src); miss = 0; }
-        else if (found.length) { if (++miss >= GAP) break; }
-        else if (i >= GAP) break;
+        (function (idx) {
+          tasks.push(resolve('assets/shot' + idx + '_' + key).then(function (src) {
+            return src ? { idx: idx, src: src } : null;
+          }));
+        })(i);
       }
-      return found;
+      var r = await Promise.all(tasks);
+      return r.filter(Boolean).sort(function (a, b) { return a.idx - b.idx; })
+              .map(function (o) { return o.src; });
     }
     function frameHTML(frame, src, alt) {
-      var screen = '<div class="frame-screen"><img src="' + src + '" alt="' + alt + '" loading="lazy"></div>';
+      var screen = '<div class="frame-screen"><img src="' + src + '" alt="' + alt + '" loading="lazy" draggable="false"></div>';
       if (frame === 'tv') {
         return '<figure class="frame frame-tv"><div class="frame-body">' + screen +
                '</div><div class="frame-stand"></div><div class="frame-foot"></div></figure>';
       }
       return '<figure class="frame frame-' + frame + '">' + screen + '</figure>';
+    }
+    // Grab-and-drag horizontal scrolling for mouse; touch keeps native swipe.
+    // Sets el._dragged when the pointer moved, so a click after a drag doesn't
+    // trigger the lightbox.
+    function enableDrag(el) {
+      var down = false, startX = 0, startLeft = 0;
+      el.addEventListener('pointerdown', function (e) {
+        el._dragged = false;
+        if (e.pointerType !== 'mouse') return;
+        down = true; startX = e.pageX; startLeft = el.scrollLeft;
+        el.classList.add('dragging'); el.setPointerCapture(e.pointerId);
+      });
+      el.addEventListener('pointermove', function (e) {
+        if (!down) return;
+        var dx = e.pageX - startX;
+        if (Math.abs(dx) > 6) el._dragged = true;
+        el.scrollLeft = startLeft - dx;
+      });
+      function end() { down = false; el.classList.remove('dragging'); }
+      el.addEventListener('pointerup', end);
+      el.addEventListener('pointercancel', end);
+      el.addEventListener('dragstart', function (e) { e.preventDefault(); });
+    }
+    // Full-screen viewer: click a screenshot to enlarge it.
+    function buildLightbox() {
+      var lb = document.createElement('div');
+      lb.className = 'lightbox'; lb.hidden = true;
+      lb.innerHTML = '<button class="lightbox-close" aria-label="Zavřít">&times;</button><img alt="">';
+      document.body.appendChild(lb);
+      var img = lb.querySelector('img');
+      function close() { lb.classList.remove('open'); lb.hidden = true; img.removeAttribute('src'); }
+      lb.addEventListener('click', function (e) {
+        if (e.target === lb || e.target.classList.contains('lightbox-close')) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !lb.hidden) close();
+      });
+      return function open(src, alt) {
+        img.src = src; img.alt = alt || '';
+        lb.hidden = false;
+        requestAnimationFrame(function () { lb.classList.add('open'); });
+      };
     }
 
     (async function () {
@@ -223,7 +283,7 @@
 
       function render(grp) {
         shotsEl.innerHTML = grp.imgs.map(function (s, i) {
-          return frameHTML(grp.key, s, 'ZbxView ' + grp.label + ' – náhled ' + (i + 1));
+          return frameHTML(grp.frame, s, 'ZbxView ' + grp.label + ' – náhled ' + (i + 1));
         }).join('');
         Array.prototype.forEach.call(tabsEl.children, function (b) {
           b.classList.toggle('active', b.dataset.key === grp.key);
@@ -237,6 +297,13 @@
       }).join('');
       Array.prototype.forEach.call(tabsEl.children, function (b, idx) {
         b.addEventListener('click', function () { render(groups[idx]); });
+      });
+      enableDrag(shotsEl);
+      var openLightbox = buildLightbox();
+      shotsEl.addEventListener('click', function (e) {
+        var img = e.target.closest('img');
+        if (!img || !img.closest('.frame-screen') || shotsEl._dragged) return;
+        openLightbox(img.currentSrc || img.src, img.alt);
       });
       render(groups[0]);
     })();
