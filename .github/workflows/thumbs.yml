@@ -1,0 +1,40 @@
+name: Gallery thumbnails + manifest
+
+# When screenshots change, regenerate small thumbnails (assets/thumbs/) and the
+# manifest (assets/screens.json), then commit them back. The landing page reads
+# the manifest and shows thumbnails; the full image loads only on click.
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'assets/shot*'
+      - 'tools/gen-gallery.sh'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: thumbs
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install ImageMagick
+        run: sudo apt-get update && sudo apt-get install -y imagemagick
+      - name: Generate thumbnails + manifest
+        run: bash tools/gen-gallery.sh
+      - name: Commit if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/thumbs assets/screens.json
+          if git diff --cached --quiet; then
+            echo "No gallery changes."
+          else
+            git commit -m "chore: regenerate gallery thumbnails + manifest [skip ci]"
+            git push
+          fi
