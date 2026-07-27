@@ -49,6 +49,10 @@ header.nav {
 .nav nav a { color: var(--muted); transition: color .15s; }
 .nav nav a:hover { color: var(--text); }
 @media (max-width: 640px) { .nav nav { display: none; } }
+.lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex: none; }
+.lang-opt { border: none; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 6px 11px; cursor: pointer; transition: color .15s, background .15s; }
+.lang-opt:hover { color: var(--text); }
+.lang-opt.active { background: var(--red); color: #fff; }
 
 /* ---------- hero ---------- */
 .hero {

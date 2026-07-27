@@ -19,12 +19,16 @@
     <div class="wrap">
       <a class="brand" href="#top"><img src="assets/icon.png" alt="ZbxView" />Zbx<b>View</b></a>
       <nav>
-        <a href="#features">Funkce</a>
-        <a href="#screens">Náhledy</a>
-        <a href="#editions">Verze</a>
-        <a href="#about">O mně</a>
-        <a href="privacy.html">Soukromí</a>
+        <a href="#features" data-i18n="nav_features">Funkce</a>
+        <a href="#screens" data-i18n="nav_screens">Náhledy</a>
+        <a href="#editions" data-i18n="nav_editions">Verze</a>
+        <a href="#about" data-i18n="nav_about">O mně</a>
+        <a href="privacy.html" data-i18n="nav_privacy">Soukromí</a>
       </nav>
+      <div class="lang-switch">
+        <button class="lang-opt" data-lang="cs">CZ</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
     </div>
   </header>
 
@@ -32,15 +36,15 @@
   <section class="hero" id="top">
     <div class="wrap">
       <div>
-        <span class="eyebrow"><span class="dot"></span> mobilní klient pro Zabbix</span>
-        <h1>Tvůj monitoring<br /><span>vždy po ruce.</span></h1>
-        <p class="lead">ZbxView připojí tvůj Zabbix server přímo do telefonu — problémy v reálném čase, potvrzování a zavírání událostí, mapa hostů i dashboardy. Rychle, přehledně, kdekoliv.</p>
+        <span class="eyebrow"><span class="dot"></span> <span data-i18n="hero_eyebrow">mobilní klient pro Zabbix</span></span>
+        <h1 data-i18n="hero_h1">Tvůj monitoring<br /><span>vždy po ruce.</span></h1>
+        <p class="lead" data-i18n="hero_lead">ZbxView připojí tvůj Zabbix server přímo do telefonu — problémy v reálném čase, potvrzování a zavírání událostí, mapa hostů i dashboardy. Rychle, přehledně, kdekoliv.</p>
         <div class="cta">
           <!-- TODO: až bude appka na Google Play, doplň sem odkaz na listing -->
-          <a class="btn btn-primary" href="#editions">▶ Získat ZbxView <small>brzy na&nbsp;Google&nbsp;Play</small></a>
-          <a class="btn btn-ghost" href="#features">Prohlédnout funkce</a>
+          <a class="btn btn-primary" href="#editions" data-i18n="hero_cta">▶ Získat ZbxView <small>brzy na&nbsp;Google&nbsp;Play</small></a>
+          <a class="btn btn-ghost" href="#features" data-i18n="hero_ghost">Prohlédnout funkce</a>
         </div>
-        <p class="platform">🤖 Android nyní &nbsp;·&nbsp; 🍎 iOS ve vývoji</p>
+        <p class="platform" data-i18n="hero_platform">🤖 Android nyní &nbsp;·&nbsp; 🍎 iOS ve vývoji</p>
       </div>
 
       <!-- phone: real ZbxView screenshot (shot26); the ad banner + Android nav
@@ -55,22 +59,22 @@
   <section id="features">
     <div class="wrap">
       <div class="section-head">
-        <div class="tag">Funkce</div>
-        <h2>Vše, co od terénního dohledu čekáš</h2>
-        <p>Postaveno na Zabbix API — jen pro čtení plus potvrzení a zavření událostí. Nic v produkci omylem nerozbiješ.</p>
+        <div class="tag" data-i18n="feat_tag">Funkce</div>
+        <h2 data-i18n="feat_h2">Vše, co od terénního dohledu čekáš</h2>
+        <p data-i18n="feat_p">Postaveno na Zabbix API — jen pro čtení plus potvrzení a zavření událostí. Nic v produkci omylem nerozbiješ.</p>
       </div>
       <div class="grid">
-        <div class="feat"><div class="ico">🚨</div><h3>Problémy v reálném čase</h3><p>Živý přehled událostí s barvami podle závažnosti přesně jako ve webovém Zabbixu.</p></div>
-        <div class="feat"><div class="ico">✅</div><h3>Potvrzení &amp; zavření</h3><p>Acknowledge i close událostí přímo z mobilu, včetně komentáře.</p></div>
-        <div class="feat"><div class="ico">🗺️</div><h3>Geomapa hostů</h3><p>Hosty na mapě s clusterováním podle přiblížení. Offline i bez dlaždic.</p></div>
-        <div class="feat"><div class="ico">📊</div><h3>Dashboardy</h3><p>Tvoje Zabbix dashboardy a widgety na displeji telefonu i tabletu.</p></div>
-        <div class="feat"><div class="ico">📺</div><h3>TV / kiosk režim</h3><p>Celoobrazovkový dashboard s trvale zapnutou obrazovkou — ideální na nástěnný panel.</p></div>
-        <div class="feat"><div class="ico">🖥️</div><h3>Více serverů</h3><p>Přepínej mezi několika Zabbix instancemi jedním klepnutím.</p></div>
-        <div class="feat"><div class="ico">🔄</div><h3>Synchronizace mezi zařízeními</h3><p>Nastavení serverů a preferencí přenes mezi telefonem a tabletem.</p></div>
-        <div class="feat"><div class="ico">🏢</div><h3>Nasazení přes Intune</h3><p>Správa přes MDM (Microsoft Intune) s plnou konfigurovatelností — servery a nastavení předvyplníte hromadně managed configem.</p></div>
-        <div class="feat"><div class="ico">🔔</div><h3>Widget na plochu</h3><p>Počet otevřených problémů rovnou na domovské obrazovce.</p></div>
-        <div class="feat"><div class="ico">📤</div><h3>Sdílení problému</h3><p>Pošli událost do Teams, WhatsAppu nebo e-mailem přímo ze systémového sheetu.</p></div>
-        <div class="feat"><div class="ico">🌙</div><h3>Tmavý režim</h3><p>Šetrný k očím při nočních službách a k baterii na OLED.</p></div>
+        <div class="feat"><div class="ico">🚨</div><h3 data-i18n="f1_h">Problémy v reálném čase</h3><p data-i18n="f1_p">Živý přehled událostí s barvami podle závažnosti přesně jako ve webovém Zabbixu.</p></div>
+        <div class="feat"><div class="ico">✅</div><h3 data-i18n="f2_h">Potvrzení &amp; zavření</h3><p data-i18n="f2_p">Acknowledge i close událostí přímo z mobilu, včetně komentáře.</p></div>
+        <div class="feat"><div class="ico">🗺️</div><h3 data-i18n="f3_h">Geomapa hostů</h3><p data-i18n="f3_p">Hosty na mapě s clusterováním podle přiblížení. Offline i bez dlaždic.</p></div>
+        <div class="feat"><div class="ico">📊</div><h3 data-i18n="f4_h">Dashboardy</h3><p data-i18n="f4_p">Tvoje Zabbix dashboardy a widgety na displeji telefonu i tabletu.</p></div>
+        <div class="feat"><div class="ico">📺</div><h3 data-i18n="f5_h">TV / kiosk režim</h3><p data-i18n="f5_p">Celoobrazovkový dashboard s trvale zapnutou obrazovkou — ideální na nástěnný panel.</p></div>
+        <div class="feat"><div class="ico">🖥️</div><h3 data-i18n="f6_h">Více serverů</h3><p data-i18n="f6_p">Přepínej mezi několika Zabbix instancemi jedním klepnutím.</p></div>
+        <div class="feat"><div class="ico">🔄</div><h3 data-i18n="f7_h">Synchronizace mezi zařízeními</h3><p data-i18n="f7_p">Nastavení serverů a preferencí přenes mezi telefonem a tabletem.</p></div>
+        <div class="feat"><div class="ico">🏢</div><h3 data-i18n="f8_h">Nasazení přes Intune</h3><p data-i18n="f8_p">Správa přes MDM (Microsoft Intune) s plnou konfigurovatelností — servery a nastavení předvyplníte hromadně managed configem.</p></div>
+        <div class="feat"><div class="ico">🔔</div><h3 data-i18n="f9_h">Widget na plochu</h3><p data-i18n="f9_p">Počet otevřených problémů rovnou na domovské obrazovce.</p></div>
+        <div class="feat"><div class="ico">📤</div><h3 data-i18n="f10_h">Sdílení problému</h3><p data-i18n="f10_p">Pošli událost do Teams, WhatsAppu nebo e-mailem přímo ze systémového sheetu.</p></div>
+        <div class="feat"><div class="ico">🌙</div><h3 data-i18n="f11_h">Tmavý režim</h3><p data-i18n="f11_p">Šetrný k očím při nočních službách a k baterii na OLED.</p></div>
       </div>
     </div>
   </section>
@@ -79,9 +83,9 @@
   <section id="screens" style="background:var(--bg-2);">
     <div class="wrap">
       <div class="section-head">
-        <div class="tag">Náhledy</div>
-        <h2>Podívej se dovnitř</h2>
-        <p>Ukázky přímo z aplikace.</p>
+        <div class="tag" data-i18n="screens_tag">Náhledy</div>
+        <h2 data-i18n="screens_h2">Podívej se dovnitř</h2>
+        <p data-i18n="screens_p">Ukázky přímo z aplikace.</p>
       </div>
       <!-- Přepínač prostředí + galerie se plní automaticky (viz script na konci
            stránky). Screenshoty pojmenuj shot<N>_<skupina>.jpg do assets/,
@@ -89,7 +93,7 @@
       <div class="shot-tabs" id="shotTabs"></div>
       <div class="car-stage" id="carStage"></div>
       <div class="car-dots" id="carDots"></div>
-      <p class="shots-empty" id="shotsEmpty" hidden>Screenshoty se připravují.</p>
+      <p class="shots-empty" id="shotsEmpty" hidden data-i18n="shots_empty">Screenshoty se připravují.</p>
     </div>
   </section>
 
@@ -97,28 +101,28 @@
   <section id="editions">
     <div class="wrap">
       <div class="section-head">
-        <div class="tag">Verze</div>
-        <h2>Zdarma, s možností Pro</h2>
-        <p>Začni zadarmo. Pro odemče verzi bez reklam jednorázovým nákupem.</p>
+        <div class="tag" data-i18n="ed_tag">Verze</div>
+        <h2 data-i18n="ed_h2">Zdarma, s možností Pro</h2>
+        <p data-i18n="ed_p">Začni zadarmo. Pro odemče verzi bez reklam jednorázovým nákupem.</p>
       </div>
       <div class="editions">
         <div class="edition">
           <h3>Free</h3>
-          <div class="price">0 Kč</div>
+          <div class="price" data-i18n="free_price">0 Kč</div>
           <ul>
-            <li>Všechny funkce dohledu</li>
-            <li>Neomezený počet serverů</li>
-            <li>Nenápadný banner (AdMob)</li>
+            <li data-i18n="free_1">Všechny funkce dohledu</li>
+            <li data-i18n="free_2">Neomezený počet serverů</li>
+            <li data-i18n="free_3">Nenápadný banner (AdMob)</li>
           </ul>
         </div>
         <div class="edition pro">
-          <span class="badge">DOPORUČENO</span>
+          <span class="badge" data-i18n="pro_badge">DOPORUČENO</span>
           <h3>Pro</h3>
-          <div class="price">jednorázově <small>/ odemčení</small></div>
+          <div class="price" data-i18n="pro_price">jednorázově <small>/ odemčení</small></div>
           <ul>
-            <li>Vše z Free</li>
-            <li>Bez reklam</li>
-            <li>Podpora dalšího vývoje</li>
+            <li data-i18n="pro_1">Vše z Free</li>
+            <li data-i18n="pro_2">Bez reklam</li>
+            <li data-i18n="pro_3">Podpora dalšího vývoje</li>
           </ul>
         </div>
       </div>
@@ -131,16 +135,16 @@
       <div class="about">
         <img src="assets/dev_logo.png" alt="Radek Pavlík" />
         <div>
-          <div class="tag" style="font-family:var(--mono);color:var(--red-soft);font-size:12px;letter-spacing:2px;text-transform:uppercase;">O mně</div>
+          <div class="tag" style="font-family:var(--mono);color:var(--red-soft);font-size:12px;letter-spacing:2px;text-transform:uppercase;" data-i18n="about_tag">O mně</div>
           <h2>Radek Pavlík</h2>
-          <div class="role">IT technik · monitoring · Zabbix Certified Professional 7.0</div>
-          <p>Je mi 40 let. Pracuji v oboru IT jako technik se zaměřením na monitoring a mám dlouholetou praxi se systémem Zabbix (certifikace <strong>Zabbix Certified Professional 7.0</strong>).</p>
-          <p><strong>ZbxView je můj soukromý, nezávislý projekt</strong>, který vyvíjím výhradně ve svém volném čase (večery a víkendy). Nevzniká na zakázku, jménem ani z prostředků mého zaměstnavatele a nijak nesouvisí s jeho interními systémy — k jeho vzniku mě přivedla jen osobní zkušenost se Zabbixem.</p>
-          <p>Zpětná vazba i nápady na funkce jsou vítané. Ozvi se!</p>
+          <div class="role" data-i18n="about_role">IT technik · monitoring · Zabbix Certified Professional 7.0</div>
+          <p data-i18n="about_p1">Je mi 40 let. Pracuji v oboru IT jako technik se zaměřením na monitoring a mám dlouholetou praxi se systémem Zabbix (certifikace <strong>Zabbix Certified Professional 7.0</strong>).</p>
+          <p data-i18n="about_p2"><strong>ZbxView je můj soukromý, nezávislý projekt</strong>, který vyvíjím výhradně ve svém volném čase (večery a víkendy). Nevzniká na zakázku, jménem ani z prostředků mého zaměstnavatele a nijak nesouvisí s jeho interními systémy — k jeho vzniku mě přivedla jen osobní zkušenost se Zabbixem.</p>
+          <p data-i18n="about_p3">Zpětná vazba i nápady na funkce jsou vítané. Ozvi se!</p>
           <div class="links">
             <span class="chip chip-cert">🏅 Zabbix Certified Professional 7.0</span>
             <a class="chip" href="mailto:pavlikradek@gmail.com">✉️ pavlikradek@gmail.com</a>
-            <a class="chip" href="privacy.html">🔒 Zásady soukromí</a>
+            <a class="chip" href="privacy.html" data-i18n="chip_privacy">🔒 Zásady soukromí</a>
           </div>
         </div>
       </div>
@@ -152,15 +156,91 @@
     <div class="wrap">
       <a class="brand" href="#top"><img src="assets/icon.png" alt="" style="width:26px;height:26px;border-radius:6px;" /> Zbx<b style="color:var(--red-soft);">View</b></a>
       <div class="fl">
-        <a href="#features">Funkce</a>
-        <a href="#editions">Verze</a>
-        <a href="privacy.html">Zásady soukromí</a>
-        <a href="mailto:pavlikradek@gmail.com">Kontakt</a>
+        <a href="#features" data-i18n="nav_features">Funkce</a>
+        <a href="#editions" data-i18n="nav_editions">Verze</a>
+        <a href="privacy.html" data-i18n="foot_privacy">Zásady soukromí</a>
+        <a href="mailto:pavlikradek@gmail.com" data-i18n="foot_contact">Kontakt</a>
       </div>
       <div class="cp">© 2026 Radek Pavlík. ZbxView.</div>
-      <div class="disc">ZbxView je nezávislý klient a není spojen, schvalován ani sponzorován společností Zabbix SIA. „Zabbix“ je ochranná známka Zabbix SIA. Google Play a logo Google Play jsou ochranné známky Google LLC.</div>
+      <div class="disc" data-i18n="foot_disc">ZbxView je nezávislý klient a není spojen, schvalován ani sponzorován společností Zabbix SIA. „Zabbix“ je ochranná známka Zabbix SIA. Google Play a logo Google Play jsou ochranné známky Google LLC.</div>
     </div>
   </footer>
+
+  <!-- Language switch (CZ default in HTML, EN via dictionary). Choice persisted;
+       first visit follows the browser language. -->
+  <script>
+  (function () {
+    var EN = {
+      nav_features: 'Features', nav_screens: 'Screenshots', nav_editions: 'Editions',
+      nav_about: 'About', nav_privacy: 'Privacy',
+      hero_eyebrow: 'mobile client for Zabbix',
+      hero_h1: 'Your monitoring<br /><span>always at hand.</span>',
+      hero_lead: 'ZbxView brings your Zabbix server straight to your phone — real-time problems, acknowledging and closing events, a host map and dashboards. Fast, clear, anywhere.',
+      hero_cta: '▶ Get ZbxView <small>soon on&nbsp;Google&nbsp;Play</small>',
+      hero_ghost: 'See features',
+      hero_platform: '🤖 Android now &nbsp;·&nbsp; 🍎 iOS in development',
+      feat_tag: 'Features', feat_h2: 'Everything you expect from field monitoring',
+      feat_p: 'Built on the Zabbix API — read-only plus acknowledging and closing events. You won’t break anything in production by accident.',
+      f1_h: 'Real-time problems', f1_p: 'A live overview of events, colour-coded by severity just like in Zabbix web.',
+      f2_h: 'Acknowledge &amp; close', f2_p: 'Acknowledge and close events straight from your phone, with a comment.',
+      f3_h: 'Host geomap', f3_p: 'Hosts on a map with zoom-based clustering. Works offline without tiles too.',
+      f4_h: 'Dashboards', f4_p: 'Your Zabbix dashboards and widgets on a phone or tablet screen.',
+      f5_h: 'TV / kiosk mode', f5_p: 'Full-screen dashboard with the screen kept awake — ideal for a wall panel.',
+      f6_h: 'Multiple servers', f6_p: 'Switch between several Zabbix instances with one tap.',
+      f7_h: 'Sync across devices', f7_p: 'Carry your server setup and preferences between phone and tablet.',
+      f8_h: 'Intune deployment', f8_p: 'MDM management (Microsoft Intune) with full configurability — pre-fill servers and settings in bulk via managed config.',
+      f9_h: 'Home-screen widget', f9_p: 'The number of open problems right on your home screen.',
+      f10_h: 'Share a problem', f10_p: 'Send an event to Teams, WhatsApp or e-mail straight from the system share sheet.',
+      f11_h: 'Dark mode', f11_p: 'Easy on the eyes during night shifts and on OLED battery.',
+      screens_tag: 'Screenshots', screens_h2: 'Take a look inside', screens_p: 'Straight from the app.',
+      shots_empty: 'Screenshots coming soon.',
+      ed_tag: 'Editions', ed_h2: 'Free, with an optional Pro',
+      ed_p: 'Start for free. Pro unlocks an ad-free version with a one-time purchase.',
+      free_price: 'Free', free_1: 'All monitoring features', free_2: 'Unlimited servers', free_3: 'Unobtrusive banner (AdMob)',
+      pro_badge: 'RECOMMENDED', pro_price: 'one-time <small>/ unlock</small>',
+      pro_1: 'Everything in Free', pro_2: 'No ads', pro_3: 'Support further development',
+      about_tag: 'About', about_role: 'IT technician · monitoring · Zabbix Certified Professional 7.0',
+      about_p1: 'I’m 40. I work in IT as a technician focused on monitoring and have long-time experience with Zabbix (<strong>Zabbix Certified Professional 7.0</strong> certification).',
+      about_p2: '<strong>ZbxView is my private, independent project</strong>, developed entirely in my own free time (evenings and weekends). It is not made to order, on behalf of, or with the resources of my employer, and has nothing to do with its internal systems — it was born purely out of personal experience with Zabbix.',
+      about_p3: 'Feedback and feature ideas are welcome. Get in touch!',
+      chip_privacy: '🔒 Privacy policy',
+      foot_privacy: 'Privacy policy', foot_contact: 'Contact',
+      foot_disc: 'ZbxView is an independent client and is not affiliated with, endorsed by or sponsored by Zabbix SIA. “Zabbix” is a trademark of Zabbix SIA. Google Play and the Google Play logo are trademarks of Google LLC.',
+      __title: 'ZbxView — Zabbix monitoring in your pocket',
+      __desc: 'ZbxView is a mobile client for Zabbix. Watch problems in real time, acknowledge and close events, host maps and dashboards — right from your phone.'
+    };
+    var htmlEl = document.documentElement;
+    var descEl = document.querySelector('meta[name="description"]');
+    htmlEl.__csTitle = document.title;
+    htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
+
+    function apply(lang) {
+      var dict = lang === 'en' ? EN : null;
+      var nodes = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i], key = el.getAttribute('data-i18n');
+        if (el.__cs == null) el.__cs = el.innerHTML;
+        el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      document.title = (lang === 'en') ? EN.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', (lang === 'en') ? EN.__desc : htmlEl.__csDesc);
+      htmlEl.lang = lang;
+      try { localStorage.setItem('zbxlang', lang); } catch (e) {}
+      var opts = document.querySelectorAll('.lang-opt');
+      for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
+      document.dispatchEvent(new CustomEvent('langchange', { detail: lang }));
+    }
+    window.__zbxLang = function () { return htmlEl.lang === 'en' ? 'en' : 'cs'; };
+
+    var opts = document.querySelectorAll('.lang-opt');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
+    }
+    var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
+    var lang = saved || ((navigator.language || '').slice(0, 2).toLowerCase() === 'cs' ? 'cs' : 'en');
+    apply(lang);
+  })();
+  </script>
 
   <!-- Screenshot gallery: auto-discovers assets/shot<N>_<group>.jpg for each
        device group and renders device frames. Groups with no files are hidden.
@@ -175,10 +255,11 @@
     // Display order + how each group is rendered. `key` is the filename suffix:
     // shot<N>_<key>.(jpg|png). Add a group here to support a new suffix.
     var GROUPS = [
-      { key: 'tv', label: 'TV', frame: 'tv' },
-      { key: 'mobile', label: 'Telefon', frame: 'phone' },
-      { key: 'tablet', label: 'Tablet', frame: 'tablet' }
+      { key: 'tv', label: { cs: 'TV', en: 'TV' }, frame: 'tv' },
+      { key: 'mobile', label: { cs: 'Telefon', en: 'Phone' }, frame: 'phone' },
+      { key: 'tablet', label: { cs: 'Tablet', en: 'Tablet' }, frame: 'tablet' }
     ];
+    function L(grp) { var l = (window.__zbxLang ? window.__zbxLang() : 'cs'); return grp.label[l] || grp.label.cs; }
     var EXT = ['jpg', 'png', 'jpeg', 'webp'];
     var MAX = 60; // highest shot number probed per group
 
@@ -290,8 +371,7 @@
         var html = '';
         for (var k = 0; k < n; k++) {
           var j = (idx + k) % cur.imgs.length;
-          html += frameHTML(cur.frame, cur.imgs[j],
-            'ZbxView ' + cur.label + ' – náhled ' + (j + 1));
+          html += frameHTML(cur.frame, cur.imgs[j], 'ZbxView ' + L(cur) + ' ' + (j + 1));
         }
         stage.innerHTML = html;
       }
@@ -320,7 +400,7 @@
 
       tabsEl.innerHTML = groups.map(function (grp) {
         return '<button class="shot-tab" data-key="' + grp.key + '">' + ICON[grp.key] +
-               '<span>' + grp.label + '</span></button>';
+               '<span>' + L(grp) + '</span></button>';
       }).join('');
       Array.prototype.forEach.call(tabsEl.children, function (b, i) {
         b.addEventListener('click', function () { selectGroup(groups[i]); });
@@ -338,6 +418,16 @@
       // pause auto-rotation while hovering the preview
       stage.addEventListener('mouseenter', stopAuto);
       stage.addEventListener('mouseleave', startAuto);
+
+      // relabel tabs (Telefon↔Phone) and current frame when the language changes
+      document.addEventListener('langchange', function () {
+        var btns = tabsEl.children;
+        for (var t = 0; t < groups.length; t++) {
+          var span = btns[t] && btns[t].querySelector('span');
+          if (span) span.textContent = L(groups[t]);
+        }
+        renderFrame();
+      });
 
       selectGroup(groups[0]);
     })();
