@@ -156,15 +156,15 @@ section { padding: 72px 0; }
 
 /* screenshots — small auto-rotating preview (up to 3 at once); click to enlarge */
 .car-stage { display: flex; justify-content: center; align-items: center; gap: 16px; flex-wrap: wrap; min-height: 10px; }
-.car-stage .frame { margin: 0; animation: shotfade .35s ease; }
+.car-stage .frame { margin: 0; flex: 0 0 auto; animation: shotfade .35s ease; }
 @keyframes shotfade { from { opacity: 0; } to { opacity: 1; } }
 .frame { margin: 0; }
 .frame-screen { overflow: hidden; background: #000; }
 .frame-screen img { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; cursor: zoom-in; }
 /* small preview sizes (click enlarges to full screen) */
 .car-stage .frame-phone { width: 148px; }
-.car-stage .frame-tablet { width: min(72vw, 300px); }
-.car-stage .frame-tv { width: min(78vw, 340px); }
+.car-stage .frame-tablet { width: min(29vw, 300px); }
+.car-stage .frame-tv { width: min(29vw, 340px); }
 /* dots — click to jump between shots */
 .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
 .car-dots[hidden] { display: none; }
@@ -174,7 +174,7 @@ section { padding: 72px 0; }
 
 /* tablet: landscape 16:10 slab with a front-camera dot on the bezel */
 .frame-tablet {
-  position: relative; flex-basis: min(84vw, 540px);
+  position: relative;
   background: linear-gradient(160deg, #1d2430, #0e1218);
   border: 1px solid #2a3340; border-radius: 20px; padding: 14px 20px;
   box-shadow: 0 24px 60px rgba(0,0,0,.5);
@@ -184,7 +184,7 @@ section { padding: 72px 0; }
 
 /* phone: portrait slab with a speaker notch */
 .frame-phone {
-  position: relative; flex-basis: min(64vw, 250px);
+  position: relative;
   background: linear-gradient(160deg, #1d2430, #0e1218);
   border: 1px solid #2a3340; border-radius: 30px; padding: 12px;
   box-shadow: 0 24px 60px rgba(0,0,0,.5);
@@ -199,7 +199,7 @@ section { padding: 72px 0; }
 .hero-phone .frame-screen img { object-position: top; }
 
 /* tv: 16:9 panel on a stand */
-.frame-tv { flex-basis: min(90vw, 580px); text-align: center; }
+.frame-tv { text-align: center; }
 .frame-tv .frame-body {
   background: linear-gradient(160deg, #1d2430, #0e1218);
   border: 1px solid #2a3340; border-radius: 12px; padding: 12px;
