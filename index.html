@@ -90,26 +90,12 @@
         <h2>Podívej se dovnitř</h2>
         <p>Ukázky přímo z aplikace.</p>
       </div>
-      <div class="shots">
-        <!-- Tabletové screenshoty (16:10). Přidat/ubrat = zkopírovat JPG do
-             assets/ a přidat/smazat řádek. Chybějící soubor se sám skryje. -->
-        <figure class="slot"><img src="assets/shot1.jpg" alt="ZbxView – náhled 1" onerror="this.remove()"><figcaption>screenshot 1</figcaption></figure>
-        <figure class="slot"><img src="assets/shot2.jpg" alt="ZbxView – náhled 2" onerror="this.remove()"><figcaption>screenshot 2</figcaption></figure>
-        <figure class="slot"><img src="assets/shot3.jpg" alt="ZbxView – náhled 3" onerror="this.remove()"><figcaption>screenshot 3</figcaption></figure>
-        <figure class="slot"><img src="assets/shot4.jpg" alt="ZbxView – náhled 4" onerror="this.remove()"><figcaption>screenshot 4</figcaption></figure>
-        <figure class="slot"><img src="assets/shot5.jpg" alt="ZbxView – náhled 5" onerror="this.remove()"><figcaption>screenshot 5</figcaption></figure>
-        <figure class="slot"><img src="assets/shot6.jpg" alt="ZbxView – náhled 6" onerror="this.remove()"><figcaption>screenshot 6</figcaption></figure>
-        <figure class="slot"><img src="assets/shot7.jpg" alt="ZbxView – náhled 7" onerror="this.remove()"><figcaption>screenshot 7</figcaption></figure>
-        <figure class="slot"><img src="assets/shot8.jpg" alt="ZbxView – náhled 8" onerror="this.remove()"><figcaption>screenshot 8</figcaption></figure>
-        <figure class="slot"><img src="assets/shot9.jpg" alt="ZbxView – náhled 9" onerror="this.remove()"><figcaption>screenshot 9</figcaption></figure>
-        <figure class="slot"><img src="assets/shot10.jpg" alt="ZbxView – náhled 10" onerror="this.remove()"><figcaption>screenshot 10</figcaption></figure>
-        <figure class="slot"><img src="assets/shot11.jpg" alt="ZbxView – náhled 11" onerror="this.remove()"><figcaption>screenshot 11</figcaption></figure>
-        <figure class="slot"><img src="assets/shot12.jpg" alt="ZbxView – náhled 12" onerror="this.remove()"><figcaption>screenshot 12</figcaption></figure>
-        <figure class="slot"><img src="assets/shot13.jpg" alt="ZbxView – náhled 13" onerror="this.remove()"><figcaption>screenshot 13</figcaption></figure>
-        <figure class="slot"><img src="assets/shot14.jpg" alt="ZbxView – náhled 14" onerror="this.remove()"><figcaption>screenshot 14</figcaption></figure>
-        <figure class="slot"><img src="assets/shot15.jpg" alt="ZbxView – náhled 15" onerror="this.remove()"><figcaption>screenshot 15</figcaption></figure>
-        <figure class="slot"><img src="assets/shot16.jpg" alt="ZbxView – náhled 16" onerror="this.remove()"><figcaption>screenshot 16</figcaption></figure>
-      </div>
+      <!-- Přepínač prostředí + galerie se plní automaticky (viz script na konci
+           stránky). Screenshoty pojmenuj shot<N>_<skupina>.jpg do assets/,
+           kde <skupina> je tv | phone | tablet. Skupina bez souborů se skryje. -->
+      <div class="shot-tabs" id="shotTabs"></div>
+      <div class="shots" id="shots"></div>
+      <p class="shots-empty" id="shotsEmpty" hidden>Screenshoty se připravují.</p>
     </div>
   </section>
 
@@ -179,6 +165,83 @@
       <div class="disc">ZbxView je nezávislý klient a není spojen, schvalován ani sponzorován společností Zabbix SIA. „Zabbix“ je ochranná známka Zabbix SIA. Google Play a logo Google Play jsou ochranné známky Google LLC.</div>
     </div>
   </footer>
+
+  <!-- Screenshot gallery: auto-discovers assets/shot<N>_<group>.jpg for each
+       device group and renders device frames. Groups with no files are hidden.
+       Tabler icons (MIT): device-tv, device-mobile, device-tablet. -->
+  <script>
+  (function () {
+    var ICON = {
+      tv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9"/><path d="M16 3l-4 4l-4 -4"/></svg>',
+      phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14"/><path d="M11 4h2"/><path d="M12 17v.01"/></svg>',
+      tablet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4a1 1 0 0 1 1 -1h12a1 1 0 0 1 1 1v16a1 1 0 0 1 -1 1h-12a1 1 0 0 1 -1 -1v-16"/><path d="M11 17a1 1 0 1 0 2 0a1 1 0 0 0 -2 0"/></svg>'
+    };
+    var GROUPS = [
+      { key: 'tv', label: 'TV' },
+      { key: 'phone', label: 'Telefon' },
+      { key: 'tablet', label: 'Tablet' }
+    ];
+    var MAX = 40, GAP = 3;
+
+    function exists(src) {
+      return new Promise(function (res) {
+        var im = new Image();
+        im.onload = function () { res(true); };
+        im.onerror = function () { res(false); };
+        im.src = src;
+      });
+    }
+    async function probe(key) {
+      var found = [], miss = 0;
+      for (var i = 1; i <= MAX; i++) {
+        var src = 'assets/shot' + i + '_' + key + '.jpg';
+        if (await exists(src)) { found.push(src); miss = 0; }
+        else if (found.length) { if (++miss >= GAP) break; }
+        else if (i >= GAP) break;
+      }
+      return found;
+    }
+    function frameHTML(frame, src, alt) {
+      var screen = '<div class="frame-screen"><img src="' + src + '" alt="' + alt + '" loading="lazy"></div>';
+      if (frame === 'tv') {
+        return '<figure class="frame frame-tv"><div class="frame-body">' + screen +
+               '</div><div class="frame-stand"></div><div class="frame-foot"></div></figure>';
+      }
+      return '<figure class="frame frame-' + frame + '">' + screen + '</figure>';
+    }
+
+    (async function () {
+      var tabsEl = document.getElementById('shotTabs');
+      var shotsEl = document.getElementById('shots');
+      var emptyEl = document.getElementById('shotsEmpty');
+      var groups = [];
+      for (var g = 0; g < GROUPS.length; g++) {
+        var imgs = await probe(GROUPS[g].key);
+        if (imgs.length) groups.push(Object.assign({}, GROUPS[g], { imgs: imgs }));
+      }
+      if (!groups.length) { tabsEl.hidden = true; emptyEl.hidden = false; return; }
+
+      function render(grp) {
+        shotsEl.innerHTML = grp.imgs.map(function (s, i) {
+          return frameHTML(grp.key, s, 'ZbxView ' + grp.label + ' – náhled ' + (i + 1));
+        }).join('');
+        Array.prototype.forEach.call(tabsEl.children, function (b) {
+          b.classList.toggle('active', b.dataset.key === grp.key);
+        });
+        shotsEl.scrollLeft = 0;
+      }
+
+      tabsEl.innerHTML = groups.map(function (grp) {
+        return '<button class="shot-tab" data-key="' + grp.key + '">' + ICON[grp.key] +
+               '<span>' + grp.label + '</span></button>';
+      }).join('');
+      Array.prototype.forEach.call(tabsEl.children, function (b, idx) {
+        b.addEventListener('click', function () { render(groups[idx]); });
+      });
+      render(groups[0]);
+    })();
+  })();
+  </script>
 
 </body>
 </html>
