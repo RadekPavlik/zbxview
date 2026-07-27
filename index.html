@@ -221,22 +221,40 @@
       }
       return '<figure class="frame frame-' + frame + '">' + screen + '</figure>';
     }
-    // Full-screen viewer: click a screenshot to enlarge it.
+    // Full-screen viewer: click a screenshot to enlarge it, then move through
+    // the whole set with the ‹ › buttons or the ← → arrow keys.
     function buildLightbox() {
       var lb = document.createElement('div');
       lb.className = 'lightbox'; lb.hidden = true;
-      lb.innerHTML = '<button class="lightbox-close" aria-label="Zavřít">&times;</button><img alt="">';
+      lb.innerHTML =
+        '<button class="lightbox-close" aria-label="Zavřít">&times;</button>' +
+        '<button class="lightbox-nav lightbox-prev" aria-label="Předchozí">‹</button>' +
+        '<img alt="">' +
+        '<button class="lightbox-nav lightbox-next" aria-label="Další">›</button>';
       document.body.appendChild(lb);
       var img = lb.querySelector('img');
+      var prevBtn = lb.querySelector('.lightbox-prev');
+      var nextBtn = lb.querySelector('.lightbox-next');
+      var list = [], i = 0;
+      function show() { img.src = list[i]; }
+      function go(n) { if (list.length) { i = (n + list.length) % list.length; show(); } }
       function close() { lb.classList.remove('open'); lb.hidden = true; img.removeAttribute('src'); }
       lb.addEventListener('click', function (e) {
         if (e.target === lb || e.target.classList.contains('lightbox-close')) close();
       });
+      prevBtn.addEventListener('click', function (e) { e.stopPropagation(); go(i - 1); });
+      nextBtn.addEventListener('click', function (e) { e.stopPropagation(); go(i + 1); });
       document.addEventListener('keydown', function (e) {
-        if (e.key === 'Escape' && !lb.hidden) close();
+        if (lb.hidden) return;
+        if (e.key === 'Escape') close();
+        else if (e.key === 'ArrowLeft') go(i - 1);
+        else if (e.key === 'ArrowRight') go(i + 1);
       });
-      return function open(src, alt) {
-        img.src = src; img.alt = alt || '';
+      return function open(items, index) {
+        list = items || []; i = index || 0;
+        var multi = list.length > 1;
+        prevBtn.hidden = nextBtn.hidden = !multi;
+        show();
         lb.hidden = false;
         requestAnimationFrame(function () { lb.classList.add('open'); });
       };
@@ -308,10 +326,12 @@
       dotsEl.addEventListener('click', function (e) {
         var d = e.target.closest('.car-dot'); if (d) go(+d.dataset.i);
       });
-      // click a screenshot to enlarge it
+      // click a screenshot to enlarge it (lightbox then navigates the whole set)
       stage.addEventListener('click', function (e) {
         var img = e.target.closest('img');
-        if (img) openLightbox(img.currentSrc || img.src, img.alt);
+        if (!img) return;
+        var k = cur.imgs.indexOf(img.getAttribute('src'));
+        openLightbox(cur.imgs, k >= 0 ? k : 0);
       });
       // pause auto-rotation while hovering the preview
       stage.addEventListener('mouseenter', stopAuto);
