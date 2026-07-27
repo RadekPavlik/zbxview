@@ -168,7 +168,7 @@ section { padding: 72px 0; }
 /* small preview sizes (click enlarges to full screen) */
 .car-stage .frame-phone { width: 148px; }
 .car-stage .frame-tablet { width: min(29vw, 300px); }
-.car-stage .frame-tv { width: min(29vw, 340px); }
+.car-stage .frame-tv { width: min(29vw, 300px); }
 /* dots — click to jump between shots */
 .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
 .car-dots[hidden] { display: none; }
