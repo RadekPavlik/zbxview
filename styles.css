@@ -202,6 +202,21 @@ section { padding: 72px 0; }
 .hero-phone .frame-screen { aspect-ratio: 1080 / 2250; }
 .hero-phone .frame-screen img { object-position: top; }
 
+/* watch: round Wear OS bezel with a side crown */
+.frame-watch {
+  position: relative;
+  background: radial-gradient(120% 120% at 30% 25%, #232c38, #0c1016);
+  border: 1px solid #2a3340; border-radius: 50%; padding: 10px;
+  box-shadow: 0 18px 44px rgba(0,0,0,.5);
+}
+.frame-watch .frame-screen { aspect-ratio: 1 / 1; border-radius: 50%; overflow: hidden; background: #000; }
+.frame-watch .frame-crown { position: absolute; right: -5px; top: 50%; transform: translateY(-50%); width: 6px; height: 26px; border-radius: 3px; background: #3a4552; }
+.car-stage .frame-watch { width: 190px; }
+
+/* Wear OS note under the gallery */
+.wear-note { margin: 18px auto 0; max-width: 720px; text-align: center; color: var(--muted, #9aa7b6); font-size: 14px; line-height: 1.55; }
+.wear-note strong { color: var(--text, #e6ebf0); }
+
 /* tv: 16:9 panel on a stand */
 .frame-tv { text-align: center; }
 .frame-tv .frame-body {

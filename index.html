@@ -44,7 +44,7 @@
           <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.zbxview" target="_blank" rel="noopener" data-i18n="hero_cta">▶ Získat na&nbsp;Google&nbsp;Play</a>
           <a class="btn btn-ghost" href="#features" data-i18n="hero_ghost">Prohlédnout funkce</a>
         </div>
-        <p class="platform" data-i18n="hero_platform">🤖 Android nyní &nbsp;·&nbsp; 🍎 iOS ve vývoji</p>
+        <p class="platform" data-i18n="hero_platform">🤖 Android nyní &nbsp;·&nbsp; ⌚ Wear OS &nbsp;·&nbsp; 🍎 iOS ve vývoji</p>
       </div>
 
       <!-- phone: real ZbxView screenshot (shot26); the ad banner + Android nav
@@ -94,6 +94,7 @@
       <div class="car-stage" id="carStage"></div>
       <div class="car-dots" id="carDots"></div>
       <p class="shots-empty" id="shotsEmpty" hidden data-i18n="shots_empty">Screenshoty se připravují.</p>
+      <p class="wear-note" data-i18n="wear_note">⌚ <strong>Wear OS (companion):</strong> počty problémů podle závažnosti, seznam aktuálních problémů a potvrzení (acknowledge) přímo z hodinek. Data se synchronizují ze spárované telefonní aplikace ZbxView.</p>
     </div>
   </section>
 
@@ -240,7 +241,8 @@
       hero_cta: '▶ Get it on&nbsp;Google&nbsp;Play',
       free_cta: 'Get it on Google Play',
       hero_ghost: 'See features',
-      hero_platform: '🤖 Android now &nbsp;·&nbsp; 🍎 iOS in development',
+      hero_platform: '🤖 Android now &nbsp;·&nbsp; ⌚ Wear OS &nbsp;·&nbsp; 🍎 iOS in development',
+      wear_note: '⌚ <strong>Wear OS (companion):</strong> problem counts by severity, a list of current problems and acknowledging straight from your wrist. Data syncs from the paired ZbxView phone app.',
       feat_tag: 'Features', feat_h2: 'Everything you expect from field monitoring',
       feat_p: 'Built on the Zabbix API — read-only plus acknowledging and closing events. You won’t break anything in production by accident.',
       f1_h: 'Real-time problems', f1_p: 'A live overview of events, colour-coded by severity just like in Zabbix web.',
@@ -330,14 +332,16 @@
     var ICON = {
       tv: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v9a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2l0 -9"/><path d="M16 3l-4 4l-4 -4"/></svg>',
       mobile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 5a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v14a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2v-14"/><path d="M11 4h2"/><path d="M12 17v.01"/></svg>',
-      tablet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-12"/><path d="M9 17h6"/></svg>'
+      tablet: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6a2 2 0 0 1 2 -2h14a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-12"/><path d="M9 17h6"/></svg>',
+      watch: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 7a4 4 0 1 0 8 0a4 4 0 0 0 -8 0"/><path d="M12 10l0 2l1.5 1.5"/><path d="M8 5l.5 -2.5a1 1 0 0 1 1 -.5h5a1 1 0 0 1 1 .5l.5 2.5"/><path d="M8 19l.5 2.5a1 1 0 0 0 1 .5h5a1 1 0 0 0 1 -.5l.5 -2.5"/></svg>'
     };
     // Display order + how each group is rendered. `key` is the filename suffix:
     // shot<N>_<key>.(jpg|png). Add a group here to support a new suffix.
     var GROUPS = [
       { key: 'mobile', label: { cs: 'Telefon', en: 'Phone' }, frame: 'phone' },
       { key: 'tablet', label: { cs: 'Tablet', en: 'Tablet' }, frame: 'tablet' },
-      { key: 'tv', label: { cs: 'TV', en: 'TV' }, frame: 'tv' }
+      { key: 'tv', label: { cs: 'TV', en: 'TV' }, frame: 'tv' },
+      { key: 'watch', label: { cs: 'Hodinky', en: 'Watch' }, frame: 'watch' }
     ];
     function L(grp) { var l = (window.__zbxLang ? window.__zbxLang() : 'cs'); return grp.label[l] || grp.label.cs; }
 
@@ -355,6 +359,9 @@
       if (frame === 'tv') {
         return '<figure class="frame frame-tv"><div class="frame-body">' + screen +
                '</div><div class="frame-stand"></div><div class="frame-foot"></div></figure>';
+      }
+      if (frame === 'watch') {
+        return '<figure class="frame frame-watch"><div class="frame-crown"></div>' + screen + '</figure>';
       }
       return '<figure class="frame frame-' + frame + '">' + screen + '</figure>';
     }
