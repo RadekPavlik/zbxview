@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZbxView — Nasazení přes MDM (Intune)</title>
+  <meta name="description" content="Jak nasadit a předkonfigurovat aplikaci ZbxView přes Microsoft Intune nebo jiné MDM — app configuration, klíče, work profile." />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="doc">
+    <div class="doc-top">
+      <a class="back" href="index.html" data-i18n="back">← zpět na ZbxView</a>
+      <div class="lang-switch">
+        <button class="lang-opt" data-lang="cs">CZ</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+      </div>
+    </div>
+
+    <h1 data-i18n="title">Nasazení přes MDM (Intune)</h1>
+    <div class="updated" data-i18n="updated">Aplikace: ZbxView · Platí pro Microsoft Intune a další MDM podporující app configuration</div>
+
+    <p data-i18n="intro">ZbxView umí přijmout <strong>konfiguraci od správce</strong>. Uživatel pak po instalaci nemusí nic vyplňovat — server je předvyplněný a stačí se přihlásit. Funguje to na Androidu (Managed configuration) i na iOS (Managed app configuration).</p>
+
+    <h2 data-i18n="s1_h">1. Co jde nastavit</h2>
+    <p data-i18n="s1_p">Správce může předvyplnit připojení k serveru a vynutit biometrické odemčení. Nic dalšího se z aplikace vzdáleně neřídí — hesla ani tokeny se přes konfiguraci neposílají, ty zadává uživatel sám a zůstávají v úložišti zařízení.</p>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th data-i18n="th_key">Klíč</th>
+          <th data-i18n="th_type">Typ</th>
+          <th data-i18n="th_meaning">Význam</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><code>server_url</code></td>
+          <td data-i18n="t_string">řetězec</td>
+          <td data-i18n="k_url">Adresa Zabbix serveru nebo relay, např. <code>https://zabbix.example.com</code></td>
+        </tr>
+        <tr>
+          <td><code>server_name</code></td>
+          <td data-i18n="t_string2">řetězec</td>
+          <td data-i18n="k_name">Název, pod kterým se server v aplikaci zobrazí</td>
+        </tr>
+        <tr>
+          <td><code>auth_type</code></td>
+          <td data-i18n="t_string3">řetězec</td>
+          <td data-i18n="k_auth"><code>password</code> (uživatel se přihlásí jménem a heslem) nebo <code>token</code> (API token)</td>
+        </tr>
+        <tr>
+          <td><code>allow_self_signed</code></td>
+          <td data-i18n="t_bool">ano/ne</td>
+          <td data-i18n="k_self">Povolí self-signed TLS certifikát na tomto serveru</td>
+        </tr>
+        <tr>
+          <td><code>require_biometric</code></td>
+          <td data-i18n="t_bool2">ano/ne</td>
+          <td data-i18n="k_bio">Vynutí otisk/obličej (nebo PIN zařízení) při otevření aplikace. Přepínač v Nastavení se uživateli zamkne.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h2 data-i18n="s2_h">2. Android — Intune krok za krokem</h2>
+    <ol>
+      <li data-i18n="a1"><strong>Přidání aplikace.</strong> Intune → <em>Aplikace</em> → <em>Android</em> → <em>Přidat</em> → typ <em>Spravovaný Google Play</em>. Najděte <strong>ZbxView</strong> (ID balíčku <code>app.zbxview</code>), schvalte ji a synchronizujte.</li>
+      <li data-i18n="a2"><strong>Přiřazení.</strong> U aplikace nastavte <em>Přiřazení</em> na skupinu uživatelů nebo zařízení. Pro firemní telefony doporučuji <em>Povinné</em>, aby se nainstalovala sama.</li>
+      <li data-i18n="a3"><strong>Konfigurace.</strong> Intune → <em>Aplikace</em> → <em>Zásady konfigurace aplikací</em> → <em>Přidat</em> → <em>Spravovaná zařízení</em>. Platforma <em>Android Enterprise</em>, cílová aplikace ZbxView.</li>
+      <li data-i18n="a4"><strong>Vyplnění hodnot.</strong> V <em>Konfiguračním návrháři</em> uvidíte klíče z tabulky výše jako hotová pole i s popisem — nemusíte psát žádné XML. Vyplňte aspoň <code>server_url</code>.</li>
+      <li data-i18n="a5"><strong>Přiřazení zásady</strong> na stejnou skupinu. Hotovo — po instalaci má uživatel server rovnou v seznamu.</li>
+    </ol>
+
+    <div class="note" data-i18n="note_wp">Na zařízeních s <strong>pracovním profilem</strong> se aplikace nainstaluje do pracovní části a konfigurace platí jen tam. Soukromá instalace ze stejného telefonu si žádnou konfiguraci nevezme — jsou to dvě oddělené instance.</div>
+
+    <h2 data-i18n="s3_h">3. iOS</h2>
+    <p data-i18n="s3_p">Postup je stejný, jen se aplikace přidává jako <em>Aplikace z App Storu</em> a zásada se dělá pro platformu <em>iOS/iPadOS</em>. Hodnoty se vyplňují ve <em>Zprostředkovateli konfigurace</em> — použijte stejné názvy klíčů jako v tabulce.</p>
+
+    <h2 data-i18n="s4_h">4. Jiné MDM</h2>
+    <p data-i18n="s4_p">Klíče jsou standardní <em>managed configuration</em>, takže fungují i mimo Intune — VMware Workspace ONE, MobileIron, Miradore, Headwind a další. Pokud vaše MDM neumí načíst schéma z Google Play automaticky, zadejte klíče ručně přesně tak, jak jsou napsané v tabulce (malá písmena, podtržítka).</p>
+
+    <h2 data-i18n="s5_h">5. Časté potíže</h2>
+    <ul>
+      <li data-i18n="q1"><strong>Server se nepředvyplnil.</strong> Konfigurace dorazí až se synchronizací zařízení. Zkuste v Portál společnosti vynutit synchronizaci a aplikaci zavřít a znovu otevřít.</li>
+      <li data-i18n="q2"><strong>Aplikace hlásí problém s certifikátem.</strong> U interního serveru s vlastní certifikační autoritou zapněte <code>allow_self_signed</code>, nebo lépe rozdistribuujte kořenový certifikát přes MDM.</li>
+      <li data-i18n="q3"><strong>Biometrika se nenabízí.</strong> Zařízení musí mít nastavený zámek obrazovky. V pracovním profilu se navíc používá zámek pracovního profilu, pokud je zavedený.</li>
+      <li data-i18n="q4"><strong>Instalace hlásí „Parse error“.</strong> To se týká ručně instalovaného APK na starých zařízeních — aplikace vyžaduje Android 7.0 a novější.</li>
+    </ul>
+
+    <h2 data-i18n="s6_h">6. Co aplikace neposílá</h2>
+    <p data-i18n="s6_p">ZbxView komunikuje výhradně s Zabbix serverem, který zadáte vy. Vývojář nesbírá žádná vaše data — podrobně to popisují <a href="privacy.html" data-i18n="s6_link">zásady ochrany osobních údajů</a>.</p>
+
+    <p class="doc-foot"><a href="index.html" data-i18n="foot_back">← zpět na hlavní stránku</a></p>
+  </div>
+
+  <script>
+  (function () {
+    var EN = {
+      back: '← back to ZbxView',
+      title: 'Deploying with MDM (Intune)',
+      updated: 'App: ZbxView · Applies to Microsoft Intune and any MDM supporting app configuration',
+      intro: 'ZbxView accepts <strong>configuration pushed by an administrator</strong>. After install the user fills in nothing — the server is already there and they just sign in. This works on Android (managed configuration) and on iOS (managed app configuration).',
+      s1_h: '1. What can be set',
+      s1_p: 'An administrator can pre-fill the server connection and enforce biometric unlock. Nothing else is controlled remotely — passwords and tokens are never sent through the configuration; the user enters those and they stay in the device keystore.',
+      th_key: 'Key',
+      th_type: 'Type',
+      th_meaning: 'Meaning',
+      t_string: 'string', t_string2: 'string', t_string3: 'string',
+      t_bool: 'boolean', t_bool2: 'boolean',
+      k_url: 'Zabbix server or relay URL, e.g. <code>https://zabbix.example.com</code>',
+      k_name: 'Name the server is shown under in the app',
+      k_auth: '<code>password</code> (user signs in with username and password) or <code>token</code> (API token)',
+      k_self: 'Allow a self-signed TLS certificate on this server',
+      k_bio: 'Force fingerprint/face (or the device PIN) when the app opens. The in-app toggle is locked for the user.',
+      s2_h: '2. Android — Intune step by step',
+      a1: '<strong>Add the app.</strong> Intune → <em>Apps</em> → <em>Android</em> → <em>Add</em> → type <em>Managed Google Play</em>. Find <strong>ZbxView</strong> (package id <code>app.zbxview</code>), approve it and sync.',
+      a2: '<strong>Assign it.</strong> Set <em>Assignments</em> to a user or device group. For company phones <em>Required</em> is the sensible choice so it installs itself.',
+      a3: '<strong>Create the configuration.</strong> Intune → <em>Apps</em> → <em>App configuration policies</em> → <em>Add</em> → <em>Managed devices</em>. Platform <em>Android Enterprise</em>, target app ZbxView.',
+      a4: '<strong>Fill in the values.</strong> The <em>Configuration designer</em> lists the keys from the table above as ready-made fields with descriptions — no XML to write. At minimum set <code>server_url</code>.',
+      a5: '<strong>Assign the policy</strong> to the same group. Done — after install the server is already in the user’s list.',
+      note_wp: 'On devices with a <strong>work profile</strong> the app installs into the work side and the configuration applies only there. A personal install on the same phone picks up no configuration — they are two separate instances.',
+      s3_h: '3. iOS',
+      s3_p: 'The same procedure, except the app is added as an <em>App Store app</em> and the policy targets the <em>iOS/iPadOS</em> platform. Values go into the <em>Configuration settings</em> — use the same key names as in the table.',
+      s4_h: '4. Other MDMs',
+      s4_p: 'These are standard <em>managed configuration</em> keys, so they work outside Intune too — VMware Workspace ONE, MobileIron, Miradore, Headwind and others. If your MDM cannot read the schema from Google Play automatically, enter the keys by hand exactly as written in the table (lower case, underscores).',
+      s5_h: '5. Common problems',
+      q1: '<strong>The server was not pre-filled.</strong> The configuration arrives with a device sync. Force a sync in the Company Portal, then close and reopen the app.',
+      q2: '<strong>The app reports a certificate problem.</strong> For an internal server with your own certificate authority switch on <code>allow_self_signed</code> — or better, distribute the root certificate through MDM.',
+      q3: '<strong>Biometrics are not offered.</strong> The device must have a screen lock set. In a work profile the work profile lock is used instead, if one is configured.',
+      q4: '<strong>Installing shows "Parse error".</strong> That affects a hand-installed APK on old devices — the app needs Android 7.0 or newer.',
+      s6_h: '6. What the app does not send',
+      s6_p: 'ZbxView talks only to the Zabbix server you configure. The developer collects none of your data — the <a href="privacy.html">privacy policy</a> spells this out in detail.',
+      s6_link: 'privacy policy',
+      foot_back: '← back to the main page',
+      __title: 'ZbxView — Deploying with MDM (Intune)',
+      __desc: 'How to deploy and pre-configure the ZbxView app with Microsoft Intune or another MDM — app configuration, keys, work profile.'
+    };
+    var htmlEl = document.documentElement;
+    var descEl = document.querySelector('meta[name="description"]');
+    htmlEl.__csTitle = document.title;
+    htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
+
+    function apply(lang) {
+      var dict = lang === 'en' ? EN : null;
+      var nodes = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i], key = el.getAttribute('data-i18n');
+        if (el.__cs == null) el.__cs = el.innerHTML;
+        el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      document.title = (lang === 'en') ? EN.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', (lang === 'en') ? EN.__desc : htmlEl.__csDesc);
+      htmlEl.lang = lang;
+      try { localStorage.setItem('zbxlang', lang); } catch (e) {}
+      var opts = document.querySelectorAll('.lang-opt');
+      for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
+    }
+    var opts = document.querySelectorAll('.lang-opt');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
+    }
+    var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
+    var lang = saved || ((navigator.language || '').slice(0, 2).toLowerCase() === 'cs' ? 'cs' : 'en');
+    apply(lang);
+  })();
+  </script>
+</body>
+</html>

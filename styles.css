@@ -339,3 +339,24 @@ footer .disc { width: 100%; color: #5c6675; font-size: 11px; line-height: 1.5; }
 .back:hover { color: var(--text); }
 .doc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
 .doc-top .back { margin-bottom: 0; }
+
+/* MDM guide: numbered steps, a key table and a callout. */
+.doc ol { padding-left: 22px; margin-bottom: 10px; }
+.doc code { font-family: var(--mono); font-size: 12.5px; color: var(--text);
+  background: var(--card-2); border: 1px solid var(--line); border-radius: 4px;
+  padding: 1px 5px; white-space: nowrap; }
+
+/* The key column must not wrap; on a phone the table scrolls instead. */
+.tbl { width: 100%; border-collapse: collapse; margin: 14px 0 6px;
+  display: block; overflow-x: auto; }
+.tbl th, .tbl td { border: 1px solid var(--line); padding: 8px 10px;
+  text-align: left; vertical-align: top; font-size: 14px; color: var(--muted); }
+.tbl th { background: var(--card); color: var(--text); font-size: 12px;
+  text-transform: uppercase; letter-spacing: .05em; white-space: nowrap; }
+.tbl td:first-child { white-space: nowrap; }
+
+.note { border-left: 3px solid var(--red); background: var(--card);
+  padding: 12px 14px; margin: 16px 0; color: var(--muted); font-size: 14px;
+  border-radius: 0 6px 6px 0; }
+
+.doc-foot { margin-top: 36px; padding-top: 18px; border-top: 1px solid var(--line); }
