@@ -21,10 +21,10 @@
     <h1 data-i18n="title">Nasazení přes MDM (Intune)</h1>
     <div class="updated" data-i18n="updated">Aplikace: ZbxView · Platí pro Microsoft Intune a další MDM podporující app configuration</div>
 
-    <p data-i18n="intro">ZbxView umí přijmout <strong>konfiguraci od správce</strong>. Uživatel pak po instalaci nemusí nic vyplňovat — server je předvyplněný a stačí se přihlásit. Funguje to na Androidu (Managed configuration) i na iOS (Managed app configuration).</p>
+    <p data-i18n="intro">ZbxView umí přijmout <strong>konfiguraci od správce</strong>. Uživatel pak po instalaci nemusí nic vyplňovat — server je předvyplněný. Pokud pošlete i API token, je aplikace rovnou přihlášená a uživatel se nepřihlašuje vůbec. Funguje to na Androidu (Managed configuration) i na iOS (Managed app configuration).</p>
 
     <h2 data-i18n="s1_h">1. Co jde nastavit</h2>
-    <p data-i18n="s1_p">Správce může předvyplnit připojení k serveru a vynutit biometrické odemčení. Nic dalšího se z aplikace vzdáleně neřídí — hesla ani tokeny se přes konfiguraci neposílají, ty zadává uživatel sám a zůstávají v úložišti zařízení.</p>
+    <p data-i18n="s1_p">Správce může předvyplnit připojení k serveru, poslat API token a vynutit biometrické odemčení. Nic dalšího se z aplikace vzdáleně neřídí. Hesla se konfigurací neposílají nikdy — ta zadává uživatel sám a zůstávají v úložišti zařízení.</p>
 
     <table class="tbl">
       <thead>
@@ -51,6 +51,11 @@
           <td data-i18n="k_auth"><code>password</code> (uživatel se přihlásí jménem a heslem) nebo <code>token</code> (API token)</td>
         </tr>
         <tr>
+          <td><code>api_token</code></td>
+          <td data-i18n="t_string4">řetězec</td>
+          <td data-i18n="k_token">Zabbix API token. Aplikace se s ním otevře přihlášená a nikoho se na nic neptá — vhodné pro nástěnky na zdi a sdílená zařízení. Přečtěte si upozornění pod tabulkou.</td>
+        </tr>
+        <tr>
           <td><code>allow_self_signed</code></td>
           <td data-i18n="t_bool">ano/ne</td>
           <td data-i18n="k_self">Povolí self-signed TLS certifikát na tomto serveru</td>
@@ -62,6 +67,8 @@
         </tr>
       </tbody>
     </table>
+
+    <div class="note" data-i18n="note_token"><strong>K tokenu:</strong> managed configuration <strong>není trezor</strong> — hodnotu vidí každý, kdo má přístup do konzole MDM, a z rootnutého zařízení se dá vytáhnout. Vytvořte proto v Zabbixu <strong>vyhrazeného uživatele s právy jen ke čtení</strong>, omezeného na skupiny hostů a nástěnky, které mají tato zařízení vidět, a token vydejte jemu. Všechna zařízení pak sdílejí jednu identitu — tak je uvidíte i v auditním logu Zabbixu. A nechte <code>require_biometric</code> vypnuté, jinak uživatele stejně zastaví zámek.</div>
 
     <h2 data-i18n="s2_h">2. Android — Intune krok za krokem</h2>
     <ol>
@@ -85,6 +92,7 @@
       <li data-i18n="q1"><strong>Server se nepředvyplnil.</strong> Konfigurace dorazí až se synchronizací zařízení. Zkuste v Portál společnosti vynutit synchronizaci a aplikaci zavřít a znovu otevřít.</li>
       <li data-i18n="q2"><strong>Aplikace hlásí problém s certifikátem.</strong> U interního serveru s vlastní certifikační autoritou zapněte <code>allow_self_signed</code>, nebo lépe rozdistribuujte kořenový certifikát přes MDM.</li>
       <li data-i18n="q3"><strong>Biometrika se nenabízí.</strong> Zařízení musí mít nastavený zámek obrazovky. V pracovním profilu se navíc používá zámek pracovního profilu, pokud je zavedený.</li>
+      <li data-i18n="q5"><strong>Změnili jsme token a aplikace ho nevzala.</strong> Konfigurace se čte při startu aplikace. Po rotaci tokenu v MDM je potřeba aplikaci zavřít a znovu otevřít; pak se nový token uloží místo starého.</li>
       <li data-i18n="q4"><strong>Instalace hlásí „Parse error“.</strong> To se týká ručně instalovaného APK na starých zařízeních — aplikace vyžaduje Android 7.0 a novější.</li>
     </ul>
 
@@ -100,19 +108,21 @@
       back: '← back to ZbxView',
       title: 'Deploying with MDM (Intune)',
       updated: 'App: ZbxView · Applies to Microsoft Intune and any MDM supporting app configuration',
-      intro: 'ZbxView accepts <strong>configuration pushed by an administrator</strong>. After install the user fills in nothing — the server is already there and they just sign in. This works on Android (managed configuration) and on iOS (managed app configuration).',
+      intro: 'ZbxView accepts <strong>configuration pushed by an administrator</strong>. After install the user fills in nothing — the server is already there. Push an API token as well and the app opens signed in, so they never see a login at all. This works on Android (managed configuration) and on iOS (managed app configuration).',
       s1_h: '1. What can be set',
-      s1_p: 'An administrator can pre-fill the server connection and enforce biometric unlock. Nothing else is controlled remotely — passwords and tokens are never sent through the configuration; the user enters those and they stay in the device keystore.',
+      s1_p: 'An administrator can pre-fill the server connection, push an API token and enforce biometric unlock. Nothing else is controlled remotely. Passwords are never sent through the configuration — the user enters those and they stay in the device keystore.',
       th_key: 'Key',
       th_type: 'Type',
       th_meaning: 'Meaning',
-      t_string: 'string', t_string2: 'string', t_string3: 'string',
+      t_string: 'string', t_string2: 'string', t_string3: 'string', t_string4: 'string',
       t_bool: 'boolean', t_bool2: 'boolean',
       k_url: 'Zabbix server or relay URL, e.g. <code>https://zabbix.example.com</code>',
       k_name: 'Name the server is shown under in the app',
       k_auth: '<code>password</code> (user signs in with username and password) or <code>token</code> (API token)',
+      k_token: 'Zabbix API token. With it the app opens signed in and asks the user for nothing — the sensible choice for wall displays and shared devices. Read the warning below the table.',
       k_self: 'Allow a self-signed TLS certificate on this server',
       k_bio: 'Force fingerprint/face (or the device PIN) when the app opens. The in-app toggle is locked for the user.',
+      note_token: '<strong>About the token:</strong> managed configuration is <strong>not a secret store</strong> — anyone with access to the MDM console can read the value, and it can be extracted from a rooted device. So create a <strong>dedicated read-only Zabbix user</strong>, limited to the host groups and dashboards those devices may see, and issue the token to it. Every device then shares that one identity, which is also how the Zabbix audit log will show them. Leave <code>require_biometric</code> off, or the lock screen stops the user anyway.',
       s2_h: '2. Android — Intune step by step',
       a1: '<strong>Add the app.</strong> Intune → <em>Apps</em> → <em>Android</em> → <em>Add</em> → type <em>Managed Google Play</em>. Find <strong>ZbxView</strong> (package id <code>app.zbxview</code>), approve it and sync.',
       a2: '<strong>Assign it.</strong> Set <em>Assignments</em> to a user or device group. For company phones <em>Required</em> is the sensible choice so it installs itself.',
@@ -128,6 +138,7 @@
       q1: '<strong>The server was not pre-filled.</strong> The configuration arrives with a device sync. Force a sync in the Company Portal, then close and reopen the app.',
       q2: '<strong>The app reports a certificate problem.</strong> For an internal server with your own certificate authority switch on <code>allow_self_signed</code> — or better, distribute the root certificate through MDM.',
       q3: '<strong>Biometrics are not offered.</strong> The device must have a screen lock set. In a work profile the work profile lock is used instead, if one is configured.',
+      q5: '<strong>We rotated the token and the app ignored it.</strong> The configuration is read when the app starts. After rotating the token in MDM, close the app and open it again; the new token then replaces the old one.',
       q4: '<strong>Installing shows "Parse error".</strong> That affects a hand-installed APK on old devices — the app needs Android 7.0 or newer.',
       s6_h: '6. What the app does not send',
       s6_p: 'ZbxView talks only to the Zabbix server you configure. The developer collects none of your data — the <a href="privacy.html">privacy policy</a> spells this out in detail.',
