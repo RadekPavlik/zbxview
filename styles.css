@@ -346,6 +346,13 @@ footer .disc { width: 100%; color: #5c6675; font-size: 11px; line-height: 1.5; }
   background: var(--card-2); border: 1px solid var(--line); border-radius: 4px;
   padding: 1px 5px; white-space: nowrap; }
 
+/* A command example: keeps its line breaks and scrolls on a phone rather
+   than wrapping a shell command into nonsense. */
+.doc pre { font-family: var(--mono); font-size: 12.5px; color: var(--text);
+  background: var(--card-2); border: 1px solid var(--line); border-radius: 6px;
+  padding: 10px 12px; margin: 10px 0; overflow-x: auto; line-height: 1.55; }
+.doc pre code { background: none; border: 0; padding: 0; white-space: pre; }
+
 /* The key column must not wrap; on a phone the table scrolls instead. */
 .tbl { width: 100%; border-collapse: collapse; margin: 14px 0 6px;
   display: block; overflow-x: auto; }

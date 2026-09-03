@@ -87,7 +87,20 @@
     <h2 data-i18n="s4_h">4. Jiné MDM</h2>
     <p data-i18n="s4_p">Klíče jsou standardní <em>managed configuration</em>, takže fungují i mimo Intune — VMware Workspace ONE, MobileIron, Miradore, Headwind a další. Pokud vaše MDM neumí načíst schéma z Google Play automaticky, zadejte klíče ručně přesně tak, jak jsou napsané v tabulce (malá písmena, podtržítka).</p>
 
-    <h2 data-i18n="s5_h">5. Časté potíže</h2>
+    <h2 data-i18n="s5_h">5. Obrazovky bez MDM (Android signage)</h2>
+    <p data-i18n="s5_p">Profesionální displeje se SoC Androidem — Philips, Samsung, LG — zpravidla nemají Google Play services, a bez nich na nich Android Enterprise neexistuje: žádná politika se k nim nedoručí. Aplikace proto přijímá <strong>tytéž klíče i jako parametry spuštění</strong> (intent extras) — což je způsob, jakým ji signage přehrávač stejně startuje.</p>
+    <pre><code>Intent i = pm.getLaunchIntentForPackage("app.zbxview");
+i.putExtra("server_url", "https://zabbix.example.com");
+i.putExtra("api_token", "&lt;token&gt;");
+i.putExtra("kiosk_dashboard_id", "247");
+startActivity(i);</code></pre>
+    <p data-i18n="s5_p3">Stačí tedy název balíčku, <code>app.zbxview</code> — třídu aktivity znát nemusíte. Pro ruční zkoušku z <code>adb</code> si komponentu vyžádejte systému:</p>
+    <pre><code>adb shell cmd package resolve-activity --brief app.zbxview</code></pre>
+    <p data-i18n="s5_p2">Názvy klíčů jsou stejné jako v tabulce výše. Hodnoty si aplikace <strong>uloží</strong>, takže obrazovka spuštěná později bez parametrů naběhne nakonfigurovaná. Pokud zařízení managed configuration přece jen umí, má přednost.</p>
+
+    <div class="note" data-i18n="note_signage">Dejte každé obrazovce jiné <code>kiosk_dashboard_id</code> a celá stěna se přihlásí sama, každý panel na svůj dashboard. Stačí k tomu tři klíče: <code>server_url</code>, <code>api_token</code> a <code>kiosk_dashboard_id</code>.</div>
+
+    <h2 data-i18n="s6_h">6. Časté potíže</h2>
     <ul>
       <li data-i18n="q1"><strong>Server se nepředvyplnil.</strong> Konfigurace dorazí až se synchronizací zařízení. Zkuste v Portál společnosti vynutit synchronizaci a aplikaci zavřít a znovu otevřít.</li>
       <li data-i18n="q2"><strong>Aplikace hlásí problém s certifikátem.</strong> U interního serveru s vlastní certifikační autoritou zapněte <code>allow_self_signed</code>, nebo lépe rozdistribuujte kořenový certifikát přes MDM.</li>
@@ -96,8 +109,8 @@
       <li data-i18n="q4"><strong>Instalace hlásí „Parse error“.</strong> To se týká ručně instalovaného APK na starých zařízeních — aplikace vyžaduje Android 7.0 a novější.</li>
     </ul>
 
-    <h2 data-i18n="s6_h">6. Co aplikace neposílá</h2>
-    <p data-i18n="s6_p">ZbxView komunikuje výhradně s Zabbix serverem, který zadáte vy. Vývojář nesbírá žádná vaše data — podrobně to popisují <a href="privacy.html" data-i18n="s6_link">zásady ochrany osobních údajů</a>.</p>
+    <h2 data-i18n="s7_h">7. Co aplikace neposílá</h2>
+    <p data-i18n="s7_p">ZbxView komunikuje výhradně s Zabbix serverem, který zadáte vy. Vývojář nesbírá žádná vaše data — podrobně to popisují <a href="privacy.html" data-i18n="s7_link">zásady ochrany osobních údajů</a>.</p>
 
     <p class="doc-foot"><a href="index.html" data-i18n="foot_back">← zpět na hlavní stránku</a></p>
   </div>
@@ -134,15 +147,20 @@
       s3_p: 'The same procedure, except the app is added as an <em>App Store app</em> and the policy targets the <em>iOS/iPadOS</em> platform. Values go into the <em>Configuration settings</em> — use the same key names as in the table.',
       s4_h: '4. Other MDMs',
       s4_p: 'These are standard <em>managed configuration</em> keys, so they work outside Intune too — VMware Workspace ONE, MobileIron, Miradore, Headwind and others. If your MDM cannot read the schema from Google Play automatically, enter the keys by hand exactly as written in the table (lower case, underscores).',
-      s5_h: '5. Common problems',
+      s5_h: '5. Screens without MDM (Android signage)',
+      s5_p: 'Professional SoC Android displays — Philips, Samsung, LG — usually ship without Google Play services, and without those there is no Android Enterprise on them: no policy can reach the device. The app therefore takes <strong>the same keys as launch parameters</strong> (intent extras) — which is how a signage player starts it anyway.',
+      s5_p3: 'All you need is the package name, <code>app.zbxview</code> — you never have to know the activity class. To try it by hand from <code>adb</code>, ask the system for the component:',
+      s5_p2: 'The key names are the ones in the table above. The app <strong>keeps</strong> the values, so a screen started later without parameters still comes up configured. Where the device does support managed configuration, that wins.',
+      note_signage: 'Give every screen a different <code>kiosk_dashboard_id</code> and the whole wall signs itself in, each panel on its own dashboard. Three keys are enough: <code>server_url</code>, <code>api_token</code> and <code>kiosk_dashboard_id</code>.',
+      s6_h: '6. Common problems',
       q1: '<strong>The server was not pre-filled.</strong> The configuration arrives with a device sync. Force a sync in the Company Portal, then close and reopen the app.',
       q2: '<strong>The app reports a certificate problem.</strong> For an internal server with your own certificate authority switch on <code>allow_self_signed</code> — or better, distribute the root certificate through MDM.',
       q3: '<strong>Biometrics are not offered.</strong> The device must have a screen lock set. In a work profile the work profile lock is used instead, if one is configured.',
       q5: '<strong>We rotated the token and the app ignored it.</strong> The configuration is read when the app starts. After rotating the token in MDM, close the app and open it again; the new token then replaces the old one.',
       q4: '<strong>Installing shows "Parse error".</strong> That affects a hand-installed APK on old devices — the app needs Android 7.0 or newer.',
-      s6_h: '6. What the app does not send',
-      s6_p: 'ZbxView talks only to the Zabbix server you configure. The developer collects none of your data — the <a href="privacy.html">privacy policy</a> spells this out in detail.',
-      s6_link: 'privacy policy',
+      s7_h: '7. What the app does not send',
+      s7_p: 'ZbxView talks only to the Zabbix server you configure. The developer collects none of your data — the <a href="privacy.html">privacy policy</a> spells this out in detail.',
+      s7_link: 'privacy policy',
       foot_back: '← back to the main page',
       __title: 'ZbxView — Deploying with MDM (Intune)',
       __desc: 'How to deploy and pre-configure the ZbxView app with Microsoft Intune or another MDM — app configuration, keys, work profile.'
