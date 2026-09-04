@@ -15,6 +15,10 @@
       <div class="lang-switch">
         <button class="lang-opt" data-lang="cs">CZ</button>
         <button class="lang-opt" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="de">DE</button>
+        <button class="lang-opt" data-lang="es">ES</button>
+        <button class="lang-opt" data-lang="fr">FR</button>
+        <button class="lang-opt" data-lang="lv">LV</button>
       </div>
     </div>
 
@@ -165,21 +169,230 @@ startActivity(i);</code></pre>
       __title: 'ZbxView — Deploying with MDM (Intune)',
       __desc: 'How to deploy and pre-configure the ZbxView app with Microsoft Intune or another MDM — app configuration, keys, work profile.'
     };
+    var DE = {
+      back: "← zurück zu ZbxView",
+      title: "Verteilung per MDM (Intune)",
+      updated: "App: ZbxView · Gilt für Microsoft Intune und jedes MDM mit App-Konfiguration",
+      intro: "ZbxView übernimmt <strong>vom Administrator verteilte Konfiguration</strong>. Nach der Installation muss der Nutzer nichts eintragen — der Server ist schon da. Geben Sie zusätzlich ein API-Token mit, öffnet sich die App bereits angemeldet und es erscheint überhaupt kein Login. Das funktioniert unter Android (Managed configuration) und unter iOS (Managed app configuration).",
+      s1_h: "1. Was sich einstellen lässt",
+      s1_p: "Ein Administrator kann die Serververbindung vorbefüllen, ein API-Token mitgeben und die biometrische Entsperrung erzwingen. Mehr wird nicht aus der Ferne gesteuert. Passwörter werden nie über die Konfiguration übertragen — die gibt der Nutzer selbst ein, und sie bleiben im Schlüsselspeicher des Geräts.",
+      th_key: "Schlüssel",
+      th_type: "Typ",
+      th_meaning: "Bedeutung",
+      t_string: "Zeichenkette",
+      t_string2: "Zeichenkette",
+      t_string3: "Zeichenkette",
+      t_string4: "Zeichenkette",
+      t_bool: "ja/nein",
+      t_bool2: "ja/nein",
+      k_url: "Adresse des Zabbix-Servers oder Relays, z. B. <code>https://zabbix.example.com</code>",
+      k_name: "Name, unter dem der Server in der App erscheint",
+      k_auth: "<code>password</code> (Anmeldung mit Benutzername und Passwort) oder <code>token</code> (API-Token)",
+      k_token: "Zabbix-API-Token. Damit öffnet sich die App angemeldet und fragt den Nutzer nach nichts — die sinnvolle Wahl für Wandmonitore und geteilte Geräte. Lesen Sie den Hinweis unter der Tabelle.",
+      k_self: "Selbstsigniertes TLS-Zertifikat auf diesem Server zulassen",
+      k_bio: "Fingerabdruck/Gesicht (oder die Geräte-PIN) beim Öffnen der App erzwingen. Der Schalter in den Einstellungen ist für den Nutzer gesperrt.",
+      note_token: "<strong>Zum Token:</strong> Managed configuration ist <strong>kein Tresor</strong> — jeder mit Zugang zur MDM-Konsole kann den Wert lesen, und von einem gerooteten Gerät lässt er sich auslesen. Legen Sie deshalb einen <strong>eigenen Zabbix-Benutzer mit reinen Leserechten</strong> an, beschränkt auf die Hostgruppen und Dashboards, die diese Geräte sehen dürfen, und stellen Sie das Token für ihn aus. Alle Geräte teilen sich dann diese eine Identität — so erscheinen sie auch im Zabbix-Auditlog. Lassen Sie <code>require_biometric</code> aus, sonst hält der Sperrbildschirm den Nutzer ohnehin auf.",
+      s2_h: "2. Android — Intune Schritt für Schritt",
+      a1: "<strong>App hinzufügen.</strong> Intune → <em>Apps</em> → <em>Android</em> → <em>Hinzufügen</em> → Typ <em>Verwalteter Google Play</em>. Suchen Sie <strong>ZbxView</strong> (Paket-ID <code>app.zbxview</code>), genehmigen Sie sie und synchronisieren Sie.",
+      a2: "<strong>Zuweisen.</strong> Setzen Sie die <em>Zuweisungen</em> auf eine Benutzer- oder Gerätegruppe. Für Firmentelefone ist <em>Erforderlich</em> sinnvoll, damit sich die App selbst installiert.",
+      a3: "<strong>Konfiguration anlegen.</strong> Intune → <em>Apps</em> → <em>App-Konfigurationsrichtlinien</em> → <em>Hinzufügen</em> → <em>Verwaltete Geräte</em>. Plattform <em>Android Enterprise</em>, Ziel-App ZbxView.",
+      a4: "<strong>Werte eintragen.</strong> Der <em>Konfigurations-Designer</em> zeigt die Schlüssel aus der Tabelle oben als fertige Felder mit Beschreibung — kein XML nötig. Mindestens <code>server_url</code> setzen.",
+      a5: "<strong>Richtlinie zuweisen</strong> — derselben Gruppe. Fertig: Nach der Installation steht der Server bereits in der Liste des Nutzers.",
+      note_wp: "Auf Geräten mit <strong>Arbeitsprofil</strong> wird die App in den Arbeitsbereich installiert und die Konfiguration gilt nur dort. Eine private Installation auf demselben Telefon übernimmt keine Konfiguration — das sind zwei getrennte Instanzen.",
+      s3_h: "3. iOS",
+      s3_p: "Dasselbe Vorgehen, nur wird die App als <em>App-Store-App</em> hinzugefügt und die Richtlinie zielt auf die Plattform <em>iOS/iPadOS</em>. Die Werte kommen in die <em>Konfigurationseinstellungen</em> — verwenden Sie dieselben Schlüsselnamen wie in der Tabelle.",
+      s4_h: "4. Andere MDM-Systeme",
+      s4_p: "Das sind standardmäßige <em>managed configuration</em>-Schlüssel, sie funktionieren also auch außerhalb von Intune — VMware Workspace ONE, MobileIron, Miradore, Headwind und andere. Kann Ihr MDM das Schema nicht automatisch aus Google Play lesen, tragen Sie die Schlüssel genau so von Hand ein wie in der Tabelle (Kleinschreibung, Unterstriche).",
+      s5_h: "5. Bildschirme ohne MDM (Android Signage)",
+      s5_p: "Professionelle SoC-Android-Displays — Philips, Samsung, LG — kommen meist ohne Google Play services, und ohne die gibt es dort kein Android Enterprise: keine Richtlinie erreicht das Gerät. Die App nimmt deshalb <strong>dieselben Schlüssel auch als Startparameter</strong> (Intent-Extras) — so startet sie ein Signage-Player ohnehin.",
+      s5_p3: "Sie brauchen nur den Paketnamen, <code>app.zbxview</code> — die Activity-Klasse müssen Sie nie kennen. Für einen Versuch von Hand aus <code>adb</code> fragen Sie das System nach der Komponente:",
+      s5_p2: "Die Schlüsselnamen sind dieselben wie in der Tabelle oben. Die App <strong>behält</strong> die Werte, ein später ohne Parameter gestarteter Bildschirm kommt also konfiguriert hoch. Wo das Gerät managed configuration doch beherrscht, hat diese Vorrang.",
+      note_signage: "Geben Sie jedem Bildschirm eine andere <code>kiosk_dashboard_id</code> und die ganze Wand meldet sich selbst an, jedes Panel auf seinem eigenen Dashboard. Drei Schlüssel genügen: <code>server_url</code>, <code>api_token</code> und <code>kiosk_dashboard_id</code>.",
+      s6_h: "6. Häufige Probleme",
+      q1: "<strong>Der Server wurde nicht vorbefüllt.</strong> Die Konfiguration kommt mit einer Gerätesynchronisierung. Erzwingen Sie eine Synchronisierung im Unternehmensportal und schließen und öffnen Sie die App neu.",
+      q2: "<strong>Die App meldet ein Zertifikatsproblem.</strong> Schalten Sie bei einem internen Server mit eigener Zertifizierungsstelle <code>allow_self_signed</code> ein — besser noch: verteilen Sie das Stammzertifikat über das MDM.",
+      q3: "<strong>Biometrie wird nicht angeboten.</strong> Das Gerät muss eine Bildschirmsperre eingerichtet haben. Im Arbeitsprofil wird stattdessen dessen Sperre verwendet, sofern eingerichtet.",
+      q5: "<strong>Wir haben das Token gewechselt und die App ignoriert es.</strong> Die Konfiguration wird beim Start der App gelesen. Schließen Sie die App nach dem Wechsel im MDM und öffnen Sie sie erneut; dann ersetzt das neue Token das alte.",
+      q4: "<strong>Bei der Installation erscheint „Parse error“.</strong> Das betrifft ein von Hand installiertes APK auf alten Geräten — die App benötigt Android 7.0 oder neuer.",
+      s7_h: "7. Was die App nicht sendet",
+      s7_p: "ZbxView spricht ausschließlich mit dem Zabbix-Server, den Sie einrichten. Der Entwickler sammelt keine Ihrer Daten — die <a href=\"privacy.html\">Datenschutzerklärung</a> führt das im Detail aus.",
+      s7_link: "Datenschutzerklärung",
+      foot_back: "← zurück zur Hauptseite",
+      __title: "ZbxView — Verteilung per MDM (Intune)",
+      __desc: "Wie Sie die ZbxView-App mit Microsoft Intune oder einem anderen MDM verteilen und vorkonfigurieren — App-Konfiguration, Schlüssel, Arbeitsprofil.",
+    };
+    var ES = {
+      back: "← volver a ZbxView",
+      title: "Despliegue con MDM (Intune)",
+      updated: "App: ZbxView · Válido para Microsoft Intune y cualquier MDM con configuración de aplicaciones",
+      intro: "ZbxView acepta <strong>configuración enviada por el administrador</strong>. Tras la instalación el usuario no rellena nada: el servidor ya está ahí. Envía además un token de API y la aplicación se abre con la sesión iniciada, de modo que nunca ve una pantalla de acceso. Funciona en Android (managed configuration) y en iOS (managed app configuration).",
+      s1_h: "1. Qué se puede configurar",
+      s1_p: "El administrador puede rellenar la conexión al servidor, enviar un token de API y forzar el desbloqueo biométrico. Nada más se controla en remoto. Las contraseñas nunca viajan en la configuración: las introduce el usuario y se quedan en el almacén seguro del dispositivo.",
+      th_key: "Clave",
+      th_type: "Tipo",
+      th_meaning: "Significado",
+      t_string: "cadena",
+      t_string2: "cadena",
+      t_string3: "cadena",
+      t_string4: "cadena",
+      t_bool: "sí/no",
+      t_bool2: "sí/no",
+      k_url: "Dirección del servidor Zabbix o del relay, p. ej. <code>https://zabbix.example.com</code>",
+      k_name: "Nombre con el que aparece el servidor en la aplicación",
+      k_auth: "<code>password</code> (el usuario entra con usuario y contraseña) o <code>token</code> (token de API)",
+      k_token: "Token de API de Zabbix. Con él la aplicación se abre con la sesión iniciada y no pregunta nada al usuario: la opción sensata para pantallas de pared y dispositivos compartidos. Lee el aviso bajo la tabla.",
+      k_self: "Permitir un certificado TLS autofirmado en este servidor",
+      k_bio: "Exigir huella/rostro (o el PIN del dispositivo) al abrir la aplicación. El interruptor en los ajustes queda bloqueado para el usuario.",
+      note_token: "<strong>Sobre el token:</strong> la managed configuration <strong>no es una caja fuerte</strong>: cualquiera con acceso a la consola del MDM puede leer el valor, y se puede extraer de un dispositivo rooteado. Crea por eso un <strong>usuario de Zabbix dedicado y de solo lectura</strong>, limitado a los grupos de hosts y paneles que esos dispositivos deban ver, y emítele el token. Todos los dispositivos compartirán entonces esa única identidad, que es también como aparecerán en el registro de auditoría de Zabbix. Deja <code>require_biometric</code> desactivado, o la pantalla de bloqueo detendrá al usuario igualmente.",
+      s2_h: "2. Android — Intune paso a paso",
+      a1: "<strong>Añade la aplicación.</strong> Intune → <em>Aplicaciones</em> → <em>Android</em> → <em>Agregar</em> → tipo <em>Google Play administrado</em>. Busca <strong>ZbxView</strong> (id de paquete <code>app.zbxview</code>), apruébala y sincroniza.",
+      a2: "<strong>Asígnala.</strong> Configura las <em>Asignaciones</em> a un grupo de usuarios o dispositivos. Para móviles de empresa, <em>Requerida</em> es lo razonable para que se instale sola.",
+      a3: "<strong>Crea la configuración.</strong> Intune → <em>Aplicaciones</em> → <em>Directivas de configuración de aplicaciones</em> → <em>Agregar</em> → <em>Dispositivos administrados</em>. Plataforma <em>Android Enterprise</em>, aplicación de destino ZbxView.",
+      a4: "<strong>Rellena los valores.</strong> El <em>Diseñador de configuración</em> muestra las claves de la tabla anterior como campos listos con su descripción: no hay que escribir XML. Como mínimo, define <code>server_url</code>.",
+      a5: "<strong>Asigna la directiva</strong> al mismo grupo. Listo: tras la instalación el servidor ya está en la lista del usuario.",
+      note_wp: "En dispositivos con <strong>perfil de trabajo</strong> la aplicación se instala en la parte de trabajo y la configuración solo se aplica allí. Una instalación personal en el mismo móvil no recoge ninguna configuración: son dos instancias separadas.",
+      s3_h: "3. iOS",
+      s3_p: "El mismo procedimiento, salvo que la aplicación se añade como <em>aplicación de la App Store</em> y la directiva apunta a la plataforma <em>iOS/iPadOS</em>. Los valores van en los <em>Ajustes de configuración</em>: usa los mismos nombres de clave que en la tabla.",
+      s4_h: "4. Otros MDM",
+      s4_p: "Son claves estándar de <em>managed configuration</em>, así que funcionan también fuera de Intune: VMware Workspace ONE, MobileIron, Miradore, Headwind y otros. Si tu MDM no puede leer el esquema automáticamente desde Google Play, introduce las claves a mano exactamente como están en la tabla (minúsculas, guiones bajos).",
+      s5_h: "5. Pantallas sin MDM (señalización Android)",
+      s5_p: "Las pantallas profesionales Android con SoC — Philips, Samsung, LG — suelen venir sin Google Play services, y sin ellos no existe Android Enterprise en el dispositivo: ninguna directiva puede llegar. Por eso la aplicación acepta <strong>las mismas claves como parámetros de arranque</strong> (intent extras), que es como la lanza de todos modos un reproductor de señalización.",
+      s5_p3: "Solo necesitas el nombre del paquete, <code>app.zbxview</code>: nunca tienes que conocer la clase de la actividad. Para probarlo a mano desde <code>adb</code>, pide el componente al sistema:",
+      s5_p2: "Los nombres de las claves son los de la tabla anterior. La aplicación <strong>conserva</strong> los valores, así que una pantalla arrancada más tarde sin parámetros sigue apareciendo configurada. Donde el dispositivo sí admita managed configuration, esta tiene prioridad.",
+      note_signage: "Da a cada pantalla un <code>kiosk_dashboard_id</code> distinto y todo el muro inicia sesión solo, cada panel en su propio dashboard. Bastan tres claves: <code>server_url</code>, <code>api_token</code> y <code>kiosk_dashboard_id</code>.",
+      s6_h: "6. Problemas frecuentes",
+      q1: "<strong>El servidor no se ha rellenado.</strong> La configuración llega con una sincronización del dispositivo. Fuerza una sincronización en el Portal de empresa y luego cierra y vuelve a abrir la aplicación.",
+      q2: "<strong>La aplicación avisa de un problema de certificado.</strong> Para un servidor interno con tu propia autoridad de certificación activa <code>allow_self_signed</code>, o mejor, distribuye el certificado raíz mediante el MDM.",
+      q3: "<strong>No se ofrece la biometría.</strong> El dispositivo debe tener un bloqueo de pantalla configurado. En un perfil de trabajo se usa el bloqueo de ese perfil, si lo hay.",
+      q5: "<strong>Hemos rotado el token y la aplicación lo ignora.</strong> La configuración se lee al arrancar la aplicación. Tras rotar el token en el MDM, cierra la aplicación y ábrela de nuevo; entonces el token nuevo sustituye al antiguo.",
+      q4: "<strong>La instalación muestra «Parse error».</strong> Afecta a un APK instalado a mano en dispositivos antiguos: la aplicación necesita Android 7.0 o posterior.",
+      s7_h: "7. Qué no envía la aplicación",
+      s7_p: "ZbxView habla únicamente con el servidor Zabbix que tú configures. El desarrollador no recopila ningún dato tuyo: la <a href=\"privacy.html\">política de privacidad</a> lo detalla.",
+      s7_link: "política de privacidad",
+      foot_back: "← volver a la página principal",
+      __title: "ZbxView — Despliegue con MDM (Intune)",
+      __desc: "Cómo desplegar y preconfigurar la app ZbxView con Microsoft Intune u otro MDM: configuración de la aplicación, claves y perfil de trabajo.",
+    };
+    var FR = {
+      back: "← retour à ZbxView",
+      title: "Déploiement par MDM (Intune)",
+      updated: "App : ZbxView · Vaut pour Microsoft Intune et tout MDM gérant la configuration d’application",
+      intro: "ZbxView accepte une <strong>configuration poussée par l’administrateur</strong>. Après l’installation, l’utilisateur ne saisit rien — le serveur est déjà là. Ajoutez un jeton API et l’application s’ouvre déjà connectée : aucun écran de connexion n’apparaît. Cela fonctionne sous Android (managed configuration) et sous iOS (managed app configuration).",
+      s1_h: "1. Ce qui peut être configuré",
+      s1_p: "L’administrateur peut pré-remplir la connexion au serveur, transmettre un jeton API et imposer le déverrouillage biométrique. Rien d’autre n’est piloté à distance. Les mots de passe ne transitent jamais par la configuration — l’utilisateur les saisit lui-même et ils restent dans le coffre-fort de l’appareil.",
+      th_key: "Clé",
+      th_type: "Type",
+      th_meaning: "Signification",
+      t_string: "chaîne",
+      t_string2: "chaîne",
+      t_string3: "chaîne",
+      t_string4: "chaîne",
+      t_bool: "oui/non",
+      t_bool2: "oui/non",
+      k_url: "Adresse du serveur Zabbix ou du relais, p. ex. <code>https://zabbix.example.com</code>",
+      k_name: "Nom sous lequel le serveur apparaît dans l’application",
+      k_auth: "<code>password</code> (connexion par identifiant et mot de passe) ou <code>token</code> (jeton API)",
+      k_token: "Jeton API Zabbix. Avec lui, l’application s’ouvre connectée et ne demande rien à l’utilisateur — le choix logique pour les écrans muraux et les appareils partagés. Lisez l’avertissement sous le tableau.",
+      k_self: "Autoriser un certificat TLS auto-signé sur ce serveur",
+      k_bio: "Imposer l’empreinte/le visage (ou le code PIN de l’appareil) à l’ouverture. Le réglage dans l’application est verrouillé pour l’utilisateur.",
+      note_token: "<strong>À propos du jeton :</strong> la managed configuration <strong>n’est pas un coffre-fort</strong> — toute personne ayant accès à la console MDM peut lire la valeur, et elle peut être extraite d’un appareil rooté. Créez donc un <strong>utilisateur Zabbix dédié en lecture seule</strong>, limité aux groupes d’hôtes et aux tableaux de bord que ces appareils doivent voir, et émettez le jeton pour lui. Tous les appareils partagent alors cette identité unique — c’est aussi ainsi qu’ils apparaîtront dans le journal d’audit de Zabbix. Laissez <code>require_biometric</code> désactivé, sinon l’écran de verrouillage arrêtera l’utilisateur de toute façon.",
+      s2_h: "2. Android — Intune pas à pas",
+      a1: "<strong>Ajoutez l’application.</strong> Intune → <em>Applications</em> → <em>Android</em> → <em>Ajouter</em> → type <em>Google Play géré</em>. Cherchez <strong>ZbxView</strong> (id de package <code>app.zbxview</code>), approuvez-la et synchronisez.",
+      a2: "<strong>Affectez-la.</strong> Réglez les <em>Affectations</em> sur un groupe d’utilisateurs ou d’appareils. Pour des téléphones d’entreprise, <em>Requis</em> est le choix logique afin qu’elle s’installe seule.",
+      a3: "<strong>Créez la configuration.</strong> Intune → <em>Applications</em> → <em>Stratégies de configuration d’application</em> → <em>Ajouter</em> → <em>Appareils gérés</em>. Plateforme <em>Android Enterprise</em>, application cible ZbxView.",
+      a4: "<strong>Renseignez les valeurs.</strong> Le <em>concepteur de configuration</em> présente les clés du tableau ci-dessus sous forme de champs prêts à l’emploi, avec leur description — aucun XML à écrire. Définissez au minimum <code>server_url</code>.",
+      a5: "<strong>Affectez la stratégie</strong> au même groupe. C’est terminé : après l’installation, le serveur figure déjà dans la liste de l’utilisateur.",
+      note_wp: "Sur les appareils avec <strong>profil professionnel</strong>, l’application s’installe du côté professionnel et la configuration ne s’applique que là. Une installation personnelle sur le même téléphone ne reçoit aucune configuration — ce sont deux instances distinctes.",
+      s3_h: "3. iOS",
+      s3_p: "Même procédure, sauf que l’application est ajoutée comme <em>application de l’App Store</em> et que la stratégie vise la plateforme <em>iOS/iPadOS</em>. Les valeurs vont dans les <em>Paramètres de configuration</em> — utilisez les mêmes noms de clés que dans le tableau.",
+      s4_h: "4. Autres MDM",
+      s4_p: "Ce sont des clés <em>managed configuration</em> standard : elles fonctionnent donc aussi hors d’Intune — VMware Workspace ONE, MobileIron, Miradore, Headwind et d’autres. Si votre MDM ne sait pas lire le schéma automatiquement depuis Google Play, saisissez les clés à la main exactement comme dans le tableau (minuscules, traits de soulignement).",
+      s5_h: "5. Écrans sans MDM (affichage dynamique Android)",
+      s5_p: "Les écrans professionnels Android à SoC — Philips, Samsung, LG — sont généralement livrés sans les Google Play services, et sans eux Android Enterprise n’existe pas sur l’appareil : aucune stratégie ne peut l’atteindre. L’application accepte donc <strong>les mêmes clés comme paramètres de lancement</strong> (intent extras) — ce qui est de toute façon la manière dont un lecteur d’affichage la démarre.",
+      s5_p3: "Il vous suffit du nom du package, <code>app.zbxview</code> — vous n’avez jamais besoin de connaître la classe de l’activité. Pour un essai manuel depuis <code>adb</code>, demandez le composant au système :",
+      s5_p2: "Les noms de clés sont ceux du tableau ci-dessus. L’application <strong>conserve</strong> les valeurs : un écran redémarré plus tard sans paramètres remonte donc configuré. Là où l’appareil gère malgré tout la managed configuration, celle-ci l’emporte.",
+      note_signage: "Donnez à chaque écran un <code>kiosk_dashboard_id</code> différent et tout le mur se connecte seul, chaque dalle sur son propre tableau de bord. Trois clés suffisent : <code>server_url</code>, <code>api_token</code> et <code>kiosk_dashboard_id</code>.",
+      s6_h: "6. Problèmes fréquents",
+      q1: "<strong>Le serveur n’a pas été pré-rempli.</strong> La configuration arrive avec une synchronisation de l’appareil. Forcez une synchronisation dans le Portail d’entreprise, puis fermez et rouvrez l’application.",
+      q2: "<strong>L’application signale un problème de certificat.</strong> Pour un serveur interne doté de votre propre autorité de certification, activez <code>allow_self_signed</code> — ou mieux, distribuez le certificat racine via le MDM.",
+      q3: "<strong>La biométrie n’est pas proposée.</strong> L’appareil doit avoir un verrouillage d’écran configuré. Dans un profil professionnel, c’est le verrouillage de ce profil qui est utilisé, s’il existe.",
+      q5: "<strong>Nous avons changé le jeton et l’application l’ignore.</strong> La configuration est lue au démarrage de l’application. Après la rotation du jeton dans le MDM, fermez l’application et rouvrez-la ; le nouveau jeton remplace alors l’ancien.",
+      q4: "<strong>L’installation affiche « Parse error ».</strong> Cela concerne un APK installé à la main sur d’anciens appareils — l’application exige Android 7.0 ou plus récent.",
+      s7_h: "7. Ce que l’application n’envoie pas",
+      s7_p: "ZbxView ne dialogue qu’avec le serveur Zabbix que vous configurez. Le développeur ne collecte aucune de vos données — la <a href=\"privacy.html\">politique de confidentialité</a> le détaille.",
+      s7_link: "politique de confidentialité",
+      foot_back: "← retour à la page principale",
+      __title: "ZbxView — Déploiement par MDM (Intune)",
+      __desc: "Comment déployer et préconfigurer l’application ZbxView avec Microsoft Intune ou un autre MDM — configuration d’application, clés, profil professionnel.",
+    };
+    var LV = {
+      back: "← atpakaļ uz ZbxView",
+      title: "Izvietošana ar MDM (Intune)",
+      updated: "Lietotne: ZbxView · Attiecas uz Microsoft Intune un jebkuru MDM ar lietotņu konfigurāciju",
+      intro: "ZbxView pieņem <strong>administratora nosūtītu konfigurāciju</strong>. Pēc uzstādīšanas lietotājam nekas nav jāievada — serveris jau ir klāt. Nosūtiet līdzi arī API pilnvaru, un lietotne atveras jau pieteikusies, tāpēc pieteikšanās ekrāns vispār neparādās. Tas darbojas Android (managed configuration) un iOS (managed app configuration) ierīcēs.",
+      s1_h: "1. Ko var iestatīt",
+      s1_p: "Administrators var iepriekš aizpildīt savienojumu ar serveri, nosūtīt API pilnvaru un pieprasīt biometrisko atbloķēšanu. Nekas cits attālināti netiek vadīts. Paroles caur konfigurāciju netiek sūtītas nekad — tās ievada pats lietotājs, un tās paliek ierīces drošajā krātuvē.",
+      th_key: "Atslēga",
+      th_type: "Tips",
+      th_meaning: "Nozīme",
+      t_string: "virkne",
+      t_string2: "virkne",
+      t_string3: "virkne",
+      t_string4: "virkne",
+      t_bool: "jā/nē",
+      t_bool2: "jā/nē",
+      k_url: "Zabbix servera vai releja adrese, piem. <code>https://zabbix.example.com</code>",
+      k_name: "Nosaukums, ar kādu serveris redzams lietotnē",
+      k_auth: "<code>password</code> (lietotājs piesakās ar lietotājvārdu un paroli) vai <code>token</code> (API pilnvara)",
+      k_token: "Zabbix API pilnvara. Ar to lietotne atveras jau pieteikusies un lietotājam neko nejautā — saprātīga izvēle sienas ekrāniem un koplietotām ierīcēm. Izlasiet brīdinājumu zem tabulas.",
+      k_self: "Atļaut pašparakstītu TLS sertifikātu šajā serverī",
+      k_bio: "Pieprasīt pirksta nospiedumu/seju (vai ierīces PIN) lietotnes atvēršanā. Slēdzis iestatījumos lietotājam ir bloķēts.",
+      note_token: "<strong>Par pilnvaru:</strong> managed configuration <strong>nav seifs</strong> — ikviens, kam ir pieeja MDM konsolei, var vērtību izlasīt, un no root ierīces to var iegūt. Tāpēc izveidojiet <strong>atsevišķu Zabbix lietotāju tikai ar lasīšanas tiesībām</strong>, ierobežotu ar tām resursdatoru grupām un paneļiem, ko šīs ierīces drīkst redzēt, un izsniedziet pilnvaru viņam. Visas ierīces tad izmanto vienu identitāti — tieši tā tās parādīsies arī Zabbix audita žurnālā. Atstājiet <code>require_biometric</code> izslēgtu, citādi bloķēšanas ekrāns lietotāju tāpat apturēs.",
+      s2_h: "2. Android — Intune soli pa solim",
+      a1: "<strong>Pievienojiet lietotni.</strong> Intune → <em>Lietotnes</em> → <em>Android</em> → <em>Pievienot</em> → tips <em>Pārvaldītais Google Play</em>. Atrodiet <strong>ZbxView</strong> (pakotnes id <code>app.zbxview</code>), apstipriniet to un sinhronizējiet.",
+      a2: "<strong>Piešķiriet to.</strong> Iestatiet <em>Piešķīrumus</em> lietotāju vai ierīču grupai. Uzņēmuma telefoniem <em>Obligāta</em> ir saprātīga izvēle, lai tā uzstādās pati.",
+      a3: "<strong>Izveidojiet konfigurāciju.</strong> Intune → <em>Lietotnes</em> → <em>Lietotņu konfigurācijas politikas</em> → <em>Pievienot</em> → <em>Pārvaldītās ierīces</em>. Platforma <em>Android Enterprise</em>, mērķa lietotne ZbxView.",
+      a4: "<strong>Aizpildiet vērtības.</strong> <em>Konfigurācijas noformētājs</em> rāda augšējās tabulas atslēgas kā gatavus laukus ar aprakstiem — XML rakstīt nevajag. Iestatiet vismaz <code>server_url</code>.",
+      a5: "<strong>Piešķiriet politiku</strong> tai pašai grupai. Gatavs — pēc uzstādīšanas serveris jau ir lietotāja sarakstā.",
+      note_wp: "Ierīcēs ar <strong>darba profilu</strong> lietotne tiek uzstādīta darba pusē un konfigurācija attiecas tikai uz to. Privāta uzstādīšana tajā pašā telefonā konfigurāciju nesaņem — tie ir divi atsevišķi eksemplāri.",
+      s3_h: "3. iOS",
+      s3_p: "Tā pati kārtība, tikai lietotne tiek pievienota kā <em>App Store lietotne</em> un politika attiecas uz platformu <em>iOS/iPadOS</em>. Vērtības ievada <em>Konfigurācijas iestatījumos</em> — izmantojiet tos pašus atslēgu nosaukumus kā tabulā.",
+      s4_h: "4. Citas MDM sistēmas",
+      s4_p: "Šīs ir standarta <em>managed configuration</em> atslēgas, tāpēc tās darbojas arī ārpus Intune — VMware Workspace ONE, MobileIron, Miradore, Headwind un citās. Ja jūsu MDM nevar shēmu no Google Play nolasīt automātiski, ievadiet atslēgas manuāli tieši tā, kā rakstīts tabulā (mazie burti, apakšsvītras).",
+      s5_h: "5. Ekrāni bez MDM (Android digitālā signalizācija)",
+      s5_p: "Profesionālie Android SoC ekrāni — Philips, Samsung, LG — parasti nāk bez Google Play services, un bez tiem uz tiem nav Android Enterprise: neviena politika ierīci nesasniedz. Tāpēc lietotne pieņem <strong>tās pašas atslēgas arī kā palaišanas parametrus</strong> (intent extras) — tieši tā to jebkurā gadījumā palaiž signalizācijas atskaņotājs.",
+      s5_p3: "Nepieciešams tikai pakotnes nosaukums, <code>app.zbxview</code> — aktivitātes klase jums nav jāzina. Lai to pamēģinātu manuāli no <code>adb</code>, palūdziet sistēmai komponenti:",
+      s5_p2: "Atslēgu nosaukumi ir tie paši, kas augšējā tabulā. Lietotne vērtības <strong>saglabā</strong>, tāpēc vēlāk bez parametriem palaists ekrāns joprojām startē konfigurēts. Ja ierīce tomēr atbalsta managed configuration, priekšroka ir tai.",
+      note_signage: "Piešķiriet katram ekrānam citu <code>kiosk_dashboard_id</code>, un visa siena piesakās pati, katrs panelis savā panelī. Pietiek ar trim atslēgām: <code>server_url</code>, <code>api_token</code> un <code>kiosk_dashboard_id</code>.",
+      s6_h: "6. Biežākās problēmas",
+      q1: "<strong>Serveris netika iepriekš aizpildīts.</strong> Konfigurācija pienāk ar ierīces sinhronizāciju. Uzņēmuma portālā piespiediet sinhronizāciju, pēc tam aizveriet un atveriet lietotni no jauna.",
+      q2: "<strong>Lietotne ziņo par sertifikāta problēmu.</strong> Iekšējam serverim ar savu sertifikācijas iestādi ieslēdziet <code>allow_self_signed</code> — vai vēl labāk, izplatiet saknes sertifikātu caur MDM.",
+      q3: "<strong>Biometrija netiek piedāvāta.</strong> Ierīcē jābūt iestatītai ekrāna bloķēšanai. Darba profilā tā vietā tiek izmantota profila bloķēšana, ja tāda ir.",
+      q5: "<strong>Nomainījām pilnvaru, un lietotne to ignorē.</strong> Konfigurācija tiek nolasīta lietotnes startā. Pēc pilnvaras nomaiņas MDM aizveriet lietotni un atveriet to vēlreiz; tad jaunā pilnvara aizstāj veco.",
+      q4: "<strong>Uzstādīšanā parādās “Parse error”.</strong> Tas attiecas uz manuāli uzstādītu APK vecās ierīcēs — lietotnei nepieciešams Android 7.0 vai jaunāks.",
+      s7_h: "7. Ko lietotne nesūta",
+      s7_p: "ZbxView sazinās tikai ar to Zabbix serveri, ko norādāt jūs. Izstrādātājs nevāc nekādus jūsu datus — to sīki apraksta <a href=\"privacy.html\">privātuma politika</a>.",
+      s7_link: "privātuma politika",
+      foot_back: "← atpakaļ uz galveno lapu",
+      __title: "ZbxView — Izvietošana ar MDM (Intune)",
+      __desc: "Kā izvietot un iepriekš konfigurēt ZbxView lietotni ar Microsoft Intune vai citu MDM — lietotnes konfigurācija, atslēgas, darba profils.",
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
     var htmlEl = document.documentElement;
     var descEl = document.querySelector('meta[name="description"]');
     htmlEl.__csTitle = document.title;
     htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
 
     function apply(lang) {
-      var dict = lang === 'en' ? EN : null;
+      var dict = DICTS[lang] || null; // cs is the markup itself
       var nodes = document.querySelectorAll('[data-i18n]');
       for (var i = 0; i < nodes.length; i++) {
         var el = nodes[i], key = el.getAttribute('data-i18n');
         if (el.__cs == null) el.__cs = el.innerHTML;
         el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
       }
-      document.title = (lang === 'en') ? EN.__title : htmlEl.__csTitle;
-      if (descEl) descEl.setAttribute('content', (lang === 'en') ? EN.__desc : htmlEl.__csDesc);
+      document.title = dict ? dict.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
       htmlEl.lang = lang;
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
       var opts = document.querySelectorAll('.lang-opt');
@@ -190,7 +403,9 @@ startActivity(i);</code></pre>
       opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
     }
     var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
-    var lang = saved || ((navigator.language || '').slice(0, 2).toLowerCase() === 'cs' ? 'cs' : 'en');
+    var nav = (navigator.language || '').slice(0, 2).toLowerCase();
+    var lang = saved
+      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
     apply(lang);
   })();
   </script>
