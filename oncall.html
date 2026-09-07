@@ -1,0 +1,273 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZbxView — Pohotovosti (On call)</title>
+  <meta name="description" content="Jak v Zabbixu připravit data pro obrazovku Pohotovosti v aplikaci ZbxView — název položky, klíč, formát JSON a příklad." />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="doc">
+    <div class="doc-top">
+      <a class="back" href="index.html" data-i18n="back">← zpět na ZbxView</a>
+      <div class="lang-switch">
+        <button class="lang-opt" data-lang="cs">CZ</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="de">DE</button>
+        <button class="lang-opt" data-lang="es">ES</button>
+        <button class="lang-opt" data-lang="fr">FR</button>
+        <button class="lang-opt" data-lang="lv">LV</button>
+      </div>
+    </div>
+
+    <h1 data-i18n="title">Pohotovosti (On call)</h1>
+    <div class="updated" data-i18n="updated">Aplikace: ZbxView · Obrazovka Pohotovosti v hlavním menu</div>
+
+    <p data-i18n="intro">Aplikace umí zobrazit <strong>rozpis pohotovostí</strong> — kdo právě drží službu, do kdy, a tlačítka pro zavolání a e-mail. Data si nebere odnikud zvenčí: čte je z <strong>obyčejné položky ve vašem Zabbixu</strong>, takže si je naplníte, jak vám vyhovuje.</p>
+
+    <h2 data-i18n="s1_h">1. Co aplikace hledá</h2>
+    <p data-i18n="s1_p">Stačí jedna položka. Aplikace vezme první, která odpovídá kterékoli z těchto podmínek:</p>
+    <ul>
+      <li data-i18n="s1_li1">položka <strong>pojmenovaná</strong> <code>ZbxView on-call</code> (název stačí, aby ten text obsahoval), nebo</li>
+      <li data-i18n="s1_li2">položka s <strong>klíčem</strong> <code>zbxview.oncall</code>.</li>
+    </ul>
+    <p data-i18n="s1_p2">Položka musí být <strong>monitorovaná</strong> a její poslední hodnota musí být <strong>pole JSON</strong>. Typ zvolte textový (Text nebo Character). Pokud odpovídá víc položek, použije se ta s nejnovější hodnotou.</p>
+
+    <h2 data-i18n="s2_h">2. Formát dat</h2>
+    <p data-i18n="s2_p">Hodnotou položky je pole objektů. Jeden objekt = jedna směna:</p>
+
+    <table class="tbl">
+      <thead>
+        <tr>
+          <th data-i18n="th_field">Pole</th>
+          <th data-i18n="th_meaning">Význam</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td><code>Kategorie</code></td><td data-i18n="k_kat">Skupina, pod kterou se směna zařadí — nadpis sekce v aplikaci. <code>Cluster4002_4003</code> se vypíše jako „Cluster 4002, 4003“, <code>MicrosoftInfrastruktura</code> jako „Microsoft Infrastruktura“.</td></tr>
+        <tr><td><code>ADuser</code></td><td data-i18n="k_ad">E-mail, který je zároveň zdrojem jména. Z <code>P.Eliasek@firma.cz</code> aplikace zobrazí „P. Eliasek“ a e-mailové tlačítko.</td></tr>
+        <tr><td><code>Mobil</code></td><td data-i18n="k_mobil">Telefon. Mezery a závorky nevadí, pro vytáčení se odstraní.</td></tr>
+        <tr><td><code>StartTime</code></td><td data-i18n="k_start">Začátek směny, ISO 8601 (<code>2026-09-07T08:00:00</code>).</td></tr>
+        <tr><td><code>EndTime</code></td><td data-i18n="k_end">Konec směny, stejný formát. Aktuální je směna, do jejíhož rozmezí spadá právě teď.</td></tr>
+        <tr><td><code>HM</code></td><td data-i18n="k_hm">Volitelné. Čísla poboček nebo lokalit oddělená mezerou, čárkou či středníkem; zobrazí se u kontaktu. Nechte prázdné, pokud směna platí všude.</td></tr>
+      </tbody>
+    </table>
+
+    <h2 data-i18n="s3_h">3. Příklad</h2>
+    <pre><code>[
+  {
+    "Kategorie": "Cluster4002_4003",
+    "ADuser": "P.Eliasek@firma.cz",
+    "Mobil": "+420 777 123 456",
+    "StartTime": "2026-09-07T08:00:00",
+    "EndTime": "2026-09-14T08:00:00",
+    "HM": "4002 4003"
+  },
+  {
+    "Kategorie": "Databaze",
+    "ADuser": "J.Novak@firma.cz",
+    "Mobil": "+420 777 987 654",
+    "StartTime": "2026-09-07T08:00:00",
+    "EndTime": "2026-09-14T08:00:00",
+    "HM": ""
+  }
+]</code></pre>
+
+    <h2 data-i18n="s4_h">4. Čím položku naplnit</h2>
+    <p data-i18n="s4_p">Na tom aplikaci nezáleží, jde jí jen o výslednou hodnotu. Obvyklé cesty: <strong>HTTP agent</strong> na endpoint, který to JSON vrací; <strong>skript</strong> (externí nebo Zabbix agent), který si data vytáhne z rozpisu služeb; nebo soubor přes <code>vfs.file.contents</code> a předzpracování, které CSV převede na JSON.</p>
+
+    <h2 data-i18n="s5_h">5. Jak to vypadá v aplikaci</h2>
+    <p data-i18n="s5_p">Směny se seskupí podle <code>Kategorie</code> a v každé sekci je nahoře ta, která právě běží. U kontaktu je jméno, telefon a e-mail — obojí jako tlačítko, takže se z aplikace rovnou zavolá nebo napíše. Nahoře je vidět, jak stará je poslední hodnota položky.</p>
+
+    <div class="note" data-i18n="note_privacy"><strong>Pozor na obsah:</strong> do té položky dáváte jména, telefonní čísla a e-maily svých lidí, a ta hodnota je čitelná pro každého, kdo má v Zabbixu právo tu položku vidět. Omez proto přístup na skupinu hostů, kam patří, a nedávej tam víc, než je pro zavolání potřeba.</div>
+
+    <p class="doc-foot"><a href="index.html" data-i18n="foot_back">← zpět na hlavní stránku</a></p>
+  </div>
+  <script>
+  (function () {
+    var EN = {
+      back: "← back to ZbxView",
+      title: "On call",
+      updated: "App: ZbxView · The On call screen in the main menu",
+      intro: "The app can show an <strong>on-call rota</strong> — who is on duty right now, until when, and buttons to call or e-mail them. It fetches nothing from outside: it reads <strong>an ordinary item on your own Zabbix</strong>, so you fill it however suits you.",
+      s1_h: "1. What the app looks for",
+      s1_p: "One item is enough. The app takes the first that matches either of these:",
+      s1_li1: "an item <strong>named</strong> <code>ZbxView on-call</code> (containing that text is enough), or",
+      s1_li2: "an item with the <strong>key</strong> <code>zbxview.oncall</code>.",
+      s1_p2: "The item must be <strong>monitored</strong> and its last value must be a <strong>JSON array</strong>. Give it a text type (Text or Character). If several items match, the one with the newest value is used.",
+      s2_h: "2. Data format",
+      s2_p: "The item value is an array of objects. One object is one shift:",
+      th_field: "Field",
+      th_meaning: "Meaning",
+      k_kat: "The group the shift belongs to — the section heading in the app. <code>Cluster4002_4003</code> reads as “Cluster 4002, 4003”, <code>MicrosoftInfrastructure</code> as “Microsoft Infrastructure”.",
+      k_ad: "E-mail address, which is also where the name comes from. From <code>P.Eliasek@company.com</code> the app shows “P. Eliasek” and an e-mail button.",
+      k_mobil: "Phone number. Spaces and brackets are fine — they are stripped for dialling.",
+      k_start: "Start of the shift, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      k_end: "End of the shift, same format. The current shift is the one whose range contains right now.",
+      k_hm: "Optional. Site or branch numbers separated by a space, comma or semicolon; shown next to the contact. Leave empty when the shift covers everything.",
+      s3_h: "3. Example",
+      s4_h: "4. How to fill the item",
+      s4_p: "The app does not care — only the resulting value matters. The usual routes: an <strong>HTTP agent</strong> pointed at an endpoint that returns the JSON; a <strong>script</strong> (external or Zabbix agent) that pulls the rota from wherever it lives; or a file via <code>vfs.file.contents</code> with a preprocessing step that turns CSV into JSON.",
+      s5_h: "5. How it looks in the app",
+      s5_p: "Shifts are grouped by <code>Kategorie</code>, and the one running now is at the top of its section. Each contact shows a name, a phone number and an e-mail — both as buttons, so you call or write straight from the app. The age of the item value is shown at the top.",
+      note_privacy: "<strong>Mind what goes in:</strong> that item holds your people’s names, phone numbers and e-mail addresses, and its value is readable by anyone allowed to see the item in Zabbix. Put it on a host group with restricted access, and do not include more than is needed to reach someone.",
+      foot_back: "← back to the main page",
+      __title: "ZbxView — On call",
+      __desc: "How to prepare the data in Zabbix for the On call screen in ZbxView — item name, key, JSON format and an example.",
+    };
+    var DE = {
+      back: "← zurück zu ZbxView",
+      title: "Bereitschaft",
+      updated: "App: ZbxView · Der Bereitschafts-Bildschirm im Hauptmenü",
+      intro: "Die App kann einen <strong>Bereitschaftsplan</strong> anzeigen — wer gerade Dienst hat, bis wann, und Schaltflächen zum Anrufen und Mailen. Sie holt nichts von außen: sie liest <strong>ein gewöhnliches Item auf Ihrem eigenen Zabbix</strong>, das Sie befüllen, wie es Ihnen passt.",
+      s1_h: "1. Wonach die App sucht",
+      s1_p: "Ein Item genügt. Die App nimmt das erste, auf das eines davon zutrifft:",
+      s1_li1: "ein Item mit dem <strong>Namen</strong> <code>ZbxView on-call</code> (der Text muss nur enthalten sein), oder",
+      s1_li2: "ein Item mit dem <strong>Schlüssel</strong> <code>zbxview.oncall</code>.",
+      s1_p2: "Das Item muss <strong>überwacht</strong> sein und sein letzter Wert ein <strong>JSON-Array</strong>. Wählen Sie einen Texttyp (Text oder Character). Treffen mehrere Items zu, wird das mit dem neuesten Wert verwendet.",
+      s2_h: "2. Datenformat",
+      s2_p: "Der Wert des Items ist ein Array von Objekten. Ein Objekt ist eine Schicht:",
+      th_field: "Feld",
+      th_meaning: "Bedeutung",
+      k_kat: "Die Gruppe, zu der die Schicht gehört — die Abschnittsüberschrift in der App. <code>Cluster4002_4003</code> erscheint als „Cluster 4002, 4003“, <code>MicrosoftInfrastruktur</code> als „Microsoft Infrastruktur“.",
+      k_ad: "E-Mail-Adresse, aus der auch der Name kommt. Aus <code>P.Eliasek@firma.de</code> zeigt die App „P. Eliasek“ und eine E-Mail-Schaltfläche.",
+      k_mobil: "Telefonnummer. Leerzeichen und Klammern stören nicht — zum Wählen werden sie entfernt.",
+      k_start: "Beginn der Schicht, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      k_end: "Ende der Schicht, gleiches Format. Aktuell ist die Schicht, in deren Zeitraum der jetzige Moment fällt.",
+      k_hm: "Optional. Standort- oder Filialnummern, getrennt durch Leerzeichen, Komma oder Semikolon; wird beim Kontakt angezeigt. Leer lassen, wenn die Schicht überall gilt.",
+      s3_h: "3. Beispiel",
+      s4_h: "4. Womit das Item befüllt wird",
+      s4_p: "Das ist der App gleichgültig — es zählt nur der Wert am Ende. Übliche Wege: ein <strong>HTTP-Agent</strong> auf einen Endpunkt, der das JSON liefert; ein <strong>Skript</strong> (extern oder Zabbix-Agent), das den Plan dort abholt, wo er gepflegt wird; oder eine Datei über <code>vfs.file.contents</code> mit einem Vorverarbeitungsschritt, der CSV in JSON verwandelt.",
+      s5_h: "5. Wie es in der App aussieht",
+      s5_p: "Die Schichten werden nach <code>Kategorie</code> gruppiert, und die gerade laufende steht in ihrem Abschnitt oben. Jeder Kontakt zeigt Name, Telefonnummer und E-Mail — beides als Schaltfläche, sodass Sie direkt aus der App anrufen oder schreiben. Oben steht, wie alt der letzte Wert des Items ist.",
+      note_privacy: "<strong>Achten Sie auf den Inhalt:</strong> in diesem Item stehen Namen, Telefonnummern und E-Mail-Adressen Ihrer Leute, und der Wert ist für jeden lesbar, der das Item in Zabbix sehen darf. Legen Sie es auf eine Hostgruppe mit eingeschränktem Zugriff und schreiben Sie nicht mehr hinein, als zum Erreichen einer Person nötig ist.",
+      foot_back: "← zurück zur Hauptseite",
+      __title: "ZbxView — Bereitschaft",
+      __desc: "Wie Sie in Zabbix die Daten für den Bereitschafts-Bildschirm in ZbxView vorbereiten — Item-Name, Schlüssel, JSON-Format und ein Beispiel.",
+    };
+    var ES = {
+      back: "← volver a ZbxView",
+      title: "Guardias",
+      updated: "App: ZbxView · La pantalla Guardias del menú principal",
+      intro: "La aplicación puede mostrar un <strong>cuadro de guardias</strong>: quién está de guardia ahora, hasta cuándo, y botones para llamar o escribir. No trae nada de fuera: lee <strong>un ítem normal de tu propio Zabbix</strong>, así que lo rellenas como te convenga.",
+      s1_h: "1. Qué busca la aplicación",
+      s1_p: "Basta con un ítem. La aplicación toma el primero que cumpla cualquiera de estas condiciones:",
+      s1_li1: "un ítem <strong>llamado</strong> <code>ZbxView on-call</code> (basta con que el nombre contenga ese texto), o",
+      s1_li2: "un ítem con la <strong>clave</strong> <code>zbxview.oncall</code>.",
+      s1_p2: "El ítem debe estar <strong>monitorizado</strong> y su último valor debe ser un <strong>array JSON</strong>. Usa un tipo de texto (Text o Character). Si coinciden varios ítems, se usa el del valor más reciente.",
+      s2_h: "2. Formato de los datos",
+      s2_p: "El valor del ítem es un array de objetos. Cada objeto es un turno:",
+      th_field: "Campo",
+      th_meaning: "Significado",
+      k_kat: "El grupo al que pertenece el turno: el título de sección en la aplicación. <code>Cluster4002_4003</code> se muestra como «Cluster 4002, 4003», y <code>MicrosoftInfraestructura</code> como «Microsoft Infraestructura».",
+      k_ad: "Dirección de correo, de la que además sale el nombre. De <code>P.Eliasek@empresa.com</code> la aplicación muestra «P. Eliasek» y un botón de correo.",
+      k_mobil: "Teléfono. Los espacios y paréntesis no molestan: se quitan para marcar.",
+      k_start: "Inicio del turno, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      k_end: "Fin del turno, mismo formato. El turno actual es aquel cuyo intervalo contiene el momento presente.",
+      k_hm: "Opcional. Números de centro o de tienda separados por espacio, coma o punto y coma; se muestran junto al contacto. Déjalo vacío si el turno cubre todo.",
+      s3_h: "3. Ejemplo",
+      s4_h: "4. Cómo rellenar el ítem",
+      s4_p: "A la aplicación le da igual: solo cuenta el valor final. Las vías habituales: un <strong>agente HTTP</strong> apuntando a un endpoint que devuelva el JSON; un <strong>script</strong> (externo o del agente Zabbix) que recoja el cuadro de donde se mantenga; o un fichero por <code>vfs.file.contents</code> con un preprocesado que convierta CSV en JSON.",
+      s5_h: "5. Cómo se ve en la aplicación",
+      s5_p: "Los turnos se agrupan por <code>Kategorie</code> y el que está en curso aparece arriba de su sección. Cada contacto muestra nombre, teléfono y correo, ambos como botones, así que llamas o escribes desde la propia aplicación. Arriba se ve la antigüedad del último valor del ítem.",
+      note_privacy: "<strong>Cuidado con lo que pones:</strong> ese ítem contiene nombres, teléfonos y correos de tu gente, y su valor lo puede leer cualquiera con permiso para ver el ítem en Zabbix. Colócalo en un grupo de hosts con acceso restringido y no incluyas más de lo necesario para localizar a alguien.",
+      foot_back: "← volver a la página principal",
+      __title: "ZbxView — Guardias",
+      __desc: "Cómo preparar en Zabbix los datos de la pantalla Guardias de ZbxView: nombre del ítem, clave, formato JSON y un ejemplo.",
+    };
+    var FR = {
+      back: "← retour à ZbxView",
+      title: "Astreintes",
+      updated: "App : ZbxView · L’écran Astreintes du menu principal",
+      intro: "L’application peut afficher un <strong>tableau d’astreinte</strong> — qui est de garde en ce moment, jusqu’à quand, et des boutons pour appeler ou écrire. Elle ne va rien chercher à l’extérieur : elle lit <strong>un élément ordinaire de votre propre Zabbix</strong>, que vous remplissez comme bon vous semble.",
+      s1_h: "1. Ce que l’application cherche",
+      s1_p: "Un seul élément suffit. L’application prend le premier qui satisfait l’une de ces conditions :",
+      s1_li1: "un élément <strong>nommé</strong> <code>ZbxView on-call</code> (il suffit que le nom contienne ce texte), ou",
+      s1_li2: "un élément de <strong>clé</strong> <code>zbxview.oncall</code>.",
+      s1_p2: "L’élément doit être <strong>surveillé</strong> et sa dernière valeur doit être un <strong>tableau JSON</strong>. Choisissez un type texte (Text ou Character). Si plusieurs éléments correspondent, celui dont la valeur est la plus récente l’emporte.",
+      s2_h: "2. Format des données",
+      s2_p: "La valeur de l’élément est un tableau d’objets. Un objet correspond à une garde :",
+      th_field: "Champ",
+      th_meaning: "Signification",
+      k_kat: "Le groupe auquel la garde appartient — le titre de section dans l’application. <code>Cluster4002_4003</code> s’affiche « Cluster 4002, 4003 », et <code>MicrosoftInfrastructure</code> « Microsoft Infrastructure ».",
+      k_ad: "Adresse e-mail, dont vient aussi le nom. À partir de <code>P.Eliasek@societe.fr</code>, l’application affiche « P. Eliasek » et un bouton e-mail.",
+      k_mobil: "Numéro de téléphone. Espaces et parenthèses ne gênent pas : ils sont retirés pour la numérotation.",
+      k_start: "Début de la garde, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      k_end: "Fin de la garde, même format. La garde en cours est celle dont l’intervalle contient l’instant présent.",
+      k_hm: "Facultatif. Numéros de site ou d’agence séparés par une espace, une virgule ou un point-virgule ; affichés à côté du contact. Laissez vide si la garde couvre tout.",
+      s3_h: "3. Exemple",
+      s4_h: "4. Comment alimenter l’élément",
+      s4_p: "Peu importe à l’application : seule compte la valeur obtenue. Les voies habituelles : un <strong>agent HTTP</strong> vers un endpoint qui renvoie le JSON ; un <strong>script</strong> (externe ou agent Zabbix) qui récupère le planning là où il est tenu ; ou un fichier via <code>vfs.file.contents</code> avec un prétraitement qui transforme le CSV en JSON.",
+      s5_h: "5. Ce que cela donne dans l’application",
+      s5_p: "Les gardes sont regroupées par <code>Kategorie</code>, et celle en cours figure en haut de sa section. Chaque contact affiche un nom, un téléphone et un e-mail — les deux sous forme de boutons, pour appeler ou écrire directement depuis l’application. En haut s’affiche l’ancienneté de la dernière valeur.",
+      note_privacy: "<strong>Attention au contenu :</strong> cet élément contient les noms, numéros et adresses de vos collègues, et sa valeur est lisible par quiconque a le droit de voir l’élément dans Zabbix. Placez-le sur un groupe d’hôtes à accès restreint et n’y mettez pas plus que ce qu’il faut pour joindre quelqu’un.",
+      foot_back: "← retour à la page principale",
+      __title: "ZbxView — Astreintes",
+      __desc: "Comment préparer dans Zabbix les données de l’écran Astreintes de ZbxView : nom de l’élément, clé, format JSON et un exemple.",
+    };
+    var LV = {
+      back: "← atpakaļ uz ZbxView",
+      title: "Dežūras",
+      updated: "Lietotne: ZbxView · Dežūru ekrāns galvenajā izvēlnē",
+      intro: "Lietotne var rādīt <strong>dežūru grafiku</strong> — kurš pašlaik dežūrē, līdz kuram brīdim, un pogas zvanīšanai un e-pastam. Neko no ārpuses tā nevelk: tā lasa <strong>parastu vienumu jūsu pašu Zabbix serverī</strong>, tāpēc to aizpildāt, kā jums ērtāk.",
+      s1_h: "1. Ko lietotne meklē",
+      s1_p: "Pietiek ar vienu vienumu. Lietotne ņem pirmo, kas atbilst kādam no šiem nosacījumiem:",
+      s1_li1: "vienums ar <strong>nosaukumu</strong> <code>ZbxView on-call</code> (pietiek, ka nosaukums satur šo tekstu), vai",
+      s1_li2: "vienums ar <strong>atslēgu</strong> <code>zbxview.oncall</code>.",
+      s1_p2: "Vienumam jābūt <strong>uzraudzītam</strong>, un tā pēdējai vērtībai jābūt <strong>JSON masīvam</strong>. Izvēlieties teksta tipu (Text vai Character). Ja atbilst vairāki vienumi, tiek izmantots tas ar jaunāko vērtību.",
+      s2_h: "2. Datu formāts",
+      s2_p: "Vienuma vērtība ir objektu masīvs. Viens objekts ir viena maiņa:",
+      th_field: "Lauks",
+      th_meaning: "Nozīme",
+      k_kat: "Grupa, kurai maiņa pieder — sadaļas virsraksts lietotnē. <code>Cluster4002_4003</code> tiek rādīts kā “Cluster 4002, 4003”, bet <code>MicrosoftInfrastruktura</code> kā “Microsoft Infrastruktura”.",
+      k_ad: "E-pasta adrese, no kuras tiek iegūts arī vārds. No <code>P.Eliasek@uznemums.lv</code> lietotne parāda “P. Eliasek” un e-pasta pogu.",
+      k_mobil: "Tālruņa numurs. Atstarpes un iekavas netraucē — zvanīšanai tās tiek noņemtas.",
+      k_start: "Maiņas sākums, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      k_end: "Maiņas beigas, tāds pats formāts. Pašreizējā ir tā maiņa, kuras intervālā ietilpst šis brīdis.",
+      k_hm: "Neobligāti. Objektu vai filiāļu numuri, atdalīti ar atstarpi, komatu vai semikolu; tiek rādīti pie kontakta. Atstājiet tukšu, ja maiņa attiecas uz visu.",
+      s3_h: "3. Piemērs",
+      s4_h: "4. Ar ko vienumu aizpildīt",
+      s4_p: "Lietotnei tas ir vienalga — nozīme ir tikai gala vērtībai. Ierastie ceļi: <strong>HTTP aģents</strong> uz galapunktu, kas atgriež šo JSON; <strong>skripts</strong> (ārējs vai Zabbix aģenta), kas paņem grafiku no turienes, kur tas tiek uzturēts; vai fails caur <code>vfs.file.contents</code> ar priekšapstrādi, kas CSV pārveido par JSON.",
+      s5_h: "5. Kā tas izskatās lietotnē",
+      s5_p: "Maiņas tiek grupētas pēc <code>Kategorie</code>, un tā, kas notiek pašlaik, ir savas sadaļas augšā. Pie katra kontakta ir vārds, tālrunis un e-pasts — abi kā pogas, tāpēc zvanāt vai rakstāt tieši no lietotnes. Augšā redzams, cik veca ir vienuma pēdējā vērtība.",
+      note_privacy: "<strong>Uzmanieties ar saturu:</strong> šajā vienumā ir jūsu cilvēku vārdi, tālruņu numuri un e-pasta adreses, un tā vērtību var izlasīt ikviens, kam Zabbix ir tiesības šo vienumu redzēt. Novietojiet to resursdatoru grupā ar ierobežotu piekļuvi un nelieciet tur vairāk, nekā vajadzīgs, lai kādu sazvanītu.",
+      foot_back: "← atpakaļ uz galveno lapu",
+      __title: "ZbxView — Dežūras",
+      __desc: "Kā Zabbix sagatavot datus ZbxView Dežūru ekrānam — vienuma nosaukums, atslēga, JSON formāts un piemērs.",
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var htmlEl = document.documentElement;
+    var descEl = document.querySelector('meta[name="description"]');
+    htmlEl.__csTitle = document.title;
+    htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
+
+    function apply(lang) {
+      var dict = DICTS[lang] || null; // cs is the markup itself
+      var nodes = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i], key = el.getAttribute('data-i18n');
+        if (el.__cs == null) el.__cs = el.innerHTML;
+        el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      document.title = dict ? dict.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
+      htmlEl.lang = lang;
+      try { localStorage.setItem('zbxlang', lang); } catch (e) {}
+      var opts = document.querySelectorAll('.lang-opt');
+      for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
+    }
+    var opts = document.querySelectorAll('.lang-opt');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
+    }
+    var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
+    var nav = (navigator.language || '').slice(0, 2).toLowerCase();
+    var lang = saved
+      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+    apply(lang);
+  })();
+  </script>
+</body>
+</html>
