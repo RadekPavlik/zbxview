@@ -844,15 +844,55 @@
       var img = lb.querySelector('img');
       var prevBtn = lb.querySelector('.lightbox-prev');
       var nextBtn = lb.querySelector('.lightbox-next');
-      var list = [], i = 0;
+      var list = [], i = 0, lastSwipe = 0;
       function show() { img.src = list[i]; }
       function go(n) { if (list.length) { i = (n + list.length) % list.length; show(); } }
       function close() { lb.classList.remove('open'); lb.hidden = true; img.removeAttribute('src'); }
       lb.addEventListener('click', function (e) {
+        // a swipe ends with a stray click on some browsers — ignore it briefly,
+        // but never swallow a genuine tap that comes later
+        if (Date.now() - lastSwipe < 400) return;
         if (e.target === lb || e.target.classList.contains('lightbox-close')) close();
       });
       prevBtn.addEventListener('click', function (e) { e.stopPropagation(); go(i - 1); });
       nextBtn.addEventListener('click', function (e) { e.stopPropagation(); go(i + 1); });
+
+      // Swipe / drag the picture sideways to move through the set, the way a
+      // photo gallery behaves — the ‹ › buttons alone are awkward on a phone.
+      var sx = 0, sy = 0, dragging = false, dx = 0;
+      function dragStart(x, y) {
+        if (list.length < 2) return;
+        sx = x; sy = y; dx = 0; dragging = true;
+        img.style.transition = 'none';
+      }
+      function dragMove(x, y) {
+        if (!dragging) return;
+        var mx = x - sx, my = y - sy;
+        // a mostly-vertical move is a scroll, not a swipe
+        if (Math.abs(my) > Math.abs(mx) + 12) { dragging = false; img.style.transform = ''; return; }
+        dx = mx;
+        img.style.transform = 'translateX(' + mx + 'px)';
+        img.style.opacity = String(Math.max(.35, 1 - Math.abs(mx) / 420));
+      }
+      function dragEnd() {
+        if (!dragging) return;
+        dragging = false;
+        img.style.transition = 'transform .18s ease, opacity .18s ease';
+        img.style.transform = ''; img.style.opacity = '';
+        if (Math.abs(dx) > 45) { lastSwipe = Date.now(); go(dx < 0 ? i + 1 : i - 1); }
+        dx = 0;
+      }
+      lb.addEventListener('touchstart', function (e) {
+        var t = e.touches[0]; dragStart(t.clientX, t.clientY);
+      }, { passive: true });
+      lb.addEventListener('touchmove', function (e) {
+        var t = e.touches[0]; dragMove(t.clientX, t.clientY);
+      }, { passive: true });
+      lb.addEventListener('touchend', dragEnd);
+      lb.addEventListener('touchcancel', dragEnd);
+      lb.addEventListener('mousedown', function (e) { e.preventDefault(); dragStart(e.clientX, e.clientY); });
+      document.addEventListener('mousemove', function (e) { dragMove(e.clientX, e.clientY); });
+      document.addEventListener('mouseup', dragEnd);
       document.addEventListener('keydown', function (e) {
         if (lb.hidden) return;
         if (e.key === 'Escape') close();
