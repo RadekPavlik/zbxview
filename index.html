@@ -56,7 +56,7 @@
       <!-- phone: real ZbxView screenshot (shot26); the ad banner + Android nav
            bar at the bottom are cropped off via the screen's aspect ratio. -->
       <figure class="frame frame-phone hero-phone" aria-hidden="true">
-        <div class="frame-screen"><img src="assets/shot26_mobile.png" alt="ZbxView na telefonu" draggable="false"></div>
+        <div class="frame-screen"><img src="assets/shot17_mobile.jpg" alt="ZbxView na telefonu" draggable="false"></div>
       </figure>
     </div>
   </section>
@@ -892,15 +892,27 @@
       function stopAuto() { if (timer) { clearInterval(timer); timer = null; } }
       function startAuto() { stopAuto(); if (!reduce && cur.imgs.length > 1) timer = setInterval(function () { go(idx + 1); }, 4000); }
 
-      var VISIBLE = 3; // how many previews to show side by side
+      // One device stays on stage; rotating only swaps the screenshot inside it,
+      // so the frame never flickers or jumps (same feel across TV/phone/tablet/watch).
       function renderFrame() {
-        var n = Math.min(VISIBLE, cur.imgs.length);
-        var html = '';
-        for (var k = 0; k < n; k++) {
-          var j = (idx + k) % cur.imgs.length;
-          html += frameHTML(cur.frame, cur.imgs[j].thumb, 'ZbxView ' + L(cur) + ' ' + (j + 1), j);
-        }
-        stage.innerHTML = html;
+        stage.innerHTML = frameHTML(cur.frame, cur.imgs[idx].thumb,
+                                    'ZbxView ' + L(cur) + ' ' + (idx + 1), idx);
+      }
+      // Preload the next shot, then cross-fade it in inside the existing frame.
+      function swapShot() {
+        var img = stage.querySelector('.frame-screen img');
+        if (!img) { renderFrame(); return; }
+        var next = cur.imgs[idx], pre = new Image();
+        pre.onload = pre.onerror = function () {
+          img.classList.add('swapping');
+          setTimeout(function () {
+            img.src = next.thumb;
+            img.dataset.i = idx;
+            img.alt = 'ZbxView ' + L(cur) + ' ' + (idx + 1);
+            img.classList.remove('swapping');
+          }, 180);
+        };
+        pre.src = next.thumb;
       }
       function renderDots() {
         dotsEl.innerHTML = cur.imgs.map(function (_, i) {
@@ -910,7 +922,7 @@
       }
       function go(n) {
         idx = (n + cur.imgs.length) % cur.imgs.length;
-        renderFrame();
+        swapShot();
         Array.prototype.forEach.call(dotsEl.children, function (d, i) {
           d.classList.toggle('active', i === idx);
         });

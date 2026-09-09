@@ -10,15 +10,15 @@ Served via GitHub Pages: <https://radekpavlik.github.io/zbxview/>
 
 ## How to add screenshots
 Drop images in `assets/` named `shot<N>_<group>.<ext>`, where:
-- `<group>` = `tv` | `mobile` | `tablet` (the device tab it appears under),
+- `<group>` = `tv` | `mobile` | `tablet` | `watch` (the device tab it appears under),
 - `<ext>` = `jpg`, `png`, `jpeg` or `webp`,
 - `<N>` = any number up to 60; numbering may start anywhere and have gaps
   (shots are shown in numeric order).
 
-Examples: `shot1_tablet.jpg`, `shot17_mobile.png`, `shot1_tv.jpg`.
+Examples: `shot1_tablet.jpg`, `shot17_mobile.jpg`, `shot33_tv.jpg`, `shot46_watch.jpg`.
 
 The gallery auto-discovers them: it shows an environment tab (TV / Telefon /
-Tablet) **only** for groups that have at least one file, renders each shot in
+Tablet / Hodinky) **only** for groups that have at least one file, renders each shot in
 the matching device frame, supports grab-and-drag scrolling, and click-to-zoom
 (lightbox). No HTML editing needed — just add the files, commit and push.
 

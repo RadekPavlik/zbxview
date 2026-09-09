@@ -164,11 +164,14 @@ section { padding: 72px 0; }
 @keyframes shotfade { from { opacity: 0; } to { opacity: 1; } }
 .frame { margin: 0; }
 .frame-screen { overflow: hidden; background: #000; }
-.frame-screen img { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; cursor: zoom-in; }
+.frame-screen img { display: block; width: 100%; height: 100%; object-fit: cover; -webkit-user-drag: none; user-select: none; cursor: zoom-in;
+  transition: opacity .18s ease; }
+/* rotation cross-fades the screenshot only — the device frame stays put */
+.frame-screen img.swapping { opacity: 0; }
 /* small preview sizes (click enlarges to full screen) */
-.car-stage .frame-phone { width: 148px; }
-.car-stage .frame-tablet { width: min(29vw, 300px); }
-.car-stage .frame-tv { width: min(29vw, 300px); }
+.car-stage .frame-phone { width: min(62vw, 270px); }
+.car-stage .frame-tablet { width: min(88vw, 620px); }
+.car-stage .frame-tv { width: min(88vw, 700px); }
 /* dots — click to jump between shots */
 .car-dots { display: flex; justify-content: center; gap: 8px; margin-top: 22px; flex-wrap: wrap; }
 .car-dots[hidden] { display: none; }
@@ -198,7 +201,7 @@ section { padding: 72px 0; }
 
 /* hero phone: real shot26 screenshot, anchored to the top so the bottom ~11%
    (AdMob banner + Android navigation bar) is cropped out of view. */
-.hero-phone { justify-self: center; width: 250px; }
+.hero-phone { justify-self: center; width: 290px; }
 .hero-phone .frame-screen { aspect-ratio: 1080 / 2250; }
 .hero-phone .frame-screen img { object-position: top; }
 
@@ -211,7 +214,7 @@ section { padding: 72px 0; }
 }
 .frame-watch .frame-screen { aspect-ratio: 1 / 1; border-radius: 50%; overflow: hidden; background: #000; }
 .frame-watch .frame-crown { position: absolute; right: -5px; top: 50%; transform: translateY(-50%); width: 6px; height: 26px; border-radius: 3px; background: #3a4552; }
-.car-stage .frame-watch { width: 190px; }
+.car-stage .frame-watch { width: min(62vw, 290px); }
 
 /* Wear OS note under the gallery */
 .wear-note { margin: 18px auto 0; max-width: 720px; text-align: center; color: var(--muted, #9aa7b6); font-size: 14px; line-height: 1.55; }
