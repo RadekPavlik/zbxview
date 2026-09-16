@@ -1,0 +1,5 @@
+{
+  "public": {"version": "0.39.0", "url": "https://play.google.com/store/apps/details?id=app.zbxview"},
+  "globus": {"version": "0.39.0", "url": "https://github.com/Globus-CR-v-o-s/zabbix-mobile-app/releases/latest"},
+  "tv": {"version": "0.39.0", "url": "https://github.com/Globus-CR-v-o-s/zabbix-mobile-app/releases/latest"}
+}
