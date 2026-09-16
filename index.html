@@ -77,7 +77,7 @@
         <div class="feat"><div class="ico">📺</div><h3 data-i18n="f5_h">TV / kiosk režim</h3><p data-i18n="f5_p">Celoobrazovkový dashboard s trvale zapnutou obrazovkou — ideální na nástěnný panel.</p></div>
         <div class="feat"><div class="ico">🖥️</div><h3 data-i18n="f6_h">Více serverů</h3><p data-i18n="f6_p">Přepínej mezi několika Zabbix instancemi jedním klepnutím.</p></div>
         <div class="feat"><div class="ico">🔄</div><h3 data-i18n="f7_h">Synchronizace mezi zařízeními</h3><p data-i18n="f7_p">Nastavení serverů a preferencí přenes mezi telefonem a tabletem.</p></div>
-        <div class="feat"><div class="ico">🏢</div><h3 data-i18n="f8_h">Nasazení přes Intune</h3><p data-i18n="f8_p">Správa přes MDM (Microsoft Intune i další) — servery, API token a nastavení předvyplníte hromadně managed configem. S tokenem se aplikace otevře rovnou přihlášená.</p></div>
+        <div class="feat"><div class="ico">🏢</div><h3 data-i18n="f8_h">Nasazení přes Intune</h3><p data-i18n="f8_p">Správa přes MDM (Microsoft Intune i další) — servery, API token a nastavení předvyplníte hromadně managed configem. S tokenem se aplikace otevře rovnou přihlášená, a s <code>set_default</code> rovnou v nasazeném serveru — bez seznamu serverů.</p></div>
         <div class="feat"><div class="ico">🔔</div><h3 data-i18n="f9_h">Widget na plochu</h3><p data-i18n="f9_p">Počet otevřených problémů rovnou na domovské obrazovce.</p></div>
         <div class="feat"><div class="ico">📤</div><h3 data-i18n="f10_h">Sdílení problému</h3><p data-i18n="f10_p">Do Teams odejde událost jako přehledná karta se závažností, hostem, popisem a tagy. Do SMS prostý text.</p></div>
         <div class="feat"><div class="ico">🌙</div><h3 data-i18n="f11_h">Tmavý režim</h3><p data-i18n="f11_p">Šetrný k očím při nočních službách a k baterii na OLED.</p></div>
@@ -156,7 +156,7 @@
       <div class="grid">
         <div class="feat"><div class="ico">🏷️</div><h3 data-i18n="ent1_h">Licence za zařízení</h3><p data-i18n="ent1_p">Firemní licence podle počtu spravovaných zařízení (ročně). Množstevně přívětivé, na fakturu — bez konzumního nákupu přes obchod.</p></div>
         <div class="feat"><div class="ico">🏢</div><h3 data-i18n="ent2_h">Nasazení přes Intune / MDM</h3><p data-i18n="ent2_p">Distribuce privátně přes Managed Google Play a nasazení ZbxView na zařízení pomocí Microsoft Intune (nebo jiného MDM).</p></div>
-        <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="ent3_h">Managed configuration</h3><p data-i18n="ent3_p">Předvyplnění Zabbix serverů a nastavení centrálně přes managed config — žádné ruční nastavování na každém zařízení.</p></div>
+        <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="ent3_h">Managed configuration</h3><p data-i18n="ent3_p">Předvyplnění Zabbix serverů a nastavení centrálně přes managed config — žádné ruční nastavování na každém zařízení. Klíč <code>set_default</code> označí nasazený server jako výchozí, takže se aplikace po spuštění otevře rovnou v něm.</p></div>
         <div class="feat"><div class="ico">🛡️</div><h3 data-i18n="ent4_h">Bez reklam &amp; podpora</h3><p data-i18n="ent4_p">Enterprise buildy jsou bez reklam, s prioritní podporou a řízenými aktualizacemi.</p></div>
       </div>
       <div class="ent-cta">
@@ -270,7 +270,7 @@
       f5_h: 'TV / kiosk mode', f5_p: 'Full-screen dashboard with the screen kept awake — ideal for a wall panel.',
       f6_h: 'Multiple servers', f6_p: 'Switch between several Zabbix instances with one tap.',
       f7_h: 'Sync across devices', f7_p: 'Carry your server setup and preferences between phone and tablet.',
-      f8_h: 'MDM deployment', f8_p: 'MDM management (Microsoft Intune and others) — pre-fill servers, an API token and settings in bulk via managed config.',
+      f8_h: 'MDM deployment', f8_p: 'MDM management (Microsoft Intune and others) — pre-fill servers, an API token and settings in bulk via managed config. With a token the app opens signed in; with <code>set_default</code> it opens straight into the provisioned server.',
       f9_h: 'Home-screen widget', f9_p: 'The number of open problems right on your home screen.',
       f10_h: 'Share a problem', f10_p: 'Teams gets the event as a clear card with severity, host, description and tags. SMS gets plain text.',
       f11_h: 'Dark mode', f11_p: 'Easy on the eyes during night shifts and on OLED battery.',
@@ -294,7 +294,7 @@
       ent_p: 'For teams and organisations: bulk deployment, central management and per-device licensing.',
       ent1_h: 'Per-device licensing', ent1_p: 'Business licences priced per managed device (annual). Volume-friendly and invoiced — no consumer app-store purchase.',
       ent2_h: 'Intune / MDM deployment', ent2_p: 'Distribute privately via Managed Google Play and roll ZbxView out to devices with Microsoft Intune (or another MDM).',
-      ent3_h: 'Managed configuration', ent3_p: 'Pre-fill Zabbix servers and settings centrally via managed config — no manual setup on each device.',
+      ent3_h: 'Managed configuration', ent3_p: 'Pre-fill Zabbix servers and settings centrally via managed config — no manual setup on each device. The <code>set_default</code> key marks the provisioned server as the default, so the app opens it on start.',
       ent4_h: 'Ad-free &amp; support', ent4_p: 'Enterprise builds have no ads, with priority support and managed updates.',
       ent_cta_p: 'Interested in a company-wide rollout? Send us a non-binding enquiry.',
       f_name: 'Name', f_email: 'E-mail', f_company: 'Company (optional)',
@@ -346,7 +346,7 @@
       f7_h: "Sync zwischen Geräten",
       f7_p: "Serverkonfiguration und Einstellungen von Handy auf Tablet mitnehmen.",
       f8_h: "MDM-Rollout",
-      f8_p: "Verwaltung per MDM (Microsoft Intune und andere) — Server, API-Token und Einstellungen zentral per Managed Config vorbefüllen.",
+      f8_p: "Verwaltung per MDM (Microsoft Intune und andere) — Server, API-Token und Einstellungen zentral per Managed Config vorbefüllen. Mit Token startet die App angemeldet, mit <code>set_default</code> direkt im bereitgestellten Server.",
       f9_h: "Homescreen-Widget",
       f9_p: "Die Zahl der offenen Probleme direkt auf dem Startbildschirm.",
       f10_h: "Problem teilen",
@@ -394,7 +394,7 @@
       ent2_h: "Rollout per Intune / MDM",
       ent2_p: "Privat über Managed Google Play verteilen und ZbxView mit Microsoft Intune (oder einem anderen MDM) auf die Geräte bringen.",
       ent3_h: "Managed Configuration",
-      ent3_p: "Zabbix-Server und Einstellungen zentral per Managed Config vorbefüllen — keine Einrichtung von Hand auf jedem Gerät.",
+      ent3_p: "Zabbix-Server und Einstellungen zentral per Managed Config vorbefüllen — keine Einrichtung von Hand auf jedem Gerät. Der Schlüssel <code>set_default</code> macht den bereitgestellten Server zum Standard, sodass die App beim Start direkt in ihm öffnet.",
       ent4_h: "Werbefrei &amp; Support",
       ent4_p: "Enterprise-Builds enthalten keine Werbung, mit bevorzugtem Support und verwalteten Updates.",
       ent_cta_p: "Interesse an einem unternehmensweiten Rollout? Schreiben Sie uns unverbindlich.",
@@ -455,7 +455,7 @@
       f7_h: "Sincronización entre dispositivos",
       f7_p: "Lleva la configuración de servidores y tus preferencias del móvil a la tableta.",
       f8_h: "Despliegue por MDM",
-      f8_p: "Gestión por MDM (Microsoft Intune y otros): rellena servidores, token de API y ajustes de forma masiva con managed config.",
+      f8_p: "Gestión por MDM (Microsoft Intune y otros): rellena servidores, token de API y ajustes de forma masiva con managed config. Con token la aplicación se abre ya autenticada; con <code>set_default</code>, directamente en el servidor aprovisionado.",
       f9_h: "Widget en la pantalla de inicio",
       f9_p: "El número de problemas abiertos directamente en la pantalla de inicio.",
       f10_h: "Compartir un problema",
@@ -503,7 +503,7 @@
       ent2_h: "Despliegue por Intune / MDM",
       ent2_p: "Distribuye de forma privada con Managed Google Play y lleva ZbxView a los dispositivos con Microsoft Intune (u otro MDM).",
       ent3_h: "Configuración gestionada",
-      ent3_p: "Rellena servidores Zabbix y ajustes de forma centralizada con managed config, sin configurar cada dispositivo a mano.",
+      ent3_p: "Rellena servidores Zabbix y ajustes de forma centralizada con managed config, sin configurar cada dispositivo a mano. La clave <code>set_default</code> marca el servidor aprovisionado como predeterminado, así la aplicación lo abre al iniciarse.",
       ent4_h: "Sin anuncios y con soporte",
       ent4_p: "Las compilaciones Enterprise no llevan anuncios, con soporte prioritario y actualizaciones gestionadas.",
       ent_cta_p: "¿Te interesa un despliegue para toda la empresa? Escríbenos sin compromiso.",
@@ -564,7 +564,7 @@
       f7_h: "Synchronisation entre appareils",
       f7_p: "Emportez la configuration de vos serveurs et vos préférences du téléphone à la tablette.",
       f8_h: "Déploiement MDM",
-      f8_p: "Gestion par MDM (Microsoft Intune et autres) — pré-remplissez serveurs, jeton API et réglages en masse via la managed config.",
+      f8_p: "Gestion par MDM (Microsoft Intune et autres) — pré-remplissez serveurs, jeton API et réglages en masse via la managed config. Avec un jeton l’application s’ouvre connectée ; avec <code>set_default</code>, directement sur le serveur provisionné.",
       f9_h: "Widget sur l’écran d’accueil",
       f9_p: "Le nombre de problèmes ouverts directement sur l’écran d’accueil.",
       f10_h: "Partager un problème",
@@ -612,7 +612,7 @@
       ent2_h: "Déploiement Intune / MDM",
       ent2_p: "Distribuez en privé via Managed Google Play et déployez ZbxView sur les appareils avec Microsoft Intune (ou un autre MDM).",
       ent3_h: "Configuration gérée",
-      ent3_p: "Pré-remplissez serveurs Zabbix et réglages de façon centralisée via la managed config — aucune configuration manuelle sur chaque appareil.",
+      ent3_p: "Pré-remplissez serveurs Zabbix et réglages de façon centralisée via la managed config — aucune configuration manuelle sur chaque appareil. La clé <code>set_default</code> fait du serveur provisionné le serveur par défaut : l’application s’ouvre dessus au démarrage.",
       ent4_h: "Sans publicité et avec support",
       ent4_p: "Les versions Enterprise ne contiennent pas de publicité, avec support prioritaire et mises à jour gérées.",
       ent_cta_p: "Un déploiement à l’échelle de l’entreprise vous intéresse ? Écrivez-nous, sans engagement.",
@@ -673,7 +673,7 @@
       f7_h: "Sinhronizācija starp ierīcēm",
       f7_p: "Pārnesiet serveru iestatījumus un preferences no telefona uz planšeti.",
       f8_h: "Izvietošana ar MDM",
-      f8_p: "Pārvaldība ar MDM (Microsoft Intune un citiem) — aizpildiet serverus, API pilnvaru un iestatījumus centralizēti ar managed config.",
+      f8_p: "Pārvaldība ar MDM (Microsoft Intune un citiem) — aizpildiet serverus, API pilnvaru un iestatījumus centralizēti ar managed config. Ar pilnvaru lietotne atveras jau pieteikusies; ar <code>set_default</code> — uzreiz nodrošinātajā serverī.",
       f9_h: "Logrīks sākuma ekrānā",
       f9_p: "Atvērto problēmu skaits tieši sākuma ekrānā.",
       f10_h: "Problēmas kopīgošana",
@@ -721,7 +721,7 @@
       ent2_h: "Izvietošana ar Intune / MDM",
       ent2_p: "Izplatiet privāti caur Managed Google Play un uzstādiet ZbxView ierīcēs ar Microsoft Intune (vai citu MDM).",
       ent3_h: "Pārvaldītā konfigurācija",
-      ent3_p: "Aizpildiet Zabbix serverus un iestatījumus centralizēti ar managed config — bez manuālas uzstādīšanas katrā ierīcē.",
+      ent3_p: "Aizpildiet Zabbix serverus un iestatījumus centralizēti ar managed config — bez manuālas uzstādīšanas katrā ierīcē. Atslēga <code>set_default</code> atzīmē nodrošināto serveri kā noklusējuma, tāpēc lietotne startējot atver tieši to.",
       ent4_h: "Bez reklāmām un ar atbalstu",
       ent4_p: "Enterprise būvējumos nav reklāmu, ar prioritāru atbalstu un pārvaldītiem atjauninājumiem.",
       ent_cta_p: "Interesē izvietošana visā uzņēmumā? Uzrakstiet mums nesaistoši.",
