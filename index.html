@@ -88,7 +88,7 @@
         <div class="feat"><div class="ico">🎚️</div><h3 data-i18n="f16_h">Filtry a přednastavení</h3><p data-i18n="f16_p">Filtruj podle závažnosti, skupin hostů, názvu i potlačených událostí — a sestavu si ulož.</p></div>
         <div class="feat"><div class="ico">⌚</div><h3 data-i18n="f17_h">Hodinky</h3><p data-i18n="f17_p">Problémy na zápěstí, na Apple Watch i Wear OS.</p></div>
         <div class="feat"><div class="ico">📨</div><h3 data-i18n="f18_h">Akce a komentáře</h3><p data-i18n="f18_p">U události uvidíš, komu a jakým kanálem Zabbix poslal upozornění, i celou historii komentářů a potvrzení.</p></div>
-        <div class="feat"><div class="ico">📷</div><h3 data-i18n="f20_h">Přidání serveru QR kódem</h3><p data-i18n="f20_p">V Zabbixu otevřete „Připojit aplikaci“ a naskenujte QR kód — server i přihlášení jsou hotové. Spojení platí, dokud nespárujete znovu. Stačí modul <a href="#connect">ZbxView connect</a>.</p></div>
+        <div class="feat"><div class="ico">📷</div><h3 data-i18n="f20_h">Přidání serveru QR kódem</h3><p data-i18n="f20_p">V Zabbixu otevřete „Připojení telefonu“ a naskenujte QR kód — server i přihlášení jsou hotové. Spojení platí, dokud nespárujete znovu. Stačí modul <a href="#connect">ZbxView connect</a>.</p></div>
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="f21_h">Klientský certifikát (mTLS)</h3><p data-i18n="f21_p">Pro Zabbix za bránou, která vyžaduje certifikát (např. Cloudflare): nahrajte ho u serveru, pošlete přes MDM, nebo ho dostanete rovnou v QR kódu při párování.</p></div>
         <div class="feat"><div class="ico">🔒</div><h3 data-i18n="f19_h">Zámek aplikace</h3><p data-i18n="f19_p">Otisk, obličej nebo PIN při otevření. Přihlašovací údaje zůstávají v úložišti zařízení.</p></div>
       </div>
@@ -101,10 +101,10 @@
       <div class="section-head">
         <div class="tag" data-i18n="conn_tag">Párování</div>
         <h2 data-i18n="conn_h2">Telefon připojený k Zabbixu za pár vteřin</h2>
-        <p data-i18n="conn_p">Modul <strong>ZbxView connect</strong> do Zabbixu (6.4–8.0) přidá v Uživatelském nastavení položku „Připojit aplikaci“. Nikdo nic nevypisuje ani neopisuje tokeny.</p>
+        <p data-i18n="conn_p">Modul <strong>ZbxView connect</strong> do Zabbixu (6.4–8.0) přidá v Uživatelském nastavení položku „Připojení telefonu“. Nikdo nic nevypisuje ani neopisuje tokeny.</p>
       </div>
       <div class="grid">
-        <div class="feat"><div class="ico">1</div><h3 data-i18n="conn_s1_h">Otevřete „Připojit aplikaci“</h3><p data-i18n="conn_s1_p">Hned se zobrazí QR kód. Modul vytvoří uživateli API token, který nevyprší — jeden na uživatele.</p></div>
+        <div class="feat"><div class="ico">1</div><h3 data-i18n="conn_s1_h">Otevřete „Připojení telefonu“</h3><p data-i18n="conn_s1_p">Hned se zobrazí QR kód. Modul vytvoří uživateli API token, který nevyprší — jeden na uživatele.</p></div>
         <div class="feat"><div class="ico">2</div><h3 data-i18n="conn_s2_h">Naskenujte v aplikaci</h3><p data-i18n="conn_s2_p">Přidat server → Naskenovat QR kód. Aplikace ukáže, co kód obsahuje, a server přidá i s přihlášením.</p></div>
         <div class="feat"><div class="ico">3</div><h3 data-i18n="conn_s3_h">Nový telefon? Spárovat znovu</h3><p data-i18n="conn_s3_p">Po spárování stránka ukazuje jen stav a tlačítko „Spárovat znovu“. Starý token se tím zruší, takže ztracený telefon ztratí přístup.</p></div>
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="conn_s4_h">Certifikát v QR kódu</h3><p data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC). Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49).</p></div>
@@ -305,13 +305,13 @@
       f18_h: 'Actions and comments', f18_p: 'See who Zabbix notified and through which channel, plus the full history of comments and acknowledgements.',
       f19_h: 'App lock', f19_p: 'Fingerprint, face or PIN on open. Credentials stay in the device keystore.',
       f20_h: 'Add a server with a QR code',
-      f20_p: 'In Zabbix open “Connect application” and scan the QR code — server and sign-in are done. The connection stays until you pair again. All it takes is the <a href="#connect">ZbxView connect</a> module.',
+      f20_p: 'In Zabbix open “Mobile connect” and scan the QR code — server and sign-in are done. The connection stays until you pair again. All it takes is the <a href="#connect">ZbxView connect</a> module.',
       f21_h: 'Client certificate (mTLS)',
       f21_p: 'For Zabbix behind a gateway that requires a certificate (e.g. Cloudflare): import it on the server, push it via MDM, or get it right in the QR code when pairing.',
       conn_tag: 'Pairing',
       conn_h2: 'A phone connected to Zabbix in seconds',
-      conn_p: 'The <strong>ZbxView connect</strong> module for Zabbix (6.4–8.0) adds “Connect application” to User settings. Nobody types anything or copies tokens.',
-      conn_s1_h: 'Open “Connect application”',
+      conn_p: 'The <strong>ZbxView connect</strong> module for Zabbix (6.4–8.0) adds “Mobile connect” to User settings. Nobody types anything or copies tokens.',
+      conn_s1_h: 'Open “Mobile connect”',
       conn_s1_p: 'The QR code appears right away. The module creates an API token for the user that never expires — one per user.',
       conn_s2_h: 'Scan it in the app',
       conn_s2_p: 'Add server → Scan QR code. The app shows what the code holds and adds the server, signed in.',
@@ -412,13 +412,13 @@
       f19_h: "App-Sperre",
       f19_p: "Fingerabdruck, Gesicht oder PIN beim Öffnen. Zugangsdaten bleiben im Schlüsselspeicher des Geräts.",
       f20_h: "Server per QR-Code hinzufügen",
-      f20_p: "In Zabbix „Anwendung verbinden“ öffnen und den QR-Code scannen — Server und Anmeldung sind erledigt. Die Verbindung bleibt, bis Sie neu koppeln. Dafür genügt das Modul <a href=\"#connect\">ZbxView connect</a>.",
+      f20_p: "In Zabbix „Mobile connect“ öffnen und den QR-Code scannen — Server und Anmeldung sind erledigt. Die Verbindung bleibt, bis Sie neu koppeln. Dafür genügt das Modul <a href=\"#connect\">ZbxView connect</a>.",
       f21_h: "Client-Zertifikat (mTLS)",
       f21_p: "Für Zabbix hinter einem Gateway, das ein Zertifikat verlangt (z. B. Cloudflare): beim Server importieren, per MDM verteilen oder direkt im QR-Code beim Koppeln erhalten.",
       conn_tag: "Koppeln",
       conn_h2: "Das Telefon in Sekunden mit Zabbix verbunden",
-      conn_p: "Das Modul <strong>ZbxView connect</strong> für Zabbix (6.4–8.0) fügt in den Benutzereinstellungen „Anwendung verbinden“ hinzu. Niemand tippt etwas oder kopiert Tokens.",
-      conn_s1_h: "„Anwendung verbinden“ öffnen",
+      conn_p: "Das Modul <strong>ZbxView connect</strong> für Zabbix (6.4–8.0) fügt in den Benutzereinstellungen „Mobile connect“ hinzu. Niemand tippt etwas oder kopiert Tokens.",
+      conn_s1_h: "„Mobile connect“ öffnen",
       conn_s1_p: "Der QR-Code erscheint sofort. Das Modul erzeugt für den Benutzer einen API-Token ohne Ablauf — einen pro Benutzer.",
       conn_s2_h: "In der App scannen",
       conn_s2_p: "Server hinzufügen → QR-Code scannen. Die App zeigt den Inhalt und fügt den Server angemeldet hinzu.",
@@ -541,13 +541,13 @@
       f19_h: "Bloqueo de la app",
       f19_p: "Huella, rostro o PIN al abrir. Las credenciales se quedan en el almacén seguro del dispositivo.",
       f20_h: "Añadir un servidor con un código QR",
-      f20_p: "En Zabbix abra «Conectar aplicación» y escanee el código QR: servidor e inicio de sesión listos. La conexión dura hasta que vuelva a emparejar. Basta con el módulo <a href=\"#connect\">ZbxView connect</a>.",
+      f20_p: "En Zabbix abra «Mobile connect» y escanee el código QR: servidor e inicio de sesión listos. La conexión dura hasta que vuelva a emparejar. Basta con el módulo <a href=\"#connect\">ZbxView connect</a>.",
       f21_h: "Certificado de cliente (mTLS)",
       f21_p: "Para Zabbix detrás de una pasarela que exige certificado (p. ej. Cloudflare): impórtelo en el servidor, envíelo por MDM o recíbalo directamente en el código QR al emparejar.",
       conn_tag: "Emparejar",
       conn_h2: "El teléfono conectado a Zabbix en segundos",
-      conn_p: "El módulo <strong>ZbxView connect</strong> para Zabbix (6.4–8.0) añade «Conectar aplicación» en la configuración de usuario. Nadie escribe nada ni copia tokens.",
-      conn_s1_h: "Abra «Conectar aplicación»",
+      conn_p: "El módulo <strong>ZbxView connect</strong> para Zabbix (6.4–8.0) añade «Mobile connect» en la configuración de usuario. Nadie escribe nada ni copia tokens.",
+      conn_s1_h: "Abra «Mobile connect»",
       conn_s1_p: "El código QR aparece al instante. El módulo crea para el usuario un token de API que no caduca, uno por usuario.",
       conn_s2_h: "Escanéelo en la app",
       conn_s2_p: "Añadir servidor → Escanear código QR. La app muestra el contenido y añade el servidor con la sesión iniciada.",
@@ -670,13 +670,13 @@
       f19_h: "Verrouillage de l’application",
       f19_p: "Empreinte, visage ou code PIN à l’ouverture. Les identifiants restent dans le coffre-fort de l’appareil.",
       f20_h: "Ajouter un serveur par QR code",
-      f20_p: "Dans Zabbix, ouvrez « Connecter l’application » et scannez le QR code : serveur et connexion sont prêts. La liaison reste valable jusqu’à un nouvel appairage. Il suffit du module <a href=\"#connect\">ZbxView connect</a>.",
+      f20_p: "Dans Zabbix, ouvrez « Mobile connect » et scannez le QR code : serveur et connexion sont prêts. La liaison reste valable jusqu’à un nouvel appairage. Il suffit du module <a href=\"#connect\">ZbxView connect</a>.",
       f21_h: "Certificat client (mTLS)",
       f21_p: "Pour un Zabbix derrière une passerelle qui exige un certificat (p. ex. Cloudflare) : importez-le sur le serveur, poussez-le par MDM ou recevez-le directement dans le QR code à l’appairage.",
       conn_tag: "Appairage",
       conn_h2: "Un téléphone relié à Zabbix en quelques secondes",
-      conn_p: "Le module <strong>ZbxView connect</strong> pour Zabbix (6.4–8.0) ajoute « Connecter l’application » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton.",
-      conn_s1_h: "Ouvrez « Connecter l’application »",
+      conn_p: "Le module <strong>ZbxView connect</strong> pour Zabbix (6.4–8.0) ajoute « Mobile connect » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton.",
+      conn_s1_h: "Ouvrez « Mobile connect »",
       conn_s1_p: "Le QR code s’affiche aussitôt. Le module crée pour l’utilisateur un jeton API sans expiration, un par utilisateur.",
       conn_s2_h: "Scannez-le dans l’app",
       conn_s2_p: "Ajouter un serveur → Scanner un QR code. L’app affiche le contenu et ajoute le serveur, déjà connecté.",
@@ -799,13 +799,13 @@
       f19_h: "Lietotnes bloķēšana",
       f19_p: "Pirksta nospiedums, seja vai PIN atverot. Pieteikšanās dati paliek ierīces drošajā krātuvē.",
       f20_h: "Servera pievienošana ar QR kodu",
-      f20_p: "Zabbix atveriet “Pievienot lietotni” un noskenējiet QR kodu — serveris un pieteikšanās ir gatavi. Savienojums ir derīgs, līdz savienojat atkārtoti. Pietiek ar moduli <a href=\"#connect\">ZbxView connect</a>.",
+      f20_p: "Zabbix atveriet “Tālruņa savienojums” un noskenējiet QR kodu — serveris un pieteikšanās ir gatavi. Savienojums ir derīgs, līdz savienojat atkārtoti. Pietiek ar moduli <a href=\"#connect\">ZbxView connect</a>.",
       f21_h: "Klienta sertifikāts (mTLS)",
       f21_p: "Zabbix aiz vārtejas, kas pieprasa sertifikātu (piem. Cloudflare): importējiet to pie servera, nosūtiet ar MDM vai saņemiet to tieši QR kodā savienošanas laikā.",
       conn_tag: "Savienošana",
       conn_h2: "Tālrunis savienots ar Zabbix dažās sekundēs",
-      conn_p: "Modulis <strong>ZbxView connect</strong> priekš Zabbix (6.4–8.0) lietotāja iestatījumos pievieno “Pievienot lietotni”. Neviens neko neraksta un nekopē marķierus.",
-      conn_s1_h: "Atveriet “Pievienot lietotni”",
+      conn_p: "Modulis <strong>ZbxView connect</strong> priekš Zabbix (6.4–8.0) lietotāja iestatījumos pievieno “Tālruņa savienojums”. Neviens neko neraksta un nekopē marķierus.",
+      conn_s1_h: "Atveriet “Tālruņa savienojums”",
       conn_s1_p: "QR kods parādās uzreiz. Modulis lietotājam izveido API marķieri bez termiņa — vienu katram lietotājam.",
       conn_s2_h: "Noskenējiet lietotnē",
       conn_s2_p: "Pievienot serveri → Skenēt QR kodu. Lietotne parāda koda saturu un pievieno serveri jau pieteiktu.",
