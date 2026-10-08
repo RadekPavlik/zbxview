@@ -88,7 +88,7 @@
         <div class="feat"><div class="ico">🎚️</div><h3 data-i18n="f16_h">Filtry a přednastavení</h3><p data-i18n="f16_p">Filtruj podle závažnosti, skupin hostů, názvu i potlačených událostí — a sestavu si ulož.</p></div>
         <div class="feat"><div class="ico">⌚</div><h3 data-i18n="f17_h">Hodinky</h3><p data-i18n="f17_p">Problémy na zápěstí, na Apple Watch i Wear OS.</p></div>
         <div class="feat"><div class="ico">📨</div><h3 data-i18n="f18_h">Akce a komentáře</h3><p data-i18n="f18_p">U události uvidíš, komu a jakým kanálem Zabbix poslal upozornění, i celou historii komentářů a potvrzení.</p></div>
-        <div class="feat"><div class="ico">📷</div><h3 data-i18n="f20_h">Přidání serveru QR kódem</h3><p data-i18n="f20_p">V Zabbixu otevřete „Připojení telefonu“ a naskenujte QR kód — server i přihlášení jsou hotové. Spojení platí, dokud nespárujete znovu. Stačí modul <a href="#connect">ZbxView connect</a>.</p></div>
+        <div class="feat"><div class="ico">📷</div><h3 data-i18n="f20_h">Přidání serveru QR kódem</h3><p data-i18n="f20_p">V Zabbixu otevřete „Připojení telefonu“ a naskenujte QR kód — server i přihlášení jsou hotové. Spojení platí, dokud nespárujete znovu. Stačí modul <a href="#connect-setup">ZbxView connect</a>.</p></div>
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="f21_h">Klientský certifikát (mTLS)</h3><p data-i18n="f21_p">Pro Zabbix za bránou, která vyžaduje certifikát (např. Cloudflare): nahrajte ho u serveru, pošlete přes MDM, nebo ho dostanete rovnou v QR kódu při párování.</p></div>
         <div class="feat"><div class="ico">🔒</div><h3 data-i18n="f19_h">Zámek aplikace</h3><p data-i18n="f19_p">Otisk, obličej nebo PIN při otevření. Přihlašovací údaje zůstávají v úložišti zařízení.</p></div>
       </div>
@@ -110,6 +110,20 @@
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="conn_s4_h">Certifikát v QR kódu</h3><p data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC). Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49).</p></div>
         <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="conn_s5_h">Nastaví správce jednou</h3><p data-i18n="conn_s5_p">Adresu, na které telefony Zabbix najdou (např. přes Cloudflare), jméno serveru a práci s certifikáty nastaví správce v Administrace → Konfigurace telefonu, kde nahraje i klientský certifikát a modul ho rovnou zkontroluje — uživatel nic nevyplňuje.</p></div>
         <div class="feat"><div class="ico">🔐</div><h3 data-i18n="conn_s6_h">Bezpečně</h3><p data-i18n="conn_s6_p">Kód se zobrazí jen jednou a „Hotovo“ ho skryje. Token je běžný API token uživatele s jeho oprávněními, vidíte ho i v API tokenech.</p></div>
+      </div>
+      <div class="doc" id="connect-setup" style="max-width:760px;margin:34px auto 0;">
+        <h3 data-i18n="cs_h">Jak modul nainstalovat (jednou, správce Zabbixu)</h3>
+        <ol>
+          <li data-i18n="cs_s1">Stáhněte modul z GitHubu a nakopírujte ho do adresáře modulů Zabbix frontendu:</li>
+        </ol>
+        <pre><code>cd /usr/share/zabbix/modules
+git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</code></pre>
+        <ol start="2">
+          <li data-i18n="cs_s2">V Zabbixu otevřete <strong>Administrace → Obecné → Moduly</strong>, klikněte na <strong>Skenovat adresář</strong> a modul <strong>ZbxView connect</strong> zapněte.</li>
+          <li data-i18n="cs_s3">V <strong>Administrace → Konfigurace telefonu</strong> nastavte adresu, na které telefony Zabbix najdou (např. přes Cloudflare), název serveru a certifikát serveru. Pokud je Zabbix za bránou s mTLS, nahrajte tam i klientský certifikát (klíč EC) — modul ho zkontroluje.</li>
+          <li data-i18n="cs_s4">Uživatelé pak otevřou <strong>Uživatelské nastavení → Připojení telefonu</strong> a v aplikaci zvolí <strong>Přidat server → Naskenovat QR kód</strong>. Hotovo.</li>
+        </ol>
+        <div class="note" data-i18n="cs_req">Požadavky: Zabbix 6.4–8.0; role uživatele musí povolovat <strong>Správu API tokenů</strong> a <strong>přístup k API</strong>. Certifikát v QR kódu umí aplikace od verze 0.49. Novější verzi modulu stáhnete příkazem <code>git pull</code> v jeho adresáři.</div>
       </div>
       <p style="text-align:center;margin-top:22px;"><a class="btn btn-ghost" href="https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect" target="_blank" rel="noopener" data-i18n="conn_cta">Modul ZbxView connect na GitHubu</a></p>
     </div>
@@ -324,6 +338,12 @@
       conn_s6_h: 'Secure',
       conn_s6_p: 'The code is shown only once and “Done” hides it. The token is the user’s regular API token with their permissions, listed under API tokens.',
       conn_cta: 'ZbxView connect module on GitHub',
+      cs_h: 'Installing the module (once, by the Zabbix admin)',
+      cs_s1: 'Download the module from GitHub into the Zabbix frontend modules directory:',
+      cs_s2: 'In Zabbix open <strong>Administration → General → Modules</strong>, click <strong>Scan directory</strong> and enable <strong>ZbxView connect</strong>.',
+      cs_s3: 'In <strong>Administration → Mobile configuration</strong> set the address phones reach Zabbix at (e.g. through Cloudflare), the server name and the server certificate. If Zabbix sits behind an mTLS gateway, upload the client certificate (EC key) there too — the module checks it.',
+      cs_s4: 'Users then open <strong>User settings → Mobile connect</strong> and in the app choose <strong>Add server → Scan QR code</strong>. Done.',
+      cs_req: 'Requirements: Zabbix 6.4–8.0; the user role must allow <strong>Manage API tokens</strong> and <strong>API access</strong>. The certificate in the QR code needs app version 0.49 or newer. Get a newer module version with <code>git pull</code> in its directory.',
       screens_tag: 'Screenshots', screens_h2: 'Take a look inside', screens_p: 'Straight from the app.',
       shots_empty: 'Screenshots coming soon.',
       ed_tag: 'Editions', ed_h2: 'Free, with an optional Pro',
@@ -431,6 +451,12 @@
       conn_s6_h: "Sicher",
       conn_s6_p: "Der Code wird nur einmal angezeigt und „Fertig“ blendet ihn aus. Der Token ist ein normaler API-Token des Benutzers mit seinen Rechten, sichtbar unter API-Tokens.",
       conn_cta: "Modul ZbxView connect auf GitHub",
+      cs_h: "Modul installieren (einmalig, durch den Zabbix-Admin)",
+      cs_s1: "Laden Sie das Modul von GitHub in das Modulverzeichnis des Zabbix-Frontends:",
+      cs_s2: "Öffnen Sie in Zabbix <strong>Administration → Allgemein → Module</strong>, klicken Sie auf <strong>Verzeichnis scannen</strong> und aktivieren Sie <strong>ZbxView connect</strong>.",
+      cs_s3: "Unter <strong>Administration → Mobile configuration</strong> legen Sie die Adresse fest, unter der Telefone Zabbix erreichen (z. B. über Cloudflare), den Servernamen und das Serverzertifikat. Steht Zabbix hinter einem mTLS-Gateway, laden Sie dort auch das Client-Zertifikat (EC-Schlüssel) hoch — das Modul prüft es.",
+      cs_s4: "Benutzer öffnen dann <strong>Benutzereinstellungen → Mobile connect</strong> und wählen in der App <strong>Server hinzufügen → QR-Code scannen</strong>. Fertig.",
+      cs_req: "Voraussetzungen: Zabbix 6.4–8.0; die Benutzerrolle muss <strong>Verwalten von API-Tokens</strong> und <strong>API-Zugriff</strong> erlauben. Das Zertifikat im QR-Code braucht App-Version 0.49 oder neuer. Eine neuere Modulversion holen Sie mit <code>git pull</code> im Modulverzeichnis.",
       screens_tag: "Screenshots",
       screens_h2: "Ein Blick hinein",
       screens_p: "Direkt aus der App.",
@@ -560,6 +586,12 @@
       conn_s6_h: "Seguro",
       conn_s6_p: "El código se muestra una sola vez y «Hecho» lo oculta. El token es un token de API normal del usuario con sus permisos, visible en Tokens de API.",
       conn_cta: "Módulo ZbxView connect en GitHub",
+      cs_h: "Instalar el módulo (una vez, el administrador de Zabbix)",
+      cs_s1: "Descargue el módulo de GitHub en el directorio de módulos del frontend de Zabbix:",
+      cs_s2: "En Zabbix abra <strong>Administración → Zabbix → Módulos</strong>, pulse <strong>Directorio de escaneo</strong> y active <strong>ZbxView connect</strong>.",
+      cs_s3: "En <strong>Administración → Mobile configuration</strong> indique la dirección por la que los teléfonos llegan a Zabbix (p. ej. vía Cloudflare), el nombre del servidor y su certificado. Si Zabbix está detrás de una pasarela mTLS, suba allí también el certificado de cliente (clave EC); el módulo lo comprueba.",
+      cs_s4: "Los usuarios abren <strong>Configuración de usuario → Mobile connect</strong> y en la app eligen <strong>Añadir servidor → Escanear código QR</strong>. Listo.",
+      cs_req: "Requisitos: Zabbix 6.4–8.0; el rol del usuario debe permitir <strong>Administrar tokens de API</strong> y el <strong>acceso a la API</strong>. El certificado en el código QR requiere la app 0.49 o posterior. Actualice el módulo con <code>git pull</code> en su directorio.",
       screens_tag: "Capturas",
       screens_h2: "Echa un vistazo dentro",
       screens_p: "Directamente desde la app.",
@@ -689,6 +721,12 @@
       conn_s6_h: "Sûr",
       conn_s6_p: "Le code n’est affiché qu’une fois et « Terminé » le masque. Le jeton est un jeton API ordinaire de l’utilisateur, avec ses droits, visible dans les jetons API.",
       conn_cta: "Module ZbxView connect sur GitHub",
+      cs_h: "Installer le module (une fois, par l’administrateur Zabbix)",
+      cs_s1: "Téléchargez le module depuis GitHub dans le répertoire des modules du frontend Zabbix :",
+      cs_s2: "Dans Zabbix, ouvrez <strong>Administration → Général → Modules</strong>, cliquez sur <strong>Analyser le répertoire</strong> et activez <strong>ZbxView connect</strong>.",
+      cs_s3: "Dans <strong>Administration → Mobile configuration</strong>, indiquez l’adresse par laquelle les téléphones joignent Zabbix (p. ex. via Cloudflare), le nom du serveur et son certificat. Si Zabbix est derrière une passerelle mTLS, téléversez-y aussi le certificat client (clé EC) — le module le vérifie.",
+      cs_s4: "Les utilisateurs ouvrent ensuite <strong>Paramètres utilisateur → Mobile connect</strong> et choisissent dans l’app <strong>Ajouter un serveur → Scanner un QR code</strong>. C’est tout.",
+      cs_req: "Prérequis : Zabbix 6.4–8.0 ; le rôle de l’utilisateur doit autoriser <strong>Gérer les Tokens API</strong> et l’<strong>accès à l’API</strong>. Le certificat dans le QR code nécessite l’app 0.49 ou plus récente. Mettez le module à jour avec <code>git pull</code> dans son répertoire.",
       screens_tag: "Captures",
       screens_h2: "Un aperçu de l’intérieur",
       screens_p: "Directement depuis l’application.",
@@ -814,10 +852,16 @@
       conn_s4_h: "Sertifikāts QR kodā",
       conn_s4_p: "Administrators modulim var iedot kopīgu klienta sertifikātu (EC atslēga). Kods tad kļūst lielāks, tāpēc tas tiek sadalīts trīs mainīgos kodos. Lietotne nolasa visus un sertifikātu saglabā pati (no versijas 0.49).",
       conn_s5_h: "Administrators iestata vienreiz",
-      conn_s5_p: "Adrese, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukums un sertifikāti iestata sadaļā Administrēšana → Tālruņa konfigurācija, kur administrators augšupielādē arī klienta sertifikātu un modulis to pārbauda — lietotājs neko neaizpilda.",
+      conn_s5_p: "Adrese, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukums un sertifikāti iestata sadaļā Administrācija → Tālruņa konfigurācija, kur administrators augšupielādē arī klienta sertifikātu un modulis to pārbauda — lietotājs neko neaizpilda.",
       conn_s6_h: "Droši",
       conn_s6_p: "Kods tiek parādīts tikai vienreiz, un “Gatavs” to paslēpj. Marķieris ir parasts lietotāja API marķieris ar viņa tiesībām, redzams sadaļā API marķieri.",
       conn_cta: "Modulis ZbxView connect GitHub",
+      cs_h: "Moduļa uzstādīšana (vienreiz, Zabbix administrators)",
+      cs_s1: "Lejupielādējiet moduli no GitHub Zabbix frontenda moduļu direktorijā:",
+      cs_s2: "Zabbix atveriet <strong>Administrācija → General → Moduļi</strong>, noklikšķiniet <strong>Skenēt direktoriju</strong> un ieslēdziet <strong>ZbxView connect</strong>.",
+      cs_s3: "Sadaļā <strong>Administrācija → Tālruņa konfigurācija</strong> iestatiet adresi, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukumu un servera sertifikātu. Ja Zabbix ir aiz mTLS vārtejas, augšupielādējiet tur arī klienta sertifikātu (EC atslēga) — modulis to pārbauda.",
+      cs_s4: "Lietotāji pēc tam atver <strong>User settings → Tālruņa savienojums</strong> un lietotnē izvēlas <strong>Pievienot serveri → Skenēt QR kodu</strong>. Gatavs.",
+      cs_req: "Prasības: Zabbix 6.4–8.0; lietotāja lomai jāatļauj <strong>Manage API tokens</strong> un <strong>API piekļuve</strong>. Sertifikātam QR kodā vajadzīga lietotnes versija 0.49 vai jaunāka. Jaunāku moduļa versiju iegūstiet ar <code>git pull</code> tā direktorijā.",
       screens_tag: "Ekrānuzņēmumi",
       screens_h2: "Ieskatieties iekšā",
       screens_p: "Tieši no lietotnes.",
