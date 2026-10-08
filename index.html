@@ -108,7 +108,7 @@
         <div class="feat"><div class="ico">2</div><h3 data-i18n="conn_s2_h">Naskenujte v aplikaci</h3><p data-i18n="conn_s2_p">Přidat server → Naskenovat QR kód. Aplikace ukáže, co kód obsahuje, a server přidá i s přihlášením.</p></div>
         <div class="feat"><div class="ico">3</div><h3 data-i18n="conn_s3_h">Nový telefon? Spárovat znovu</h3><p data-i18n="conn_s3_p">Po spárování stránka ukazuje jen stav a tlačítko „Spárovat znovu“. Starý token se tím zruší, takže ztracený telefon ztratí přístup.</p></div>
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="conn_s4_h">Certifikát v QR kódu</h3><p data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC). Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49).</p></div>
-        <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="conn_s5_h">Nastaví správce jednou</h3><p data-i18n="conn_s5_p">Adresu, na které telefony Zabbix najdou (např. přes Cloudflare), jméno serveru a práci s certifikáty nastaví správce v Administrace → Obecné → ZbxView connect, kde nahraje i klientský certifikát a modul ho rovnou zkontroluje — uživatel nic nevyplňuje.</p></div>
+        <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="conn_s5_h">Nastaví správce jednou</h3><p data-i18n="conn_s5_p">Adresu, na které telefony Zabbix najdou (např. přes Cloudflare), jméno serveru a práci s certifikáty nastaví správce v Administrace → Mobilní aplikace, kde nahraje i klientský certifikát a modul ho rovnou zkontroluje — uživatel nic nevyplňuje.</p></div>
         <div class="feat"><div class="ico">🔐</div><h3 data-i18n="conn_s6_h">Bezpečně</h3><p data-i18n="conn_s6_p">Kód se zobrazí jen jednou a „Hotovo“ ho skryje. Token je běžný API token uživatele s jeho oprávněními, vidíte ho i v API tokenech.</p></div>
       </div>
       <p style="text-align:center;margin-top:22px;"><a class="btn btn-ghost" href="https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect" target="_blank" rel="noopener" data-i18n="conn_cta">Modul ZbxView connect na GitHubu</a></p>
@@ -320,7 +320,7 @@
       conn_s4_h: 'Certificate in the QR code',
       conn_s4_p: 'An admin can give the module a shared client certificate (EC key). The code then gets bigger, so it is split into three codes shown in turn. The app reads them all and saves the certificate itself (from version 0.49).',
       conn_s5_h: 'Set once by the admin',
-      conn_s5_p: 'The address phones reach Zabbix at (e.g. via Cloudflare), the server name and certificate handling are set in Administration → General → ZbxView connect, where the admin also uploads the client certificate and the module checks it — users fill in nothing.',
+      conn_s5_p: 'The address phones reach Zabbix at (e.g. via Cloudflare), the server name and certificate handling are set in Administration → Mobile app, where the admin also uploads the client certificate and the module checks it — users fill in nothing.',
       conn_s6_h: 'Secure',
       conn_s6_p: 'The code is shown only once and “Done” hides it. The token is the user’s regular API token with their permissions, listed under API tokens.',
       conn_cta: 'ZbxView connect module on GitHub',
@@ -427,7 +427,7 @@
       conn_s4_h: "Zertifikat im QR-Code",
       conn_s4_p: "Ein Admin kann dem Modul ein gemeinsames Client-Zertifikat (EC-Schlüssel) geben. Der Code wird dann größer und deshalb auf drei wechselnde Codes verteilt. Die App liest alle und speichert das Zertifikat selbst (ab Version 0.49).",
       conn_s5_h: "Einmal vom Admin eingestellt",
-      conn_s5_p: "Die Adresse, unter der Telefone Zabbix erreichen (z. B. über Cloudflare), der Servername und die Zertifikate werden unter Administration → Allgemein → ZbxView connect eingestellt; dort lädt der Admin auch das Client-Zertifikat hoch und das Modul prüft es — Benutzer füllen nichts aus.",
+      conn_s5_p: "Die Adresse, unter der Telefone Zabbix erreichen (z. B. über Cloudflare), der Servername und die Zertifikate werden unter Administration → Mobile App eingestellt; dort lädt der Admin auch das Client-Zertifikat hoch und das Modul prüft es — Benutzer füllen nichts aus.",
       conn_s6_h: "Sicher",
       conn_s6_p: "Der Code wird nur einmal angezeigt und „Fertig“ blendet ihn aus. Der Token ist ein normaler API-Token des Benutzers mit seinen Rechten, sichtbar unter API-Tokens.",
       conn_cta: "Modul ZbxView connect auf GitHub",
@@ -556,7 +556,7 @@
       conn_s4_h: "Certificado en el código QR",
       conn_s4_p: "Un administrador puede dar al módulo un certificado de cliente común (clave EC). El código crece y por eso se divide en tres códigos que se alternan. La app los lee todos y guarda el certificado (desde la versión 0.49).",
       conn_s5_h: "Lo configura el administrador una vez",
-      conn_s5_p: "La dirección por la que los teléfonos llegan a Zabbix (p. ej. vía Cloudflare), el nombre del servidor y los certificados se ajustan en Administración → General → ZbxView connect, donde el administrador también sube el certificado de cliente y el módulo lo comprueba: el usuario no rellena nada.",
+      conn_s5_p: "La dirección por la que los teléfonos llegan a Zabbix (p. ej. vía Cloudflare), el nombre del servidor y los certificados se ajustan en Administración → Aplicación móvil, donde el administrador también sube el certificado de cliente y el módulo lo comprueba: el usuario no rellena nada.",
       conn_s6_h: "Seguro",
       conn_s6_p: "El código se muestra una sola vez y «Hecho» lo oculta. El token es un token de API normal del usuario con sus permisos, visible en Tokens de API.",
       conn_cta: "Módulo ZbxView connect en GitHub",
@@ -685,7 +685,7 @@
       conn_s4_h: "Certificat dans le QR code",
       conn_s4_p: "Un administrateur peut confier au module un certificat client commun (clé EC). Le code devient alors plus grand, il est donc réparti sur trois codes qui s’alternent. L’app les lit tous et enregistre le certificat (à partir de la version 0.49).",
       conn_s5_h: "Réglé une fois par l’administrateur",
-      conn_s5_p: "L’adresse par laquelle les téléphones joignent Zabbix (p. ex. via Cloudflare), le nom du serveur et les certificats se règlent dans Administration → Général → ZbxView connect, où l’administrateur téléverse aussi le certificat client que le module vérifie : l’utilisateur ne remplit rien.",
+      conn_s5_p: "L’adresse par laquelle les téléphones joignent Zabbix (p. ex. via Cloudflare), le nom du serveur et les certificats se règlent dans Administration → Application mobile, où l’administrateur téléverse aussi le certificat client que le module vérifie : l’utilisateur ne remplit rien.",
       conn_s6_h: "Sûr",
       conn_s6_p: "Le code n’est affiché qu’une fois et « Terminé » le masque. Le jeton est un jeton API ordinaire de l’utilisateur, avec ses droits, visible dans les jetons API.",
       conn_cta: "Module ZbxView connect sur GitHub",
@@ -814,7 +814,7 @@
       conn_s4_h: "Sertifikāts QR kodā",
       conn_s4_p: "Administrators modulim var iedot kopīgu klienta sertifikātu (EC atslēga). Kods tad kļūst lielāks, tāpēc tas tiek sadalīts trīs mainīgos kodos. Lietotne nolasa visus un sertifikātu saglabā pati (no versijas 0.49).",
       conn_s5_h: "Administrators iestata vienreiz",
-      conn_s5_p: "Adrese, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukums un sertifikāti iestata sadaļā Administrēšana → Vispārīgi → ZbxView connect, kur administrators augšupielādē arī klienta sertifikātu un modulis to pārbauda — lietotājs neko neaizpilda.",
+      conn_s5_p: "Adrese, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukums un sertifikāti iestata sadaļā Administrēšana → Mobilā lietotne, kur administrators augšupielādē arī klienta sertifikātu un modulis to pārbauda — lietotājs neko neaizpilda.",
       conn_s6_h: "Droši",
       conn_s6_p: "Kods tiek parādīts tikai vienreiz, un “Gatavs” to paslēpj. Marķieris ir parasts lietotāja API marķieris ar viņa tiesībām, redzams sadaļā API marķieri.",
       conn_cta: "Modulis ZbxView connect GitHub",
