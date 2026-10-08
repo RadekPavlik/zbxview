@@ -46,8 +46,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr><td><code>Kategorie</code></td><td data-i18n="k_kat">Skupina, pod kterou se směna zařadí — nadpis sekce v aplikaci. <code>Cluster4002_4003</code> se vypíše jako „Cluster 4002, 4003“, <code>MicrosoftInfrastruktura</code> jako „Microsoft Infrastruktura“.</td></tr>
-        <tr><td><code>ADuser</code></td><td data-i18n="k_ad">E-mail, který je zároveň zdrojem jména. Z <code>P.Eliasek@firma.cz</code> aplikace zobrazí „P. Eliasek“ a e-mailové tlačítko.</td></tr>
+        <tr><td><code>Kategorie</code></td><td data-i18n="k_kat">Skupina, pod kterou se směna zařadí — nadpis sekce v aplikaci. <code>Cluster101_102</code> se vypíše jako „Cluster 101, 102“, <code>SitovaInfrastruktura</code> jako „Sitova Infrastruktura“.</td></tr>
+        <tr><td><code>ADuser</code></td><td data-i18n="k_ad">E-mail, který je zároveň zdrojem jména. Z <code>J.Novak@firma.cz</code> aplikace zobrazí „J. Novak“ a e-mailové tlačítko.</td></tr>
         <tr><td><code>Mobil</code></td><td data-i18n="k_mobil">Telefon. Mezery a závorky nevadí, pro vytáčení se odstraní.</td></tr>
         <tr><td><code>StartTime</code></td><td data-i18n="k_start">Začátek směny, ISO 8601 (<code>2026-09-07T08:00:00</code>).</td></tr>
         <tr><td><code>EndTime</code></td><td data-i18n="k_end">Konec směny, stejný formát. Aktuální je směna, do jejíhož rozmezí spadá právě teď.</td></tr>
@@ -58,16 +58,16 @@
     <h2 data-i18n="s3_h">3. Příklad</h2>
     <pre><code>[
   {
-    "Kategorie": "Cluster4002_4003",
-    "ADuser": "P.Eliasek@firma.cz",
+    "Kategorie": "Cluster101_102",
+    "ADuser": "J.Novak@firma.cz",
     "Mobil": "+420 777 123 456",
     "StartTime": "2026-09-07T08:00:00",
     "EndTime": "2026-09-14T08:00:00",
-    "HM": "4002 4003"
+    "HM": "101 102"
   },
   {
     "Kategorie": "Databaze",
-    "ADuser": "J.Novak@firma.cz",
+    "ADuser": "P.Svoboda@firma.cz",
     "Mobil": "+420 777 987 654",
     "StartTime": "2026-09-07T08:00:00",
     "EndTime": "2026-09-14T08:00:00",
@@ -101,8 +101,8 @@
       s2_p: "The item value is an array of objects. One object is one shift:",
       th_field: "Field",
       th_meaning: "Meaning",
-      k_kat: "The group the shift belongs to — the section heading in the app. <code>Cluster4002_4003</code> reads as “Cluster 4002, 4003”, <code>MicrosoftInfrastructure</code> as “Microsoft Infrastructure”.",
-      k_ad: "E-mail address, which is also where the name comes from. From <code>P.Eliasek@company.com</code> the app shows “P. Eliasek” and an e-mail button.",
+      k_kat: "The group the shift belongs to — the section heading in the app. <code>Cluster101_102</code> reads as “Cluster 101, 102”, <code>NetworkInfrastructure</code> as “Network Infrastructure”.",
+      k_ad: "E-mail address, which is also where the name comes from. From <code>J.Novak@company.com</code> the app shows “J. Novak” and an e-mail button.",
       k_mobil: "Phone number. Spaces and brackets are fine — they are stripped for dialling.",
       k_start: "Start of the shift, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "End of the shift, same format. The current shift is the one whose range contains right now.",
@@ -131,8 +131,8 @@
       s2_p: "Der Wert des Items ist ein Array von Objekten. Ein Objekt ist eine Schicht:",
       th_field: "Feld",
       th_meaning: "Bedeutung",
-      k_kat: "Die Gruppe, zu der die Schicht gehört — die Abschnittsüberschrift in der App. <code>Cluster4002_4003</code> erscheint als „Cluster 4002, 4003“, <code>MicrosoftInfrastruktur</code> als „Microsoft Infrastruktur“.",
-      k_ad: "E-Mail-Adresse, aus der auch der Name kommt. Aus <code>P.Eliasek@firma.de</code> zeigt die App „P. Eliasek“ und eine E-Mail-Schaltfläche.",
+      k_kat: "Die Gruppe, zu der die Schicht gehört — die Abschnittsüberschrift in der App. <code>Cluster101_102</code> erscheint als „Cluster 101, 102“, <code>NetzwerkInfrastruktur</code> als „Netzwerk Infrastruktur“.",
+      k_ad: "E-Mail-Adresse, aus der auch der Name kommt. Aus <code>J.Novak@firma.de</code> zeigt die App „J. Novak“ und eine E-Mail-Schaltfläche.",
       k_mobil: "Telefonnummer. Leerzeichen und Klammern stören nicht — zum Wählen werden sie entfernt.",
       k_start: "Beginn der Schicht, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Ende der Schicht, gleiches Format. Aktuell ist die Schicht, in deren Zeitraum der jetzige Moment fällt.",
@@ -161,8 +161,8 @@
       s2_p: "El valor del ítem es un array de objetos. Cada objeto es un turno:",
       th_field: "Campo",
       th_meaning: "Significado",
-      k_kat: "El grupo al que pertenece el turno: el título de sección en la aplicación. <code>Cluster4002_4003</code> se muestra como «Cluster 4002, 4003», y <code>MicrosoftInfraestructura</code> como «Microsoft Infraestructura».",
-      k_ad: "Dirección de correo, de la que además sale el nombre. De <code>P.Eliasek@empresa.com</code> la aplicación muestra «P. Eliasek» y un botón de correo.",
+      k_kat: "El grupo al que pertenece el turno: el título de sección en la aplicación. <code>Cluster101_102</code> se muestra como «Cluster 101, 102», y <code>RedInfraestructura</code> como «Red Infraestructura».",
+      k_ad: "Dirección de correo, de la que además sale el nombre. De <code>J.Novak@empresa.com</code> la aplicación muestra «J. Novak» y un botón de correo.",
       k_mobil: "Teléfono. Los espacios y paréntesis no molestan: se quitan para marcar.",
       k_start: "Inicio del turno, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Fin del turno, mismo formato. El turno actual es aquel cuyo intervalo contiene el momento presente.",
@@ -191,8 +191,8 @@
       s2_p: "La valeur de l’élément est un tableau d’objets. Un objet correspond à une garde :",
       th_field: "Champ",
       th_meaning: "Signification",
-      k_kat: "Le groupe auquel la garde appartient — le titre de section dans l’application. <code>Cluster4002_4003</code> s’affiche « Cluster 4002, 4003 », et <code>MicrosoftInfrastructure</code> « Microsoft Infrastructure ».",
-      k_ad: "Adresse e-mail, dont vient aussi le nom. À partir de <code>P.Eliasek@societe.fr</code>, l’application affiche « P. Eliasek » et un bouton e-mail.",
+      k_kat: "Le groupe auquel la garde appartient — le titre de section dans l’application. <code>Cluster101_102</code> s’affiche « Cluster 101, 102 », et <code>ReseauInfrastructure</code> « Reseau Infrastructure ».",
+      k_ad: "Adresse e-mail, dont vient aussi le nom. À partir de <code>J.Novak@societe.fr</code>, l’application affiche « J. Novak » et un bouton e-mail.",
       k_mobil: "Numéro de téléphone. Espaces et parenthèses ne gênent pas : ils sont retirés pour la numérotation.",
       k_start: "Début de la garde, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Fin de la garde, même format. La garde en cours est celle dont l’intervalle contient l’instant présent.",
@@ -221,8 +221,8 @@
       s2_p: "Vienuma vērtība ir objektu masīvs. Viens objekts ir viena maiņa:",
       th_field: "Lauks",
       th_meaning: "Nozīme",
-      k_kat: "Grupa, kurai maiņa pieder — sadaļas virsraksts lietotnē. <code>Cluster4002_4003</code> tiek rādīts kā “Cluster 4002, 4003”, bet <code>MicrosoftInfrastruktura</code> kā “Microsoft Infrastruktura”.",
-      k_ad: "E-pasta adrese, no kuras tiek iegūts arī vārds. No <code>P.Eliasek@uznemums.lv</code> lietotne parāda “P. Eliasek” un e-pasta pogu.",
+      k_kat: "Grupa, kurai maiņa pieder — sadaļas virsraksts lietotnē. <code>Cluster101_102</code> tiek rādīts kā “Cluster 101, 102”, bet <code>TiklaInfrastruktura</code> kā “Tikla Infrastruktura”.",
+      k_ad: "E-pasta adrese, no kuras tiek iegūts arī vārds. No <code>J.Novak@uznemums.lv</code> lietotne parāda “J. Novak” un e-pasta pogu.",
       k_mobil: "Tālruņa numurs. Atstarpes un iekavas netraucē — zvanīšanai tās tiek noņemtas.",
       k_start: "Maiņas sākums, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Maiņas beigas, tāds pats formāts. Pašreizējā ir tā maiņa, kuras intervālā ietilpst šis brīdis.",
