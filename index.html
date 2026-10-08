@@ -104,9 +104,9 @@
         <p data-i18n="conn_p">Modul <strong>ZbxView connect</strong> do Zabbixu (6.4–8.0) přidá v Uživatelském nastavení položku „Připojení telefonu“. Nikdo nic nevypisuje ani neopisuje tokeny.</p>
       </div>
       <div class="grid">
-        <div class="feat"><div class="ico">1</div><h3 data-i18n="conn_s1_h">Otevřete „Připojení telefonu“</h3><p data-i18n="conn_s1_p">Hned se zobrazí QR kód. Modul vytvoří uživateli API token, který nevyprší — jeden na uživatele.</p></div>
+        <div class="feat"><div class="ico">1</div><h3 data-i18n="conn_s1_h">Otevřete „Připojení telefonu“</h3><p data-i18n="conn_s1_p">Hned se zobrazí QR kód pro první zařízení. Každý telefon dostane vlastní API token, který nevyprší.</p></div>
         <div class="feat"><div class="ico">2</div><h3 data-i18n="conn_s2_h">Naskenujte v aplikaci</h3><p data-i18n="conn_s2_p">Přidat server → Naskenovat QR kód. Aplikace ukáže, co kód obsahuje, a server přidá i s přihlášením.</p></div>
-        <div class="feat"><div class="ico">3</div><h3 data-i18n="conn_s3_h">Nový telefon? Spárovat znovu</h3><p data-i18n="conn_s3_p">Po spárování stránka ukazuje jen stav a tlačítko „Spárovat znovu“. Starý token se tím zruší, takže ztracený telefon ztratí přístup.</p></div>
+        <div class="feat"><div class="ico">3</div><h3 data-i18n="conn_s3_h">Víc telefonů? Seznam zařízení</h3><p data-i18n="conn_s3_p">Stránka ukazuje všechna spárovaná zařízení. „Přidat další zařízení“ připojí další telefon nebo tablet, „Nový QR kód“ znovu spáruje jedno zařízení a koš ho odebere — ztracený telefon tak přijde o přístup, ostatní fungují dál.</p></div>
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="conn_s4_h">Certifikát v QR kódu</h3><p data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC). Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49).</p></div>
         <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="conn_s5_h">Nastaví správce jednou</h3><p data-i18n="conn_s5_p">Adresu, na které telefony Zabbix najdou (např. přes Cloudflare), jméno serveru a práci s certifikáty nastaví správce v Administrace → Konfigurace telefonu, kde nahraje i klientský certifikát a modul ho rovnou zkontroluje — uživatel nic nevyplňuje.</p></div>
         <div class="feat"><div class="ico">🔐</div><h3 data-i18n="conn_s6_h">Bezpečně</h3><p data-i18n="conn_s6_p">Kód se zobrazí jen jednou a po 5 minutách nebo tlačítkem „Skrýt hned“ zmizí. Token je běžný API token uživatele s jeho oprávněními, vidíte ho i v API tokenech.</p></div>
@@ -326,11 +326,11 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_h2: 'A phone connected to Zabbix in seconds',
       conn_p: 'The <strong>ZbxView connect</strong> module for Zabbix (6.4–8.0) adds “Mobile connect” to User settings. Nobody types anything or copies tokens.',
       conn_s1_h: 'Open “Mobile connect”',
-      conn_s1_p: 'The QR code appears right away. The module creates an API token for the user that never expires — one per user.',
+      conn_s1_p: 'The QR code for the first device appears right away. Every phone gets its own API token that never expires.',
       conn_s2_h: 'Scan it in the app',
       conn_s2_p: 'Add server → Scan QR code. The app shows what the code holds and adds the server, signed in.',
-      conn_s3_h: 'New phone? Pair again',
-      conn_s3_p: 'Once paired, the page shows the state and a “Pair again” button. That revokes the old token, so a lost phone loses access.',
+      conn_s3_h: 'More phones? A device list',
+      conn_s3_p: 'The page lists every paired device. “Add another device” connects another phone or tablet, “New QR code” re-pairs one device and the bin removes it — a lost phone loses access, the others keep working.',
       conn_s4_h: 'Certificate in the QR code',
       conn_s4_p: 'An admin can give the module a shared client certificate (EC key). The code then gets bigger, so it is split into three codes shown in turn. The app reads them all and saves the certificate itself (from version 0.49).',
       conn_s5_h: 'Set once by the admin',
@@ -439,11 +439,11 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_h2: "Das Telefon in Sekunden mit Zabbix verbunden",
       conn_p: "Das Modul <strong>ZbxView connect</strong> für Zabbix (6.4–8.0) fügt in den Benutzereinstellungen „Mobile connect“ hinzu. Niemand tippt etwas oder kopiert Tokens.",
       conn_s1_h: "„Mobile connect“ öffnen",
-      conn_s1_p: "Der QR-Code erscheint sofort. Das Modul erzeugt für den Benutzer einen API-Token ohne Ablauf — einen pro Benutzer.",
+      conn_s1_p: "Der QR-Code für das erste Gerät erscheint sofort. Jedes Telefon bekommt einen eigenen API-Token ohne Ablauf.",
       conn_s2_h: "In der App scannen",
       conn_s2_p: "Server hinzufügen → QR-Code scannen. Die App zeigt den Inhalt und fügt den Server angemeldet hinzu.",
-      conn_s3_h: "Neues Telefon? Neu koppeln",
-      conn_s3_p: "Nach dem Koppeln zeigt die Seite den Status und „Neu koppeln“. Das widerruft den alten Token, ein verlorenes Telefon verliert den Zugang.",
+      conn_s3_h: "Mehrere Telefone? Eine Geräteliste",
+      conn_s3_p: "Die Seite listet alle gekoppelten Geräte. „Add another device“ verbindet ein weiteres Telefon oder Tablet, „New QR code“ koppelt ein Gerät neu und der Papierkorb entfernt es — ein verlorenes Telefon verliert den Zugang, die anderen arbeiten weiter.",
       conn_s4_h: "Zertifikat im QR-Code",
       conn_s4_p: "Ein Admin kann dem Modul ein gemeinsames Client-Zertifikat (EC-Schlüssel) geben. Der Code wird dann größer und deshalb auf drei wechselnde Codes verteilt. Die App liest alle und speichert das Zertifikat selbst (ab Version 0.49).",
       conn_s5_h: "Einmal vom Admin eingestellt",
@@ -574,11 +574,11 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_h2: "El teléfono conectado a Zabbix en segundos",
       conn_p: "El módulo <strong>ZbxView connect</strong> para Zabbix (6.4–8.0) añade «Mobile connect» en la configuración de usuario. Nadie escribe nada ni copia tokens.",
       conn_s1_h: "Abra «Mobile connect»",
-      conn_s1_p: "El código QR aparece al instante. El módulo crea para el usuario un token de API que no caduca, uno por usuario.",
+      conn_s1_p: "El código QR del primer dispositivo aparece al instante. Cada teléfono recibe su propio token de API que no caduca.",
       conn_s2_h: "Escanéelo en la app",
       conn_s2_p: "Añadir servidor → Escanear código QR. La app muestra el contenido y añade el servidor con la sesión iniciada.",
-      conn_s3_h: "¿Teléfono nuevo? Volver a emparejar",
-      conn_s3_p: "Una vez emparejado, la página muestra el estado y el botón «Volver a emparejar». Revoca el token anterior, así un teléfono perdido pierde el acceso.",
+      conn_s3_h: "¿Varios teléfonos? Una lista de dispositivos",
+      conn_s3_p: "La página muestra todos los dispositivos emparejados. «Add another device» conecta otro teléfono o tableta, «New QR code» vuelve a emparejar uno y la papelera lo elimina: un teléfono perdido pierde el acceso y los demás siguen funcionando.",
       conn_s4_h: "Certificado en el código QR",
       conn_s4_p: "Un administrador puede dar al módulo un certificado de cliente común (clave EC). El código crece y por eso se divide en tres códigos que se alternan. La app los lee todos y guarda el certificado (desde la versión 0.49).",
       conn_s5_h: "Lo configura el administrador una vez",
@@ -709,11 +709,11 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_h2: "Un téléphone relié à Zabbix en quelques secondes",
       conn_p: "Le module <strong>ZbxView connect</strong> pour Zabbix (6.4–8.0) ajoute « Mobile connect » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton.",
       conn_s1_h: "Ouvrez « Mobile connect »",
-      conn_s1_p: "Le QR code s’affiche aussitôt. Le module crée pour l’utilisateur un jeton API sans expiration, un par utilisateur.",
+      conn_s1_p: "Le QR code du premier appareil s’affiche aussitôt. Chaque téléphone reçoit son propre jeton API sans expiration.",
       conn_s2_h: "Scannez-le dans l’app",
       conn_s2_p: "Ajouter un serveur → Scanner un QR code. L’app affiche le contenu et ajoute le serveur, déjà connecté.",
-      conn_s3_h: "Nouveau téléphone ? Réappairer",
-      conn_s3_p: "Une fois appairé, la page affiche l’état et un bouton « Réappairer ». L’ancien jeton est révoqué : un téléphone perdu perd l’accès.",
+      conn_s3_h: "Plusieurs téléphones ? Une liste d’appareils",
+      conn_s3_p: "La page liste tous les appareils appairés. « Add another device » connecte un autre téléphone ou une tablette, « New QR code » réappaire un appareil et la corbeille le supprime — un téléphone perdu perd l’accès, les autres continuent.",
       conn_s4_h: "Certificat dans le QR code",
       conn_s4_p: "Un administrateur peut confier au module un certificat client commun (clé EC). Le code devient alors plus grand, il est donc réparti sur trois codes qui s’alternent. L’app les lit tous et enregistre le certificat (à partir de la version 0.49).",
       conn_s5_h: "Réglé une fois par l’administrateur",
@@ -844,11 +844,11 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_h2: "Tālrunis savienots ar Zabbix dažās sekundēs",
       conn_p: "Modulis <strong>ZbxView connect</strong> priekš Zabbix (6.4–8.0) lietotāja iestatījumos pievieno “Tālruņa savienojums”. Neviens neko neraksta un nekopē marķierus.",
       conn_s1_h: "Atveriet “Tālruņa savienojums”",
-      conn_s1_p: "QR kods parādās uzreiz. Modulis lietotājam izveido API marķieri bez termiņa — vienu katram lietotājam.",
+      conn_s1_p: "Pirmās ierīces QR kods parādās uzreiz. Katrs tālrunis saņem savu API marķieri bez termiņa.",
       conn_s2_h: "Noskenējiet lietotnē",
       conn_s2_p: "Pievienot serveri → Skenēt QR kodu. Lietotne parāda koda saturu un pievieno serveri jau pieteiktu.",
-      conn_s3_h: "Jauns tālrunis? Savienot atkārtoti",
-      conn_s3_p: "Pēc savienošanas lapa rāda stāvokli un pogu “Savienot atkārtoti”. Tā atsauc veco marķieri, tāpēc pazaudēts tālrunis zaudē piekļuvi.",
+      conn_s3_h: "Vairāki tālruņi? Ierīču saraksts",
+      conn_s3_p: "Lapa rāda visas savienotās ierīces. “Pievienot vēl vienu ierīci” pievieno vēl vienu tālruni vai planšeti, “Jauns QR kods” atkārtoti savieno vienu ierīci, bet miskaste to noņem — pazaudēts tālrunis zaudē piekļuvi, pārējie turpina darboties.",
       conn_s4_h: "Sertifikāts QR kodā",
       conn_s4_p: "Administrators modulim var iedot kopīgu klienta sertifikātu (EC atslēga). Kods tad kļūst lielāks, tāpēc tas tiek sadalīts trīs mainīgos kodos. Lietotne nolasa visus un sertifikātu saglabā pati (no versijas 0.49).",
       conn_s5_h: "Administrators iestata vienreiz",
