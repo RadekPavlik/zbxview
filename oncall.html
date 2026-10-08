@@ -51,7 +51,7 @@
         <tr><td><code>Mobil</code></td><td data-i18n="k_mobil">Telefon. Mezery a závorky nevadí, pro vytáčení se odstraní.</td></tr>
         <tr><td><code>StartTime</code></td><td data-i18n="k_start">Začátek směny, ISO 8601 (<code>2026-09-07T08:00:00</code>).</td></tr>
         <tr><td><code>EndTime</code></td><td data-i18n="k_end">Konec směny, stejný formát. Aktuální je směna, do jejíhož rozmezí spadá právě teď.</td></tr>
-        <tr><td><code>HM</code></td><td data-i18n="k_hm">Volitelné. Čísla poboček nebo lokalit oddělená mezerou, čárkou či středníkem; zobrazí se u kontaktu. Nechte prázdné, pokud směna platí všude.</td></tr>
+        <tr><td><code>DIVIZE</code></td><td data-i18n="k_hm">Volitelné. Čísla poboček nebo lokalit oddělená mezerou, čárkou či středníkem; zobrazí se u kontaktu. Nechte prázdné, pokud směna platí všude. Klíč <code>DIVIZE</code> čte aplikace od verze 0.49; starší verze čtou <code>HM</code>, který funguje i nadále.</td></tr>
       </tbody>
     </table>
 
@@ -63,7 +63,7 @@
     "Mobil": "+420 777 123 456",
     "StartTime": "2026-09-07T08:00:00",
     "EndTime": "2026-09-14T08:00:00",
-    "HM": "101 102"
+    "DIVIZE": "101 102"
   },
   {
     "Kategorie": "Databaze",
@@ -71,7 +71,7 @@
     "Mobil": "+420 777 987 654",
     "StartTime": "2026-09-07T08:00:00",
     "EndTime": "2026-09-14T08:00:00",
-    "HM": ""
+    "DIVIZE": ""
   }
 ]</code></pre>
 
@@ -106,7 +106,7 @@
       k_mobil: "Phone number. Spaces and brackets are fine — they are stripped for dialling.",
       k_start: "Start of the shift, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "End of the shift, same format. The current shift is the one whose range contains right now.",
-      k_hm: "Optional. Site or branch numbers separated by a space, comma or semicolon; shown next to the contact. Leave empty when the shift covers everything.",
+      k_hm: "Optional. Site or branch numbers separated by a space, comma or semicolon; shown next to the contact. Leave empty when the shift covers everything. The app reads <code>DIVIZE</code> from version 0.49; older versions read <code>HM</code>, which keeps working.",
       s3_h: "3. Example",
       s4_h: "4. How to fill the item",
       s4_p: "The app does not care — only the resulting value matters. The usual routes: an <strong>HTTP agent</strong> pointed at an endpoint that returns the JSON; a <strong>script</strong> (external or Zabbix agent) that pulls the rota from wherever it lives; or a file via <code>vfs.file.contents</code> with a preprocessing step that turns CSV into JSON.",
@@ -136,7 +136,7 @@
       k_mobil: "Telefonnummer. Leerzeichen und Klammern stören nicht — zum Wählen werden sie entfernt.",
       k_start: "Beginn der Schicht, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Ende der Schicht, gleiches Format. Aktuell ist die Schicht, in deren Zeitraum der jetzige Moment fällt.",
-      k_hm: "Optional. Standort- oder Filialnummern, getrennt durch Leerzeichen, Komma oder Semikolon; wird beim Kontakt angezeigt. Leer lassen, wenn die Schicht überall gilt.",
+      k_hm: "Optional. Standort- oder Filialnummern, getrennt durch Leerzeichen, Komma oder Semikolon; wird beim Kontakt angezeigt. Leer lassen, wenn die Schicht überall gilt. <code>DIVIZE</code> liest die App ab Version 0.49; ältere Versionen lesen <code>HM</code>, das weiterhin funktioniert.",
       s3_h: "3. Beispiel",
       s4_h: "4. Womit das Item befüllt wird",
       s4_p: "Das ist der App gleichgültig — es zählt nur der Wert am Ende. Übliche Wege: ein <strong>HTTP-Agent</strong> auf einen Endpunkt, der das JSON liefert; ein <strong>Skript</strong> (extern oder Zabbix-Agent), das den Plan dort abholt, wo er gepflegt wird; oder eine Datei über <code>vfs.file.contents</code> mit einem Vorverarbeitungsschritt, der CSV in JSON verwandelt.",
@@ -166,7 +166,7 @@
       k_mobil: "Teléfono. Los espacios y paréntesis no molestan: se quitan para marcar.",
       k_start: "Inicio del turno, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Fin del turno, mismo formato. El turno actual es aquel cuyo intervalo contiene el momento presente.",
-      k_hm: "Opcional. Números de centro o de tienda separados por espacio, coma o punto y coma; se muestran junto al contacto. Déjalo vacío si el turno cubre todo.",
+      k_hm: "Opcional. Números de centro o de tienda separados por espacio, coma o punto y coma; se muestran junto al contacto. Déjalo vacío si el turno cubre todo. La aplicación lee <code>DIVIZE</code> desde la versión 0.49; las anteriores leen <code>HM</code>, que sigue funcionando.",
       s3_h: "3. Ejemplo",
       s4_h: "4. Cómo rellenar el ítem",
       s4_p: "A la aplicación le da igual: solo cuenta el valor final. Las vías habituales: un <strong>agente HTTP</strong> apuntando a un endpoint que devuelva el JSON; un <strong>script</strong> (externo o del agente Zabbix) que recoja el cuadro de donde se mantenga; o un fichero por <code>vfs.file.contents</code> con un preprocesado que convierta CSV en JSON.",
@@ -196,7 +196,7 @@
       k_mobil: "Numéro de téléphone. Espaces et parenthèses ne gênent pas : ils sont retirés pour la numérotation.",
       k_start: "Début de la garde, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Fin de la garde, même format. La garde en cours est celle dont l’intervalle contient l’instant présent.",
-      k_hm: "Facultatif. Numéros de site ou d’agence séparés par une espace, une virgule ou un point-virgule ; affichés à côté du contact. Laissez vide si la garde couvre tout.",
+      k_hm: "Facultatif. Numéros de site ou d’agence séparés par une espace, une virgule ou un point-virgule ; affichés à côté du contact. Laissez vide si la garde couvre tout. L’application lit <code>DIVIZE</code> à partir de la version 0.49 ; les versions antérieures lisent <code>HM</code>, qui fonctionne toujours.",
       s3_h: "3. Exemple",
       s4_h: "4. Comment alimenter l’élément",
       s4_p: "Peu importe à l’application : seule compte la valeur obtenue. Les voies habituelles : un <strong>agent HTTP</strong> vers un endpoint qui renvoie le JSON ; un <strong>script</strong> (externe ou agent Zabbix) qui récupère le planning là où il est tenu ; ou un fichier via <code>vfs.file.contents</code> avec un prétraitement qui transforme le CSV en JSON.",
@@ -226,7 +226,7 @@
       k_mobil: "Tālruņa numurs. Atstarpes un iekavas netraucē — zvanīšanai tās tiek noņemtas.",
       k_start: "Maiņas sākums, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
       k_end: "Maiņas beigas, tāds pats formāts. Pašreizējā ir tā maiņa, kuras intervālā ietilpst šis brīdis.",
-      k_hm: "Neobligāti. Objektu vai filiāļu numuri, atdalīti ar atstarpi, komatu vai semikolu; tiek rādīti pie kontakta. Atstājiet tukšu, ja maiņa attiecas uz visu.",
+      k_hm: "Neobligāti. Objektu vai filiāļu numuri, atdalīti ar atstarpi, komatu vai semikolu; tiek rādīti pie kontakta. Atstājiet tukšu, ja maiņa attiecas uz visu. <code>DIVIZE</code> lietotne nolasa no versijas 0.49; vecākas versijas nolasa <code>HM</code>, kas darbojas joprojām.",
       s3_h: "3. Piemērs",
       s4_h: "4. Ar ko vienumu aizpildīt",
       s4_p: "Lietotnei tas ir vienalga — nozīme ir tikai gala vērtībai. Ierastie ceļi: <strong>HTTP aģents</strong> uz galapunktu, kas atgriež šo JSON; <strong>skripts</strong> (ārējs vai Zabbix aģenta), kas paņem grafiku no turienes, kur tas tiek uzturēts; vai fails caur <code>vfs.file.contents</code> ar priekšapstrādi, kas CSV pārveido par JSON.",
