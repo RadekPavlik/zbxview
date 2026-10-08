@@ -109,7 +109,7 @@
         <div class="feat"><div class="ico">3</div><h3 data-i18n="conn_s3_h">Nový telefon? Spárovat znovu</h3><p data-i18n="conn_s3_p">Po spárování stránka ukazuje jen stav a tlačítko „Spárovat znovu“. Starý token se tím zruší, takže ztracený telefon ztratí přístup.</p></div>
         <div class="feat"><div class="ico">🪪</div><h3 data-i18n="conn_s4_h">Certifikát v QR kódu</h3><p data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC). Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49).</p></div>
         <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="conn_s5_h">Nastaví správce jednou</h3><p data-i18n="conn_s5_p">Adresu, na které telefony Zabbix najdou (např. přes Cloudflare), jméno serveru a práci s certifikáty nastaví správce v Administrace → Konfigurace telefonu, kde nahraje i klientský certifikát a modul ho rovnou zkontroluje — uživatel nic nevyplňuje.</p></div>
-        <div class="feat"><div class="ico">🔐</div><h3 data-i18n="conn_s6_h">Bezpečně</h3><p data-i18n="conn_s6_p">Kód se zobrazí jen jednou a „Hotovo“ ho skryje. Token je běžný API token uživatele s jeho oprávněními, vidíte ho i v API tokenech.</p></div>
+        <div class="feat"><div class="ico">🔐</div><h3 data-i18n="conn_s6_h">Bezpečně</h3><p data-i18n="conn_s6_p">Kód se zobrazí jen jednou a po 5 minutách nebo tlačítkem „Skrýt hned“ zmizí. Token je běžný API token uživatele s jeho oprávněními, vidíte ho i v API tokenech.</p></div>
       </div>
       <div class="doc" id="connect-setup" style="max-width:760px;margin:34px auto 0;">
         <h3 data-i18n="cs_h">Jak modul nainstalovat (jednou, správce Zabbixu)</h3>
@@ -336,7 +336,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_s5_h: 'Set once by the admin',
       conn_s5_p: 'The address phones reach Zabbix at (e.g. via Cloudflare), the server name and certificate handling are set in Administration → Mobile configuration, where the admin also uploads the client certificate and the module checks it — users fill in nothing.',
       conn_s6_h: 'Secure',
-      conn_s6_p: 'The code is shown only once and “Done” hides it. The token is the user’s regular API token with their permissions, listed under API tokens.',
+      conn_s6_p: 'The code is shown only once and disappears after 5 minutes or with “Hide now”. The token is the user’s regular API token with their permissions, listed under API tokens.',
       conn_cta: 'ZbxView connect module on GitHub',
       cs_h: 'Installing the module (once, by the Zabbix admin)',
       cs_s1: 'Download the module from GitHub into the Zabbix frontend modules directory:',
@@ -449,7 +449,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_s5_h: "Einmal vom Admin eingestellt",
       conn_s5_p: "Die Adresse, unter der Telefone Zabbix erreichen (z. B. über Cloudflare), der Servername und die Zertifikate werden unter Administration → Mobile configuration eingestellt; dort lädt der Admin auch das Client-Zertifikat hoch und das Modul prüft es — Benutzer füllen nichts aus.",
       conn_s6_h: "Sicher",
-      conn_s6_p: "Der Code wird nur einmal angezeigt und „Fertig“ blendet ihn aus. Der Token ist ein normaler API-Token des Benutzers mit seinen Rechten, sichtbar unter API-Tokens.",
+      conn_s6_p: "Der Code wird nur einmal angezeigt und verschwindet nach 5 Minuten oder mit „Hide now“. Der Token ist ein normaler API-Token des Benutzers mit seinen Rechten, sichtbar unter API-Tokens.",
       conn_cta: "Modul ZbxView connect auf GitHub",
       cs_h: "Modul installieren (einmalig, durch den Zabbix-Admin)",
       cs_s1: "Laden Sie das Modul von GitHub in das Modulverzeichnis des Zabbix-Frontends:",
@@ -584,7 +584,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_s5_h: "Lo configura el administrador una vez",
       conn_s5_p: "La dirección por la que los teléfonos llegan a Zabbix (p. ej. vía Cloudflare), el nombre del servidor y los certificados se ajustan en Administración → Mobile configuration, donde el administrador también sube el certificado de cliente y el módulo lo comprueba: el usuario no rellena nada.",
       conn_s6_h: "Seguro",
-      conn_s6_p: "El código se muestra una sola vez y «Hecho» lo oculta. El token es un token de API normal del usuario con sus permisos, visible en Tokens de API.",
+      conn_s6_p: "El código se muestra una sola vez y desaparece a los 5 minutos o con «Hide now». El token es un token de API normal del usuario con sus permisos, visible en Tokens de API.",
       conn_cta: "Módulo ZbxView connect en GitHub",
       cs_h: "Instalar el módulo (una vez, el administrador de Zabbix)",
       cs_s1: "Descargue el módulo de GitHub en el directorio de módulos del frontend de Zabbix:",
@@ -719,7 +719,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_s5_h: "Réglé une fois par l’administrateur",
       conn_s5_p: "L’adresse par laquelle les téléphones joignent Zabbix (p. ex. via Cloudflare), le nom du serveur et les certificats se règlent dans Administration → Mobile configuration, où l’administrateur téléverse aussi le certificat client que le module vérifie : l’utilisateur ne remplit rien.",
       conn_s6_h: "Sûr",
-      conn_s6_p: "Le code n’est affiché qu’une fois et « Terminé » le masque. Le jeton est un jeton API ordinaire de l’utilisateur, avec ses droits, visible dans les jetons API.",
+      conn_s6_p: "Le code n’est affiché qu’une fois et disparaît après 5 minutes ou avec « Hide now ». Le jeton est un jeton API ordinaire de l’utilisateur, avec ses droits, visible dans les jetons API.",
       conn_cta: "Module ZbxView connect sur GitHub",
       cs_h: "Installer le module (une fois, par l’administrateur Zabbix)",
       cs_s1: "Téléchargez le module depuis GitHub dans le répertoire des modules du frontend Zabbix :",
@@ -854,7 +854,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       conn_s5_h: "Administrators iestata vienreiz",
       conn_s5_p: "Adrese, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukums un sertifikāti iestata sadaļā Administrācija → Tālruņa konfigurācija, kur administrators augšupielādē arī klienta sertifikātu un modulis to pārbauda — lietotājs neko neaizpilda.",
       conn_s6_h: "Droši",
-      conn_s6_p: "Kods tiek parādīts tikai vienreiz, un “Gatavs” to paslēpj. Marķieris ir parasts lietotāja API marķieris ar viņa tiesībām, redzams sadaļā API marķieri.",
+      conn_s6_p: "Kods tiek parādīts tikai vienreiz un pazūd pēc 5 minūtēm vai ar “Paslēpt tagad”. Marķieris ir parasts lietotāja API marķieris ar viņa tiesībām, redzams sadaļā API marķieri.",
       conn_cta: "Modulis ZbxView connect GitHub",
       cs_h: "Moduļa uzstādīšana (vienreiz, Zabbix administrators)",
       cs_s1: "Lejupielādējiet moduli no GitHub Zabbix frontenda moduļu direktorijā:",
