@@ -1,0 +1,65 @@
+zabbix_export:
+  version: '7.0'
+  media_types:
+    - name: 'ZbxView Push'
+      type: WEBHOOK
+      parameters:
+        - name: Auth
+          value: CHANGE_ME_shared_secret
+        - name: EventId
+          value: '{EVENT.ID}'
+        - name: Host
+          value: '{HOST.NAME}'
+        - name: Message
+          value: '{ALERT.MESSAGE}'
+        - name: RelayURL
+          value: 'http://127.0.0.1:8090/send'
+        - name: SendTo
+          value: '{ALERT.SENDTO}'
+        - name: Severity
+          value: '{EVENT.SEVERITY}'
+        - name: Status
+          value: '{EVENT.STATUS}'
+        - name: Subject
+          value: '{ALERT.SUBJECT}'
+      script: |
+        try {
+            var p = JSON.parse(value);
+            var req = new HttpRequest();
+            req.addHeader('Content-Type: application/json');
+            req.addHeader('X-Auth: ' + p.Auth);
+            var body = JSON.stringify({
+                token: p.SendTo,
+                title: p.Subject,
+                body: p.Message,
+                data: {
+                    eventid: p.EventId,
+                    host: p.Host,
+                    severity: p.Severity,
+                    status: p.Status
+                }
+            });
+            var resp = req.post(p.RelayURL, body);
+            var code = req.getStatus();
+            if (code < 200 || code > 299) {
+                throw 'relay HTTP ' + code + ': ' + resp;
+            }
+            return 'OK';
+        } catch (error) {
+            Zabbix.log(3, '[ZbxView Push] ' + error);
+            throw 'ZbxView Push failed: ' + error;
+        }
+      description: 'Push notifications to the ZbxView app through the push relay (https://radekpavlik.github.io/zbxview/#push). The app registers the phone token as the user''s media itself.'
+      message_templates:
+        - event_source: TRIGGERS
+          operation_mode: PROBLEM
+          subject: '{EVENT.SEVERITY}: {EVENT.NAME}'
+          message: '{HOST.NAME} - {EVENT.NAME}'
+        - event_source: TRIGGERS
+          operation_mode: RECOVERY
+          subject: 'Resolved: {EVENT.NAME}'
+          message: '{HOST.NAME}: {EVENT.NAME}'
+        - event_source: TRIGGERS
+          operation_mode: UPDATE
+          subject: 'Update: {EVENT.NAME}'
+          message: '{HOST.NAME}: {EVENT.NAME} ({USER.FULLNAME}: {EVENT.UPDATE.MESSAGE})'

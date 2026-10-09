@@ -1,0 +1,14 @@
+# Copy to config.ini (chmod 600!) and fill in.
+
+[relay]
+# Where the relay listens. Zabbix server must reach this host:port.
+listen = 127.0.0.1
+port = 8090
+
+# Shared secret — the Zabbix webhook sends it as the X-Auth header. Make it long
+# and random (e.g. `openssl rand -hex 24`).
+shared_secret = FILL_ME_LONG_RANDOM
+
+# Firebase service account JSON (Firebase console → Project settings →
+# Service accounts → Generate new private key). chmod 600, keep OFF git.
+service_account_file = /opt/zbxview-push-relay/service-account.json

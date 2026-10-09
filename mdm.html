@@ -99,6 +99,31 @@
           <td data-i18n="t_bool3">ano/ne</td>
           <td data-i18n="k_default">Označí nasazený server hvězdičkou (výchozí server), takže se aplikace po spuštění otevře rovnou v něm místo seznamu serverů. Potřebuje přihlašovací údaje — <code>api_token</code> z této politiky, nebo přihlášení, které uživatel jednou provedl.</td>
         </tr>
+        <tr>
+          <td><code>push_api_key</code></td>
+          <td data-i18n="t_string8">text</td>
+          <td data-i18n="k_pkey">Push notifikace přes vlastní Firebase projekt firmy: <code>current_key</code> z <code>google-services.json</code> Android aplikace <code>app.zbxview</code> zaregistrované v tom projektu. Všechny čtyři klíče <code>push_*</code> spolu; relay a typ média popisuje <a href="index.html#push">návod Push</a>.</td>
+        </tr>
+        <tr>
+          <td><code>push_app_id</code></td>
+          <td data-i18n="t_string8">text</td>
+          <td data-i18n="k_papp"><code>mobilesdk_app_id</code> z google-services.json (<code>1:&lt;číslo&gt;:android:&lt;hex&gt;</code>).</td>
+        </tr>
+        <tr>
+          <td><code>push_sender_id</code></td>
+          <td data-i18n="t_string8">text</td>
+          <td data-i18n="k_psender"><code>project_number</code> z google-services.json.</td>
+        </tr>
+        <tr>
+          <td><code>push_project_id</code></td>
+          <td data-i18n="t_string8">text</td>
+          <td data-i18n="k_pproject"><code>project_id</code> z google-services.json.</td>
+        </tr>
+        <tr>
+          <td><code>push_enabled</code></td>
+          <td data-i18n="t_bool4">ano/ne</td>
+          <td data-i18n="k_pon">Zapne push notifikace při prvním spuštění (uživatel povolí notifikace a zařízení se samo zaregistruje do Zabbixu). Uživatel je může v Nastavení vypnout.</td>
+        </tr>
       </tbody>
     </table>
 
@@ -181,6 +206,11 @@ startActivity(i);</code></pre>
       k_cpw: 'Password of the PKCS#12 bundle or of an encrypted key.',
       k_chosts: 'Servers the certificate is sent to, comma separated (<code>*.example.com</code> for subdomains). Empty = the server in <code>server_url</code>. It is never sent to any other server.',
       k_clock: 'The user cannot change or remove the certificate of this policy\'s server. For servers they add themselves they can still import their own.',
+      k_pkey: 'Push notifications through the organisation’s own Firebase project: <code>current_key</code> from <code>google-services.json</code> of the Android app <code>app.zbxview</code> registered in that project. All four <code>push_*</code> keys together; the relay and the media type are in the <a href="index.html#push">Push guide</a>.',
+      k_papp: '<code>mobilesdk_app_id</code> from google-services.json (<code>1:&lt;number&gt;:android:&lt;hex&gt;</code>).',
+      k_psender: '<code>project_number</code> from google-services.json.',
+      k_pproject: '<code>project_id</code> from google-services.json.',
+      k_pon: 'Turns push notifications on at first start (the user grants the notification permission and the device registers itself with Zabbix). The user can turn them off in Settings.',
       note_token: '<strong>About the token:</strong> managed configuration is <strong>not a secret store</strong> — anyone with access to the MDM console can read the value, and it can be extracted from a rooted device. So create a <strong>dedicated read-only Zabbix user</strong>, limited to the host groups and dashboards those devices may see, and issue the token to it. Every device then shares that one identity, which is also how the Zabbix audit log will show them. Leave <code>require_biometric</code> off, or the lock screen stops the user anyway.',
       s2_h: '2. Android — Intune step by step',
       a1: '<strong>Add the app.</strong> Intune → <em>Apps</em> → <em>Android</em> → <em>Add</em> → type <em>Managed Google Play</em>. Find <strong>ZbxView</strong> (package id <code>app.zbxview</code>), approve it and sync.',
@@ -245,6 +275,11 @@ startActivity(i);</code></pre>
       k_cpw: "Passwort des PKCS#12-Pakets bzw. eines verschlüsselten Schlüssels.",
       k_chosts: "Server, an die das Zertifikat geht, durch Komma getrennt (<code>*.example.com</code> für Subdomains). Leer = der Server aus <code>server_url</code>. An andere Server wird es nie gesendet.",
       k_clock: "Das Zertifikat des Servers dieser Richtlinie kann der Nutzer weder ändern noch entfernen. Für selbst hinzugefügte Server kann er weiterhin eigene importieren.",
+      k_pkey: 'Push-Benachrichtigungen über das eigene Firebase-Projekt der Organisation: <code>current_key</code> aus der <code>google-services.json</code> der Android-App <code>app.zbxview</code>, die in diesem Projekt registriert ist. Alle vier <code>push_*</code>-Schlüssel zusammen; Relay und Medientyp beschreibt die <a href="index.html#push">Push-Anleitung</a>.',
+      k_papp: '<code>mobilesdk_app_id</code> aus google-services.json (<code>1:&lt;Nummer&gt;:android:&lt;hex&gt;</code>).',
+      k_psender: '<code>project_number</code> aus google-services.json.',
+      k_pproject: '<code>project_id</code> aus google-services.json.',
+      k_pon: 'Schaltet Push-Benachrichtigungen beim ersten Start ein (der Nutzer erteilt die Benachrichtigungsberechtigung, das Gerät registriert sich selbst bei Zabbix). Der Nutzer kann sie in den Einstellungen ausschalten.',
       note_token: "<strong>Zum Token:</strong> Managed configuration ist <strong>kein Tresor</strong> — jeder mit Zugang zur MDM-Konsole kann den Wert lesen, und von einem gerooteten Gerät lässt er sich auslesen. Legen Sie deshalb einen <strong>eigenen Zabbix-Benutzer mit reinen Leserechten</strong> an, beschränkt auf die Hostgruppen und Dashboards, die diese Geräte sehen dürfen, und stellen Sie das Token für ihn aus. Alle Geräte teilen sich dann diese eine Identität — so erscheinen sie auch im Zabbix-Auditlog. Lassen Sie <code>require_biometric</code> aus, sonst hält der Sperrbildschirm den Nutzer ohnehin auf.",
       s2_h: "2. Android — Intune Schritt für Schritt",
       a1: "<strong>App hinzufügen.</strong> Intune → <em>Apps</em> → <em>Android</em> → <em>Hinzufügen</em> → Typ <em>Verwalteter Google Play</em>. Suchen Sie <strong>ZbxView</strong> (Paket-ID <code>app.zbxview</code>), genehmigen Sie sie und synchronisieren Sie.",
@@ -309,6 +344,11 @@ startActivity(i);</code></pre>
       k_cpw: "Contraseña del PKCS#12 o de una clave cifrada.",
       k_chosts: "Servidores a los que se envía el certificado, separados por comas (<code>*.example.com</code> para subdominios). Vacío = el servidor de <code>server_url</code>. Nunca se envía a otro servidor.",
       k_clock: "El usuario no puede cambiar ni quitar el certificado del servidor de esta directiva. Para los servidores que añada él mismo puede importar el suyo.",
+      k_pkey: 'Notificaciones push a través del proyecto Firebase de la propia organización: <code>current_key</code> del <code>google-services.json</code> de la app Android <code>app.zbxview</code> registrada en ese proyecto. Las cuatro claves <code>push_*</code> juntas; el relay y el tipo de medio están en la <a href="index.html#push">guía Push</a>.',
+      k_papp: '<code>mobilesdk_app_id</code> de google-services.json (<code>1:&lt;número&gt;:android:&lt;hex&gt;</code>).',
+      k_psender: '<code>project_number</code> de google-services.json.',
+      k_pproject: '<code>project_id</code> de google-services.json.',
+      k_pon: 'Activa las notificaciones push en el primer inicio (el usuario concede el permiso de notificaciones y el dispositivo se registra solo en Zabbix). El usuario puede desactivarlas en Ajustes.',
       note_token: "<strong>Sobre el token:</strong> la managed configuration <strong>no es una caja fuerte</strong>: cualquiera con acceso a la consola del MDM puede leer el valor, y se puede extraer de un dispositivo rooteado. Crea por eso un <strong>usuario de Zabbix dedicado y de solo lectura</strong>, limitado a los grupos de hosts y paneles que esos dispositivos deban ver, y emítele el token. Todos los dispositivos compartirán entonces esa única identidad, que es también como aparecerán en el registro de auditoría de Zabbix. Deja <code>require_biometric</code> desactivado, o la pantalla de bloqueo detendrá al usuario igualmente.",
       s2_h: "2. Android — Intune paso a paso",
       a1: "<strong>Añade la aplicación.</strong> Intune → <em>Aplicaciones</em> → <em>Android</em> → <em>Agregar</em> → tipo <em>Google Play administrado</em>. Busca <strong>ZbxView</strong> (id de paquete <code>app.zbxview</code>), apruébala y sincroniza.",
@@ -373,6 +413,11 @@ startActivity(i);</code></pre>
       k_cpw: "Mot de passe du PKCS#12 ou d’une clé chiffrée.",
       k_chosts: "Serveurs auxquels le certificat est envoyé, séparés par des virgules (<code>*.example.com</code> pour les sous-domaines). Vide = le serveur de <code>server_url</code>. Il n’est jamais envoyé à un autre serveur.",
       k_clock: "L’utilisateur ne peut ni changer ni retirer le certificat du serveur de cette stratégie. Pour les serveurs qu’il ajoute lui-même, il peut toujours importer le sien.",
+      k_pkey: 'Notifications push via le projet Firebase de l’organisation : <code>current_key</code> du <code>google-services.json</code> de l’app Android <code>app.zbxview</code> enregistrée dans ce projet. Les quatre clés <code>push_*</code> ensemble ; le relais et le type de média sont dans le <a href="index.html#push">guide Push</a>.',
+      k_papp: '<code>mobilesdk_app_id</code> du google-services.json (<code>1:&lt;numéro&gt;:android:&lt;hex&gt;</code>).',
+      k_psender: '<code>project_number</code> du google-services.json.',
+      k_pproject: '<code>project_id</code> du google-services.json.',
+      k_pon: 'Active les notifications push au premier démarrage (l’utilisateur accorde l’autorisation de notification et l’appareil s’enregistre lui-même auprès de Zabbix). L’utilisateur peut les désactiver dans les Paramètres.',
       note_token: "<strong>À propos du jeton :</strong> la managed configuration <strong>n’est pas un coffre-fort</strong> — toute personne ayant accès à la console MDM peut lire la valeur, et elle peut être extraite d’un appareil rooté. Créez donc un <strong>utilisateur Zabbix dédié en lecture seule</strong>, limité aux groupes d’hôtes et aux tableaux de bord que ces appareils doivent voir, et émettez le jeton pour lui. Tous les appareils partagent alors cette identité unique — c’est aussi ainsi qu’ils apparaîtront dans le journal d’audit de Zabbix. Laissez <code>require_biometric</code> désactivé, sinon l’écran de verrouillage arrêtera l’utilisateur de toute façon.",
       s2_h: "2. Android — Intune pas à pas",
       a1: "<strong>Ajoutez l’application.</strong> Intune → <em>Applications</em> → <em>Android</em> → <em>Ajouter</em> → type <em>Google Play géré</em>. Cherchez <strong>ZbxView</strong> (id de package <code>app.zbxview</code>), approuvez-la et synchronisez.",
@@ -437,6 +482,11 @@ startActivity(i);</code></pre>
       k_cpw: "PKCS#12 vai šifrētas atslēgas parole.",
       k_chosts: "Serveri, kuriem sertifikātu sūta, atdalīti ar komatu (<code>*.example.com</code> apakšdomēniem). Tukšs = serveris no <code>server_url</code>. Citam serverim tas netiek sūtīts nekad.",
       k_clock: "Šīs politikas servera sertifikātu lietotājs nevar mainīt vai noņemt. Serveriem, ko pievieno pats, joprojām var importēt savu.",
+      k_pkey: 'Push paziņojumi caur organizācijas pašas Firebase projektu: <code>current_key</code> no šajā projektā reģistrētās Android lietotnes <code>app.zbxview</code> faila <code>google-services.json</code>. Visas četras <code>push_*</code> atslēgas kopā; releju un multivides tipu apraksta <a href="index.html#push">Push ceļvedis</a>.',
+      k_papp: '<code>mobilesdk_app_id</code> no google-services.json (<code>1:&lt;numurs&gt;:android:&lt;hex&gt;</code>).',
+      k_psender: '<code>project_number</code> no google-services.json.',
+      k_pproject: '<code>project_id</code> no google-services.json.',
+      k_pon: 'Ieslēdz push paziņojumus pirmajā palaišanā (lietotājs piešķir paziņojumu atļauju, un ierīce pati reģistrējas Zabbix). Lietotājs tos var izslēgt Iestatījumos.',
       note_token: "<strong>Par pilnvaru:</strong> managed configuration <strong>nav seifs</strong> — ikviens, kam ir pieeja MDM konsolei, var vērtību izlasīt, un no root ierīces to var iegūt. Tāpēc izveidojiet <strong>atsevišķu Zabbix lietotāju tikai ar lasīšanas tiesībām</strong>, ierobežotu ar tām resursdatoru grupām un paneļiem, ko šīs ierīces drīkst redzēt, un izsniedziet pilnvaru viņam. Visas ierīces tad izmanto vienu identitāti — tieši tā tās parādīsies arī Zabbix audita žurnālā. Atstājiet <code>require_biometric</code> izslēgtu, citādi bloķēšanas ekrāns lietotāju tāpat apturēs.",
       s2_h: "2. Android — Intune soli pa solim",
       a1: "<strong>Pievienojiet lietotni.</strong> Intune → <em>Lietotnes</em> → <em>Android</em> → <em>Pievienot</em> → tips <em>Pārvaldītais Google Play</em>. Atrodiet <strong>ZbxView</strong> (pakotnes id <code>app.zbxview</code>), apstipriniet to un sinhronizējiet.",

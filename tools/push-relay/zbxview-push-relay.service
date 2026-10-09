@@ -1,0 +1,18 @@
+[Unit]
+Description=ZbxView push relay (Zabbix webhook -> Firebase Cloud Messaging)
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+# Runs as the unprivileged zabbix user. chown /opt/zbxview-push-relay (incl.
+# config.ini + service-account.json, both chmod 600) to zabbix so it can read
+# them. firebase-admin lives in a dedicated venv (see README) which ExecStart
+# runs directly — avoids system/user site-packages confusion.
+User=zabbix
+ExecStart=/opt/zbxview-push-relay/venv/bin/python3 /opt/zbxview-push-relay/push_relay.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
