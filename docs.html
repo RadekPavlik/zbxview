@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZbxView — Návody</title>
+  <meta name="description" content="Návody k aplikaci ZbxView: párování QR kódem, push notifikace, nasazení přes MDM, pohotovosti, soukromí." />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="doc">
+    <div class="doc-top">
+      <a class="back" href="index.html" data-i18n="back">← zpět na ZbxView</a>
+      <div class="lang-switch">
+        <button class="lang-opt" data-lang="cs">CZ</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="de">DE</button>
+        <button class="lang-opt" data-lang="es">ES</button>
+        <button class="lang-opt" data-lang="fr">FR</button>
+        <button class="lang-opt" data-lang="lv">LV</button>
+      </div>
+    </div>
+
+    <h1 data-i18n="title">Návody</h1>
+    <div class="updated" data-i18n="updated">Dokumentace ZbxView · párování, push notifikace, MDM, pohotovosti, soukromí</div>
+
+    <p data-i18n="intro">Vše, co správce nebo uživatel potřebuje k nastavení ZbxView, na jednom místě. Každý návod je stránka tohoto webu; aplikace sem odkazuje ze svých otazníků.</p>
+
+    <div class="grid" style="margin-top:28px;">
+      <a class="feat" href="index.html#connect" style="display:block;text-decoration:none;color:inherit;"><div class="ico">📷</div><h3 data-i18n="d_connect_h">Párování telefonu QR kódem</h3><p data-i18n="d_connect_p">Modul ZbxView connect do Zabbixu: uživatel otevře „Připojení telefonu“, naskenuje kód a je přihlášený. Víc telefonů, nový kód, odebrání zařízení, certifikát v kódu.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_connect_l">Instalace modulu →</span></p></a>
+      <a class="feat" href="index.html#push" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🔔</div><h3 data-i18n="d_push_h">Push notifikace</h3><p data-i18n="d_push_p">Problémy jako notifikace přes vlastní Firebase projekt firmy: relay na Zabbix serveru, typ média „ZbxView Push“, akce, předání projektu do telefonů modulem nebo MDM.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_push_l">Návod krok za krokem →</span></p></a>
+      <a class="feat" href="mdm.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🏢</div><h3 data-i18n="d_mdm_h">Nasazení přes MDM (Intune)</h3><p data-i18n="d_mdm_p">Předvyplnění serveru, tokenu, klientského certifikátu a push projektu hromadně přes managed configuration. Tabulka všech klíčů, Android i iOS, signage obrazovky bez MDM.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_mdm_l">Tabulka klíčů →</span></p></a>
+      <a class="feat" href="oncall.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">📞</div><h3 data-i18n="d_oncall_h">Pohotovosti</h3><p data-i18n="d_oncall_p">Jak aplikace zobrazuje pohotovosti a čísla poboček z inventáře hostů a co k tomu nastavit v Zabbixu.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_oncall_l">Nastavení →</span></p></a>
+      <a class="feat" href="privacy.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🔒</div><h3 data-i18n="d_privacy_h">Soukromí a data</h3><p data-i18n="d_privacy_p">Co aplikace posílá a neposílá, kde zůstávají vaše data, zásady ochrany osobních údajů.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_privacy_l">Zásady →</span></p></a>
+    </div>
+
+    <p class="doc-foot"><a href="index.html" data-i18n="foot_back">← zpět na hlavní stránku</a></p>
+  </div>
+
+  <script>
+  (function () {
+    var EN = {
+      back: '← back to ZbxView',
+      title: 'Guides',
+      updated: 'ZbxView documentation · pairing, push notifications, MDM, on-call, privacy',
+      intro: 'Everything an admin or a user needs to set ZbxView up, in one place. Each guide is a page on this site; the app links here from its question marks.',
+      d_connect_h: 'Pairing a phone with a QR code',
+      d_connect_p: 'The ZbxView connect module for Zabbix: the user opens “Mobile connect”, scans the code and is signed in. Several phones, a new code, removing a device, a certificate in the code.',
+      d_connect_l: 'Installing the module →',
+      d_push_h: 'Push notifications',
+      d_push_p: 'Problems as notifications through your organisation’s own Firebase project: the relay on the Zabbix server, the “ZbxView Push” media type, the action, handing the project to the phones via the module or MDM.',
+      d_push_l: 'Step by step →',
+      d_mdm_h: 'Deploying with MDM (Intune)',
+      d_mdm_p: 'Pre-filling the server, token, client certificate and push project in bulk through managed configuration. The table of all keys, Android and iOS, signage screens without MDM.',
+      d_mdm_l: 'Key table →',
+      d_oncall_h: 'On call',
+      d_oncall_p: 'How the app shows on-call duty and site numbers from the host inventory, and what to set up in Zabbix for it.',
+      d_oncall_l: 'Set-up →',
+      d_privacy_h: 'Privacy and data',
+      d_privacy_p: 'What the app sends and does not send, where your data stays, the privacy policy.',
+      d_privacy_l: 'Policy →',
+      foot_back: '← back to the main page',
+      __title: 'ZbxView — Guides',
+    };
+    var DE = {
+      back: '← zurück zu ZbxView',
+      title: 'Anleitungen',
+      updated: 'ZbxView-Dokumentation · Kopplung, Push-Benachrichtigungen, MDM, Bereitschaft, Datenschutz',
+      intro: 'Alles, was ein Admin oder Nutzer zum Einrichten von ZbxView braucht, an einem Ort. Jede Anleitung ist eine Seite dieser Website; die App verlinkt über ihre Fragezeichen hierher.',
+      d_connect_h: 'Telefon per QR-Code koppeln',
+      d_connect_p: 'Das Modul ZbxView connect für Zabbix: der Nutzer öffnet „Mobile Verbindung“, scannt den Code und ist angemeldet. Mehrere Telefone, neuer Code, Gerät entfernen, Zertifikat im Code.',
+      d_connect_l: 'Modul installieren →',
+      d_push_h: 'Push-Benachrichtigungen',
+      d_push_p: 'Probleme als Benachrichtigungen über das eigene Firebase-Projekt Ihrer Organisation: das Relay auf dem Zabbix-Server, der Medientyp „ZbxView Push“, die Aktion, die Übergabe des Projekts an die Telefone per Modul oder MDM.',
+      d_push_l: 'Schritt für Schritt →',
+      d_mdm_h: 'Verteilung per MDM (Intune)',
+      d_mdm_p: 'Server, Token, Client-Zertifikat und Push-Projekt per Managed Configuration vorbelegen. Tabelle aller Schlüssel, Android und iOS, Signage-Bildschirme ohne MDM.',
+      d_mdm_l: 'Schlüsseltabelle →',
+      d_oncall_h: 'Bereitschaft',
+      d_oncall_p: 'Wie die App Bereitschaften und Standortnummern aus dem Host-Inventar zeigt und was dafür in Zabbix einzurichten ist.',
+      d_oncall_l: 'Einrichtung →',
+      d_privacy_h: 'Datenschutz und Daten',
+      d_privacy_p: 'Was die App sendet und nicht sendet, wo Ihre Daten bleiben, die Datenschutzerklärung.',
+      d_privacy_l: 'Erklärung →',
+      foot_back: '← zurück zur Hauptseite',
+      __title: 'ZbxView — Anleitungen',
+    };
+    var ES = {
+      back: '← volver a ZbxView',
+      title: 'Guías',
+      updated: 'Documentación de ZbxView · emparejamiento, notificaciones push, MDM, guardias, privacidad',
+      intro: 'Todo lo que un administrador o un usuario necesita para configurar ZbxView, en un solo lugar. Cada guía es una página de este sitio; la app enlaza aquí desde sus interrogantes.',
+      d_connect_h: 'Emparejar el teléfono con un código QR',
+      d_connect_p: 'El módulo ZbxView connect para Zabbix: el usuario abre «Conexión móvil», escanea el código y queda conectado. Varios teléfonos, nuevo código, quitar un dispositivo, certificado en el código.',
+      d_connect_l: 'Instalar el módulo →',
+      d_push_h: 'Notificaciones push',
+      d_push_p: 'Problemas como notificaciones a través del proyecto Firebase de su organización: el relay en el servidor Zabbix, el tipo de medio «ZbxView Push», la acción, la entrega del proyecto a los teléfonos por el módulo o MDM.',
+      d_push_l: 'Paso a paso →',
+      d_mdm_h: 'Despliegue con MDM (Intune)',
+      d_mdm_p: 'Rellenar servidor, token, certificado de cliente y proyecto push en masa mediante managed configuration. Tabla de todas las claves, Android e iOS, pantallas de señalización sin MDM.',
+      d_mdm_l: 'Tabla de claves →',
+      d_oncall_h: 'Guardias',
+      d_oncall_p: 'Cómo muestra la app las guardias y los números de centro del inventario de hosts y qué configurar en Zabbix.',
+      d_oncall_l: 'Configuración →',
+      d_privacy_h: 'Privacidad y datos',
+      d_privacy_p: 'Qué envía y qué no envía la app, dónde se quedan sus datos, la política de privacidad.',
+      d_privacy_l: 'Política →',
+      foot_back: '← volver a la página principal',
+      __title: 'ZbxView — Guías',
+    };
+    var FR = {
+      back: '← retour à ZbxView',
+      title: 'Guides',
+      updated: 'Documentation ZbxView · appairage, notifications push, MDM, astreintes, confidentialité',
+      intro: 'Tout ce dont un administrateur ou un utilisateur a besoin pour configurer ZbxView, au même endroit. Chaque guide est une page de ce site ; l’app y renvoie depuis ses points d’interrogation.',
+      d_connect_h: 'Appairer un téléphone par QR code',
+      d_connect_p: 'Le module ZbxView connect pour Zabbix : l’utilisateur ouvre « Connexion mobile », scanne le code et est connecté. Plusieurs téléphones, nouveau code, retrait d’un appareil, certificat dans le code.',
+      d_connect_l: 'Installer le module →',
+      d_push_h: 'Notifications push',
+      d_push_p: 'Les problèmes en notifications via le projet Firebase de votre organisation : le relais sur le serveur Zabbix, le type de média « ZbxView Push », l’action, la transmission du projet aux téléphones par le module ou le MDM.',
+      d_push_l: 'Pas à pas →',
+      d_mdm_h: 'Déploiement par MDM (Intune)',
+      d_mdm_p: 'Préremplir serveur, jeton, certificat client et projet push en masse via la managed configuration. Tableau de toutes les clés, Android et iOS, écrans d’affichage sans MDM.',
+      d_mdm_l: 'Tableau des clés →',
+      d_oncall_h: 'Astreintes',
+      d_oncall_p: 'Comment l’app affiche les astreintes et les numéros de site depuis l’inventaire des hôtes, et quoi configurer dans Zabbix.',
+      d_oncall_l: 'Configuration →',
+      d_privacy_h: 'Confidentialité et données',
+      d_privacy_p: 'Ce que l’app envoie et n’envoie pas, où restent vos données, la politique de confidentialité.',
+      d_privacy_l: 'Politique →',
+      foot_back: '← retour à la page principale',
+      __title: 'ZbxView — Guides',
+    };
+    var LV = {
+      back: '← atpakaļ uz ZbxView',
+      title: 'Ceļveži',
+      updated: 'ZbxView dokumentācija · savienošana, push paziņojumi, MDM, dežūras, privātums',
+      intro: 'Viss, kas administratoram vai lietotājam vajadzīgs ZbxView iestatīšanai, vienuviet. Katrs ceļvedis ir šīs vietnes lapa; lietotne uz šejieni norāda ar savām jautājuma zīmēm.',
+      d_connect_h: 'Tālruņa savienošana ar QR kodu',
+      d_connect_p: 'Modulis ZbxView connect priekš Zabbix: lietotājs atver “Tālruņa savienojums”, noskenē kodu un ir pieteicies. Vairāki tālruņi, jauns kods, ierīces noņemšana, sertifikāts kodā.',
+      d_connect_l: 'Moduļa instalēšana →',
+      d_push_h: 'Push paziņojumi',
+      d_push_p: 'Problēmas kā paziņojumi caur jūsu organizācijas Firebase projektu: relejs Zabbix serverī, multivides tips “ZbxView Push”, darbība, projekta nodošana tālruņiem ar moduli vai MDM.',
+      d_push_l: 'Soli pa solim →',
+      d_mdm_h: 'Izvietošana ar MDM (Intune)',
+      d_mdm_p: 'Servera, marķiera, klienta sertifikāta un push projekta masveida aizpildīšana ar managed configuration. Visu atslēgu tabula, Android un iOS, signage ekrāni bez MDM.',
+      d_mdm_l: 'Atslēgu tabula →',
+      d_oncall_h: 'Dežūras',
+      d_oncall_p: 'Kā lietotne rāda dežūras un objektu numurus no hostu inventāra un kas tam jāiestata Zabbix.',
+      d_oncall_l: 'Iestatīšana →',
+      d_privacy_h: 'Privātums un dati',
+      d_privacy_p: 'Ko lietotne sūta un nesūta, kur paliek jūsu dati, privātuma politika.',
+      d_privacy_l: 'Politika →',
+      foot_back: '← atpakaļ uz galveno lapu',
+      __title: 'ZbxView — Ceļveži',
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var htmlEl = document.documentElement;
+    var descEl = document.querySelector('meta[name="description"]');
+    htmlEl.__csTitle = document.title;
+    htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
+
+    function apply(lang) {
+      var dict = DICTS[lang] || null; // cs is the markup itself
+      var nodes = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i], key = el.getAttribute('data-i18n');
+        if (el.__cs == null) el.__cs = el.innerHTML;
+        el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      document.title = dict ? dict.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
+      htmlEl.lang = lang;
+      try { localStorage.setItem('zbxlang', lang); } catch (e) {}
+      var opts = document.querySelectorAll('.lang-opt');
+      for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
+    }
+    var opts = document.querySelectorAll('.lang-opt');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
+    }
+    var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
+    var nav = (navigator.language || '').slice(0, 2).toLowerCase();
+    var lang = saved
+      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+    apply(lang);
+  })();
+  })();
+  </script>
+</body>
+</html>
