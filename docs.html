@@ -28,9 +28,10 @@
     <p data-i18n="intro">Vše, co správce nebo uživatel potřebuje k nastavení ZbxView, na jednom místě. Každý návod je stránka tohoto webu; aplikace sem odkazuje ze svých otazníků.</p>
 
     <div class="grid" style="margin-top:28px;">
-      <a class="feat" href="index.html#connect" style="display:block;text-decoration:none;color:inherit;"><div class="ico">📷</div><h3 data-i18n="d_connect_h">Párování telefonu QR kódem</h3><p data-i18n="d_connect_p">Modul ZbxView connect do Zabbixu: uživatel otevře „Připojení telefonu“, naskenuje kód a je přihlášený. Víc telefonů, nový kód, odebrání zařízení, certifikát v kódu.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_connect_l">Instalace modulu →</span></p></a>
-      <a class="feat" href="index.html#push" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🔔</div><h3 data-i18n="d_push_h">Push notifikace</h3><p data-i18n="d_push_p">Problémy jako notifikace přes vlastní Firebase projekt firmy: relay na Zabbix serveru, typ média „ZbxView Push“, akce, předání projektu do telefonů modulem nebo MDM.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_push_l">Návod krok za krokem →</span></p></a>
+      <a class="feat" href="connect.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">📷</div><h3 data-i18n="d_connect_h">Párování telefonu QR kódem</h3><p data-i18n="d_connect_p">Modul ZbxView connect do Zabbixu: uživatel otevře „Připojení telefonu“, naskenuje kód a je přihlášený. Víc telefonů, nový kód, odebrání zařízení, certifikát v kódu.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_connect_l">Instalace modulu →</span></p></a>
+      <a class="feat" href="push.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🔔</div><h3 data-i18n="d_push_h">Push notifikace</h3><p data-i18n="d_push_p">Problémy jako notifikace přes vlastní Firebase projekt firmy: relay na Zabbix serveru, typ média „ZbxView Push“, akce, předání projektu do telefonů modulem nebo MDM.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_push_l">Návod krok za krokem →</span></p></a>
       <a class="feat" href="mdm.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🏢</div><h3 data-i18n="d_mdm_h">Nasazení přes MDM (Intune)</h3><p data-i18n="d_mdm_p">Předvyplnění serveru, tokenu, klientského certifikátu a push projektu hromadně přes managed configuration. Tabulka všech klíčů, Android i iOS, signage obrazovky bez MDM.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_mdm_l">Tabulka klíčů →</span></p></a>
+      <a class="feat" href="mtls.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🛡️</div><h3 data-i18n="d_mtls_h">Klientský certifikát (mTLS)</h3><p data-i18n="d_mtls_p">Zabbix za Cloudflare jen pro zařízení s certifikátem: vydání certifikátu, pravidlo WAF a předání do telefonů QR kódem, přes MDM nebo ručně.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_mtls_l">Návod krok za krokem →</span></p></a>
       <a class="feat" href="oncall.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">📞</div><h3 data-i18n="d_oncall_h">Pohotovosti</h3><p data-i18n="d_oncall_p">Jak aplikace zobrazuje pohotovosti a čísla poboček z inventáře hostů a co k tomu nastavit v Zabbixu.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_oncall_l">Nastavení →</span></p></a>
       <a class="feat" href="privacy.html" style="display:block;text-decoration:none;color:inherit;"><div class="ico">🔒</div><h3 data-i18n="d_privacy_h">Soukromí a data</h3><p data-i18n="d_privacy_p">Co aplikace posílá a neposílá, kde zůstávají vaše data, zásady ochrany osobních údajů.</p><p style="margin-top:10px;"><span class="back" data-i18n="d_privacy_l">Zásady →</span></p></a>
     </div>
@@ -62,6 +63,9 @@
       d_privacy_l: 'Policy →',
       foot_back: '← back to the main page',
       __title: 'ZbxView — Guides',
+      d_mtls_h: "Client certificate (mTLS)",
+      d_mtls_p: "Zabbix behind Cloudflare for devices with a certificate only: issuing the certificate, the WAF rule and getting it to the phones by QR code, MDM or manually.",
+      d_mtls_l: "Step-by-step guide →"
     };
     var DE = {
       back: '← zurück zu ZbxView',
@@ -85,6 +89,9 @@
       d_privacy_l: 'Erklärung →',
       foot_back: '← zurück zur Hauptseite',
       __title: 'ZbxView — Anleitungen',
+      d_mtls_h: "Client-Zertifikat (mTLS)",
+      d_mtls_p: "Zabbix hinter Cloudflare nur für Geräte mit Zertifikat: Zertifikat ausstellen, WAF-Regel und Verteilung auf die Telefone per QR-Code, MDM oder manuell.",
+      d_mtls_l: "Anleitung Schritt für Schritt →"
     };
     var ES = {
       back: '← volver a ZbxView',
@@ -108,6 +115,9 @@
       d_privacy_l: 'Política →',
       foot_back: '← volver a la página principal',
       __title: 'ZbxView — Guías',
+      d_mtls_h: "Certificado de cliente (mTLS)",
+      d_mtls_p: "Zabbix detrás de Cloudflare solo para dispositivos con certificado: emisión del certificado, regla WAF y entrega a los teléfonos por QR, MDM o a mano.",
+      d_mtls_l: "Guía paso a paso →"
     };
     var FR = {
       back: '← retour à ZbxView',
@@ -131,6 +141,9 @@
       d_privacy_l: 'Politique →',
       foot_back: '← retour à la page principale',
       __title: 'ZbxView — Guides',
+      d_mtls_h: "Certificat client (mTLS)",
+      d_mtls_p: "Zabbix derrière Cloudflare réservé aux appareils avec certificat : émission du certificat, règle WAF et distribution aux téléphones par QR code, MDM ou manuellement.",
+      d_mtls_l: "Guide pas à pas →"
     };
     var LV = {
       back: '← atpakaļ uz ZbxView',
@@ -154,6 +167,9 @@
       d_privacy_l: 'Politika →',
       foot_back: '← atpakaļ uz galveno lapu',
       __title: 'ZbxView — Ceļveži',
+      d_mtls_h: "Klienta sertifikāts (mTLS)",
+      d_mtls_p: "Zabbix aiz Cloudflare tikai ierīcēm ar sertifikātu: sertifikāta izsniegšana, WAF noteikums un nodošana tālruņiem ar QR kodu, caur MDM vai manuāli.",
+      d_mtls_l: "Ceļvedis soli pa solim →"
     };
     var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
     var htmlEl = document.documentElement;
