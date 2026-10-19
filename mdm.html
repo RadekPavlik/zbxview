@@ -28,7 +28,18 @@
     <p data-i18n="intro">ZbxView umí přijmout <strong>konfiguraci od správce</strong>. Uživatel pak po instalaci nemusí nic vyplňovat — server je předvyplněný. Pokud pošlete i API token, je aplikace rovnou přihlášená a uživatel se nepřihlašuje vůbec. Funguje to na Androidu (Managed configuration) i na iOS (Managed app configuration).</p>
 
     <h2 data-i18n="s1_h">1. Co jde nastavit</h2>
-    <p data-i18n="s1_p">Správce může předvyplnit připojení k serveru, poslat API token a vynutit biometrické odemčení. Nic dalšího se z aplikace vzdáleně neřídí. Hesla se konfigurací neposílají nikdy — ta zadává uživatel sám a zůstávají v úložišti zařízení.</p>
+    <p data-i18n="s1_p">Správce může předvyplnit připojení k serveru, poslat API token, poslat klientský certifikát, napojit push notifikace na vlastní Firebase, přiřadit obrazovce dashboard a vynutit biometrické odemčení. Hesla se konfigurací neposílají nikdy — ta zadává uživatel sám a zůstávají v úložišti zařízení.</p>
+    <p class="caps-h" data-i18n="caps_h">Co všechno jde přes MDM udělat:</p>
+    <ul class="caps">
+      <li data-i18n="cap1"><strong>Server bez vyplňování</strong> — adresa, název a způsob přihlášení; s <code>set_default</code> se aplikace otevře rovnou v něm.</li>
+      <li data-i18n="cap2"><strong>Přihlášení bez hesla</strong> — API token z politiky, ideální pro sdílená zařízení.</li>
+      <li data-i18n="cap3"><strong>Nástěnky na zeď</strong> — každé obrazovce vlastní dashboard přes celou plochu (<code>kiosk_dashboard_id</code>).</li>
+      <li data-i18n="cap4"><strong>Klientský certifikát pro mTLS</strong> — posílá se jen na povolené servery, lze ho uživateli zamknout.</li>
+      <li data-i18n="cap5"><strong>Push notifikace</strong> z firemního Firebase projektu, volitelně zapnuté hned po instalaci.</li>
+      <li data-i18n="cap6"><strong>Zabezpečení</strong> — vynucený otisk/obličej, povolení self-signed certifikátu interního serveru.</li>
+      <li data-i18n="cap7"><strong>Displeje</strong> — tlačítko pro ovládání signage displejů (restart, zapnutí, uspání) podle práv ze Zabbixu.</li>
+      <li data-i18n="cap8"><strong>Obrazovky bez MDM</strong> — tytéž klíče jako parametry spuštění (sekce 5).</li>
+    </ul>
 
     <table class="tbl">
       <thead>
@@ -58,6 +69,16 @@
           <td><code>api_token</code></td>
           <td data-i18n="t_string4">řetězec</td>
           <td data-i18n="k_token">Zabbix API token. Aplikace se s ním otevře přihlášená a nikoho se na nic neptá — vhodné pro nástěnky na zdi a sdílená zařízení. Přečtěte si upozornění pod tabulkou.</td>
+        </tr>
+        <tr>
+          <td><code>kiosk_dashboard_id</code></td>
+          <td data-i18n="t_string4">řetězec</td>
+          <td data-i18n="k_kdash">ID dashboardu, který obrazovka zobrazí přes celou plochu. Každému zařízení dejte jiné a každý displej ukáže svou nástěnku; přebije volbu na zařízení a použije server z této politiky.</td>
+        </tr>
+        <tr>
+          <td><code>kiosk_dashboard_name</code></td>
+          <td data-i18n="t_string4">řetězec</td>
+          <td data-i18n="k_kname">Popisek toho dashboardu. Jen kosmetický — co se zobrazí, rozhoduje ID výše.</td>
         </tr>
         <tr>
           <td><code>allow_self_signed</code></td>
@@ -124,6 +145,11 @@
           <td data-i18n="t_bool4">ano/ne</td>
           <td data-i18n="k_pon">Zapne push notifikace při prvním spuštění (uživatel povolí notifikace a zařízení se samo zaregistruje do Zabbixu). Uživatel je může v Nastavení vypnout.</td>
         </tr>
+        <tr>
+          <td><code>displays_enabled</code></td>
+          <td data-i18n="t_bool4">ano/ne</td>
+          <td data-i18n="k_disp">Zobrazí v hlavičce tlačítko <strong>Displeje</strong>: signage displeje spravované modulem ZbxView MDM pro Zabbix s povely restart aplikace, restart zařízení, zapnout a uspat (podle toho, co uživateli dovolí skripty v Zabbixu). Má přednost před nastavením z QR kódu.</td>
+        </tr>
       </tbody>
     </table>
 
@@ -182,7 +208,7 @@ startActivity(i);</code></pre>
       updated: 'App: ZbxView · Applies to Microsoft Intune and any MDM supporting app configuration',
       intro: 'ZbxView accepts <strong>configuration pushed by an administrator</strong>. After install the user fills in nothing — the server is already there. Push an API token as well and the app opens signed in, so they never see a login at all. This works on Android (managed configuration) and on iOS (managed app configuration).',
       s1_h: '1. What can be set',
-      s1_p: 'An administrator can pre-fill the server connection, push an API token and enforce biometric unlock. Nothing else is controlled remotely. Passwords are never sent through the configuration — the user enters those and they stay in the device keystore.',
+      s1_p: "An administrator can pre-fill the server connection, push an API token, deliver a client certificate, hook push notifications to their own Firebase, assign a dashboard to a screen and enforce biometric unlock. Passwords are never sent through the configuration — the user enters those and they stay in the device keystore.",
       th_key: 'Key',
       th_type: 'Type',
       th_meaning: 'Meaning',
@@ -239,7 +265,19 @@ startActivity(i);</code></pre>
       s7_link: 'privacy policy',
       foot_back: '← back to the main page',
       __title: 'ZbxView — Deploying with MDM (Intune)',
-      __desc: 'How to deploy and pre-configure the ZbxView app with Microsoft Intune or another MDM — app configuration, keys, work profile.'
+      __desc: 'How to deploy and pre-configure the ZbxView app with Microsoft Intune or another MDM — app configuration, keys, work profile.',
+      caps_h: "What you can do through the MDM:",
+      cap1: "<strong>Server with nothing to fill in</strong> — address, name and sign-in method; with <code>set_default</code> the app opens straight into it.",
+      cap2: "<strong>Sign-in without passwords</strong> — an API token from the policy, ideal for shared devices.",
+      cap3: "<strong>Wall displays</strong> — every screen gets its own full-screen dashboard (<code>kiosk_dashboard_id</code>).",
+      cap4: "<strong>Client certificate for mTLS</strong> — sent only to allowed servers, can be locked for the user.",
+      cap5: "<strong>Push notifications</strong> from your company Firebase project, optionally on right after installation.",
+      cap6: "<strong>Security</strong> — enforced fingerprint/face, self-signed certificate allowed for an internal server.",
+      cap7: "<strong>Displays</strong> — a key for controlling signage displays (restart, switch on, standby) as the Zabbix permissions allow.",
+      cap8: "<strong>Screens without MDM</strong> — the same keys as launch parameters (section 5).",
+      k_kdash: "ID of the dashboard this screen shows full-screen. Give each device a different one and every display shows its own board; it overrides whatever was picked on the device and uses the server from this policy.",
+      k_kname: "Label shown for that dashboard. Cosmetic — the ID above decides what is displayed.",
+      k_disp: "Shows the <strong>Displays</strong> key in the header: the signage displays managed by the ZbxView MDM module for Zabbix, with restart app, reboot device, switch on and standby (as the Zabbix scripts allow the user). Wins over the setting from a QR code."
     };
     var DE = {
       back: "← zurück zu ZbxView",
@@ -247,7 +285,7 @@ startActivity(i);</code></pre>
       updated: "App: ZbxView · Gilt für Microsoft Intune und jedes MDM mit App-Konfiguration",
       intro: "ZbxView übernimmt <strong>vom Administrator verteilte Konfiguration</strong>. Nach der Installation muss der Nutzer nichts eintragen — der Server ist schon da. Geben Sie zusätzlich ein API-Token mit, öffnet sich die App bereits angemeldet und es erscheint überhaupt kein Login. Das funktioniert unter Android (Managed configuration) und unter iOS (Managed app configuration).",
       s1_h: "1. Was sich einstellen lässt",
-      s1_p: "Ein Administrator kann die Serververbindung vorbefüllen, ein API-Token mitgeben und die biometrische Entsperrung erzwingen. Mehr wird nicht aus der Ferne gesteuert. Passwörter werden nie über die Konfiguration übertragen — die gibt der Nutzer selbst ein, und sie bleiben im Schlüsselspeicher des Geräts.",
+      s1_p: "Ein Administrator kann die Serververbindung vorbefüllen, ein API-Token mitgeben, ein Client-Zertifikat ausrollen, Push-Benachrichtigungen an das eigene Firebase anbinden, einem Bildschirm ein Dashboard zuweisen und die biometrische Entsperrung erzwingen. Passwörter werden nie über die Konfiguration übertragen — die gibt der Nutzer selbst ein, und sie bleiben im Schlüsselspeicher des Geräts.",
       th_key: "Schlüssel",
       th_type: "Typ",
       th_meaning: "Bedeutung",
@@ -309,6 +347,18 @@ startActivity(i);</code></pre>
       foot_back: "← zurück zur Hauptseite",
       __title: "ZbxView — Verteilung per MDM (Intune)",
       __desc: "Wie Sie die ZbxView-App mit Microsoft Intune oder einem anderen MDM verteilen und vorkonfigurieren — App-Konfiguration, Schlüssel, Arbeitsprofil.",
+      caps_h: "Was sich per MDM erledigen lässt:",
+      cap1: "<strong>Server ohne Eintippen</strong> — Adresse, Name und Anmeldeart; mit <code>set_default</code> öffnet die App direkt in ihm.",
+      cap2: "<strong>Anmeldung ohne Passwort</strong> — ein API-Token aus der Richtlinie, ideal für geteilte Geräte.",
+      cap3: "<strong>Wandmonitore</strong> — jeder Bildschirm bekommt sein eigenes Vollbild-Dashboard (<code>kiosk_dashboard_id</code>).",
+      cap4: "<strong>Client-Zertifikat für mTLS</strong> — geht nur an erlaubte Server, lässt sich für den Nutzer sperren.",
+      cap5: "<strong>Push-Benachrichtigungen</strong> aus dem Firebase-Projekt Ihrer Firma, wahlweise direkt nach der Installation aktiv.",
+      cap6: "<strong>Sicherheit</strong> — erzwungener Fingerabdruck/Gesicht, selbstsigniertes Zertifikat für einen internen Server erlaubt.",
+      cap7: "<strong>Displays</strong> — eine Taste zum Steuern von Signage-Displays (Neustart, Einschalten, Standby), soweit es die Zabbix-Rechte erlauben.",
+      cap8: "<strong>Bildschirme ohne MDM</strong> — dieselben Schlüssel als Startparameter (Abschnitt 5).",
+      k_kdash: "ID des Dashboards, das dieser Bildschirm im Vollbild zeigt. Geben Sie jedem Gerät ein anderes, und jedes Display zeigt seine eigene Tafel; überschreibt die Auswahl am Gerät und nutzt den Server aus dieser Richtlinie.",
+      k_kname: "Angezeigte Bezeichnung dieses Dashboards. Nur kosmetisch — was angezeigt wird, bestimmt die ID oben.",
+      k_disp: "Zeigt in der Kopfzeile die Taste <strong>Displays</strong>: die vom Modul ZbxView MDM für Zabbix verwalteten Signage-Displays mit App-Neustart, Geräteneustart, Einschalten und Standby (soweit die Zabbix-Skripte es dem Nutzer erlauben). Hat Vorrang vor der Einstellung aus einem QR-Code."
     };
     var ES = {
       back: "← volver a ZbxView",
@@ -316,7 +366,7 @@ startActivity(i);</code></pre>
       updated: "App: ZbxView · Válido para Microsoft Intune y cualquier MDM con configuración de aplicaciones",
       intro: "ZbxView acepta <strong>configuración enviada por el administrador</strong>. Tras la instalación el usuario no rellena nada: el servidor ya está ahí. Envía además un token de API y la aplicación se abre con la sesión iniciada, de modo que nunca ve una pantalla de acceso. Funciona en Android (managed configuration) y en iOS (managed app configuration).",
       s1_h: "1. Qué se puede configurar",
-      s1_p: "El administrador puede rellenar la conexión al servidor, enviar un token de API y forzar el desbloqueo biométrico. Nada más se controla en remoto. Las contraseñas nunca viajan en la configuración: las introduce el usuario y se quedan en el almacén seguro del dispositivo.",
+      s1_p: "El administrador puede rellenar la conexión al servidor, enviar un token de API, entregar un certificado de cliente, conectar las notificaciones push a su propio Firebase, asignar un dashboard a una pantalla y forzar el desbloqueo biométrico. Las contraseñas nunca viajan en la configuración: las introduce el usuario y se quedan en el almacén seguro del dispositivo.",
       th_key: "Clave",
       th_type: "Tipo",
       th_meaning: "Significado",
@@ -378,6 +428,18 @@ startActivity(i);</code></pre>
       foot_back: "← volver a la página principal",
       __title: "ZbxView — Despliegue con MDM (Intune)",
       __desc: "Cómo desplegar y preconfigurar la app ZbxView con Microsoft Intune u otro MDM: configuración de la aplicación, claves y perfil de trabajo.",
+      caps_h: "Qué se puede hacer desde el MDM:",
+      cap1: "<strong>Servidor sin rellenar nada</strong>: dirección, nombre y método de inicio de sesión; con <code>set_default</code> la aplicación se abre directamente en él.",
+      cap2: "<strong>Inicio de sesión sin contraseñas</strong>: un token de API desde la política, ideal para dispositivos compartidos.",
+      cap3: "<strong>Pantallas de pared</strong>: cada pantalla recibe su propio dashboard a pantalla completa (<code>kiosk_dashboard_id</code>).",
+      cap4: "<strong>Certificado de cliente para mTLS</strong>: solo se envía a servidores permitidos y se puede bloquear para el usuario.",
+      cap5: "<strong>Notificaciones push</strong> desde el proyecto Firebase de tu empresa, opcionalmente activas nada más instalar.",
+      cap6: "<strong>Seguridad</strong>: huella/rostro obligatorio, certificado autofirmado permitido para un servidor interno.",
+      cap7: "<strong>Pantallas</strong>: un botón para controlar las pantallas de señalización (reinicio, encender, reposo) según los permisos de Zabbix.",
+      cap8: "<strong>Pantallas sin MDM</strong>: las mismas claves como parámetros de inicio (sección 5).",
+      k_kdash: "ID del dashboard que esta pantalla muestra a pantalla completa. Da a cada dispositivo uno distinto y cada pantalla mostrará su propio panel; anula lo elegido en el dispositivo y usa el servidor de esta política.",
+      k_kname: "Etiqueta que se muestra para ese dashboard. Solo estética: lo que se muestra lo decide el ID de arriba.",
+      k_disp: "Muestra en la cabecera el botón <strong>Pantallas</strong>: las pantallas de señalización gestionadas por el módulo ZbxView MDM para Zabbix, con reiniciar la aplicación, reiniciar el dispositivo, encender y reposo (según lo que los scripts de Zabbix permitan al usuario). Tiene prioridad sobre el ajuste de un código QR."
     };
     var FR = {
       back: "← retour à ZbxView",
@@ -385,7 +447,7 @@ startActivity(i);</code></pre>
       updated: "App : ZbxView · Vaut pour Microsoft Intune et tout MDM gérant la configuration d’application",
       intro: "ZbxView accepte une <strong>configuration poussée par l’administrateur</strong>. Après l’installation, l’utilisateur ne saisit rien — le serveur est déjà là. Ajoutez un jeton API et l’application s’ouvre déjà connectée : aucun écran de connexion n’apparaît. Cela fonctionne sous Android (managed configuration) et sous iOS (managed app configuration).",
       s1_h: "1. Ce qui peut être configuré",
-      s1_p: "L’administrateur peut pré-remplir la connexion au serveur, transmettre un jeton API et imposer le déverrouillage biométrique. Rien d’autre n’est piloté à distance. Les mots de passe ne transitent jamais par la configuration — l’utilisateur les saisit lui-même et ils restent dans le coffre-fort de l’appareil.",
+      s1_p: "L’administrateur peut pré-remplir la connexion au serveur, transmettre un jeton API, fournir un certificat client, relier les notifications push à son propre Firebase, attribuer un dashboard à un écran et imposer le déverrouillage biométrique. Les mots de passe ne transitent jamais par la configuration — l’utilisateur les saisit lui-même et ils restent dans le coffre-fort de l’appareil.",
       th_key: "Clé",
       th_type: "Type",
       th_meaning: "Signification",
@@ -447,6 +509,18 @@ startActivity(i);</code></pre>
       foot_back: "← retour à la page principale",
       __title: "ZbxView — Déploiement par MDM (Intune)",
       __desc: "Comment déployer et préconfigurer l’application ZbxView avec Microsoft Intune ou un autre MDM — configuration d’application, clés, profil professionnel.",
+      caps_h: "Ce que le MDM permet de faire :",
+      cap1: "<strong>Serveur sans rien saisir</strong> — adresse, nom et mode de connexion ; avec <code>set_default</code>, l’application s’ouvre directement dessus.",
+      cap2: "<strong>Connexion sans mot de passe</strong> — un jeton API issu de la politique, idéal pour les appareils partagés.",
+      cap3: "<strong>Écrans muraux</strong> — chaque écran reçoit son propre dashboard plein écran (<code>kiosk_dashboard_id</code>).",
+      cap4: "<strong>Certificat client pour mTLS</strong> — envoyé uniquement aux serveurs autorisés, verrouillable pour l’utilisateur.",
+      cap5: "<strong>Notifications push</strong> depuis le projet Firebase de votre entreprise, activables dès l’installation.",
+      cap6: "<strong>Sécurité</strong> — empreinte/visage imposé, certificat auto-signé autorisé pour un serveur interne.",
+      cap7: "<strong>Écrans</strong> — un bouton pour piloter les écrans d’affichage dynamique (redémarrage, allumage, veille) selon les droits Zabbix.",
+      cap8: "<strong>Écrans sans MDM</strong> — les mêmes clés comme paramètres de lancement (section 5).",
+      k_kdash: "ID du dashboard que cet écran affiche en plein écran. Donnez-en un différent à chaque appareil et chaque écran affichera son propre tableau ; il remplace le choix fait sur l’appareil et utilise le serveur de cette politique.",
+      k_kname: "Libellé affiché pour ce dashboard. Purement cosmétique — c’est l’ID ci-dessus qui décide de ce qui s’affiche.",
+      k_disp: "Affiche dans l’en-tête le bouton <strong>Écrans</strong> : les écrans d’affichage dynamique gérés par le module ZbxView MDM pour Zabbix, avec redémarrage de l’application, redémarrage de l’appareil, allumage et veille (selon ce que les scripts Zabbix autorisent à l’utilisateur). Prime sur le réglage issu d’un QR code."
     };
     var LV = {
       back: "← atpakaļ uz ZbxView",
@@ -454,7 +528,7 @@ startActivity(i);</code></pre>
       updated: "Lietotne: ZbxView · Attiecas uz Microsoft Intune un jebkuru MDM ar lietotņu konfigurāciju",
       intro: "ZbxView pieņem <strong>administratora nosūtītu konfigurāciju</strong>. Pēc uzstādīšanas lietotājam nekas nav jāievada — serveris jau ir klāt. Nosūtiet līdzi arī API pilnvaru, un lietotne atveras jau pieteikusies, tāpēc pieteikšanās ekrāns vispār neparādās. Tas darbojas Android (managed configuration) un iOS (managed app configuration) ierīcēs.",
       s1_h: "1. Ko var iestatīt",
-      s1_p: "Administrators var iepriekš aizpildīt savienojumu ar serveri, nosūtīt API pilnvaru un pieprasīt biometrisko atbloķēšanu. Nekas cits attālināti netiek vadīts. Paroles caur konfigurāciju netiek sūtītas nekad — tās ievada pats lietotājs, un tās paliek ierīces drošajā krātuvē.",
+      s1_p: "Administrators var iepriekš aizpildīt savienojumu ar serveri, nosūtīt API pilnvaru, piegādāt klienta sertifikātu, piesaistīt push paziņojumus savam Firebase, piešķirt ekrānam informācijas paneli un pieprasīt biometrisko atbloķēšanu. Paroles caur konfigurāciju netiek sūtītas nekad — tās ievada pats lietotājs, un tās paliek ierīces drošajā krātuvē.",
       th_key: "Atslēga",
       th_type: "Tips",
       th_meaning: "Nozīme",
@@ -516,6 +590,18 @@ startActivity(i);</code></pre>
       foot_back: "← atpakaļ uz galveno lapu",
       __title: "ZbxView — Izvietošana ar MDM (Intune)",
       __desc: "Kā izvietot un iepriekš konfigurēt ZbxView lietotni ar Microsoft Intune vai citu MDM — lietotnes konfigurācija, atslēgas, darba profils.",
+      caps_h: "Ko var paveikt caur MDM:",
+      cap1: "<strong>Serveris bez aizpildīšanas</strong> — adrese, nosaukums un pieteikšanās veids; ar <code>set_default</code> lietotne atveras uzreiz tajā.",
+      cap2: "<strong>Pieteikšanās bez parolēm</strong> — API pilnvara no politikas, ideāli koplietotām ierīcēm.",
+      cap3: "<strong>Sienas ekrāni</strong> — katrs ekrāns saņem savu pilnekrāna informācijas paneli (<code>kiosk_dashboard_id</code>).",
+      cap4: "<strong>Klienta sertifikāts mTLS</strong> — tiek sūtīts tikai atļautiem serveriem, lietotājam to var bloķēt.",
+      cap5: "<strong>Push paziņojumi</strong> no jūsu uzņēmuma Firebase projekta, pēc izvēles ieslēgti uzreiz pēc uzstādīšanas.",
+      cap6: "<strong>Drošība</strong> — obligāts pirkstu nospiedums/seja, atļauts pašparakstīts sertifikāts iekšējam serverim.",
+      cap7: "<strong>Ekrāni</strong> — poga signage ekrānu vadībai (restarts, ieslēgšana, gaidstāve) atbilstoši Zabbix tiesībām.",
+      cap8: "<strong>Ekrāni bez MDM</strong> — tās pašas atslēgas kā palaišanas parametri (5. sadaļa).",
+      k_kdash: "Informācijas paneļa ID, ko šis ekrāns rāda pilnekrānā. Katrai ierīcei dodiet citu, un katrs ekrāns rādīs savu paneli; tas aizstāj ierīcē izvēlēto un izmanto serveri no šīs politikas.",
+      k_kname: "Šim panelim rādītais nosaukums. Tikai kosmētisks — ko rādīt, nosaka augstāk norādītais ID.",
+      k_disp: "Galvenē parāda pogu <strong>Ekrāni</strong>: signage ekrāni, ko pārvalda Zabbix modulis ZbxView MDM, ar lietotnes restartu, ierīces restartu, ieslēgšanu un gaidstāvi (ciktāl Zabbix skripti to lietotājam atļauj). Ir prioritāra pār iestatījumu no QR koda."
     };
     var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
     var htmlEl = document.documentElement;

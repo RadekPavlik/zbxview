@@ -238,7 +238,13 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
         <div class="feat"><div class="ico">🏢</div><h3 data-i18n="ent2_h">Nasazení přes Intune / MDM</h3><p data-i18n="ent2_p">Distribuce privátně přes Managed Google Play a nasazení ZbxView na zařízení pomocí Microsoft Intune (nebo jiného MDM).</p></div>
         <div class="feat"><div class="ico">⚙️</div><h3 data-i18n="ent3_h">Managed configuration</h3><p data-i18n="ent3_p">Předvyplnění Zabbix serverů a nastavení centrálně přes managed config — žádné ruční nastavování na každém zařízení. Klíč <code>set_default</code> označí nasazený server jako výchozí, takže se aplikace po spuštění otevře rovnou v něm.</p></div>
         <div class="feat"><div class="ico">🛡️</div><h3 data-i18n="ent4_h">Bez reklam &amp; podpora</h3><p data-i18n="ent4_p">Enterprise buildy jsou bez reklam, s prioritní podporou a řízenými aktualizacemi.</p></div>
+        <div class="feat"><div class="ico">🖥️</div><h3 data-i18n="ent5_h">Nástěnky na zeď</h3><p data-i18n="ent5_p">Každé obrazovce pošlete vlastní <code>kiosk_dashboard_id</code> — aplikace naběhne rovnou na celoobrazovkový dashboard, bez klikání a bez přihlašování.</p></div>
+        <div class="feat"><div class="ico">🔑</div><h3 data-i18n="ent6_h">Přihlášení bez hesla</h3><p data-i18n="ent6_p">S klíčem <code>api_token</code> je aplikace po instalaci rovnou přihlášená. Hesla se konfigurací neposílají nikdy.</p></div>
+        <div class="feat"><div class="ico">📜</div><h3 data-i18n="ent7_h">Klientský certifikát (mTLS)</h3><p data-i18n="ent7_p">Zabbix za bránou s mTLS (Cloudflare Access apod.)? Certifikát a klíč dorazí z MDM, posílají se jen na povolené servery a uživatel je může mít zamčené.</p></div>
+        <div class="feat"><div class="ico">🔔</div><h3 data-i18n="ent8_h">Push z vlastního Firebase</h3><p data-i18n="ent8_p">Klíče <code>push_*</code> napojí aplikaci na firemní Firebase projekt; <code>push_enabled</code> zapne notifikace hned při prvním spuštění.</p></div>
+        <div class="feat"><div class="ico">👆</div><h3 data-i18n="ent9_h">Biometrika a displeje bez MDM</h3><p data-i18n="ent9_p">Vynucené odemčení otiskem (<code>require_biometric</code>). Signage displeje bez Google Play přijmou tytéž klíče jako parametry spuštění.</p></div>
       </div>
+      <p class="ent-more"><a href="mdm.html" data-i18n="ent_more">Všechny klíče a návod pro Intune →</a></p>
       <div class="ent-cta">
         <p data-i18n="ent_cta_p">Máte zájem o firemní nasazení? Napište nám nezávaznou poptávku.</p>
         <form class="ent-form" novalidate>
@@ -440,7 +446,18 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       foot_privacy: 'Privacy policy', foot_contact: 'Contact',
       foot_disc: 'ZbxView is an independent client and is not affiliated with, endorsed by or sponsored by Zabbix SIA. “Zabbix” is a trademark of Zabbix SIA. Google Play and the Google Play logo are trademarks of Google LLC.',
       __title: 'ZbxView: Zabbix Client — Zabbix monitoring in your pocket',
-      __desc: 'ZbxView is a mobile client for Zabbix. Watch problems in real time, acknowledge and close events, host maps and dashboards — right from your phone.'
+      __desc: 'ZbxView is a mobile client for Zabbix. Watch problems in real time, acknowledge and close events, host maps and dashboards — right from your phone.',
+      ent5_h: "Wall displays",
+      ent5_p: "Send each screen its own <code>kiosk_dashboard_id</code> — the app starts straight into a full-screen dashboard, no tapping and no sign-in.",
+      ent6_h: "Sign-in without passwords",
+      ent6_p: "With the <code>api_token</code> key the app is signed in right after installation. Passwords never travel through the configuration.",
+      ent7_h: "Client certificate (mTLS)",
+      ent7_p: "Zabbix behind an mTLS gateway (Cloudflare Access and the like)? The certificate and key come from the MDM, are sent only to allowed servers and can be locked for the user.",
+      ent8_h: "Push from your own Firebase",
+      ent8_p: "The <code>push_*</code> keys connect the app to your company Firebase project; <code>push_enabled</code> turns notifications on at first start.",
+      ent9_h: "Biometrics, and displays without MDM",
+      ent9_p: "Enforced fingerprint unlock (<code>require_biometric</code>). Signage displays without Google Play take the same keys as launch parameters.",
+      ent_more: "All keys and the Intune guide →"
     };
     var DE = {
       nav_oncall: "Bereitschaft", foot_oncall: "Bereitschaft",
@@ -599,6 +616,17 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       foot_disc: "ZbxView ist ein unabhängiger Client und steht in keiner Verbindung zu Zabbix SIA, wird von Zabbix SIA weder unterstützt noch gesponsert. „Zabbix“ ist eine Marke von Zabbix SIA. Google Play und das Google-Play-Logo sind Marken von Google LLC.",
       __title: "ZbxView: Zabbix Client — Zabbix-Monitoring in der Hosentasche",
       __desc: "ZbxView ist ein mobiler Client für Zabbix. Probleme in Echtzeit verfolgen, Ereignisse bestätigen und schließen, Hostkarten und Dashboards — direkt vom Handy.",
+      ent5_h: "Wandmonitore",
+      ent5_p: "Jeder Bildschirm bekommt sein eigenes <code>kiosk_dashboard_id</code> — die App startet direkt in ein Vollbild-Dashboard, ohne Tippen und ohne Anmeldung.",
+      ent6_h: "Anmeldung ohne Passwort",
+      ent6_p: "Mit dem Schlüssel <code>api_token</code> ist die App direkt nach der Installation angemeldet. Passwörter laufen nie über die Konfiguration.",
+      ent7_h: "Client-Zertifikat (mTLS)",
+      ent7_p: "Zabbix hinter einem mTLS-Gateway (Cloudflare Access o. Ä.)? Zertifikat und Schlüssel kommen aus dem MDM, gehen nur an erlaubte Server und lassen sich für den Nutzer sperren.",
+      ent8_h: "Push aus eigenem Firebase",
+      ent8_p: "Die Schlüssel <code>push_*</code> verbinden die App mit dem Firebase-Projekt Ihrer Firma; <code>push_enabled</code> schaltet Benachrichtigungen schon beim ersten Start ein.",
+      ent9_h: "Biometrie und Displays ohne MDM",
+      ent9_p: "Erzwungene Entsperrung per Fingerabdruck (<code>require_biometric</code>). Signage-Displays ohne Google Play nehmen dieselben Schlüssel als Startparameter.",
+      ent_more: "Alle Schlüssel und die Intune-Anleitung →"
     };
     var ES = {
       nav_oncall: "Guardias", foot_oncall: "Guardias",
@@ -757,6 +785,17 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       foot_disc: "ZbxView es un cliente independiente y no está afiliado a Zabbix SIA ni cuenta con su respaldo o patrocinio. «Zabbix» es una marca registrada de Zabbix SIA. Google Play y el logotipo de Google Play son marcas de Google LLC.",
       __title: "ZbxView: Zabbix Client — la monitorización Zabbix en tu bolsillo",
       __desc: "ZbxView es un cliente móvil para Zabbix. Vigila los problemas en tiempo real, reconoce y cierra eventos, mapas de hosts y paneles, desde el móvil.",
+      ent5_h: "Pantallas de pared",
+      ent5_p: "Envía a cada pantalla su propio <code>kiosk_dashboard_id</code>: la aplicación arranca directamente en un dashboard a pantalla completa, sin tocar nada y sin iniciar sesión.",
+      ent6_h: "Inicio de sesión sin contraseñas",
+      ent6_p: "Con la clave <code>api_token</code> la aplicación queda con la sesión iniciada nada más instalarse. Las contraseñas nunca viajan en la configuración.",
+      ent7_h: "Certificado de cliente (mTLS)",
+      ent7_p: "¿Zabbix detrás de una pasarela mTLS (Cloudflare Access o similar)? El certificado y la clave llegan desde el MDM, solo se envían a servidores permitidos y se pueden bloquear para el usuario.",
+      ent8_h: "Push desde tu propio Firebase",
+      ent8_p: "Las claves <code>push_*</code> conectan la aplicación con el proyecto Firebase de tu empresa; <code>push_enabled</code> activa las notificaciones desde el primer inicio.",
+      ent9_h: "Biometría y pantallas sin MDM",
+      ent9_p: "Desbloqueo con huella obligatorio (<code>require_biometric</code>). Las pantallas de señalización sin Google Play aceptan las mismas claves como parámetros de inicio.",
+      ent_more: "Todas las claves y la guía de Intune →"
     };
     var FR = {
       nav_oncall: "Astreintes", foot_oncall: "Astreintes",
@@ -915,6 +954,17 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       foot_disc: "ZbxView est un client indépendant, sans affiliation avec Zabbix SIA, ni approuvé ni sponsorisé par elle. « Zabbix » est une marque de Zabbix SIA. Google Play et le logo Google Play sont des marques de Google LLC.",
       __title: "ZbxView : Zabbix Client — la supervision Zabbix dans votre poche",
       __desc: "ZbxView est un client mobile pour Zabbix. Suivez les problèmes en temps réel, acquittez et fermez les événements, cartes des hôtes et tableaux de bord — depuis votre téléphone.",
+      ent5_h: "Écrans muraux",
+      ent5_p: "Envoyez à chaque écran son propre <code>kiosk_dashboard_id</code> : l’application démarre directement sur un dashboard plein écran, sans toucher à rien ni se connecter.",
+      ent6_h: "Connexion sans mot de passe",
+      ent6_p: "Avec la clé <code>api_token</code>, l’application est connectée dès l’installation. Les mots de passe ne transitent jamais par la configuration.",
+      ent7_h: "Certificat client (mTLS)",
+      ent7_p: "Zabbix derrière une passerelle mTLS (Cloudflare Access ou autre) ? Le certificat et la clé arrivent du MDM, ne sont envoyés qu’aux serveurs autorisés et peuvent être verrouillés pour l’utilisateur.",
+      ent8_h: "Push depuis votre propre Firebase",
+      ent8_p: "Les clés <code>push_*</code> relient l’application au projet Firebase de votre entreprise ; <code>push_enabled</code> active les notifications dès le premier démarrage.",
+      ent9_h: "Biométrie et écrans sans MDM",
+      ent9_p: "Déverrouillage par empreinte imposé (<code>require_biometric</code>). Les écrans d’affichage dynamique sans Google Play acceptent les mêmes clés comme paramètres de lancement.",
+      ent_more: "Toutes les clés et le guide Intune →"
     };
     var LV = {
       nav_oncall: "Dežūras", foot_oncall: "Dežūras",
@@ -1073,6 +1123,17 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       foot_disc: "ZbxView ir neatkarīgs klients, kas nav saistīts ar Zabbix SIA, nav tās apstiprināts vai sponsorēts. “Zabbix” ir Zabbix SIA preču zīme. Google Play un Google Play logotips ir Google LLC preču zīmes.",
       __title: "ZbxView: Zabbix klients — Zabbix uzraudzība jūsu kabatā",
       __desc: "ZbxView ir mobilais klients Zabbix sistēmai. Sekojiet problēmām reāllaikā, apstipriniet un slēdziet notikumus, resursdatoru kartes un paneļi — tieši no telefona.",
+      ent5_h: "Sienas ekrāni",
+      ent5_p: "Nosūtiet katram ekrānam savu <code>kiosk_dashboard_id</code> — lietotne startē uzreiz pilnekrāna informācijas panelī, bez pieskārieniem un bez pieteikšanās.",
+      ent6_h: "Pieteikšanās bez parolēm",
+      ent6_p: "Ar atslēgu <code>api_token</code> lietotne ir pieteikusies uzreiz pēc uzstādīšanas. Paroles caur konfigurāciju netiek sūtītas nekad.",
+      ent7_h: "Klienta sertifikāts (mTLS)",
+      ent7_p: "Zabbix aiz mTLS vārtejas (Cloudflare Access u. c.)? Sertifikāts un atslēga pienāk no MDM, tiek sūtīti tikai atļautiem serveriem, un lietotājam tos var bloķēt.",
+      ent8_h: "Push no sava Firebase",
+      ent8_p: "Atslēgas <code>push_*</code> savieno lietotni ar jūsu uzņēmuma Firebase projektu; <code>push_enabled</code> ieslēdz paziņojumus jau pirmajā palaišanā.",
+      ent9_h: "Biometrija un ekrāni bez MDM",
+      ent9_p: "Obligāta atbloķēšana ar pirkstu nospiedumu (<code>require_biometric</code>). Signage ekrāni bez Google Play pieņem tās pašas atslēgas kā palaišanas parametrus.",
+      ent_more: "Visas atslēgas un Intune ceļvedis →"
     };
     var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
     var htmlEl = document.documentElement;

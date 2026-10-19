@@ -41,14 +41,16 @@ header.nav {
   backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--line);
 }
-.nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; height: 62px; max-width: 1360px; }
+.brand { flex: none; }
 .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; letter-spacing: .2px; }
 .brand img { width: 30px; height: 30px; border-radius: 7px; }
 .brand b { color: var(--red-soft); }
-.nav nav { display: flex; gap: 26px; font-size: 14px; }
-.nav nav a { color: var(--muted); transition: color .15s; }
+.nav nav { display: flex; gap: 22px; font-size: 14px; min-width: 0; }
+.nav nav a { color: var(--muted); transition: color .15s; white-space: nowrap; }
+@media (max-width: 1240px) { .nav nav { gap: 15px; font-size: 13px; } }
+@media (max-width: 1080px) { .nav nav { display: none; } }
 .nav nav a:hover { color: var(--text); }
-@media (max-width: 640px) { .nav nav { display: none; } }
 .lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex: none; }
 .lang-opt { border: none; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 6px 11px; cursor: pointer; transition: color .15s, background .15s; }
 .lang-opt:hover { color: var(--text); }
@@ -337,6 +339,14 @@ footer .disc { width: 100%; color: #5c6675; font-size: 11px; line-height: 1.5; }
 .doc h2 { font-size: 20px; margin: 30px 0 10px; color: var(--red-soft); }
 .doc p, .doc li { color: var(--muted); margin-bottom: 10px; }
 .doc ul { padding-left: 22px; }
+.doc p.caps-h { color: var(--text); font-weight: 600; }
+.doc ul.caps { list-style: none; padding: 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 6px 0 22px; }
+.doc ul.caps li { background: var(--card); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; margin: 0; font-size: 14px; }
+.doc ul.caps li strong { color: var(--text); }
+@media (max-width: 640px) { .doc ul.caps { grid-template-columns: 1fr; } }
+.ent-more { text-align: center; margin-top: 18px; }
+.ent-more a { color: var(--red-soft); font-weight: 600; }
+.ent-more a:hover { text-decoration: underline; }
 .doc a { color: var(--red-soft); text-decoration: underline; }
 .back { display: inline-block; margin-bottom: 24px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
 .back:hover { color: var(--text); }
