@@ -335,7 +335,7 @@ header.nav { position: sticky; top: 0; z-index: 50; background: rgba(12,15,20,.8
 .about-text { display: flex; flex-direction: column; gap: 18px; }
 .about-text > p { color: var(--muted); }
 .about-head { display: flex; align-items: center; gap: 16px; }
-.about-head img { width: 88px; height: 88px; flex: none; border-radius: 50%; background: #fff; padding: 6px; object-fit: contain; box-shadow: 0 0 0 1px var(--line-2); }
+.about-head img { width: 88px; height: 88px; flex: none; border-radius: 50%; background: #fff; padding: 14px; object-fit: contain; box-shadow: 0 0 0 1px var(--line-2); }
 .about-head h2 { font-size: 28px; line-height: 1.2; }
 .role { font-family: var(--mono); font-size: 13px; color: var(--muted-2); }
 .chips { display: flex; flex-wrap: wrap; gap: 10px; }
