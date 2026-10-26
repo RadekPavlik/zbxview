@@ -30,9 +30,11 @@
       <li><strong data-i18n="conn_s1_h">Otevřete „Připojení telefonu“</strong><br><span data-i18n="conn_s1_p">Hned se zobrazí QR kód pro první zařízení. Každý telefon dostane vlastní API token, který nevyprší.</span></li>
       <li><strong data-i18n="conn_s2_h">Naskenujte v aplikaci</strong><br><span data-i18n="conn_s2_p">Přidat server → Naskenovat QR kód. Aplikace ukáže, co kód obsahuje, a server přidá i s přihlášením.</span></li>
       <li><strong data-i18n="conn_s3_h">Víc telefonů? Seznam zařízení</strong><br><span data-i18n="conn_s3_p">Stránka ukazuje všechna spárovaná zařízení. „Přidat další zařízení“ připojí další telefon nebo tablet, „Nový QR kód“ znovu spáruje jedno zařízení a koš ho odebere — ztracený telefon tak přijde o přístup, ostatní fungují dál.</span></li>
-      <li><strong data-i18n="conn_s4_h">Certifikát v QR kódu</strong><br><span data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC). Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49).</span></li>
+      <li><strong data-i18n="conn_s4_h">Certifikát v QR kódu</strong><br><span data-i18n="conn_s4_p">Správce může do modulu nahrát společný klientský certifikát (klíč EC) a určit, kterým serverům se posílá. Kód je pak větší, a proto se rozdělí na tři kódy, které se střídají. Aplikace si načte všechny a certifikát uloží sama (od verze 0.49). Stránka s kódem ukazuje, jestli certifikát obsahuje.</span></li>
       <li><strong data-i18n="conn_s5_h">Nastaví správce jednou</strong><br><span data-i18n="conn_s5_p">Adresu, na které telefony Zabbix najdou (např. přes Cloudflare), jméno serveru a práci s certifikáty nastaví správce v Administrace → Konfigurace telefonu, kde nahraje i klientský certifikát a modul ho rovnou zkontroluje — uživatel nic nevyplňuje.</span></li>
       <li><strong data-i18n="conn_s6_h">Bezpečně</strong><br><span data-i18n="conn_s6_p">Kód se zobrazí jen jednou a po 5 minutách nebo tlačítkem „Skrýt hned“ zmizí. Jakmile ho telefon naskenuje, stránka to pozná a kód schová; kód, který nikdo nenaskenoval, se zahodí i s tokenem. Token je běžný API token uživatele s jeho oprávněními, vidíte ho i v API tokenech.</span></li>
+      <li><strong data-i18n="conn_s7_h">Push notifikace v kódu</strong><br><span data-i18n="conn_s7_p">Když správce v modulu vyplní údaje firemního Firebase projektu, kód je předá aplikaci a ta po naskenování rovnou zapne push notifikace (Android, od verze 0.50). Každý telefon uživatele se registruje zvlášť, notifikace tak dostanou všechny. Návod na <a href="push.html">push notifikace</a>.</span></li>
+      <li><strong data-i18n="conn_s8_h">Displeje v aplikaci</strong><br><span data-i18n="conn_s8_p">Přepínač v Konfiguraci telefonu přidá do kódu tlačítko Displeje: aplikace (od verze 0.53) pak ukáže digital signage displeje modulu <a href="mdm.html">ZbxView MDM</a> s restartem, zapnutím a uspáním.</span></li>
     </ul>
 
     <h2 id="setup" data-i18n="cs_h">Jak modul nainstalovat (jednou, správce Zabbixu)</h2>
@@ -41,6 +43,7 @@
     </ol>
     <pre><code>cd /usr/share/zabbix/modules
 git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</code></pre>
+    <p class="note" data-i18n="cs_zip">Bez gitu: stáhněte <a href="https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect/archive/refs/heads/main.zip">ZIP s aktuální verzí</a> a rozbalte ho do adresáře <code>modules</code> (složku přejmenujte na <code>Zabbix-UI-Modules-ZbxView-connect</code>).</p>
     <ol start="2">
       <li data-i18n="cs_s2">V Zabbixu otevřete <strong>Administrace → Obecné → Moduly</strong>, klikněte na <strong>Skenovat adresář</strong> a modul <strong>ZbxView connect</strong> zapněte.</li>
       <li data-i18n="cs_s3">V <strong>Administrace → Konfigurace telefonu</strong> nastavte adresu, na které telefony Zabbix najdou (např. přes Cloudflare), název serveru a certifikát serveru. Pokud je Zabbix za bránou s mTLS, nahrajte tam i klientský certifikát (klíč EC) — modul ho zkontroluje.</li>
@@ -65,11 +68,16 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "conn_s3_h": "More phones? A device list",
       "conn_s3_p": "The page lists every paired device. “Add another device” connects another phone or tablet, “New QR code” re-pairs one device and the bin removes it — a lost phone loses access, the others keep working.",
       "conn_s4_h": "Certificate in the QR code",
-      "conn_s4_p": "An admin can give the module a shared client certificate (EC key). The code then gets bigger, so it is split into three codes shown in turn. The app reads them all and saves the certificate itself (from version 0.49).",
+      "conn_s4_p": "An admin can give the module a shared client certificate (EC key) and say which servers it is sent to. The code then gets bigger, so it is split into three codes shown in turn. The app reads them all and saves the certificate itself (version 0.49 or newer). The page with the code says whether it carries the certificate.",
       "conn_s5_h": "Set once by the admin",
       "conn_s5_p": "The address phones reach Zabbix at (e.g. via Cloudflare), the server name and certificate handling are set in Administration → Mobile configuration, where the admin also uploads the client certificate and the module checks it — users fill in nothing.",
       "conn_s6_h": "Secure",
       "conn_s6_p": "The code is shown only once and disappears after 5 minutes or with “Hide now”. As soon as a phone scans it the page notices and hides the code; a code nobody scanned is dropped together with its token. The token is the user’s regular API token with their permissions, listed under API tokens.",
+      "conn_s7_h": "Push notifications in the code",
+      "conn_s7_p": "When the admin fills in the organisation’s Firebase project in the module, the code hands it to the app, which turns push notifications on right after the scan (Android, version 0.50 or newer). Each of a user’s phones registers on its own, so all of them get the notifications. See <a href=\"push.html\">push notifications</a>.",
+      "conn_s8_h": "Displays in the app",
+      "conn_s8_p": "A switch in Mobile configuration adds a Displays key to the code: the app (0.53 or newer) then shows the signage displays of the <a href=\"mdm.html\">ZbxView MDM</a> module with restart, switch on and standby.",
+      "cs_zip": "Without git: download the <a href=\"https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect/archive/refs/heads/main.zip\">ZIP of the current version</a> and unpack it into the <code>modules</code> directory (rename the folder to <code>Zabbix-UI-Modules-ZbxView-connect</code>).",
       "cs_h": "Installing the module (once, by the Zabbix admin)",
       "cs_s1": "Download the module from GitHub into the Zabbix frontend modules directory:",
       "cs_s2": "In Zabbix open <strong>Administration → General → Modules</strong>, click <strong>Scan directory</strong> and enable <strong>ZbxView connect</strong>.",
@@ -93,11 +101,16 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "conn_s3_h": "Mehrere Telefone? Eine Geräteliste",
       "conn_s3_p": "Die Seite listet alle gekoppelten Geräte. „Add another device“ verbindet ein weiteres Telefon oder Tablet, „New QR code“ koppelt ein Gerät neu und der Papierkorb entfernt es — ein verlorenes Telefon verliert den Zugang, die anderen arbeiten weiter.",
       "conn_s4_h": "Zertifikat im QR-Code",
-      "conn_s4_p": "Ein Admin kann dem Modul ein gemeinsames Client-Zertifikat (EC-Schlüssel) geben. Der Code wird dann größer und deshalb auf drei wechselnde Codes verteilt. Die App liest alle und speichert das Zertifikat selbst (ab Version 0.49).",
+      "conn_s4_p": "Ein Admin kann dem Modul ein gemeinsames Client-Zertifikat (EC-Schlüssel) geben und festlegen, an welche Server es geht. Der Code wird dann größer und deshalb auf drei abwechselnd angezeigte Codes aufgeteilt. Die App liest alle und speichert das Zertifikat selbst (ab Version 0.49). Die Seite mit dem Code zeigt, ob er das Zertifikat enthält.",
       "conn_s5_h": "Einmal vom Admin eingestellt",
       "conn_s5_p": "Die Adresse, unter der Telefone Zabbix erreichen (z. B. über Cloudflare), der Servername und die Zertifikate werden unter Administration → Mobile configuration eingestellt; dort lädt der Admin auch das Client-Zertifikat hoch und das Modul prüft es — Benutzer füllen nichts aus.",
       "conn_s6_h": "Sicher",
       "conn_s6_p": "Der Code wird nur einmal angezeigt und verschwindet nach 5 Minuten oder mit „Jetzt ausblenden“. Sobald ein Telefon ihn scannt, merkt es die Seite und blendet ihn aus; ein Code, den niemand gescannt hat, wird samt Token verworfen. Der Token ist ein normaler API-Token des Benutzers mit seinen Rechten, sichtbar unter API-Tokens.",
+      "conn_s7_h": "Push-Benachrichtigungen im Code",
+      "conn_s7_p": "Trägt der Admin im Modul das Firebase-Projekt der Organisation ein, gibt der Code es an die App weiter, die Push-Benachrichtigungen gleich nach dem Scan einschaltet (Android, ab Version 0.50). Jedes Telefon eines Benutzers registriert sich einzeln, so erhalten alle die Benachrichtigungen. Siehe <a href=\"push.html\">Push-Benachrichtigungen</a>.",
+      "conn_s8_h": "Displays in der App",
+      "conn_s8_p": "Ein Schalter in der Mobilkonfiguration fügt dem Code eine Displays-Taste hinzu: Die App (ab 0.53) zeigt dann die Signage-Displays des Moduls <a href=\"mdm.html\">ZbxView MDM</a> mit Neustart, Einschalten und Standby.",
+      "cs_zip": "Ohne git: Laden Sie das <a href=\"https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect/archive/refs/heads/main.zip\">ZIP der aktuellen Version</a> herunter und entpacken Sie es in das Verzeichnis <code>modules</code> (Ordner in <code>Zabbix-UI-Modules-ZbxView-connect</code> umbenennen).",
       "cs_h": "Modul installieren (einmalig, durch den Zabbix-Admin)",
       "cs_s1": "Laden Sie das Modul von GitHub in das Modulverzeichnis des Zabbix-Frontends:",
       "cs_s2": "Öffnen Sie in Zabbix <strong>Administration → Allgemein → Module</strong>, klicken Sie auf <strong>Verzeichnis scannen</strong> und aktivieren Sie <strong>ZbxView connect</strong>.",
@@ -121,11 +134,16 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "conn_s3_h": "¿Varios teléfonos? Una lista de dispositivos",
       "conn_s3_p": "La página muestra todos los dispositivos emparejados. «Add another device» conecta otro teléfono o tableta, «New QR code» vuelve a emparejar uno y la papelera lo elimina: un teléfono perdido pierde el acceso y los demás siguen funcionando.",
       "conn_s4_h": "Certificado en el código QR",
-      "conn_s4_p": "Un administrador puede dar al módulo un certificado de cliente común (clave EC). El código crece y por eso se divide en tres códigos que se alternan. La app los lee todos y guarda el certificado (desde la versión 0.49).",
+      "conn_s4_p": "Un administrador puede dar al módulo un certificado de cliente común (clave EC) e indicar a qué servidores se envía. El código crece y por eso se divide en tres códigos que se alternan. La app los lee todos y guarda el certificado sola (desde la versión 0.49). La página del código indica si lo lleva.",
       "conn_s5_h": "Lo configura el administrador una vez",
       "conn_s5_p": "La dirección por la que los teléfonos llegan a Zabbix (p. ej. vía Cloudflare), el nombre del servidor y los certificados se ajustan en Administración → Mobile configuration, donde el administrador también sube el certificado de cliente y el módulo lo comprueba: el usuario no rellena nada.",
       "conn_s6_h": "Seguro",
       "conn_s6_p": "El código se muestra una sola vez y desaparece a los 5 minutos o con «Ocultar ahora». En cuanto un teléfono lo escanea, la página lo detecta y lo oculta; un código que nadie escaneó se descarta junto con su token. El token es un token de API normal del usuario con sus permisos, visible en Tokens de API.",
+      "conn_s7_h": "Notificaciones push en el código",
+      "conn_s7_p": "Si el administrador introduce en el módulo el proyecto Firebase de la organización, el código lo pasa a la app, que activa las notificaciones push justo después del escaneo (Android, desde la versión 0.50). Cada teléfono de un usuario se registra por separado, así que todos reciben las notificaciones. Ver <a href=\"push.html\">notificaciones push</a>.",
+      "conn_s8_h": "Pantallas en la app",
+      "conn_s8_p": "Un interruptor en la Configuración móvil añade al código un botón Pantallas: la app (desde 0.53) muestra entonces las pantallas de señalización del módulo <a href=\"mdm.html\">ZbxView MDM</a> con reinicio, encendido y reposo.",
+      "cs_zip": "Sin git: descarga el <a href=\"https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect/archive/refs/heads/main.zip\">ZIP de la versión actual</a> y descomprímelo en el directorio <code>modules</code> (renombra la carpeta a <code>Zabbix-UI-Modules-ZbxView-connect</code>).",
       "cs_h": "Instalar el módulo (una vez, el administrador de Zabbix)",
       "cs_s1": "Descargue el módulo de GitHub en el directorio de módulos del frontend de Zabbix:",
       "cs_s2": "En Zabbix abra <strong>Administración → Zabbix → Módulos</strong>, pulse <strong>Directorio de escaneo</strong> y active <strong>ZbxView connect</strong>.",
@@ -149,11 +167,16 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "conn_s3_h": "Plusieurs téléphones ? Une liste d’appareils",
       "conn_s3_p": "La page liste tous les appareils appairés. « Add another device » connecte un autre téléphone ou une tablette, « New QR code » réappaire un appareil et la corbeille le supprime — un téléphone perdu perd l’accès, les autres continuent.",
       "conn_s4_h": "Certificat dans le QR code",
-      "conn_s4_p": "Un administrateur peut confier au module un certificat client commun (clé EC). Le code devient alors plus grand, il est donc réparti sur trois codes qui s’alternent. L’app les lit tous et enregistre le certificat (à partir de la version 0.49).",
+      "conn_s4_p": "Un administrateur peut confier au module un certificat client commun (clé EC) et indiquer à quels serveurs il est envoyé. Le code devient alors plus grand et se divise en trois codes affichés à tour de rôle. L’app les lit tous et enregistre le certificat elle-même (à partir de la version 0.49). La page du code indique s’il contient le certificat.",
       "conn_s5_h": "Réglé une fois par l’administrateur",
       "conn_s5_p": "L’adresse par laquelle les téléphones joignent Zabbix (p. ex. via Cloudflare), le nom du serveur et les certificats se règlent dans Administration → Mobile configuration, où l’administrateur téléverse aussi le certificat client que le module vérifie : l’utilisateur ne remplit rien.",
       "conn_s6_h": "Sûr",
       "conn_s6_p": "Le code n’est affiché qu’une fois et disparaît après 5 minutes ou avec « Masquer maintenant ». Dès qu’un téléphone le scanne, la page le détecte et masque le code ; un code que personne n’a scanné est abandonné avec son jeton. Le jeton est un jeton API ordinaire de l’utilisateur, avec ses droits, visible dans les jetons API.",
+      "conn_s7_h": "Notifications push dans le code",
+      "conn_s7_p": "Si l’administrateur renseigne dans le module le projet Firebase de l’organisation, le code le transmet à l’app, qui active les notifications push juste après le scan (Android, à partir de la version 0.50). Chaque téléphone d’un utilisateur s’enregistre séparément, tous reçoivent donc les notifications. Voir <a href=\"push.html\">notifications push</a>.",
+      "conn_s8_h": "Écrans dans l’app",
+      "conn_s8_p": "Un interrupteur dans la Configuration mobile ajoute au code un bouton Écrans : l’app (à partir de 0.53) affiche alors les écrans d’affichage dynamique du module <a href=\"mdm.html\">ZbxView MDM</a> avec redémarrage, allumage et veille.",
+      "cs_zip": "Sans git : téléchargez le <a href=\"https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect/archive/refs/heads/main.zip\">ZIP de la version actuelle</a> et décompressez-le dans le répertoire <code>modules</code> (renommez le dossier en <code>Zabbix-UI-Modules-ZbxView-connect</code>).",
       "cs_h": "Installer le module (une fois, par l’administrateur Zabbix)",
       "cs_s1": "Téléchargez le module depuis GitHub dans le répertoire des modules du frontend Zabbix :",
       "cs_s2": "Dans Zabbix, ouvrez <strong>Administration → Général → Modules</strong>, cliquez sur <strong>Analyser le répertoire</strong> et activez <strong>ZbxView connect</strong>.",
@@ -177,11 +200,16 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "conn_s3_h": "Vairāki tālruņi? Ierīču saraksts",
       "conn_s3_p": "Lapa rāda visas savienotās ierīces. “Pievienot vēl vienu ierīci” pievieno vēl vienu tālruni vai planšeti, “Jauns QR kods” atkārtoti savieno vienu ierīci, bet miskaste to noņem — pazaudēts tālrunis zaudē piekļuvi, pārējie turpina darboties.",
       "conn_s4_h": "Sertifikāts QR kodā",
-      "conn_s4_p": "Administrators modulim var iedot kopīgu klienta sertifikātu (EC atslēga). Kods tad kļūst lielāks, tāpēc tas tiek sadalīts trīs mainīgos kodos. Lietotne nolasa visus un sertifikātu saglabā pati (no versijas 0.49).",
+      "conn_s4_p": "Administrators modulim var iedot kopīgu klienta sertifikātu (EC atslēga) un noteikt, kuriem serveriem to sūtīt. Kods tad kļūst lielāks, tāpēc tiek sadalīts trīs kodos, kas mainās pēc kārtas. Lietotne nolasa visus un sertifikātu saglabā pati (no versijas 0.49). Lapa ar kodu parāda, vai tajā ir sertifikāts.",
       "conn_s5_h": "Administrators iestata vienreiz",
       "conn_s5_p": "Adrese, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukums un sertifikāti iestata sadaļā Administrācija → Tālruņa konfigurācija, kur administrators augšupielādē arī klienta sertifikātu un modulis to pārbauda — lietotājs neko neaizpilda.",
       "conn_s6_h": "Droši",
       "conn_s6_p": "Kods tiek parādīts tikai vienreiz un pazūd pēc 5 minūtēm vai ar “Paslēpt tagad”. Tiklīdz tālrunis to noskenē, lapa to pamana un kodu paslēpj; kods, ko neviens nenoskenēja, tiek atmests kopā ar marķieri. Marķieris ir parasts lietotāja API marķieris ar viņa tiesībām, redzams sadaļā API marķieri.",
+      "conn_s7_h": "Push paziņojumi kodā",
+      "conn_s7_p": "Ja administrators modulī ievada organizācijas Firebase projektu, kods to nodod lietotnei, kas uzreiz pēc skenēšanas ieslēdz push paziņojumus (Android, no versijas 0.50). Katrs lietotāja tālrunis reģistrējas atsevišķi, tāpēc paziņojumus saņem visi. Skatiet <a href=\"push.html\">push paziņojumi</a>.",
+      "conn_s8_h": "Displeji lietotnē",
+      "conn_s8_p": "Slēdzis mobilajā konfigurācijā pievieno kodam pogu Displeji: lietotne (no 0.53) tad rāda moduļa <a href=\"mdm.html\">ZbxView MDM</a> digitālās signalizācijas displejus ar restartu, ieslēgšanu un gaidstāvi.",
+      "cs_zip": "Bez git: lejupielādējiet <a href=\"https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect/archive/refs/heads/main.zip\">aktuālās versijas ZIP</a> un atpakojiet to direktorijā <code>modules</code> (pārdēvējiet mapi par <code>Zabbix-UI-Modules-ZbxView-connect</code>).",
       "cs_h": "Moduļa uzstādīšana (vienreiz, Zabbix administrators)",
       "cs_s1": "Lejupielādējiet moduli no GitHub Zabbix frontenda moduļu direktorijā:",
       "cs_s2": "Zabbix atveriet <strong>Administrācija → General → Moduļi</strong>, noklikšķiniet <strong>Skenēt direktoriju</strong> un ieslēdziet <strong>ZbxView connect</strong>.",
