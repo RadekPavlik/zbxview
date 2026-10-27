@@ -24,6 +24,36 @@ from firebase_admin import credentials, messaging
 
 log = logging.getLogger('push-relay')
 
+# Zabbix severity colours (Administration → General → Trigger displaying options, defaults),
+# keyed by {EVENT.SEVERITY} as the server sends it - the English names and the Czech ones.
+SEVERITY_COLORS = {
+    'not classified': '#97AAB3', 'nezařazeno': '#97AAB3',
+    'information': '#7499FF', 'informace': '#7499FF',
+    'warning': '#FFC859', 'varování': '#FFC859',
+    'average': '#FFA059', 'průměrná': '#FFA059',
+    'high': '#E97659', 'vysoká': '#E97659',
+    'disaster': '#E45959', 'katastrofa': '#E45959',
+}
+UPDATE_COLOR = '#7499FF'
+RESOLVED_COLOR = '#59DB8F'
+UPDATE_PREFIXES = ('aktualizace', 'update', 'updated')
+RESOLVED_PREFIXES = ('vyřešeno', 'resolved')
+
+
+def notification_style(title, data):
+    """(kind, icon, colour) of an alert for the Android notification: the app ships
+    ic_stat_problem / ic_stat_update / ic_stat_resolved. An update is data "update" = "1"
+    ({EVENT.UPDATE.STATUS}) or a subject starting "Aktualizace:" / "Update:" (the media
+    type's update template); resolved is status RESOLVED or "Vyřešeno:" / "Resolved:"."""
+    head = title.strip().lower()
+    status = str(data.get('status') or '').strip().upper()
+    if status == 'RESOLVED' or head.startswith(RESOLVED_PREFIXES):
+        return 'resolved', 'ic_stat_resolved', RESOLVED_COLOR
+    if str(data.get('update') or '') == '1' or head.startswith(UPDATE_PREFIXES):
+        return 'update', 'ic_stat_update', UPDATE_COLOR
+    color = SEVERITY_COLORS.get(str(data.get('severity') or '').strip().lower(), SEVERITY_COLORS['warning'])
+    return 'problem', 'ic_stat_problem', color
+
 
 def load_config():
     cfg = configparser.ConfigParser()
@@ -61,14 +91,21 @@ class Handler(BaseHTTPRequestHandler):
             return self._reply(400, {'ok': False, 'error': 'missing token'})
         # FCM data values must be strings.
         data = {k: str(v) for k, v in (payload.get('data') or {}).items()}
+        title = str(payload.get('title') or 'Zabbix')
+        kind, icon, color = notification_style(title, data)
+        data['kind'] = kind
         msg = messaging.Message(
             token=token,
             notification=messaging.Notification(
-                title=str(payload.get('title') or 'Zabbix'),
+                title=title,
                 body=str(payload.get('body') or ''),
             ),
             data=data,
-            android=messaging.AndroidConfig(priority='high'),
+            # Older app builds lack the icons: Android then falls back to the app's default.
+            android=messaging.AndroidConfig(
+                priority='high',
+                notification=messaging.AndroidNotification(icon=icon, color=color),
+            ),
         )
         try:
             mid = messaging.send(msg)
