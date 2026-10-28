@@ -188,7 +188,8 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
     htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
 
     function apply(lang) {
-      var dict = DICTS[lang] || null; // cs is the markup itself
+      // cs is the markup itself; a language this page has no text for reads English
+      var dict = DICTS[lang] || (lang === 'cs' ? null : EN);
       var nodes = document.querySelectorAll('[data-i18n]');
       for (var i = 0; i < nodes.length; i++) {
         var el = nodes[i], key = el.getAttribute('data-i18n');
