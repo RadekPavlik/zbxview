@@ -30,7 +30,8 @@
     figure.shot { margin: 14px 0 20px; }
     figure.shot img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
     figure.shot.tall img { max-width: 480px; }
-    figure.shot.phone img { max-width: 300px; border: 0; border-radius: 0; }
+    figure.shot.app-shot img { max-width: 300px; border: 0; border-radius: 0; }
+    figure.shot.app-shot figcaption { max-width: 640px; }
     figure.shot figcaption { color: var(--muted); font-size: 13px; margin-top: 6px; }
     figure.shot.pending { display: none; }
     body.draft figure.shot.pending { display: block; border: 1px dashed var(--warn); border-radius: 8px; padding: 26px 16px; color: var(--warn); font-size: 13px; text-align: center; }
@@ -257,7 +258,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
       <li data-i18n="g102">If the app tells you to restart it, close it fully and open it again.</li>
     </ol>
     <p data-i18n="g103">Push turns on by itself after the scan. To confirm, check that <strong>Settings → Push notifications</strong> is on in the app.</p>
-    <figure class="shot phone"><img src="assets/push/app-settings-en.png" data-lang-img alt="ZbxView Settings screen with Push notifications turned on" width="430" height="884" loading="lazy" /><figcaption data-i18n="c9">In the app, <strong>Push notifications</strong> should be on. This image is an illustration, and your list may differ slightly.</figcaption></figure>
+    <figure class="shot app-shot"><img src="assets/push/app-settings-en.png" data-lang-img alt="ZbxView Settings screen with Push notifications turned on" width="430" height="884" loading="lazy" /><figcaption data-i18n="c9">In the app, <strong>Push notifications</strong> should be on. This image is an illustration, and your list may differ slightly.</figcaption></figure>
 
     <h3 data-i18n="g104">6.2 Confirm Zabbix registered the phone</h3>
     <p data-i18n="g105">In Zabbix, open <strong>Users → Users</strong>, choose your user and open the <strong>Media</strong> tab. There should be a <strong>ZbxView Push</strong> row with a long token. Each phone has its own row.</p>
