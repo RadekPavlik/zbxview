@@ -32,26 +32,32 @@
       <li><strong data-i18n="push_c3_h">Zatím jen Android</strong><br><span data-i18n="push_c3_p">Na iOS doručuje Firebase přes APNs a potřebuje klíč vývojáře aplikace, který nelze sdílet. Jedno zařízení používá jeden Firebase projekt.</span></li>
     </ul>
 
+    <p class="note"><a href="push-setup.html" data-i18n="ps_guide">Podrobný návod krok za krokem (anglicky) →</a></p>
+
     <h2 id="setup" data-i18n="ps_h">Jak to zapnout (jednou, správce Zabbixu)</h2>
     <ol>
-      <li data-i18n="ps_s1"><strong>Firebase projekt.</strong> Na <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</li>
+      <li data-i18n="ps_s1"><strong>Firebase projekt.</strong> Na <a href="https://console.firebase.google.com" target="_blank" rel="noopener">console.firebase.google.com</a> založte projekt (tarif Spark je zdarma) a přidejte Android aplikaci s názvem balíčku <code>app.zbxview</code>. Stáhněte <code>google-services.json</code>. V <em>Project settings → Service accounts</em> vygenerujte nový privátní klíč a uložte ho jako <code>service-account.json</code> — patří jen na server, nikdy do telefonu.</li>
       <li data-i18n="ps_s2"><strong>Relay na Zabbix serveru.</strong> Malá Python služba, která přijme webhook ze Zabbixu a odešle zprávu do Firebase (FCM HTTP v1 vyžaduje podepsaný OAuth token, což webhook v Zabbixu neumí):</li>
     </ol>
-    <pre><code>sudo mkdir -p /opt/zbxview-push-relay &amp;&amp; cd /opt/zbxview-push-relay
+    <pre><code># Debian/Ubuntu only: sudo apt install -y python3-venv
+sudo mkdir -p /opt/zbxview-push-relay &amp;&amp; cd /opt/zbxview-push-relay
 for f in push_relay.py config.ini.example zbxview-push-relay.service; do
   sudo curl -fsSLO https://radekpavlik.github.io/zbxview/tools/push-relay/$f
 done
-sudo cp config.ini.example config.ini        # shared_secret = openssl rand -hex 24
-sudo cp ~/service-account.json .             # z Firebase (krok 1)
+SECRET=$(openssl rand -hex 24)
+sudo cp config.ini.example config.ini
+sudo sed -i "s/FILL_ME_LONG_RANDOM/$SECRET/" config.ini
+echo "Shared secret: $SECRET"
+sudo cp ~/service-account.json .
 sudo python3 -m venv venv &amp;&amp; sudo venv/bin/pip install firebase-admin
 sudo chown -R zabbix:zabbix . &amp;&amp; sudo chmod 600 config.ini service-account.json
 sudo cp zbxview-push-relay.service /etc/systemd/system/
 sudo systemctl enable --now zbxview-push-relay</code></pre>
     <ol start="3">
-      <li data-i18n="ps_s3"><strong>Typ média „ZbxView Push“.</strong> V <em>Upozorňování → Typy médií → Import</em> naimportujte <a href="tools/push-relay/media_type_zbxview_push.yaml">media_type_zbxview_push.yaml</li>
-      <li data-i18n="ps_s4"><strong>Akce.</strong> V <em>Upozorňování → Akce → Akce triggerů</em> přidejte operaci <em>Odeslat zprávu</em> uživatelům nebo skupině <em>přes ZbxView Push</em> (pro problém i obnovení). Token telefonu si aplikace zaregistruje do médií uživatele sama — nikdo nic nevyplňuje a Zabbix pošle jen to, na co má uživatel právo.</li>
-      <li data-i18n="ps_s5"><strong>Údaje projektu do telefonů.</strong> V modulu <a href="connect.html#setup">ZbxView connect</li>
-      <li data-i18n="ps_s6"><strong>Ověření.</strong> V aplikaci je v <em>Nastavení → Push notifikace</em> přepínač zapnutý; vyvolejte testovací problém na hostu, který uživatel vidí — notifikace dorazí a klepnutí otevře problém. Když nic nepřijde: <code>journalctl -u zbxview-push-relay</code> a <em>Reporty → Akce</em> v Zabbixu.</li>
+      <li data-i18n="ps_s3"><strong>Typ média „ZbxView Push“.</strong> V <em>Upozornění → Typy médií → Import</em> naimportujte <a href="tools/push-relay/media_type_zbxview_push.yaml">media_type_zbxview_push.yaml</a> a do parametru <code>Auth</code> vložte shared secret z <code>config.ini</code>. (Ručně: webhook s parametry RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status a <a href="tools/push-relay/media_type_script.js">tímto skriptem</a>.)</li>
+      <li data-i18n="ps_s4"><strong>Akce.</strong> V <em>Upozornění → Akce → Spouštěcí akce</em> přidejte operaci <em>Odeslat zprávu</em> uživatelům nebo skupině <em>přes ZbxView Push</em> (pro problém i obnovení). Token telefonu si aplikace zaregistruje do médií uživatele sama — nikdo nic nevyplňuje a Zabbix pošle jen to, na co má uživatel právo.</li>
+      <li data-i18n="ps_s5"><strong>Údaje projektu do telefonů.</strong> V modulu <a href="connect.html#setup">ZbxView connect</a> otevřete <em>Administrace → Konfigurace telefonu</em>, kartu <em>Push notifikace (Firebase)</em>, a klikněte na <em>Načíst google-services.json</em> — čtyři hodnoty se vyplní. Od té chvíle je nese každý QR kód a telefon po naskenování push rovnou zapne. Bez modulu totéž přes MDM: klíče <code>push_api_key</code>, <code>push_app_id</code>, <code>push_sender_id</code>, <code>push_project_id</code> a <code>push_enabled</code> (<a href="mdm.html">tabulka klíčů</a>).</li>
+      <li data-i18n="ps_s6"><strong>Ověření.</strong> V aplikaci je v <em>Nastavení → Push notifikace</em> přepínač zapnutý; vyvolejte testovací problém na hostu, který uživatel vidí — notifikace dorazí a klepnutí otevře problém. Když nic nepřijde: <code>journalctl -u zbxview-push-relay</code> a <em>Protokoly → Log akcí</em> v Zabbixu.</li>
     </ol>
     <div class="note" data-i18n="ps_note">Poznámky: aplikace 0.50+ a modul ZbxView connect 1.6+. Firebase u Android aplikace neověřuje vlastníka balíčku, registrace <code>app.zbxview</code> ve vašem projektu je v pořádku. Zabbix 6.4–8.0; soubor YAML je pro 7.0+, v 6.4 založte typ média ručně podle skriptu. Pokud má telefon aplikaci už spuštěnou s jiným projektem, změna se projeví po restartu aplikace.</div>
     <p><a href="https://github.com/RadekPavlik/zbxview/tree/main/tools/push-relay" target="_blank" rel="noopener" data-i18n="push_cta">Soubory relay na GitHubu</a></p>
@@ -62,6 +68,7 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
   <script>
   (function () {
     var EN = {
+      "ps_guide": "Detailed step-by-step guide →",
       "push_tag": "Push notifications",
       "push_h2": "Problems as notifications — through your own Firebase",
       "push_p": "ZbxView has no cloud in the middle. Your organisation creates its own Firebase project, a small relay runs on the Zabbix server, and notifications go straight from your Zabbix to your phones. Android, app 0.50 and newer.",
@@ -86,6 +93,7 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "__desc": "ZbxView has no cloud in the middle. Your organisation creates its own Firebase project, a small relay runs on the Zabbix server, and notifications go straight from your Zabbix to your phones. Android, app 0.50 and newer."
     };
     var DE = {
+      "ps_guide": "Ausführliche Schritt-für-Schritt-Anleitung (Englisch) →",
       "push_tag": "Push-Benachrichtigungen",
       "push_h2": "Probleme als Benachrichtigung — über Ihr eigenes Firebase",
       "push_p": "ZbxView hat keine Cloud dazwischen. Ihre Organisation legt ein eigenes Firebase-Projekt an, auf dem Zabbix-Server läuft ein kleines Relay, und Benachrichtigungen gehen direkt von Ihrem Zabbix auf Ihre Telefone. Android, App 0.50 und neuer.",
@@ -98,8 +106,8 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "ps_h": "So schalten Sie es ein (einmalig, Zabbix-Admin)",
       "ps_s1": "<strong>Firebase-Projekt.</strong> Legen Sie auf <a href=\"https://console.firebase.google.com\" target=\"_blank\" rel=\"noopener\">console.firebase.google.com</a> ein Projekt an (der Spark-Plan ist kostenlos) und fügen Sie eine Android-App mit dem Paketnamen <code>app.zbxview</code> hinzu. Laden Sie <code>google-services.json</code> herunter. Erzeugen Sie unter <em>Project settings → Service accounts</em> einen neuen privaten Schlüssel und speichern Sie ihn als <code>service-account.json</code> — er gehört nur auf den Server, nie auf ein Telefon.",
       "ps_s2": "<strong>Relay auf dem Zabbix-Server.</strong> Ein kleiner Python-Dienst, der den Zabbix-Webhook entgegennimmt und die Nachricht an Firebase sendet (FCM HTTP v1 braucht ein signiertes OAuth-Token, das ein Zabbix-Webhook nicht erzeugen kann):",
-      "ps_s3": "<strong>Medientyp „ZbxView Push“.</strong> Importieren Sie unter <em>Alarmierung → Medientypen → Import</em> die Datei <a href=\"tools/push-relay/media_type_zbxview_push.yaml\">media_type_zbxview_push.yaml</a> und setzen Sie den Parameter <code>Auth</code> auf das Shared Secret aus <code>config.ini</code>. (Manuell: ein Webhook mit den Parametern RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status und <a href=\"tools/push-relay/media_type_script.js\">diesem Skript</a>.)",
-      "ps_s4": "<strong>Aktion.</strong> Fügen Sie unter <em>Alarmierung → Aktionen → Trigger-Aktionen</em> eine Operation <em>Nachricht senden</em> an Benutzer oder eine Gruppe <em>über ZbxView Push</em> hinzu (für Problem und Wiederherstellung). Den Telefon-Token trägt die App selbst in die Medien des Benutzers ein — niemand füllt etwas aus, und Zabbix sendet nur, was der Benutzer sehen darf.",
+      "ps_s3": "<strong>Medientyp „ZbxView Push“.</strong> Importieren Sie unter <em>Alarme → Medientypen → Import</em> die Datei <a href=\"tools/push-relay/media_type_zbxview_push.yaml\">media_type_zbxview_push.yaml</a> und setzen Sie den Parameter <code>Auth</code> auf das Shared Secret aus <code>config.ini</code>. (Manuell: ein Webhook mit den Parametern RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status und <a href=\"tools/push-relay/media_type_script.js\">diesem Skript</a>.)",
+      "ps_s4": "<strong>Aktion.</strong> Fügen Sie unter <em>Alarme → Aktionen → Auslöseraktionen</em> eine Operation <em>Nachricht senden</em> an Benutzer oder eine Gruppe <em>über ZbxView Push</em> hinzu (für Problem und Wiederherstellung). Den Telefon-Token trägt die App selbst in die Medien des Benutzers ein — niemand füllt etwas aus, und Zabbix sendet nur, was der Benutzer sehen darf.",
       "ps_s5": "<strong>Projektwerte auf die Telefone.</strong> Öffnen Sie im Modul <a href=\"connect.html#setup\">ZbxView connect</a> <em>Administration → Mobile Konfiguration</em>, Karte <em>Push-Benachrichtigungen (Firebase)</em>, und klicken Sie auf <em>google-services.json laden</em> — die vier Werte füllen sich. Ab dann trägt jeder QR-Code sie, und das Telefon schaltet Push direkt nach dem Scan ein. Ohne Modul dasselbe per MDM: Schlüssel <code>push_api_key</code>, <code>push_app_id</code>, <code>push_sender_id</code>, <code>push_project_id</code> und <code>push_enabled</code> (<a href=\"mdm.html\">Schlüsseltabelle</a>).",
       "ps_s6": "<strong>Prüfen.</strong> In der App ist <em>Einstellungen → Push-Benachrichtigungen</em> an; lösen Sie ein Testproblem auf einem Host aus, den der Benutzer sieht — die Benachrichtigung kommt an, ein Tipp öffnet das Problem. Kommt nichts: <code>journalctl -u zbxview-push-relay</code> und <em>Berichte → Aktionsprotokoll</em> in Zabbix.",
       "ps_note": "Hinweise: App 0.50+ und ZbxView connect 1.6+. Firebase prüft bei Android-Paketen nicht den Eigentümer; <code>app.zbxview</code> in Ihrem Projekt zu registrieren ist in Ordnung. Zabbix 6.4–8.0; die YAML-Datei ist für 7.0+, in 6.4 legen Sie den Medientyp nach dem Skript von Hand an. Läuft die App auf einem Telefon bereits mit einem anderen Projekt, gilt die Änderung nach einem Neustart der App.",
@@ -110,6 +118,7 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "__desc": "ZbxView hat keine Cloud dazwischen. Ihre Organisation legt ein eigenes Firebase-Projekt an, auf dem Zabbix-Server läuft ein kleines Relay, und Benachrichtigungen gehen direkt von Ihrem Zabbix auf Ihre Telefone. Android, App 0.50 und neuer."
     };
     var ES = {
+      "ps_guide": "Guía detallada paso a paso (en inglés) →",
       "push_tag": "Notificaciones push",
       "push_h2": "Problemas como notificaciones — con su propio Firebase",
       "push_p": "ZbxView no tiene ninguna nube en medio. Su organización crea su propio proyecto Firebase, en el servidor Zabbix corre un pequeño relay y las notificaciones van directamente de su Zabbix a sus teléfonos. Android, app 0.50 o posterior.",
@@ -122,8 +131,8 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "ps_h": "Cómo activarlo (una vez, administrador de Zabbix)",
       "ps_s1": "<strong>Proyecto Firebase.</strong> En <a href=\"https://console.firebase.google.com\" target=\"_blank\" rel=\"noopener\">console.firebase.google.com</a> cree un proyecto (el plan Spark es gratuito) y añada una app Android con el nombre de paquete <code>app.zbxview</code>. Descargue <code>google-services.json</code>. En <em>Project settings → Service accounts</em> genere una nueva clave privada y guárdela como <code>service-account.json</code>: va solo en el servidor, nunca en un teléfono.",
       "ps_s2": "<strong>Relay en el servidor Zabbix.</strong> Un pequeño servicio Python que recibe el webhook de Zabbix y envía el mensaje a Firebase (FCM HTTP v1 exige un token OAuth firmado, que un webhook de Zabbix no puede generar):",
-      "ps_s3": "<strong>Tipo de medio «ZbxView Push».</strong> En <em>Alertas → Tipos de medio → Importar</em> importe <a href=\"tools/push-relay/media_type_zbxview_push.yaml\">media_type_zbxview_push.yaml</a> y ponga en el parámetro <code>Auth</code> el secreto compartido de <code>config.ini</code>. (A mano: un webhook con los parámetros RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status y <a href=\"tools/push-relay/media_type_script.js\">este script</a>.)",
-      "ps_s4": "<strong>Acción.</strong> En <em>Alertas → Acciones → Acciones de trigger</em> añada una operación <em>Enviar mensaje</em> a usuarios o a un grupo <em>vía ZbxView Push</em> (para problema y recuperación). La app registra el token del teléfono como medio del usuario por sí misma: nadie rellena nada y Zabbix envía solo lo que el usuario puede ver.",
+      "ps_s3": "<strong>Tipo de medio «ZbxView Push».</strong> En <em>Alertas → Tipos de medios → Importar</em> importe <a href=\"tools/push-relay/media_type_zbxview_push.yaml\">media_type_zbxview_push.yaml</a> y ponga en el parámetro <code>Auth</code> el secreto compartido de <code>config.ini</code>. (A mano: un webhook con los parámetros RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status y <a href=\"tools/push-relay/media_type_script.js\">este script</a>.)",
+      "ps_s4": "<strong>Acción.</strong> En <em>Alertas → Acciones → Acciones de iniciador</em> añada una operación <em>Enviar mensaje</em> a usuarios o a un grupo <em>vía ZbxView Push</em> (para problema y recuperación). La app registra el token del teléfono como medio del usuario por sí misma: nadie rellena nada y Zabbix envía solo lo que el usuario puede ver.",
       "ps_s5": "<strong>Datos del proyecto a los teléfonos.</strong> En el módulo <a href=\"connect.html#setup\">ZbxView connect</a> abra <em>Administración → Configuración móvil</em>, tarjeta <em>Notificaciones push (Firebase)</em>, y pulse <em>Cargar google-services.json</em>: los cuatro valores se rellenan. Desde entonces cada código QR los lleva y el teléfono activa el push justo tras escanear. Sin el módulo, lo mismo por MDM: claves <code>push_api_key</code>, <code>push_app_id</code>, <code>push_sender_id</code>, <code>push_project_id</code> y <code>push_enabled</code> (<a href=\"mdm.html\">tabla de claves</a>).",
       "ps_s6": "<strong>Comprobación.</strong> En la app, <em>Ajustes → Notificaciones push</em> está activado; provoque un problema de prueba en un host que el usuario vea: llega la notificación y un toque abre el problema. Si no llega nada: <code>journalctl -u zbxview-push-relay</code> y <em>Informes → Registro de acciones</em> en Zabbix.",
       "ps_note": "Notas: app 0.50+ y ZbxView connect 1.6+. Firebase no verifica el propietario de un paquete Android, así que registrar <code>app.zbxview</code> en su proyecto es correcto. Zabbix 6.4–8.0; el YAML es para 7.0+, en 6.4 cree el tipo de medio a mano a partir del script. Si la app de un teléfono ya corre con otro proyecto, el cambio se aplica tras reiniciar la app.",
@@ -134,6 +143,7 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "__desc": "ZbxView no tiene ninguna nube en medio. Su organización crea su propio proyecto Firebase, en el servidor Zabbix corre un pequeño relay y las notificaciones van directamente de su Zabbix a sus teléfonos. Android, app 0.50 o posterior."
     };
     var FR = {
+      "ps_guide": "Guide détaillé pas à pas (en anglais) →",
       "push_tag": "Notifications push",
       "push_h2": "Les problèmes en notifications — via votre propre Firebase",
       "push_p": "ZbxView n’a aucun cloud au milieu. Votre organisation crée son propre projet Firebase, un petit relais tourne sur le serveur Zabbix et les notifications vont directement de votre Zabbix à vos téléphones. Android, app 0.50 et plus.",
@@ -158,6 +168,7 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "__desc": "ZbxView n’a aucun cloud au milieu. Votre organisation crée son propre projet Firebase, un petit relais tourne sur le serveur Zabbix et les notifications vont directement de votre Zabbix à vos téléphones. Android, app 0.50 et plus."
     };
     var LV = {
+      "ps_guide": "Detalizēta soli pa solim rokasgrāmata (angļu valodā) →",
       "push_tag": "Push paziņojumi",
       "push_h2": "Problēmas kā paziņojumi — caur jūsu pašu Firebase",
       "push_p": "ZbxView nav nekāda mākoņa pa vidu. Jūsu organizācija izveido savu Firebase projektu, Zabbix serverī darbojas neliels relejs, un paziņojumi iet tieši no jūsu Zabbix uz jūsu tālruņiem. Android, lietotne 0.50 un jaunāka.",
@@ -170,9 +181,9 @@ sudo systemctl enable --now zbxview-push-relay</code></pre>
       "ps_h": "Kā to ieslēgt (vienreiz, Zabbix administrators)",
       "ps_s1": "<strong>Firebase projekts.</strong> Vietnē <a href=\"https://console.firebase.google.com\" target=\"_blank\" rel=\"noopener\">console.firebase.google.com</a> izveidojiet projektu (Spark plāns ir bezmaksas) un pievienojiet Android lietotni ar pakotnes nosaukumu <code>app.zbxview</code>. Lejupielādējiet <code>google-services.json</code>. Sadaļā <em>Project settings → Service accounts</em> ģenerējiet jaunu privāto atslēgu un saglabājiet to kā <code>service-account.json</code> — tā pieder tikai serverim, nekad tālrunim.",
       "ps_s2": "<strong>Relejs Zabbix serverī.</strong> Neliels Python serviss, kas saņem Zabbix webhook un nosūta ziņu uz Firebase (FCM HTTP v1 prasa parakstītu OAuth marķieri, ko Zabbix webhook nevar izveidot):",
-      "ps_s3": "<strong>Multivides tips “ZbxView Push”.</strong> Sadaļā <em>Brīdinājumi → Multivides tipi → Importēt</em> importējiet <a href=\"tools/push-relay/media_type_zbxview_push.yaml\">media_type_zbxview_push.yaml</a> un parametrā <code>Auth</code> ierakstiet koplietoto noslēpumu no <code>config.ini</code>. (Manuāli: webhook ar parametriem RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status un <a href=\"tools/push-relay/media_type_script.js\">šo skriptu</a>.)",
-      "ps_s4": "<strong>Darbība.</strong> Sadaļā <em>Brīdinājumi → Darbības → Trigeru darbības</em> pievienojiet operāciju <em>Sūtīt ziņu</em> lietotājiem vai grupai <em>caur ZbxView Push</em> (problēmai un atkopšanai). Tālruņa marķieri lietotne pati reģistrē kā lietotāja multividi — neviens neko neaizpilda, un Zabbix sūta tikai to, ko lietotājs drīkst redzēt.",
-      "ps_s5": "<strong>Projekta vērtības tālruņos.</strong> Modulī <a href=\"connect.html#setup\">ZbxView connect</a> atveriet <em>Administrēšana → Tālruņa konfigurācija</em>, karti <em>Push paziņojumi (Firebase)</em>, un klikšķiniet <em>Ielādēt google-services.json</em> — četras vērtības aizpildās pašas. No šī brīža katrs QR kods tās nes, un tālrunis ieslēdz push uzreiz pēc skenēšanas. Bez moduļa to pašu ar MDM: atslēgas <code>push_api_key</code>, <code>push_app_id</code>, <code>push_sender_id</code>, <code>push_project_id</code> un <code>push_enabled</code> (<a href=\"mdm.html\">atslēgu tabula</a>).",
+      "ps_s3": "<strong>Multivides tips “ZbxView Push”.</strong> Sadaļā <em>Brīdinājumi → Media types → Importēt</em> importējiet <a href=\"tools/push-relay/media_type_zbxview_push.yaml\">media_type_zbxview_push.yaml</a> un parametrā <code>Auth</code> ierakstiet koplietoto noslēpumu no <code>config.ini</code>. (Manuāli: webhook ar parametriem RelayURL, Auth, SendTo=<code>{ALERT.SENDTO}</code>, Subject, Message, EventId=<code>{EVENT.ID}</code>, Host=<code>{HOST.NAME}</code>, Severity, Status un <a href=\"tools/push-relay/media_type_script.js\">šo skriptu</a>.)",
+      "ps_s4": "<strong>Darbība.</strong> Sadaļā <em>Brīdinājumi → Darbības → Trigger actions</em> pievienojiet operāciju <em>Sūtīt ziņu</em> lietotājiem vai grupai <em>caur ZbxView Push</em> (problēmai un atkopšanai). Tālruņa marķieri lietotne pati reģistrē kā lietotāja multividi — neviens neko neaizpilda, un Zabbix sūta tikai to, ko lietotājs drīkst redzēt.",
+      "ps_s5": "<strong>Projekta vērtības tālruņos.</strong> Modulī <a href=\"connect.html#setup\">ZbxView connect</a> atveriet <em>Administrācija → Tālruņa konfigurācija</em>, karti <em>Push paziņojumi (Firebase)</em>, un klikšķiniet <em>Ielādēt google-services.json</em> — četras vērtības aizpildās pašas. No šī brīža katrs QR kods tās nes, un tālrunis ieslēdz push uzreiz pēc skenēšanas. Bez moduļa to pašu ar MDM: atslēgas <code>push_api_key</code>, <code>push_app_id</code>, <code>push_sender_id</code>, <code>push_project_id</code> un <code>push_enabled</code> (<a href=\"mdm.html\">atslēgu tabula</a>).",
       "ps_s6": "<strong>Pārbaude.</strong> Lietotnē <em>Iestatījumi → Push paziņojumi</em> ir ieslēgts; izraisiet testa problēmu hostam, ko lietotājs redz — paziņojums pienāk, un pieskāriens atver problēmu. Ja nekas nepienāk: <code>journalctl -u zbxview-push-relay</code> un <em>Atskaites → Darbību žurnāls</em> Zabbix.",
       "ps_note": "Piezīmes: lietotne 0.50+ un ZbxView connect 1.6+. Firebase nepārbauda Android pakotnes īpašnieku, tāpēc <code>app.zbxview</code> reģistrēšana jūsu projektā ir kārtībā. Zabbix 6.4–8.0; YAML fails ir 7.0+, 6.4 izveidojiet multivides tipu manuāli pēc skripta. Ja tālrunī lietotne jau darbojas ar citu projektu, izmaiņas stājas spēkā pēc lietotnes restartēšanas.",
       "push_cta": "Releja faili GitHub",
