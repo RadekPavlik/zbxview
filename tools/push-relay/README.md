@@ -1,7 +1,7 @@
 # ZbxView push relay
 
 Files for push notifications through your own Firebase project. The step by
-step guide is at https://radekpavlik.github.io/zbxview/push-setup.html.
+step guide is at https://radekpavlik.github.io/zbxview/push.html.
 
 - `push_relay.py` - small Python service: receives the Zabbix webhook, sends
   to Firebase Cloud Messaging (HTTP v1) with the project's service account.
