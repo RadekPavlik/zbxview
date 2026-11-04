@@ -27,6 +27,7 @@
     .diagram .sub { fill: var(--muted); font-size: 12px; }
     figure.shot { margin: 14px 0 20px; }
     figure.shot img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
+    figure.shot.tall img { max-width: 480px; }
     figure.shot figcaption { color: var(--muted); font-size: 13px; margin-top: 6px; }
     figure.shot.pending { display: none; }
     body.draft figure.shot.pending { display: block; border: 1px dashed var(--warn); border-radius: 8px; padding: 26px 16px; color: var(--warn); font-size: 13px; text-align: center; }
@@ -102,7 +103,7 @@
       <li data-i18n="g35">Click <strong>Download google-services.json</strong>.</li>
       <li data-i18n="g36">Skip the remaining wizard steps. They are for developers, and you do not need to add anything to any code.</li>
     </ol>
-    <figure class="shot pending" data-shot="firebase-add-app.png">Screenshot needed: Firebase, Add Android app, with app.zbxview entered</figure>
+    <figure class="shot tall"><img src="assets/push/firebase-add-app.png" alt="Firebase console: Add Firebase to your Android app" width="900" height="796" loading="lazy" /><figcaption data-i18n="c1">Enter <code>app.zbxview</code> in <strong>Android package name</strong>, then click <strong>Register app</strong>.</figcaption></figure>
 
     <h3 data-i18n="g37">2.3 Generate the private key</h3>
     <ol>
@@ -110,7 +111,11 @@
       <li data-i18n="g39">Click <strong>Generate new private key</strong> and confirm with <strong>Generate key</strong>.</li>
       <li data-i18n="g40"><strong>Rename the downloaded file to <code>service-account.json</code>.</strong> Firebase gives it a long name such as <code>myproject-firebase-adminsdk-abc12-1234567890.json</code>, and the relay will not find it under that name.</li>
     </ol>
-    <figure class="shot pending" data-shot="firebase-service-account.png">Screenshot needed: Firebase, Service accounts tab, Generate new private key</figure>
+    <figure class="shot"><img src="assets/push/firebase-service-account.png" alt="Firebase console: Service accounts tab" width="1200" height="557" loading="lazy" /><figcaption data-i18n="c2"><strong>Project settings → Service accounts</strong>: click <strong>Generate new private key</strong>.</figcaption></figure>
+
+    <h3 data-i18n="h24">2.4 Check that Cloud Messaging is enabled</h3>
+    <p data-i18n="p24">In <strong>Project settings</strong>, open the <strong>Cloud Messaging</strong> tab. <strong>Firebase Cloud Messaging API (V1)</strong> should show <strong>Enabled</strong>. On a new project it normally does. If it does not, use the ⋮ menu next to it to enable it.</p>
+    <figure class="shot"><img src="assets/push/firebase-cloud-messaging.png" alt="Firebase console: Cloud Messaging tab" width="1200" height="386" loading="lazy" /><figcaption data-i18n="c3"><strong>Project settings → Cloud Messaging</strong>: the V1 API shows <strong>Enabled</strong>.</figcaption></figure>
 
     <h2 id="relay" data-i18n="g41"><small>Part 3 · On the Zabbix server, over SSH</small>Install the relay</h2>
     <p data-i18n="g42">Run the blocks below one at a time, in order. Use the <strong>Copy</strong> button and paste them into your SSH session instead of retyping them.</p>
@@ -157,8 +162,9 @@ sudo systemctl enable --now zbxview-push-relay</code></pre></div>
 
     <h3 data-i18n="g54">3.6 Check that the relay works</h3>
     <div class="cmd"><pre><code>sleep 5
+cd /opt/zbxview-push-relay
 systemctl is-active zbxview-push-relay
-SECRET=$(sudo awk -F' *= *' '/^shared_secret/{print $2}' /opt/zbxview-push-relay/config.ini)
+SECRET=$(sudo awk -F' *= *' '/^shared_secret/{print $2}' config.ini)
 curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</code></pre></div>
     <p class="out-h" data-i18n="g55">You should see exactly this:</p>
     <pre class="out"><code>active
@@ -177,7 +183,7 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
       <li data-i18n="g63">Choose the file and click <strong>Import</strong>.</li>
     </ol>
     <p data-i18n="g64">The file is for Zabbix 7.0 and newer. On 6.4, create a webhook media type named exactly <code>ZbxView Push</code> by hand, using <a href="tools/push-relay/media_type_script.js">this script</a> and the parameters listed at its top.</p>
-    <figure class="shot pending" data-shot="zabbix-import.png">Screenshot needed: Zabbix, Media types, Import dialog</figure>
+    <figure class="shot"><img src="assets/push/zabbix-import.png" alt="Zabbix Import dialog" width="1008" height="276" loading="lazy" /><figcaption data-i18n="c4">The Import dialog. Choose the file and leave the rules as they are.</figcaption></figure>
 
     <h3 data-i18n="g65">4.2 Enter the shared secret</h3>
     <ol>
@@ -186,7 +192,7 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
       <li data-i18n="g68">Leave <code>RelayURL</code> as <code>http://127.0.0.1:8090/send</code>, unless Zabbix runs in Docker.</li>
       <li data-i18n="g69">Click <strong>Update</strong>.</li>
     </ol>
-    <figure class="shot pending" data-shot="zabbix-auth.png">Screenshot needed: ZbxView Push media type, Auth parameter</figure>
+    <figure class="shot tall"><img src="assets/push/zabbix-auth.png" alt="Zabbix media type form with the Auth parameter" width="1083" height="1095" loading="lazy" /><figcaption data-i18n="c5">Replace the <code>Auth</code> value with your shared secret. Leave the other parameters as they are.</figcaption></figure>
 
     <h3 data-i18n="g70">4.3 Test Zabbix → relay</h3>
     <p data-i18n="g71">In the media types list, click <strong>Test</strong> in the ZbxView Push row, leave the values as they are and click <strong>Test</strong>. This test sends to a phone that does not exist, so <strong>it is expected to fail</strong>. The message tells you how far it got:</p>
@@ -194,9 +200,9 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
       <tr><th data-i18n="g72">Message contains</th><th data-i18n="g73">Meaning</th></tr>
       <tr><td data-i18n="g74"><code>relay HTTP 502</code> or <code>relay HTTP 400</code></td><td data-i18n="g75"><strong>Good.</strong> Zabbix reached the relay and the secret is correct. Continue.</td></tr>
       <tr><td data-i18n="g76"><code>relay HTTP 401</code></td><td data-i18n="g77">The <code>Auth</code> value does not match <code>shared_secret</code>. Repeat step 4.2.</td></tr>
-      <tr><td data-i18n="g78"><code>Couldn't connect</code> or similar</td><td data-i18n="g79">Zabbix cannot reach the relay. See step 3.6, step 3.7 and the Docker row in <a href="#trouble">troubleshooting</a>.</td></tr>
+      <tr><td data-i18n="g78"><code>Failed to connect</code> or similar</td><td data-i18n="g79">Zabbix cannot reach the relay. See step 3.6, step 3.7 and the Docker row in <a href="#trouble">troubleshooting</a>.</td></tr>
     </table></div>
-    <figure class="shot pending" data-shot="zabbix-test.png">Screenshot needed: media type Test dialog with the result</figure>
+    <figure class="shot tall"><img src="assets/push/zabbix-test.png" alt="Zabbix media type test showing a connection error" width="1008" height="948" loading="lazy" /><figcaption data-i18n="c6">This example shows the bad case: the relay could not be reached. You want to see <code>relay HTTP 502</code> or <code>relay HTTP 400</code> here instead.</figcaption></figure>
 
     <h3 data-i18n="g80">4.4 Create the action</h3>
     <p data-i18n="g81">The action decides which problems are sent, and to whom.</p>
@@ -207,7 +213,7 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
       <li data-i18n="g85">Under <strong>Recovery operations</strong>, click <strong>Add</strong>, choose <strong>Notify all involved</strong> and click <strong>Add</strong>. Technicians then also get a “Resolved” notification.</li>
       <li data-i18n="g86">Click <strong>Add</strong> to save the action.</li>
     </ol>
-    <figure class="shot pending" data-shot="zabbix-action.png">Screenshot needed: action operation with ZbxView Push selected</figure>
+    <figure class="shot tall"><img src="assets/push/zabbix-action.png" alt="Zabbix Operation details dialog with ZbxView Push selected" width="890" height="630" loading="lazy" /><figcaption data-i18n="c7">Choose the user groups or users, then set <strong>Send to media type</strong> to <strong>ZbxView Push</strong>.</figcaption></figure>
     <p data-i18n="g87">You do not enter any phone numbers or addresses. The app registers each phone with Zabbix by itself in Part 6, and Zabbix only sends a user problems on hosts that user has permission to see.</p>
 
     <h2 id="module" data-i18n="g88"><small>Part 5 · Server and Zabbix web interface</small>Add the project to the QR code</h2>
@@ -225,7 +231,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
       <li data-i18n="g95">On the <strong>Push notifications (Firebase)</strong> card, click <strong>Load google-services.json</strong> and pick the file from step 2.2. The four values fill in.</li>
       <li data-i18n="g96">Click <strong>Save</strong>.</li>
     </ol>
-    <figure class="shot pending" data-shot="zabbix-module.png">Screenshot needed: Mobile configuration, Push notifications (Firebase) card</figure>
+    <figure class="shot"><img src="assets/push/zabbix-module.png" alt="Push notifications card in Mobile configuration" width="1146" height="570" loading="lazy" /><figcaption data-i18n="c8">The four values after <strong>Load google-services.json</strong>. The values shown here are examples.</figcaption></figure>
 
     <h2 id="phone" data-i18n="g97"><small>Part 6 · Every technician, on their phone</small>Scan the QR code and test</h2>
     <h3 data-i18n="g98">6.1 Pair the phone</h3>
@@ -364,7 +370,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g75": "<strong>V pořádku.<\/strong> Zabbix se k relay dostal a secret je správný. Pokračujte dál.",
 "g76": "<code>relay HTTP 401<\/code>",
 "g77": "Hodnota <code>Auth<\/code> neodpovídá <code>shared_secret<\/code>. Zopakujte krok 4.2.",
-"g78": "<code>Couldn't connect<\/code> nebo podobná hláška",
+"g78": "<code>Failed to connect<\/code> nebo podobná hláška",
 "g79": "Zabbix se k relay nedostane. Viz krok 3.6, krok 3.7 a řádek o Dockeru v části <a href=\"#trouble\">řešení problémů<\/a>.",
 "g80": "4.4 Vytvořte akci",
 "g81": "Akce určuje, které problémy se odesílají a komu.",
@@ -450,7 +456,17 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "_copied": "Zkopírováno",
 "_select": "Označte a zkopírujte",
 "__title": "ZbxView — Push notifikace: nastavení krok za krokem",
-"__desc": "Nastavení push notifikací ZbxView od začátku do konce: Firebase projekt, služba relay na Zabbix serveru, typ média, akce, QR kód, test a řešení problémů."
+"__desc": "Nastavení push notifikací ZbxView od začátku do konce: Firebase projekt, služba relay na Zabbix serveru, typ média, akce, QR kód, test a řešení problémů.",
+"c1": "Do pole <strong>Android package name<\/strong> zadejte <code>app.zbxview<\/code> a klikněte na <strong>Register app<\/strong>.",
+"c2": "<strong>Project settings → Service accounts<\/strong>: klikněte na <strong>Generate new private key<\/strong>.",
+"h24": "2.4 Ověřte, že je zapnuté Cloud Messaging",
+"p24": "V <strong>Project settings<\/strong> otevřete kartu <strong>Cloud Messaging<\/strong>. U <strong>Firebase Cloud Messaging API (V1)<\/strong> by mělo být <strong>Enabled<\/strong>. U nového projektu to tak obvykle je. Pokud ne, zapněte ho přes nabídku ⋮ vedle něj.",
+"c3": "<strong>Project settings → Cloud Messaging<\/strong>: u API V1 je <strong>Enabled<\/strong>.",
+"c4": "Dialog importu. Vyberte soubor a pravidla nechte beze změny.",
+"c5": "Hodnotu <code>Auth<\/code> nahraďte svým shared secretem. Ostatní parametry nechte beze změny.",
+"c6": "Tento příklad ukazuje špatný stav: relay není dostupná. Správně tu chcete vidět <code>relay HTTP 502<\/code> nebo <code>relay HTTP 400<\/code>.",
+"c7": "Vyberte skupiny uživatelů nebo uživatele a v <strong>Odeslat na média typ<\/strong> nastavte <strong>ZbxView Push<\/strong>.",
+"c8": "Čtyři hodnoty po kliknutí na <strong>Load google-services.json<\/strong>. Zobrazené hodnoty jsou jen příklad."
 },
 "de": {
 "g1": "Push-Benachrichtigungen: Einrichtung Schritt für Schritt",
@@ -530,7 +546,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g75": "<strong>Gut.<\/strong> Zabbix hat das Relay erreicht und das Secret ist richtig. Machen Sie weiter.",
 "g76": "<code>relay HTTP 401<\/code>",
 "g77": "Der Wert von <code>Auth<\/code> stimmt nicht mit <code>shared_secret<\/code> überein. Wiederholen Sie Schritt 4.2.",
-"g78": "<code>Couldn't connect<\/code> oder Ähnliches",
+"g78": "<code>Failed to connect<\/code> oder Ähnliches",
 "g79": "Zabbix erreicht das Relay nicht. Siehe Schritt 3.6, Schritt 3.7 und die Docker-Zeile unter <a href=\"#trouble\">Fehlerbehebung<\/a>.",
 "g80": "4.4 Aktion anlegen",
 "g81": "Die Aktion legt fest, welche Probleme gesendet werden und an wen.",
@@ -616,7 +632,17 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "_copied": "Kopiert",
 "_select": "Auswählen und kopieren",
 "__title": "ZbxView — Push-Benachrichtigungen: Einrichtung Schritt für Schritt",
-"__desc": "Richten Sie ZbxView-Push-Benachrichtigungen von Anfang bis Ende ein: Firebase-Projekt, Relay-Dienst auf dem Zabbix-Server, Medientyp, Aktion, QR-Code, Test und Fehlerbehebung."
+"__desc": "Richten Sie ZbxView-Push-Benachrichtigungen von Anfang bis Ende ein: Firebase-Projekt, Relay-Dienst auf dem Zabbix-Server, Medientyp, Aktion, QR-Code, Test und Fehlerbehebung.",
+"c1": "Tragen Sie <code>app.zbxview<\/code> unter <strong>Android package name<\/strong> ein und klicken Sie auf <strong>Register app<\/strong>.",
+"c2": "<strong>Project settings → Service accounts<\/strong>: Klicken Sie auf <strong>Generate new private key<\/strong>.",
+"h24": "2.4 Prüfen, ob Cloud Messaging aktiviert ist",
+"p24": "Öffnen Sie in <strong>Project settings<\/strong> den Reiter <strong>Cloud Messaging<\/strong>. Bei <strong>Firebase Cloud Messaging API (V1)<\/strong> sollte <strong>Enabled<\/strong> stehen. Bei einem neuen Projekt ist das normalerweise der Fall. Falls nicht, aktivieren Sie die API über das Menü ⋮ daneben.",
+"c3": "<strong>Project settings → Cloud Messaging<\/strong>: Die V1-API zeigt <strong>Enabled<\/strong>.",
+"c4": "Der Import-Dialog. Wählen Sie die Datei aus und lassen Sie die Regeln unverändert.",
+"c5": "Ersetzen Sie den Wert von <code>Auth<\/code> durch Ihr Shared Secret. Lassen Sie die anderen Parameter unverändert.",
+"c6": "Dieses Beispiel zeigt den Fehlerfall: Das Relay war nicht erreichbar. Hier sollte stattdessen <code>relay HTTP 502<\/code> oder <code>relay HTTP 400<\/code> stehen.",
+"c7": "Wählen Sie die Benutzergruppen oder Benutzer und setzen Sie <strong>Send to media type<\/strong> auf <strong>ZbxView Push<\/strong>.",
+"c8": "Die vier Werte nach <strong>Load google-services.json<\/strong>. Die gezeigten Werte sind Beispiele."
 },
 "es": {
 "g1": "Notificaciones push: configuración paso a paso",
@@ -696,7 +722,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g75": "<strong>Correcto.<\/strong> Zabbix ha llegado al relay y el secreto es válido. Continúe.",
 "g76": "<code>relay HTTP 401<\/code>",
 "g77": "El valor de <code>Auth<\/code> no coincide con <code>shared_secret<\/code>. Repita el paso 4.2.",
-"g78": "<code>Couldn't connect<\/code> o similar",
+"g78": "<code>Failed to connect<\/code> o similar",
 "g79": "Zabbix no puede llegar al relay. Consulte el paso 3.6, el paso 3.7 y la fila de Docker en <a href=\"#trouble\">solución de problemas<\/a>.",
 "g80": "4.4 Crear la acción",
 "g81": "La acción decide qué problemas se envían y a quién.",
@@ -782,7 +808,17 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "_copied": "Copiado",
 "_select": "Seleccionar y copiar",
 "__title": "ZbxView — Notificaciones push: configuración paso a paso",
-"__desc": "Configure las notificaciones push de ZbxView de principio a fin: proyecto Firebase, servicio relay en el servidor Zabbix, tipo de medio, acción, código QR, prueba y solución de problemas."
+"__desc": "Configure las notificaciones push de ZbxView de principio a fin: proyecto Firebase, servicio relay en el servidor Zabbix, tipo de medio, acción, código QR, prueba y solución de problemas.",
+"c1": "Escriba <code>app.zbxview<\/code> en <strong>Android package name<\/strong> y pulse <strong>Register app<\/strong>.",
+"c2": "<strong>Project settings → Service accounts<\/strong>: pulse <strong>Generate new private key<\/strong>.",
+"h24": "2.4 Compruebe que Cloud Messaging está activado",
+"p24": "En <strong>Project settings<\/strong>, abra la pestaña <strong>Cloud Messaging<\/strong>. <strong>Firebase Cloud Messaging API (V1)<\/strong> debe mostrar <strong>Enabled<\/strong>. En un proyecto nuevo normalmente es así. Si no, actívela con el menú ⋮ que tiene al lado.",
+"c3": "<strong>Project settings → Cloud Messaging<\/strong>: la API V1 muestra <strong>Enabled<\/strong>.",
+"c4": "El diálogo de importación. Elija el archivo y deje las reglas como están.",
+"c5": "Sustituya el valor de <code>Auth<\/code> por su secreto compartido. Deje los demás parámetros como están.",
+"c6": "Este ejemplo muestra el caso malo: no se pudo llegar al relay. Lo que debe ver aquí es <code>relay HTTP 502<\/code> o <code>relay HTTP 400<\/code>.",
+"c7": "Elija los grupos de usuarios o los usuarios y ponga <strong>Enviar al tipo de medio<\/strong> en <strong>ZbxView Push<\/strong>.",
+"c8": "Los cuatro valores tras <strong>Load google-services.json<\/strong>. Los valores mostrados son ejemplos."
 },
 "fr": {
 "g1": "Notifications push : configuration pas à pas",
@@ -862,7 +898,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g75": "<strong>C’est bon.<\/strong> Zabbix a joint le relais et le secret est correct. Continuez.",
 "g76": "<code>relay HTTP 401<\/code>",
 "g77": "La valeur de <code>Auth<\/code> ne correspond pas à <code>shared_secret<\/code>. Refaites l’étape 4.2.",
-"g78": "<code>Couldn't connect<\/code> ou un message similaire",
+"g78": "<code>Failed to connect<\/code> ou un message similaire",
 "g79": "Zabbix ne parvient pas à joindre le relais. Voir l’étape 3.6, l’étape 3.7 et la ligne Docker du <a href=\"#trouble\">dépannage<\/a>.",
 "g80": "4.4 Créer l’action",
 "g81": "L’action détermine quels problèmes sont envoyés, et à qui.",
@@ -948,7 +984,17 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "_copied": "Copié",
 "_select": "Sélectionner et copier",
 "__title": "ZbxView — Notifications push : configuration pas à pas",
-"__desc": "Configurez les notifications push de ZbxView de A à Z : projet Firebase, service relais sur le serveur Zabbix, type de média, action, QR code, test et dépannage."
+"__desc": "Configurez les notifications push de ZbxView de A à Z : projet Firebase, service relais sur le serveur Zabbix, type de média, action, QR code, test et dépannage.",
+"c1": "Saisissez <code>app.zbxview<\/code> dans <strong>Android package name<\/strong>, puis cliquez sur <strong>Register app<\/strong>.",
+"c2": "<strong>Project settings → Service accounts<\/strong> : cliquez sur <strong>Generate new private key<\/strong>.",
+"h24": "2.4 Vérifiez que Cloud Messaging est activé",
+"p24": "Dans <strong>Project settings<\/strong>, ouvrez l’onglet <strong>Cloud Messaging<\/strong>. <strong>Firebase Cloud Messaging API (V1)<\/strong> doit afficher <strong>Enabled<\/strong>. C’est normalement le cas sur un nouveau projet. Sinon, activez-la avec le menu ⋮ à côté.",
+"c3": "<strong>Project settings → Cloud Messaging<\/strong> : l’API V1 affiche <strong>Enabled<\/strong>.",
+"c4": "La fenêtre d’import. Choisissez le fichier et laissez les règles telles quelles.",
+"c5": "Remplacez la valeur de <code>Auth<\/code> par votre secret partagé. Laissez les autres paramètres tels quels.",
+"c6": "Cet exemple montre le mauvais cas : le relais est injoignable. Vous devez plutôt voir ici <code>relay HTTP 502<\/code> ou <code>relay HTTP 400<\/code>.",
+"c7": "Choisissez les groupes d’utilisateurs ou les utilisateurs, puis réglez <strong>Envoyer au type de média<\/strong> sur <strong>ZbxView Push<\/strong>.",
+"c8": "Les quatre valeurs après <strong>Load google-services.json<\/strong>. Les valeurs affichées sont des exemples."
 },
 "lv": {
 "g1": "Push paziņojumi: iestatīšana soli pa solim",
@@ -1028,7 +1074,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g75": "<strong>Labi.<\/strong> Zabbix sasniedza releju, un noslēpums ir pareizs. Turpiniet.",
 "g76": "<code>relay HTTP 401<\/code>",
 "g77": "Vērtība <code>Auth<\/code> neatbilst <code>shared_secret<\/code>. Atkārtojiet 4.2. soli.",
-"g78": "<code>Couldn't connect<\/code> vai līdzīgs ziņojums",
+"g78": "<code>Failed to connect<\/code> vai līdzīgs ziņojums",
 "g79": "Zabbix nevar sasniegt releju. Skatiet 3.6. soli, 3.7. soli un Docker rindu sadaļā <a href=\"#trouble\">problēmu novēršana<\/a>.",
 "g80": "4.4. Izveidojiet darbību",
 "g81": "Darbība nosaka, kuras problēmas tiek sūtītas un kam.",
@@ -1114,7 +1160,17 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "_copied": "Nokopēts",
 "_select": "Atlasiet un kopējiet",
 "__title": "ZbxView — Push paziņojumi: iestatīšana soli pa solim",
-"__desc": "Iestatiet ZbxView push paziņojumus no sākuma līdz beigām: Firebase projekts, relejs Zabbix serverī, multivides tips, darbība, QR kods, pārbaude un problēmu novēršana."
+"__desc": "Iestatiet ZbxView push paziņojumus no sākuma līdz beigām: Firebase projekts, relejs Zabbix serverī, multivides tips, darbība, QR kods, pārbaude un problēmu novēršana.",
+"c1": "Laukā <strong>Android package name<\/strong> ievadiet <code>app.zbxview<\/code> un noklikšķiniet uz <strong>Register app<\/strong>.",
+"c2": "<strong>Project settings → Service accounts<\/strong>: noklikšķiniet uz <strong>Generate new private key<\/strong>.",
+"h24": "2.4 Pārbaudiet, vai Cloud Messaging ir ieslēgts",
+"p24": "Sadaļā <strong>Project settings<\/strong> atveriet cilni <strong>Cloud Messaging<\/strong>. Pie <strong>Firebase Cloud Messaging API (V1)<\/strong> jābūt rakstītam <strong>Enabled<\/strong>. Jaunā projektā tā parasti ir. Ja nav, ieslēdziet to ar izvēlni ⋮ blakus.",
+"c3": "<strong>Project settings → Cloud Messaging<\/strong>: pie V1 API ir <strong>Enabled<\/strong>.",
+"c4": "Importa logs. Izvēlieties failu un noteikumus atstājiet nemainītus.",
+"c5": "Aizstājiet <code>Auth<\/code> vērtību ar savu koplietoto noslēpumu. Pārējos parametrus atstājiet nemainītus.",
+"c6": "Šis piemērs rāda slikto gadījumu: releju nevarēja sasniegt. Šeit jābūt redzamam <code>relay HTTP 502<\/code> vai <code>relay HTTP 400<\/code>.",
+"c7": "Izvēlieties lietotāju grupas vai lietotājus un laukā <strong>Send to media type<\/strong> iestatiet <strong>ZbxView Push<\/strong>.",
+"c8": "Četras vērtības pēc <strong>Load google-services.json<\/strong>. Parādītās vērtības ir piemēri."
 }
 };
     var htmlEl = document.documentElement, descEl = document.querySelector('meta[name="description"]');
