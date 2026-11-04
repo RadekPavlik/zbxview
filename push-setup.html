@@ -8,6 +8,8 @@
   <link rel="icon" href="assets/icon.png" />
   <link rel="stylesheet" href="styles.css" />
   <style>
+    :root { color-scheme: dark; }
+    .doc { max-width: 1000px; }
     .doc h2 { font-size: 22px; margin-top: 44px; padding-top: 14px; border-top: 1px solid var(--line); color: var(--text); }
     .doc h2 small { display: block; color: var(--red-soft); font: 600 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
     .doc h3 { font-size: 16px; margin: 26px 0 8px; color: var(--text); }
@@ -37,6 +39,18 @@
     .doc th, .doc td { text-align: left; vertical-align: top; padding: 8px 10px; border: 1px solid var(--line); color: var(--muted); }
     .doc th { color: var(--text); background: var(--card); }
     .doc td:first-child { color: var(--text); }
+    .doc table { table-layout: fixed; }
+    .doc th:first-child, .doc td:first-child { width: 38%; }
+    .doc .tbl th, .doc .tbl td, .doc .tbl td:first-child { white-space: normal; overflow-wrap: break-word; }
+    .doc td code { white-space: normal; overflow-wrap: anywhere; }
+    @media (max-width: 640px) {
+      .doc table, .doc tbody, .doc tr, .doc td { display: block; width: auto !important; }
+      .doc tr:first-child { display: none; }
+      .doc tr { border: 1px solid var(--line); border-radius: 8px; margin-bottom: 10px; }
+      .doc td { border: 0; }
+      .doc td:first-child { font-weight: 600; padding-bottom: 0; }
+    }
+    .doc pre { scrollbar-color: var(--line) transparent; }
   </style>
 </head>
 <body>
