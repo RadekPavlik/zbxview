@@ -28,6 +28,7 @@
     figure.shot { margin: 14px 0 20px; }
     figure.shot img { display: block; width: 100%; height: auto; border: 1px solid var(--line); border-radius: 8px; }
     figure.shot.tall img { max-width: 480px; }
+    figure.shot.phone img { max-width: 300px; border: 0; border-radius: 0; }
     figure.shot figcaption { color: var(--muted); font-size: 13px; margin-top: 6px; }
     figure.shot.pending { display: none; }
     body.draft figure.shot.pending { display: block; border: 1px dashed var(--warn); border-radius: 8px; padding: 26px 16px; color: var(--warn); font-size: 13px; text-align: center; }
@@ -242,7 +243,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
       <li data-i18n="g102">If the app tells you to restart it, close it fully and open it again.</li>
     </ol>
     <p data-i18n="g103">Push turns on by itself after the scan. To confirm, check that <strong>Settings → Push notifications</strong> is on in the app.</p>
-    <figure class="shot pending" data-shot="app-settings.png">Screenshot needed: app Settings with Push notifications on</figure>
+    <figure class="shot phone"><img src="assets/push/app-settings-en.png" data-lang-img alt="ZbxView Settings screen with Push notifications turned on" width="430" height="884" loading="lazy" /><figcaption data-i18n="c9">In the app, <strong>Push notifications</strong> should be on. This image is an illustration, and your list may differ slightly.</figcaption></figure>
 
     <h3 data-i18n="g104">6.2 Confirm Zabbix registered the phone</h3>
     <p data-i18n="g105">In Zabbix, open <strong>Users → Users</strong>, choose your user and open the <strong>Media</strong> tab. There should be a <strong>ZbxView Push</strong> row with a long token. Each phone has its own row.</p>
@@ -466,7 +467,8 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "c5": "Hodnotu <code>Auth<\/code> nahraďte svým shared secretem. Ostatní parametry nechte beze změny.",
 "c6": "Tento příklad ukazuje špatný stav: relay není dostupná. Správně tu chcete vidět <code>relay HTTP 502<\/code> nebo <code>relay HTTP 400<\/code>.",
 "c7": "Vyberte skupiny uživatelů nebo uživatele a v <strong>Odeslat na média typ<\/strong> nastavte <strong>ZbxView Push<\/strong>.",
-"c8": "Čtyři hodnoty po kliknutí na <strong>Load google-services.json<\/strong>. Zobrazené hodnoty jsou jen příklad."
+"c8": "Čtyři hodnoty po kliknutí na <strong>Load google-services.json<\/strong>. Zobrazené hodnoty jsou jen příklad.",
+"c9": "V aplikaci má být <strong>Push notifikace<\/strong> zapnuté. Obrázek je ilustrační a váš seznam se může mírně lišit."
 },
 "de": {
 "g1": "Push-Benachrichtigungen: Einrichtung Schritt für Schritt",
@@ -642,7 +644,8 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "c5": "Ersetzen Sie den Wert von <code>Auth<\/code> durch Ihr Shared Secret. Lassen Sie die anderen Parameter unverändert.",
 "c6": "Dieses Beispiel zeigt den Fehlerfall: Das Relay war nicht erreichbar. Hier sollte stattdessen <code>relay HTTP 502<\/code> oder <code>relay HTTP 400<\/code> stehen.",
 "c7": "Wählen Sie die Benutzergruppen oder Benutzer und setzen Sie <strong>Send to media type<\/strong> auf <strong>ZbxView Push<\/strong>.",
-"c8": "Die vier Werte nach <strong>Load google-services.json<\/strong>. Die gezeigten Werte sind Beispiele."
+"c8": "Die vier Werte nach <strong>Load google-services.json<\/strong>. Die gezeigten Werte sind Beispiele.",
+"c9": "In der App sollten <strong>Push-Benachrichtigungen<\/strong> aktiviert sein. Das Bild ist eine Illustration, Ihre Liste kann leicht abweichen."
 },
 "es": {
 "g1": "Notificaciones push: configuración paso a paso",
@@ -818,7 +821,8 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "c5": "Sustituya el valor de <code>Auth<\/code> por su secreto compartido. Deje los demás parámetros como están.",
 "c6": "Este ejemplo muestra el caso malo: no se pudo llegar al relay. Lo que debe ver aquí es <code>relay HTTP 502<\/code> o <code>relay HTTP 400<\/code>.",
 "c7": "Elija los grupos de usuarios o los usuarios y ponga <strong>Enviar al tipo de medio<\/strong> en <strong>ZbxView Push<\/strong>.",
-"c8": "Los cuatro valores tras <strong>Load google-services.json<\/strong>. Los valores mostrados son ejemplos."
+"c8": "Los cuatro valores tras <strong>Load google-services.json<\/strong>. Los valores mostrados son ejemplos.",
+"c9": "En la app, <strong>Notificaciones push<\/strong> debe estar activado. La imagen es ilustrativa y su lista puede variar ligeramente."
 },
 "fr": {
 "g1": "Notifications push : configuration pas à pas",
@@ -994,7 +998,8 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "c5": "Remplacez la valeur de <code>Auth<\/code> par votre secret partagé. Laissez les autres paramètres tels quels.",
 "c6": "Cet exemple montre le mauvais cas : le relais est injoignable. Vous devez plutôt voir ici <code>relay HTTP 502<\/code> ou <code>relay HTTP 400<\/code>.",
 "c7": "Choisissez les groupes d’utilisateurs ou les utilisateurs, puis réglez <strong>Envoyer au type de média<\/strong> sur <strong>ZbxView Push<\/strong>.",
-"c8": "Les quatre valeurs après <strong>Load google-services.json<\/strong>. Les valeurs affichées sont des exemples."
+"c8": "Les quatre valeurs après <strong>Load google-services.json<\/strong>. Les valeurs affichées sont des exemples.",
+"c9": "Dans l’app, <strong>Notifications push<\/strong> doit être activé. Cette image est une illustration, votre liste peut légèrement différer."
 },
 "lv": {
 "g1": "Push paziņojumi: iestatīšana soli pa solim",
@@ -1170,7 +1175,8 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "c5": "Aizstājiet <code>Auth<\/code> vērtību ar savu koplietoto noslēpumu. Pārējos parametrus atstājiet nemainītus.",
 "c6": "Šis piemērs rāda slikto gadījumu: releju nevarēja sasniegt. Šeit jābūt redzamam <code>relay HTTP 502<\/code> vai <code>relay HTTP 400<\/code>.",
 "c7": "Izvēlieties lietotāju grupas vai lietotājus un laukā <strong>Send to media type<\/strong> iestatiet <strong>ZbxView Push<\/strong>.",
-"c8": "Četras vērtības pēc <strong>Load google-services.json<\/strong>. Parādītās vērtības ir piemēri."
+"c8": "Četras vērtības pēc <strong>Load google-services.json<\/strong>. Parādītās vērtības ir piemēri.",
+"c9": "Lietotnē jābūt ieslēgtam iestatījumam <strong>Push paziņojumi<\/strong>. Attēls ir ilustrācija, un jūsu saraksts var nedaudz atšķirties."
 }
 };
     var htmlEl = document.documentElement, descEl = document.querySelector('meta[name="description"]');
@@ -1188,6 +1194,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
       document.title = dict ? dict.__title : enTitle;
       descEl.setAttribute('content', dict ? dict.__desc : enDesc);
       htmlEl.lang = dict ? lang : 'en';
+      document.querySelectorAll('img[data-lang-img]').forEach(function (img) { img.src = 'assets/push/app-settings-' + htmlEl.lang + '.png'; });
       ['_copy', '_copied', '_select'].forEach(function (k) { ui[k] = dict ? dict[k] : { _copy: 'Copy', _copied: 'Copied', _select: 'Select and copy' }[k]; });
       document.querySelectorAll('.cmd button').forEach(function (b) { b.textContent = ui._copy; });
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
