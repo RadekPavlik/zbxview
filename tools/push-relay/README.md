@@ -9,6 +9,9 @@ step guide is at https://radekpavlik.github.io/zbxview/push.html.
   secret, path to `service-account.json`).
 - `zbxview-push-relay.service` - systemd unit (runs as the `zabbix` user,
   Python from `/opt/zbxview-push-relay/venv`).
+- `Dockerfile`, `docker-compose.yml` - the same relay as a container, for a
+  Zabbix server running in Docker (see the Docker steps in the guide). Set
+  `ZABBIX_NETWORK` in `.env` and `listen = 0.0.0.0` in `config.ini`.
 - `media_type_zbxview_push.yaml` - the Zabbix media type "ZbxView Push",
   importable (Alerting → Media types → Import); set `Auth` to the shared
   secret afterwards.

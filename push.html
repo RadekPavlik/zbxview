@@ -89,7 +89,7 @@
     <div class="toc"><ol>
       <li data-i18n="g5"><a href="#before">Before you start</a></li>
       <li data-i18n="g6"><a href="#firebase">Create the Firebase project</a></li>
-      <li data-i18n="g7"><a href="#relay">Install the relay on the Zabbix server</a></li>
+      <li data-i18n="g7"><a href="#relay">Install the relay on the Zabbix server</a> (<a href="#docker">in Docker</a>)</li>
       <li data-i18n="g8"><a href="#zabbix">Connect Zabbix to the relay</a></li>
       <li data-i18n="g9"><a href="#module">Add the project to the QR code</a></li>
       <li data-i18n="g10"><a href="#phone">Scan the QR code and test</a></li>
@@ -104,7 +104,7 @@
       <li data-i18n="g16"><strong>Python 3.9 or newer</strong> on the server. Check with <code>python3 --version</code>.</li>
       <li data-i18n="g17"><strong>Outgoing HTTPS</strong> from the server to <code>fcm.googleapis.com</code> and <code>oauth2.googleapis.com</code> at all times, and to <code>pypi.org</code> and <code>github.com</code> during installation.</li>
     </ul>
-    <div class="note" data-i18n="g150">Running Zabbix in Docker? Read the Docker row in <a href="#trouble">the troubleshooting table</a> first, because the relay address is different.</div>
+    <div class="note" data-i18n="g150">Running Zabbix in Docker? You do not need Python on the server, because the relay runs as its own container. Follow <a href="#docker">the Docker steps</a> in Part 3. You need Docker Compose, and outgoing HTTPS to Docker Hub during installation as well.</div>
 
     <h2 id="firebase" data-i18n="g18"><small>Part 2 · In your browser</small>Create the Firebase project</h2>
     <p data-i18n="g19">You need two files from Firebase. Keep them apart, because they do different jobs:</p>
@@ -142,6 +142,8 @@
     <h2 id="relay" data-i18n="g41"><small>Part 3 · On the Zabbix server, over SSH</small>Install the relay</h2>
     <p data-i18n="g42">Run the blocks below one at a time, in order. Use the <strong>Copy</strong> button and paste them into your SSH session instead of retyping them.</p>
     <div class="note" data-i18n="g151"><strong>Most of these commands print little or nothing when they succeed.</strong> That is normal. Step 3.6 tells you whether the relay is really working.</div>
+
+    <div class="note" data-i18n="d2"><strong>Zabbix server in Docker?</strong> Skip steps 3.1 to 3.7 and follow <a href="#docker">the Docker steps</a> instead. Then continue with Part 4.</div>
 
     <h3 data-i18n="g43">3.1 Debian and Ubuntu only: install the Python venv package</h3>
     <p data-i18n="g44">Skip this on RHEL, Rocky, Alma and Oracle Linux.</p>
@@ -197,6 +199,57 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
     <p data-i18n="g58">Run <code>getenforce</code>. If it prints <code>Enforcing</code>, SELinux has to allow Zabbix to connect to the relay port:</p>
     <div class="cmd"><pre><code>sudo setsebool -P zabbix_can_network on</code></pre></div>
 
+    <h2 id="docker" data-i18n="d3"><small>Part 3 · If Zabbix runs in Docker</small>Install the relay as a container</h2>
+    <p data-i18n="d4">Use these steps instead of 3.1 to 3.7. The relay runs as a separate Compose project next to Zabbix. Your Zabbix compose file stays as it is, no port opens on the host, and only containers on the Zabbix network can reach the relay.</p>
+
+    <h3 data-i18n="d5">D.1 Find the Zabbix server container and its network</h3>
+    <div class="cmd"><pre><code>sudo docker ps --format '{{.Names}}  {{.Image}}' | grep zabbix-server
+sudo docker inspect -f '{{range $n, $c := .NetworkSettings.Networks}}{{println $n}}{{end}}' zabbix-server</code></pre></div>
+    <p data-i18n="d6">The first command prints the container’s name. Use that name instead of <code>zabbix-server</code> in the second command and in step D.6.</p>
+    <p class="out-h" data-i18n="d7">You should see the network’s name, for example:</p>
+    <pre class="out"><code>zabbix_default</code></pre>
+    <p data-i18n="d8">If several networks are listed, use the one with <code>backend</code> in its name. If you see only <code>host</code> or <code>bridge</code>, see the Docker rows in <a href="#trouble">troubleshooting</a>.</p>
+
+    <h3 data-i18n="d9">D.2 Download the relay</h3>
+    <div class="cmd"><pre><code>sudo mkdir -p /opt/zbxview-push-relay
+cd /opt/zbxview-push-relay
+for f in push_relay.py config.ini.example Dockerfile docker-compose.yml; do
+  sudo curl -fsSLO https://radekpavlik.github.io/zbxview/tools/push-relay/$f
+done
+ls</code></pre></div>
+    <p class="out-h" data-i18n="g46">You should see:</p>
+    <pre class="out"><code>Dockerfile  config.ini.example  docker-compose.yml  push_relay.py</code></pre>
+
+    <h3 data-i18n="d10">D.3 Put the private key on the server</h3>
+    <p data-i18n="d11">Copy <code>service-account.json</code> to <code>/opt/zbxview-push-relay/</code> the same way as in <strong>step 3.3</strong>.</p>
+
+    <h3 data-i18n="d12">D.4 Create the configuration and a shared secret</h3>
+    <p data-i18n="d13">Replace <code>zabbix_default</code> with your network from step D.1. This block generates the shared secret and writes the configuration. <strong>Copy the secret it prints</strong>, because you need it in step 4.2. The relay runs as user 10001, so both files must belong to that user.</p>
+    <div class="cmd"><pre><code>cd /opt/zbxview-push-relay
+SECRET=$(openssl rand -hex 24)
+sudo cp config.ini.example config.ini
+sudo sed -i -e "s/FILL_ME_LONG_RANDOM/$SECRET/" -e "s/^listen = .*/listen = 0.0.0.0/" config.ini
+echo "ZABBIX_NETWORK=zabbix_default" | sudo tee .env
+sudo chown 10001:10001 config.ini service-account.json
+sudo chmod 600 config.ini service-account.json
+echo "Your shared secret: $SECRET"</code></pre></div>
+
+    <h3 data-i18n="d14">D.5 Build and start the container</h3>
+    <p data-i18n="d15">The build takes a minute or two. The container starts again by itself after a reboot.</p>
+    <div class="cmd"><pre><code>cd /opt/zbxview-push-relay
+sudo docker compose up -d --build</code></pre></div>
+
+    <h3 data-i18n="d16">D.6 Check that Zabbix reaches the relay</h3>
+    <p data-i18n="d17">Use your container name from step D.1. The test runs inside the Zabbix server container, so it also proves that the network is right.</p>
+    <div class="cmd"><pre><code>sleep 5
+cd /opt/zbxview-push-relay
+SECRET=$(sudo awk -F' *= *' '/^shared_secret/{print $2}' config.ini)
+sudo docker exec zabbix-server wget -O- --header "X-Auth: $SECRET" --post-data '{}' http://zbxview-push-relay:8090/send</code></pre></div>
+    <p class="out-h" data-i18n="d18">The last line should be exactly this:</p>
+    <pre class="out"><code>wget: server returned error: HTTP/1.0 400 Bad Request</code></pre>
+    <p data-i18n="d19"><strong>That “error” means success.</strong> The relay is running, it accepted your secret, and it is only complaining that this test named no phone. <code>401</code> means the secret does not match, and <code>bad address</code> means the two containers do not share a network. If the container has no <code>wget</code>, skip this check, because step 4.3 tests the same path.</p>
+    <p data-i18n="d20">Now continue with Part 4. In step 4.2, set <code>RelayURL</code> to <code>http://zbxview-push-relay:8090/send</code>.</p>
+
     <h2 id="zabbix" data-i18n="g59"><small>Part 4 · In the Zabbix web interface</small>Connect Zabbix to the relay</h2>
     <h3 data-i18n="g60">4.1 Import the media type</h3>
     <ol>
@@ -211,7 +264,7 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
     <ol>
       <li data-i18n="g66">Click <strong>ZbxView Push</strong> in the list.</li>
       <li data-i18n="g67">Replace the value of the <code>Auth</code> parameter with the secret from step 3.4. You can show it again with <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini</code>.</li>
-      <li data-i18n="g68">Leave <code>RelayURL</code> as <code>http://127.0.0.1:8090/send</code>, unless Zabbix runs in Docker.</li>
+      <li data-i18n="g68">Leave <code>RelayURL</code> as <code>http://127.0.0.1:8090/send</code>. If Zabbix runs in Docker, set it to <code>http://zbxview-push-relay:8090/send</code>.</li>
       <li data-i18n="g69">Click <strong>Update</strong>.</li>
     </ol>
     <figure class="shot tall"><img src="assets/push/zabbix-auth.png" alt="Zabbix media type form with the Auth parameter" width="1083" height="1095" loading="lazy" /><figcaption data-i18n="c5">Replace the <code>Auth</code> value with your shared secret. Leave the other parameters as they are.</figcaption></figure>
@@ -247,6 +300,14 @@ curl -s -X POST -H "X-Auth: $SECRET" -d '{}' http://127.0.0.1:8090/send; echo</c
 sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</code></pre></div>
     <p data-i18n="g92">If that folder does not exist, use <code>/usr/share/zabbix/ui/modules</code>. Then, in Zabbix, open <strong>Administration → General → Modules</strong>, click <strong>Scan directory</strong> and enable <strong>ZbxView connect</strong>.</p>
 
+    <p data-i18n="d21"><strong>Web frontend in Docker:</strong> the modules folder is inside the container, so the module has to come from the host. First check whether the frontend already mounts that folder, using your web container’s name:</p>
+    <div class="cmd"><pre><code>sudo docker inspect -f '{{range .Mounts}}{{println .Source .Destination}}{{end}}' zabbix-web | grep modules</code></pre></div>
+    <p data-i18n="d22">If a line ends with exactly <code>/usr/share/zabbix/modules</code>, as in the official Zabbix compose files, run the <code>git clone</code> command in the host folder shown at the start of that line. Otherwise, clone the module to the host:</p>
+    <div class="cmd"><pre><code>sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git /opt/Zabbix-UI-Modules-ZbxView-connect</code></pre></div>
+    <p data-i18n="d23">Add this line under <code>volumes:</code> of the web service in your Zabbix compose file, then run <code>sudo docker compose up -d</code> in that file’s folder. The web frontend restarts, which takes a few seconds.</p>
+    <div class="cmd"><pre><code>- /opt/Zabbix-UI-Modules-ZbxView-connect:/usr/share/zabbix/modules/Zabbix-UI-Modules-ZbxView-connect:ro</code></pre></div>
+    <p data-i18n="d24">Then scan the directory and enable the module in Zabbix, as described above.</p>
+
     <h3 data-i18n="g93">5.2 Load the project</h3>
     <ol>
       <li data-i18n="g94">Open <strong>Administration → Mobile configuration</strong>.</li>
@@ -277,6 +338,8 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
     <h2 id="trouble" data-i18n="g109"><small>Part 7</small>If something does not work</h2>
     <p data-i18n="g110">Two places tell you nearly everything. On the server, this shows the relay’s log:</p>
     <div class="cmd"><pre><code>sudo journalctl -u zbxview-push-relay -n 30 --no-pager</code></pre></div>
+    <p data-i18n="d25">If the relay runs in Docker, use this instead:</p>
+    <div class="cmd"><pre><code>sudo docker logs --tail 30 zbxview-push-relay</code></pre></div>
     <p data-i18n="g111">In Zabbix, <strong>Reports → Action log</strong> shows whether an alert was sent and the error if it failed. Python <code>FutureWarning</code> and <code>DeprecationWarning</code> lines in the relay log are harmless.</p>
 
     <h3 data-i18n="g112">During installation</h3>
@@ -286,7 +349,9 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
       <tr><td data-i18n="g117"><code>curl</code> or <code>pip</code> times out</td><td data-i18n="g118">The server has no direct internet access. Go through your proxy: <code>export https_proxy=http://proxy:port</code>, and use <code>sudo -E</code> instead of <code>sudo</code>.</td></tr>
       <tr><td data-i18n="g119"><code>failed</code> or <code>activating</code> in step 3.6, log shows <code>FileNotFoundError ... service-account.json</code></td><td data-i18n="g120">The key is missing or still has its long name. See steps 2.3 and 3.3, then run <code>sudo chown zabbix:zabbix /opt/zbxview-push-relay/service-account.json</code> and <code>sudo systemctl restart zbxview-push-relay</code>.</td></tr>
       <tr><td data-i18n="g121"><code>curl</code> prints nothing in step 3.6</td><td data-i18n="g122">The relay is not running or not started yet. Wait a few seconds and retry, then check the log.</td></tr>
-      <tr><td data-i18n="g123">Zabbix runs in Docker</td><td data-i18n="g124">Inside a container, <code>127.0.0.1</code> is the container and not the host. In <code>config.ini</code>, set <code>listen</code> to the host’s IP address and restart the relay. Set <code>RelayURL</code> in the media type to the same address, and allow only the Zabbix container to reach port 8090.</td></tr>
+      <tr><td data-i18n="g123">Zabbix runs in Docker</td><td data-i18n="g124">Install the relay with <a href="#docker">the Docker steps</a>. Inside a container, <code>127.0.0.1</code> is the container and not the host, so <code>RelayURL</code> must be <code>http://zbxview-push-relay:8090/send</code>.</td></tr>
+      <tr><td data-i18n="d26">Step D.1 shows only <code>host</code> or <code>bridge</code></td><td data-i18n="d27">The relay cannot be found by name on these networks. Run <code>sudo docker network create zbxview-relay</code> and put <code>ZABBIX_NETWORK=zbxview-relay</code> in <code>.env</code>. For <code>bridge</code>, also run <code>sudo docker network connect zbxview-relay zabbix-server</code> with your container’s name, and repeat it whenever that container is recreated. For <code>host</code>, add <code>ports: ["127.0.0.1:8090:8090"]</code> to the service in <code>docker-compose.yml</code> and keep <code>RelayURL</code> at <code>http://127.0.0.1:8090/send</code>. Then run <code>sudo docker compose up -d</code>.</td></tr>
+      <tr><td data-i18n="d28">Docker: <code>IsADirectoryError</code> or <code>PermissionError</code> in the relay log</td><td data-i18n="d29">The key was missing when the container started, so Docker created a folder with its name, or a file has the wrong owner. In <code>/opt/zbxview-push-relay</code>, run <code>sudo docker compose down</code>. If the folder exists, remove it with <code>sudo rmdir service-account.json</code> and repeat step D.3. Then run <code>sudo chown 10001:10001 config.ini service-account.json</code> and <code>sudo docker compose up -d</code>.</td></tr>
     </table></div>
 
     <h3 data-i18n="g125">On the phone</h3>
@@ -321,7 +386,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g4": "<strong>„Relay“ je malý program, který nainstalujete na Zabbix server.<\/strong> Firebase přijímá jen zprávy podepsané privátním klíčem a webhook v Zabbixu je podepsat neumí. Zabbix proto každé upozornění předá službě relay, ta ho podepíše a pošle do Firebase. Není to nic, co byste ve Firebase hledali nebo tam naklikali.",
 "g5": "<a href=\"#before\">Než začnete<\/a>",
 "g6": "<a href=\"#firebase\">Založení Firebase projektu<\/a>",
-"g7": "<a href=\"#relay\">Instalace relay na Zabbix server<\/a>",
+"g7": "<a href=\"#relay\">Instalace relay na Zabbix server<\/a> (<a href=\"#docker\">v Dockeru<\/a>)",
 "g8": "<a href=\"#zabbix\">Propojení Zabbixu s relay<\/a>",
 "g9": "<a href=\"#module\">Přidání projektu do QR kódu<\/a>",
 "g10": "<a href=\"#phone\">Naskenování QR kódu a test<\/a>",
@@ -382,7 +447,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g65": "4.2 Zadejte shared secret",
 "g66": "Klikněte v seznamu na <strong>ZbxView Push<\/strong>.",
 "g67": "Hodnotu parametru <code>Auth<\/code> nahraďte secretem z kroku 3.4. Znovu ho zobrazíte příkazem <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
-"g68": "<code>RelayURL<\/code> nechte na hodnotě <code>http://127.0.0.1:8090/send<\/code>, pokud Zabbix neběží v Dockeru.",
+"g68": "<code>RelayURL<\/code> nechte na hodnotě <code>http://127.0.0.1:8090/send<\/code>. Pokud Zabbix běží v Dockeru, nastavte ho na <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Klikněte na <strong>Aktualizovat<\/strong>.",
 "g70": "4.3 Otestujte Zabbix → relay",
 "g71": "V seznamu typů médií klikněte v řádku ZbxView Push na <strong>Test<\/strong>, hodnoty ponechte a klikněte na <strong>Test<\/strong>. Tento test posílá na telefon, který neexistuje, takže <strong>má skončit chybou<\/strong>. Ze zprávy poznáte, kam až se dostal:",
@@ -438,7 +503,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g121": "<code>curl<\/code> v kroku 3.6 nic nevypíše",
 "g122": "Služba relay neběží nebo se ještě nespustila. Počkejte několik sekund, zkuste to znovu a pak se podívejte do logu.",
 "g123": "Zabbix běží v Dockeru",
-"g124": "Uvnitř kontejneru je <code>127.0.0.1<\/code> samotný kontejner, ne hostitel. V <code>config.ini<\/code> nastavte <code>listen<\/code> na IP adresu hostitele a restartujte relay. Stejnou adresu nastavte v typu média v <code>RelayURL<\/code> a na port 8090 povolte přístup jen kontejneru se Zabbixem.",
+"g124": "Nainstalujte relay podle <a href=\"#docker\">kroků pro Docker<\/a>. Uvnitř kontejneru je <code>127.0.0.1<\/code> samotný kontejner, ne host, proto musí být <code>RelayURL<\/code> nastavené na <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g125": "Na telefonu",
 "g126": "Co vidíte",
 "g127": "Příčina a řešení",
@@ -463,7 +528,35 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g146": "Zkontrolujte, že jsou v nastavení Androidu pro ZbxView povolené notifikace a že úspora baterie aplikaci neomezuje.",
 "g147": "Stále si nevíte rady? Napište nám přes <a href=\"index.html#contact\">kontaktní formulář<\/a> a přiložte výstup kroku 3.6, log služby relay a chybu z Protokoly → Log akcí. <strong>Neposílejte<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ani shared secret.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · asi 30 minut, jednorázově provede správce Zabbixu",
-"g150": "Provozujete Zabbix v Dockeru? Nejdřív si přečtěte řádek o Dockeru v <a href=\"#trouble\">tabulce řešení problémů<\/a>, protože adresa relay je jiná.",
+"g150": "Provozujete Zabbix v Dockeru? Python na serveru nepotřebujete, protože relay poběží jako samostatný kontejner. Postupujte podle <a href=\"#docker\">kroků pro Docker<\/a> v části 3. Budete potřebovat Docker Compose a během instalace také odchozí HTTPS na Docker Hub.",
+"d2": "<strong>Zabbix server v Dockeru?<\/strong> Kroky 3.1 až 3.7 přeskočte a postupujte podle <a href=\"#docker\">kroků pro Docker<\/a>. Potom pokračujte částí 4.",
+"d3": "<small>Část 3 · Pokud Zabbix běží v Dockeru<\/small>Instalace relay jako kontejneru",
+"d4": "Tyto kroky použijte místo kroků 3.1 až 3.7. Relay poběží jako samostatný Compose projekt vedle Zabbixu. Váš compose soubor Zabbixu zůstane beze změny, na hostu se neotevře žádný port a k relay se dostanou jen kontejnery v síti Zabbixu.",
+"d5": "D.1 Zjistěte kontejner Zabbix serveru a jeho síť",
+"d6": "První příkaz vypíše název kontejneru. Tento název použijte místo <code>zabbix-server<\/code> ve druhém příkazu a v kroku D.6.",
+"d7": "Měli byste vidět název sítě, například:",
+"d8": "Pokud se vypíše víc sítí, použijte tu, která má v názvu <code>backend<\/code>. Pokud vidíte jen <code>host<\/code> nebo <code>bridge<\/code>, podívejte se na řádky o Dockeru v části <a href=\"#trouble\">řešení problémů<\/a>.",
+"d9": "D.2 Stáhněte relay",
+"d10": "D.3 Nahrajte privátní klíč na server",
+"d11": "Zkopírujte <code>service-account.json<\/code> do <code>/opt/zbxview-push-relay/<\/code> stejně jako v <strong>kroku 3.3<\/strong>.",
+"d12": "D.4 Vytvořte konfiguraci a shared secret",
+"d13": "Místo <code>zabbix_default<\/code> doplňte svou síť z kroku D.1. Tento blok vygeneruje shared secret a zapíše konfiguraci. <strong>Zkopírujte si secret, který vypíše<\/strong>, budete ho potřebovat v kroku 4.2. Relay běží pod uživatelem 10001, proto mu oba soubory musí patřit.",
+"d14": "D.5 Sestavte a spusťte kontejner",
+"d15": "Sestavení trvá minutu nebo dvě. Po restartu serveru se kontejner spustí sám.",
+"d16": "D.6 Ověřte, že se Zabbix dostane k relay",
+"d17": "Použijte název kontejneru z kroku D.1. Test běží přímo v kontejneru Zabbix serveru, takže ověří i správnou síť.",
+"d18": "Poslední řádek by měl být přesně tento:",
+"d19": "<strong>Tato „chyba“ znamená úspěch.<\/strong> Služba relay běží, přijala váš secret a stěžuje si jen na to, že tento test neuvádí žádný telefon. <code>401<\/code> znamená, že secret nesouhlasí, a <code>bad address<\/code>, že kontejnery nesdílejí síť. Pokud v kontejneru není <code>wget<\/code>, tuto kontrolu přeskočte. Stejnou cestu ověří krok 4.3.",
+"d20": "Teď pokračujte částí 4. V kroku 4.2 nastavte <code>RelayURL<\/code> na <code>http://zbxview-push-relay:8090/send<\/code>.",
+"d21": "<strong>Webové rozhraní v Dockeru:<\/strong> složka modulů je uvnitř kontejneru, takže modul musí přijít z hostu. Nejdřív ověřte, jestli je tato složka už připojená. Použijte název svého webového kontejneru:",
+"d22": "Pokud některý řádek končí přesně <code>/usr/share/zabbix/modules<\/code>, jako v oficiálních compose souborech Zabbixu, spusťte příkaz <code>git clone<\/code> ve složce na hostu, kterou tento řádek uvádí jako první. Jinak naklonujte modul na host:",
+"d23": "Přidejte tento řádek pod <code>volumes:<\/code> webové služby ve svém compose souboru Zabbixu a ve složce tohoto souboru spusťte <code>sudo docker compose up -d<\/code>. Webové rozhraní se restartuje, což trvá několik sekund.",
+"d24": "Potom v Zabbixu načtěte složku a zapněte modul, jak je popsáno výše.",
+"d25": "Pokud relay běží v Dockeru, použijte místo toho:",
+"d26": "Krok D.1 ukazuje jen <code>host<\/code> nebo <code>bridge<\/code>",
+"d27": "V těchto sítích se relay podle názvu nenajde. Spusťte <code>sudo docker network create zbxview-relay<\/code> a do <code>.env<\/code> zapište <code>ZABBIX_NETWORK=zbxview-relay<\/code>. U <code>bridge<\/code> navíc spusťte <code>sudo docker network connect zbxview-relay zabbix-server<\/code> s názvem svého kontejneru a zopakujte to při každém novém vytvoření kontejneru. U <code>host<\/code> přidejte službě v <code>docker-compose.yml<\/code> řádek <code>ports: [\"127.0.0.1:8090:8090\"]<\/code> a <code>RelayURL<\/code> nechte na <code>http://127.0.0.1:8090/send<\/code>. Potom spusťte <code>sudo docker compose up -d<\/code>.",
+"d28": "Docker: <code>IsADirectoryError<\/code> nebo <code>PermissionError<\/code> v logu relay",
+"d29": "Klíč při startu kontejneru chyběl, takže Docker vytvořil složku se stejným názvem, nebo má některý soubor špatného vlastníka. V <code>/opt/zbxview-push-relay<\/code> spusťte <code>sudo docker compose down<\/code>. Pokud složka existuje, odstraňte ji příkazem <code>sudo rmdir service-account.json<\/code> a zopakujte krok D.3. Potom spusťte <code>sudo chown 10001:10001 config.ini service-account.json<\/code> a <code>sudo docker compose up -d<\/code>.",
 "g151": "<strong>Většina těchto příkazů při úspěchu nevypíše skoro nic.<\/strong> To je normální. Zda relay opravdu funguje, zjistíte v kroku 3.6.",
 "g153": "Váš Zabbix server",
 "g154": "typ média + akce",
@@ -505,7 +598,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g4": "<strong>Das „Relay“ ist ein kleines Programm, das Sie auf dem Zabbix-Server installieren.<\/strong> Firebase nimmt nur Nachrichten an, die mit einem privaten Schlüssel signiert sind, und ein Zabbix-Webhook kann nicht signieren. Darum übergibt Zabbix jeden Alarm an das Relay, und das Relay signiert ihn und leitet ihn an Firebase weiter. Sie finden das Relay also nicht in Firebase und können dort auch nichts dafür anklicken.",
 "g5": "<a href=\"#before\">Bevor Sie beginnen<\/a>",
 "g6": "<a href=\"#firebase\">Firebase-Projekt anlegen<\/a>",
-"g7": "<a href=\"#relay\">Relay auf dem Zabbix-Server installieren<\/a>",
+"g7": "<a href=\"#relay\">Relay auf dem Zabbix-Server installieren<\/a> (<a href=\"#docker\">in Docker<\/a>)",
 "g8": "<a href=\"#zabbix\">Zabbix mit dem Relay verbinden<\/a>",
 "g9": "<a href=\"#module\">Projekt in den QR-Code aufnehmen<\/a>",
 "g10": "<a href=\"#phone\">QR-Code scannen und testen<\/a>",
@@ -566,7 +659,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g65": "4.2 Shared Secret eintragen",
 "g66": "Klicken Sie in der Liste auf <strong>ZbxView Push<\/strong>.",
 "g67": "Ersetzen Sie den Wert des Parameters <code>Auth<\/code> durch das Secret aus Schritt 3.4. Sie können es sich mit <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code> erneut anzeigen lassen.",
-"g68": "Lassen Sie <code>RelayURL<\/code> auf <code>http://127.0.0.1:8090/send<\/code>, es sei denn, Zabbix läuft in Docker.",
+"g68": "Lassen Sie <code>RelayURL<\/code> auf <code>http://127.0.0.1:8090/send<\/code>. Läuft Zabbix in Docker, setzen Sie es auf <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Klicken Sie auf <strong>Ändern<\/strong>.",
 "g70": "4.3 Zabbix → Relay testen",
 "g71": "Klicken Sie in der Liste der Medientypen in der Zeile ZbxView Push auf <strong>Test<\/strong>, lassen Sie die Werte unverändert und klicken Sie auf <strong>Test<\/strong>. Dieser Test sendet an ein Telefon, das es nicht gibt, deshalb <strong>muss er fehlschlagen<\/strong>. An der Meldung erkennen Sie, wie weit er gekommen ist:",
@@ -622,7 +715,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g121": "<code>curl<\/code> gibt in Schritt 3.6 nichts aus",
 "g122": "Das Relay läuft nicht oder ist noch nicht gestartet. Warten Sie einige Sekunden und versuchen Sie es erneut. Prüfen Sie danach das Protokoll.",
 "g123": "Zabbix läuft in Docker",
-"g124": "In einem Container ist <code>127.0.0.1<\/code> der Container und nicht der Host. Setzen Sie in <code>config.ini<\/code> den Wert <code>listen<\/code> auf die IP-Adresse des Hosts und starten Sie das Relay neu. Tragen Sie dieselbe Adresse im Medientyp bei <code>RelayURL<\/code> ein und erlauben Sie nur dem Zabbix-Container den Zugriff auf Port 8090.",
+"g124": "Installieren Sie das Relay mit den <a href=\"#docker\">Docker-Schritten<\/a>. In einem Container ist <code>127.0.0.1<\/code> der Container und nicht der Host, daher muss <code>RelayURL<\/code> <code>http://zbxview-push-relay:8090/send<\/code> lauten.",
 "g125": "Auf dem Telefon",
 "g126": "Was Sie sehen",
 "g127": "Ursache und Lösung",
@@ -647,7 +740,35 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g146": "Prüfen Sie, ob Benachrichtigungen für ZbxView in den Android-Einstellungen erlaubt sind und ob der Energiesparmodus die App nicht einschränkt.",
 "g147": "Kommen Sie nicht weiter? Nutzen Sie das <a href=\"index.html#contact\">Kontaktformular<\/a> und geben Sie die Ausgabe von Schritt 3.6, das Relay-Protokoll und den Fehler aus dem Aktionsprotokoll an. <strong>Senden Sie uns keinesfalls<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> oder das Shared Secret.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · etwa 30 Minuten, einmalig durch den Zabbix-Admin",
-"g150": "Läuft Ihr Zabbix in Docker? Lesen Sie zuerst die Docker-Zeile in der <a href=\"#trouble\">Tabelle zur Fehlerbehebung<\/a>, denn die Relay-Adresse ist dann eine andere.",
+"g150": "Läuft Ihr Zabbix in Docker? Dann brauchen Sie auf dem Server kein Python, denn das Relay läuft als eigener Container. Folgen Sie den <a href=\"#docker\">Docker-Schritten<\/a> in Teil 3. Sie benötigen Docker Compose und während der Installation auch ausgehendes HTTPS zu Docker Hub.",
+"d2": "<strong>Zabbix-Server in Docker?<\/strong> Überspringen Sie die Schritte 3.1 bis 3.7 und folgen Sie stattdessen den <a href=\"#docker\">Docker-Schritten<\/a>. Machen Sie danach mit Teil 4 weiter.",
+"d3": "<small>Teil 3 · Wenn Zabbix in Docker läuft<\/small>Relay als Container installieren",
+"d4": "Verwenden Sie diese Schritte anstelle von 3.1 bis 3.7. Das Relay läuft als eigenes Compose-Projekt neben Zabbix. Ihre Zabbix-Compose-Datei bleibt unverändert, auf dem Host wird kein Port geöffnet, und nur Container im Zabbix-Netzwerk erreichen das Relay.",
+"d5": "D.1 Container des Zabbix-Servers und sein Netzwerk ermitteln",
+"d6": "Der erste Befehl gibt den Namen des Containers aus. Verwenden Sie diesen Namen anstelle von <code>zabbix-server<\/code> im zweiten Befehl und in Schritt D.6.",
+"d7": "Sie sollten den Namen des Netzwerks sehen, zum Beispiel:",
+"d8": "Werden mehrere Netzwerke aufgeführt, verwenden Sie dasjenige mit <code>backend<\/code> im Namen. Sehen Sie nur <code>host<\/code> oder <code>bridge<\/code>, lesen Sie die Docker-Zeilen unter <a href=\"#trouble\">Fehlerbehebung<\/a>.",
+"d9": "D.2 Relay herunterladen",
+"d10": "D.3 Privaten Schlüssel auf den Server bringen",
+"d11": "Kopieren Sie <code>service-account.json<\/code> wie in <strong>Schritt 3.3<\/strong> nach <code>/opt/zbxview-push-relay/<\/code>.",
+"d12": "D.4 Konfiguration und Shared Secret erstellen",
+"d13": "Ersetzen Sie <code>zabbix_default<\/code> durch Ihr Netzwerk aus Schritt D.1. Dieser Block erzeugt das Shared Secret und schreibt die Konfiguration. <strong>Kopieren Sie das ausgegebene Secret<\/strong>, denn Sie brauchen es in Schritt 4.2. Das Relay läuft als Benutzer 10001, daher müssen beide Dateien diesem Benutzer gehören.",
+"d14": "D.5 Container bauen und starten",
+"d15": "Der Build dauert ein bis zwei Minuten. Nach einem Neustart startet der Container von selbst wieder.",
+"d16": "D.6 Prüfen, ob Zabbix das Relay erreicht",
+"d17": "Verwenden Sie Ihren Containernamen aus Schritt D.1. Der Test läuft im Container des Zabbix-Servers und belegt damit auch, dass das Netzwerk stimmt.",
+"d18": "Die letzte Zeile sollte genau so lauten:",
+"d19": "<strong>Dieser „Fehler“ bedeutet Erfolg.<\/strong> Das Relay läuft, es hat Ihr Secret akzeptiert und beanstandet nur, dass dieser Test kein Telefon angegeben hat. <code>401<\/code> bedeutet, dass das Secret nicht übereinstimmt, <code>bad address<\/code>, dass die beiden Container kein gemeinsames Netzwerk haben. Gibt es im Container kein <code>wget<\/code>, überspringen Sie diese Prüfung, denn Schritt 4.3 testet denselben Weg.",
+"d20": "Machen Sie nun mit Teil 4 weiter. Setzen Sie in Schritt 4.2 <code>RelayURL<\/code> auf <code>http://zbxview-push-relay:8090/send<\/code>.",
+"d21": "<strong>Web-Frontend in Docker:<\/strong> Der Modulordner liegt im Container, das Modul muss also vom Host kommen. Prüfen Sie zuerst mit dem Namen Ihres Web-Containers, ob dieser Ordner bereits eingebunden ist:",
+"d22": "Endet eine Zeile genau mit <code>/usr/share/zabbix/modules<\/code>, wie in den offiziellen Zabbix-Compose-Dateien, führen Sie den Befehl <code>git clone<\/code> in dem Host-Ordner aus, der am Anfang dieser Zeile steht. Andernfalls klonen Sie das Modul auf den Host:",
+"d23": "Fügen Sie diese Zeile unter <code>volumes:<\/code> des Web-Dienstes in Ihre Zabbix-Compose-Datei ein und führen Sie im Ordner dieser Datei <code>sudo docker compose up -d<\/code> aus. Das Web-Frontend startet neu, was einige Sekunden dauert.",
+"d24": "Lesen Sie dann in Zabbix das Verzeichnis ein und aktivieren Sie das Modul wie oben beschrieben.",
+"d25": "Läuft das Relay in Docker, verwenden Sie stattdessen:",
+"d26": "Schritt D.1 zeigt nur <code>host<\/code> oder <code>bridge<\/code>",
+"d27": "In diesen Netzwerken lässt sich das Relay nicht über den Namen finden. Führen Sie <code>sudo docker network create zbxview-relay<\/code> aus und tragen Sie <code>ZABBIX_NETWORK=zbxview-relay<\/code> in <code>.env<\/code> ein. Bei <code>bridge<\/code> führen Sie zusätzlich <code>sudo docker network connect zbxview-relay zabbix-server<\/code> mit Ihrem Containernamen aus und wiederholen dies, sooft der Container neu erstellt wird. Bei <code>host<\/code> ergänzen Sie den Dienst in <code>docker-compose.yml<\/code> um <code>ports: [\"127.0.0.1:8090:8090\"]<\/code> und lassen <code>RelayURL<\/code> auf <code>http://127.0.0.1:8090/send<\/code>. Führen Sie dann <code>sudo docker compose up -d<\/code> aus.",
+"d28": "Docker: <code>IsADirectoryError<\/code> oder <code>PermissionError<\/code> im Relay-Protokoll",
+"d29": "Der Schlüssel fehlte beim Start des Containers, sodass Docker einen Ordner mit seinem Namen angelegt hat, oder eine Datei hat den falschen Eigentümer. Führen Sie in <code>/opt/zbxview-push-relay<\/code> den Befehl <code>sudo docker compose down<\/code> aus. Falls der Ordner existiert, entfernen Sie ihn mit <code>sudo rmdir service-account.json<\/code> und wiederholen Sie Schritt D.3. Führen Sie dann <code>sudo chown 10001:10001 config.ini service-account.json<\/code> und <code>sudo docker compose up -d<\/code> aus.",
 "g151": "<strong>Die meisten dieser Befehle geben bei Erfolg wenig oder gar nichts aus.<\/strong> Das ist normal. Ob das Relay wirklich funktioniert, erfahren Sie in Schritt 3.6.",
 "g153": "Ihr Zabbix-Server",
 "g154": "Medientyp + Aktion",
@@ -689,7 +810,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g4": "<strong>El «relay» es un pequeño programa que usted instala en el servidor Zabbix.<\/strong> Firebase solo acepta mensajes firmados con una clave privada, y un webhook de Zabbix no puede firmarlos. Por eso Zabbix entrega cada alerta al relay, y el relay la firma y la pasa a Firebase. No es algo que se busque o se pulse dentro de Firebase.",
 "g5": "<a href=\"#before\">Antes de empezar<\/a>",
 "g6": "<a href=\"#firebase\">Crear el proyecto Firebase<\/a>",
-"g7": "<a href=\"#relay\">Instalar el relay en el servidor Zabbix<\/a>",
+"g7": "<a href=\"#relay\">Instalar el relay en el servidor Zabbix<\/a> (<a href=\"#docker\">en Docker<\/a>)",
 "g8": "<a href=\"#zabbix\">Conectar Zabbix con el relay<\/a>",
 "g9": "<a href=\"#module\">Añadir el proyecto al código QR<\/a>",
 "g10": "<a href=\"#phone\">Escanear el código QR y probar<\/a>",
@@ -750,7 +871,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g65": "4.2 Introducir el secreto compartido",
 "g66": "Haga clic en <strong>ZbxView Push<\/strong> en la lista.",
 "g67": "Sustituya el valor del parámetro <code>Auth<\/code> por el secreto del paso 3.4. Puede volver a verlo con <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
-"g68": "Deje <code>RelayURL<\/code> como <code>http://127.0.0.1:8090/send<\/code>, salvo que Zabbix se ejecute en Docker.",
+"g68": "Deje <code>RelayURL<\/code> como <code>http://127.0.0.1:8090/send<\/code>. Si Zabbix se ejecuta en Docker, establézcalo en <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Haga clic en <strong>Modificar<\/strong>.",
 "g70": "4.3 Probar Zabbix → relay",
 "g71": "En la lista de tipos de medio, haga clic en <strong>Probar<\/strong> en la fila de ZbxView Push, deje los valores como están y vuelva a hacer clic en <strong>Probar<\/strong>. Esta prueba envía a un teléfono que no existe, así que <strong>lo normal es que falle<\/strong>. El mensaje le indica hasta dónde ha llegado:",
@@ -806,7 +927,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g121": "<code>curl<\/code> no muestra nada en el paso 3.6",
 "g122": "El relay no está en marcha o todavía no ha arrancado. Espere unos segundos, vuelva a intentarlo y, si sigue igual, revise el registro.",
 "g123": "Zabbix se ejecuta en Docker",
-"g124": "Dentro de un contenedor, <code>127.0.0.1<\/code> es el propio contenedor y no el host. En <code>config.ini<\/code>, ponga en <code>listen<\/code> la dirección IP del host y reinicie el relay. Ponga esa misma dirección en <code>RelayURL<\/code> en el tipo de medio, y permita que solo el contenedor de Zabbix llegue al puerto 8090.",
+"g124": "Instale el relay con <a href=\"#docker\">los pasos para Docker<\/a>. Dentro de un contenedor, <code>127.0.0.1<\/code> es el contenedor y no el host, por lo que <code>RelayURL<\/code> debe ser <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g125": "En el teléfono",
 "g126": "Qué ve",
 "g127": "Causa y solución",
@@ -831,7 +952,35 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g146": "Compruebe que las notificaciones de ZbxView estén permitidas en los ajustes de Android y que el ahorro de batería no esté restringiendo la app.",
 "g147": "¿Sigue sin funcionar? Use el <a href=\"index.html#contact\">formulario de contacto<\/a> e incluya la salida del paso 3.6, el registro del relay y el error del Registro de acciones. <strong>No envíe<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ni el secreto compartido.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · unos 30 minutos, una sola vez, a cargo del administrador de Zabbix",
-"g150": "¿Ejecuta Zabbix en Docker? Lea primero la fila de Docker en <a href=\"#trouble\">la tabla de solución de problemas<\/a>, porque la dirección del relay es distinta.",
+"g150": "¿Ejecuta Zabbix en Docker? No necesita Python en el servidor, porque el relay se ejecuta como un contenedor propio. Siga <a href=\"#docker\">los pasos para Docker<\/a> de la parte 3. Necesita Docker Compose y, durante la instalación, también HTTPS saliente hacia Docker Hub.",
+"d2": "<strong>¿Servidor Zabbix en Docker?<\/strong> Omita los pasos 3.1 a 3.7 y siga <a href=\"#docker\">los pasos para Docker<\/a>. Después continúe con la parte 4.",
+"d3": "<small>Parte 3 · Si Zabbix se ejecuta en Docker<\/small>Instalar el relay como contenedor",
+"d4": "Use estos pasos en lugar de los pasos 3.1 a 3.7. El relay se ejecuta como un proyecto Compose independiente junto a Zabbix. Su archivo compose de Zabbix no cambia, no se abre ningún puerto en el host y solo los contenedores de la red de Zabbix pueden llegar al relay.",
+"d5": "D.1 Localizar el contenedor del servidor Zabbix y su red",
+"d6": "El primer comando muestra el nombre del contenedor. Use ese nombre en lugar de <code>zabbix-server<\/code> en el segundo comando y en el paso D.6.",
+"d7": "Debería ver el nombre de la red, por ejemplo:",
+"d8": "Si aparecen varias redes, use la que tenga <code>backend<\/code> en el nombre. Si solo ve <code>host<\/code> o <code>bridge<\/code>, consulte las filas de Docker en <a href=\"#trouble\">solución de problemas<\/a>.",
+"d9": "D.2 Descargar el relay",
+"d10": "D.3 Copiar la clave privada al servidor",
+"d11": "Copie <code>service-account.json<\/code> a <code>/opt/zbxview-push-relay/<\/code> igual que en el <strong>paso 3.3<\/strong>.",
+"d12": "D.4 Crear la configuración y un secreto compartido",
+"d13": "Sustituya <code>zabbix_default<\/code> por su red del paso D.1. Este bloque genera el secreto compartido y escribe la configuración. <strong>Copie el secreto que muestra en pantalla<\/strong>, porque lo necesitará en el paso 4.2. El relay se ejecuta como usuario 10001, por lo que ambos archivos deben pertenecer a ese usuario.",
+"d14": "D.5 Construir e iniciar el contenedor",
+"d15": "La construcción tarda uno o dos minutos. Tras un reinicio, el contenedor vuelve a arrancar solo.",
+"d16": "D.6 Comprobar que Zabbix llega al relay",
+"d17": "Use el nombre de su contenedor del paso D.1. La prueba se ejecuta dentro del contenedor del servidor Zabbix, así que también demuestra que la red es correcta.",
+"d18": "La última línea debería ser exactamente esta:",
+"d19": "<strong>Ese «error» significa que todo ha ido bien.<\/strong> El relay está en marcha, ha aceptado su secreto y solo se queja de que esta prueba no indica ningún teléfono. <code>401<\/code> significa que el secreto no coincide y <code>bad address<\/code>, que los dos contenedores no comparten red. Si el contenedor no tiene <code>wget<\/code>, omita esta comprobación, porque el paso 4.3 prueba el mismo camino.",
+"d20": "Continúe ahora con la parte 4. En el paso 4.2, establezca <code>RelayURL<\/code> en <code>http://zbxview-push-relay:8090/send<\/code>.",
+"d21": "<strong>Interfaz web en Docker:<\/strong> la carpeta de módulos está dentro del contenedor, así que el módulo debe venir del host. Compruebe primero si esa carpeta ya está montada, usando el nombre de su contenedor web:",
+"d22": "Si una línea termina exactamente en <code>/usr/share/zabbix/modules<\/code>, como en los archivos compose oficiales de Zabbix, ejecute el comando <code>git clone<\/code> en la carpeta del host que aparece al principio de esa línea. Si no, clone el módulo en el host:",
+"d23": "Añada esta línea bajo <code>volumes:<\/code> del servicio web en su archivo compose de Zabbix y ejecute <code>sudo docker compose up -d<\/code> en la carpeta de ese archivo. La interfaz web se reinicia, lo que tarda unos segundos.",
+"d24": "Después, explore el directorio y active el módulo en Zabbix, como se describe arriba.",
+"d25": "Si el relay se ejecuta en Docker, use esto en su lugar:",
+"d26": "El paso D.1 muestra solo <code>host<\/code> o <code>bridge<\/code>",
+"d27": "En estas redes el relay no se encuentra por su nombre. Ejecute <code>sudo docker network create zbxview-relay<\/code> y escriba <code>ZABBIX_NETWORK=zbxview-relay<\/code> en <code>.env<\/code>. Con <code>bridge<\/code>, ejecute además <code>sudo docker network connect zbxview-relay zabbix-server<\/code> con el nombre de su contenedor y repítalo cada vez que se vuelva a crear. Con <code>host<\/code>, añada <code>ports: [\"127.0.0.1:8090:8090\"]<\/code> al servicio en <code>docker-compose.yml<\/code> y deje <code>RelayURL<\/code> en <code>http://127.0.0.1:8090/send<\/code>. Después ejecute <code>sudo docker compose up -d<\/code>.",
+"d28": "Docker: <code>IsADirectoryError<\/code> o <code>PermissionError<\/code> en el registro del relay",
+"d29": "La clave faltaba al iniciarse el contenedor, por lo que Docker creó una carpeta con ese nombre, o bien un archivo tiene el propietario equivocado. En <code>/opt/zbxview-push-relay<\/code>, ejecute <code>sudo docker compose down<\/code>. Si la carpeta existe, elimínela con <code>sudo rmdir service-account.json<\/code> y repita el paso D.3. Después ejecute <code>sudo chown 10001:10001 config.ini service-account.json<\/code> y <code>sudo docker compose up -d<\/code>.",
 "g151": "<strong>La mayoría de estos comandos muestran poco o nada cuando funcionan.<\/strong> Es normal. El paso 3.6 le indica si el relay funciona de verdad.",
 "g153": "Su servidor Zabbix",
 "g154": "tipo de medio + acción",
@@ -873,7 +1022,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g4": "<strong>Le « relais » est un petit programme que vous installez sur le serveur Zabbix.<\/strong> Firebase n’accepte que les messages signés avec une clé privée, et un webhook Zabbix ne sait pas les signer. Zabbix remet donc chaque alerte au relais, qui la signe et la transmet à Firebase. Ce n’est pas un élément que vous trouverez ou que vous activerez dans Firebase.",
 "g5": "<a href=\"#before\">Avant de commencer<\/a>",
 "g6": "<a href=\"#firebase\">Créer le projet Firebase<\/a>",
-"g7": "<a href=\"#relay\">Installer le relais sur le serveur Zabbix<\/a>",
+"g7": "<a href=\"#relay\">Installer le relais sur le serveur Zabbix<\/a> (<a href=\"#docker\">dans Docker<\/a>)",
 "g8": "<a href=\"#zabbix\">Connecter Zabbix au relais<\/a>",
 "g9": "<a href=\"#module\">Ajouter le projet au QR code<\/a>",
 "g10": "<a href=\"#phone\">Scanner le QR code et tester<\/a>",
@@ -934,7 +1083,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g65": "4.2 Saisir le secret partagé",
 "g66": "Cliquez sur <strong>ZbxView Push<\/strong> dans la liste.",
 "g67": "Remplacez la valeur du paramètre <code>Auth<\/code> par le secret de l’étape 3.4. Vous pouvez l’afficher de nouveau avec <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
-"g68": "Laissez <code>RelayURL<\/code> sur <code>http://127.0.0.1:8090/send<\/code>, sauf si Zabbix tourne dans Docker.",
+"g68": "Laissez <code>RelayURL<\/code> sur <code>http://127.0.0.1:8090/send<\/code>. Si Zabbix tourne dans Docker, réglez-le sur <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Cliquez sur <strong>Actualiser<\/strong>.",
 "g70": "4.3 Tester Zabbix → relais",
 "g71": "Dans la liste des types de média, cliquez sur <strong>Test<\/strong> sur la ligne ZbxView Push, laissez les valeurs telles quelles et cliquez sur <strong>Test<\/strong>. Ce test envoie vers un téléphone qui n’existe pas : <strong>il doit donc échouer<\/strong>. Le message vous indique jusqu’où il est allé :",
@@ -990,7 +1139,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g121": "<code>curl<\/code> n’affiche rien à l’étape 3.6",
 "g122": "Le relais ne tourne pas ou n’a pas encore démarré. Attendez quelques secondes et réessayez, puis consultez le journal.",
 "g123": "Zabbix tourne dans Docker",
-"g124": "Dans un conteneur, <code>127.0.0.1<\/code> désigne le conteneur et non l’hôte. Dans <code>config.ini<\/code>, mettez dans <code>listen<\/code> l’adresse IP de l’hôte et redémarrez le relais. Mettez la même adresse dans <code>RelayURL<\/code> du type de média, et n’autorisez que le conteneur Zabbix à joindre le port 8090.",
+"g124": "Installez le relais avec <a href=\"#docker\">les étapes pour Docker<\/a>. Dans un conteneur, <code>127.0.0.1<\/code> désigne le conteneur et non l’hôte : <code>RelayURL<\/code> doit donc être <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g125": "Sur le téléphone",
 "g126": "Ce que vous voyez",
 "g127": "Cause et solution",
@@ -1015,7 +1164,35 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g146": "Vérifiez que les notifications de ZbxView sont autorisées dans les paramètres Android et que l’économie de batterie ne restreint pas l’app.",
 "g147": "Toujours bloqué ? Utilisez le <a href=\"index.html#contact\">formulaire de contact<\/a> et joignez la sortie de l’étape 3.6, le journal du relais et l’erreur du journal des actions. <strong>N’envoyez pas<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ni le secret partagé.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · environ 30 minutes, une seule fois, par l’administrateur Zabbix",
-"g150": "Zabbix tourne dans Docker ? Lisez d’abord la ligne Docker du <a href=\"#trouble\">tableau de dépannage<\/a>, car l’adresse du relais est différente.",
+"g150": "Zabbix tourne dans Docker ? Python n’est pas nécessaire sur le serveur, car le relais s’exécute dans son propre conteneur. Suivez <a href=\"#docker\">les étapes pour Docker<\/a> de la partie 3. Il vous faut Docker Compose et, pendant l’installation, un accès HTTPS sortant vers Docker Hub.",
+"d2": "<strong>Serveur Zabbix dans Docker ?<\/strong> Ignorez les étapes 3.1 à 3.7 et suivez plutôt <a href=\"#docker\">les étapes pour Docker<\/a>. Passez ensuite à la partie 4.",
+"d3": "<small>Partie 3 · Si Zabbix tourne dans Docker<\/small>Installer le relais en conteneur",
+"d4": "Suivez ces étapes à la place des étapes 3.1 à 3.7. Le relais s’exécute comme un projet Compose distinct à côté de Zabbix. Votre fichier compose Zabbix ne change pas, aucun port n’est ouvert sur l’hôte et seuls les conteneurs du réseau Zabbix peuvent joindre le relais.",
+"d5": "D.1 Trouver le conteneur du serveur Zabbix et son réseau",
+"d6": "La première commande affiche le nom du conteneur. Utilisez ce nom à la place de <code>zabbix-server<\/code> dans la deuxième commande et à l’étape D.6.",
+"d7": "Vous devriez voir le nom du réseau, par exemple :",
+"d8": "Si plusieurs réseaux s’affichent, utilisez celui dont le nom contient <code>backend<\/code>. Si vous ne voyez que <code>host<\/code> ou <code>bridge<\/code>, consultez les lignes Docker du <a href=\"#trouble\">dépannage<\/a>.",
+"d9": "D.2 Télécharger le relais",
+"d10": "D.3 Placer la clé privée sur le serveur",
+"d11": "Copiez <code>service-account.json<\/code> dans <code>/opt/zbxview-push-relay/<\/code> comme à l’<strong>étape 3.3<\/strong>.",
+"d12": "D.4 Créer la configuration et un secret partagé",
+"d13": "Remplacez <code>zabbix_default<\/code> par votre réseau de l’étape D.1. Ce bloc génère le secret partagé et écrit la configuration. <strong>Copiez le secret affiché<\/strong> : vous en aurez besoin à l’étape 4.2. Le relais s’exécute sous l’utilisateur 10001, les deux fichiers doivent donc lui appartenir.",
+"d14": "D.5 Construire et démarrer le conteneur",
+"d15": "La construction prend une à deux minutes. Le conteneur redémarre tout seul après un redémarrage du serveur.",
+"d16": "D.6 Vérifier que Zabbix joint le relais",
+"d17": "Utilisez le nom de votre conteneur de l’étape D.1. Le test s’exécute dans le conteneur du serveur Zabbix : il prouve donc aussi que le réseau est le bon.",
+"d18": "La dernière ligne devrait être exactement celle-ci :",
+"d19": "<strong>Cette « erreur » signifie que tout fonctionne.<\/strong> Le relais tourne, il a accepté votre secret et il signale seulement que ce test ne désigne aucun téléphone. <code>401<\/code> signifie que le secret ne correspond pas, et <code>bad address<\/code> que les deux conteneurs ne partagent pas de réseau. Si le conteneur n’a pas <code>wget<\/code>, ignorez ce contrôle : l’étape 4.3 teste le même chemin.",
+"d20": "Passez maintenant à la partie 4. À l’étape 4.2, réglez <code>RelayURL<\/code> sur <code>http://zbxview-push-relay:8090/send<\/code>.",
+"d21": "<strong>Interface web dans Docker :<\/strong> le dossier des modules se trouve dans le conteneur, le module doit donc venir de l’hôte. Vérifiez d’abord si ce dossier est déjà monté, avec le nom de votre conteneur web :",
+"d22": "Si une ligne se termine exactement par <code>/usr/share/zabbix/modules<\/code>, comme dans les fichiers compose officiels de Zabbix, exécutez la commande <code>git clone<\/code> dans le dossier de l’hôte indiqué au début de cette ligne. Sinon, clonez le module sur l’hôte :",
+"d23": "Ajoutez cette ligne sous <code>volumes:<\/code> du service web dans votre fichier compose Zabbix, puis exécutez <code>sudo docker compose up -d<\/code> dans le dossier de ce fichier. L’interface web redémarre, ce qui prend quelques secondes.",
+"d24": "Ensuite, analysez le répertoire et activez le module dans Zabbix, comme décrit ci-dessus.",
+"d25": "Si le relais tourne dans Docker, utilisez plutôt :",
+"d26": "L’étape D.1 n’affiche que <code>host<\/code> ou <code>bridge<\/code>",
+"d27": "Sur ces réseaux, le relais n’est pas joignable par son nom. Exécutez <code>sudo docker network create zbxview-relay<\/code> et écrivez <code>ZABBIX_NETWORK=zbxview-relay<\/code> dans <code>.env<\/code>. Avec <code>bridge<\/code>, exécutez aussi <code>sudo docker network connect zbxview-relay zabbix-server<\/code> avec le nom de votre conteneur, et recommencez à chaque recréation du conteneur. Avec <code>host<\/code>, ajoutez <code>ports: [\"127.0.0.1:8090:8090\"]<\/code> au service dans <code>docker-compose.yml<\/code> et laissez <code>RelayURL<\/code> sur <code>http://127.0.0.1:8090/send<\/code>. Exécutez ensuite <code>sudo docker compose up -d<\/code>.",
+"d28": "Docker : <code>IsADirectoryError<\/code> ou <code>PermissionError<\/code> dans le journal du relais",
+"d29": "La clé manquait au démarrage du conteneur, Docker a donc créé un dossier portant son nom, ou un fichier n’a pas le bon propriétaire. Dans <code>/opt/zbxview-push-relay<\/code>, exécutez <code>sudo docker compose down<\/code>. Si le dossier existe, supprimez-le avec <code>sudo rmdir service-account.json<\/code> et refaites l’étape D.3. Exécutez ensuite <code>sudo chown 10001:10001 config.ini service-account.json<\/code> et <code>sudo docker compose up -d<\/code>.",
 "g151": "<strong>La plupart de ces commandes n’affichent presque rien, voire rien du tout, quand elles réussissent.<\/strong> C’est normal. L’étape 3.6 vous indique si le relais fonctionne vraiment.",
 "g153": "Votre serveur Zabbix",
 "g154": "type de média + action",
@@ -1057,7 +1234,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g4": "<strong>“Relejs” (relay) ir neliela programma, ko jūs instalējat Zabbix serverī.<\/strong> Firebase pieņem tikai ziņas, kas parakstītas ar privāto atslēgu, bet Zabbix webhook tās parakstīt nevar. Tāpēc Zabbix nodod katru brīdinājumu relejam, un relejs to paraksta un nosūta uz Firebase. Firebase konsolē relejs nav atrodams, un tur uz to nav ko klikšķināt.",
 "g5": "<a href=\"#before\">Pirms sākšanas<\/a>",
 "g6": "<a href=\"#firebase\">Firebase projekta izveide<\/a>",
-"g7": "<a href=\"#relay\">Releja instalēšana Zabbix serverī<\/a>",
+"g7": "<a href=\"#relay\">Releja instalēšana Zabbix serverī<\/a> (<a href=\"#docker\">Docker vidē<\/a>)",
 "g8": "<a href=\"#zabbix\">Zabbix savienošana ar releju<\/a>",
 "g9": "<a href=\"#module\">Projekta pievienošana QR kodam<\/a>",
 "g10": "<a href=\"#phone\">QR koda skenēšana un pārbaude<\/a>",
@@ -1118,7 +1295,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g65": "4.2. Ievadiet koplietoto noslēpumu",
 "g66": "Sarakstā noklikšķiniet <strong>ZbxView Push<\/strong>.",
 "g67": "Aizstājiet parametra <code>Auth<\/code> vērtību ar noslēpumu no 3.4. soļa. To var parādīt vēlreiz ar <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
-"g68": "Atstājiet <code>RelayURL<\/code> kā <code>http://127.0.0.1:8090/send<\/code>, ja vien Zabbix nedarbojas Docker vidē.",
+"g68": "Atstājiet <code>RelayURL<\/code> kā <code>http://127.0.0.1:8090/send<\/code>. Ja Zabbix darbojas Docker vidē, iestatiet to uz <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Noklikšķiniet <strong>Atjaunot<\/strong>.",
 "g70": "4.3. Pārbaudiet savienojumu Zabbix → relejs",
 "g71": "Multivides tipu sarakstā rindā ZbxView Push noklikšķiniet <strong>Tests<\/strong>, atstājiet vērtības nemainītas un vēlreiz noklikšķiniet <strong>Tests<\/strong>. Šis tests sūta uz tālruni, kas neeksistē, tāpēc <strong>ir paredzēts, ka tas beigsies ar kļūdu<\/strong>. Ziņojums parāda, cik tālu tas ticis:",
@@ -1174,7 +1351,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g121": "<code>curl<\/code> 3.6. solī neizdrukā neko",
 "g122": "Relejs nedarbojas vai vēl nav startējies. Pagaidiet dažas sekundes un mēģiniet vēlreiz, pēc tam pārbaudiet žurnālu.",
 "g123": "Zabbix darbojas Docker vidē",
-"g124": "Konteinerā <code>127.0.0.1<\/code> ir pats konteiners, nevis resursdators. Failā <code>config.ini<\/code> iestatiet <code>listen<\/code> uz resursdatora IP adresi un restartējiet releju. Sadaļā “ZbxView Push” iestatiet <code>RelayURL<\/code> uz to pašu adresi un atļaujiet piekļuvi portam 8090 tikai Zabbix konteineram.",
+"g124": "Instalējiet releju, izmantojot <a href=\"#docker\">Docker soļus<\/a>. Konteinerā <code>127.0.0.1<\/code> ir pats konteiners, nevis resursdators, tāpēc <code>RelayURL<\/code> jābūt <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g125": "Tālrunī",
 "g126": "Ko jūs redzat",
 "g127": "Cēlonis un risinājums",
@@ -1199,7 +1376,35 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g146": "Pārbaudiet, vai Android iestatījumos ZbxView paziņojumi ir atļauti un vai akumulatora taupīšana neierobežo lietotni.",
 "g147": "Joprojām neizdodas? Izmantojiet <a href=\"index.html#contact\">saziņas formu<\/a> un pievienojiet 3.6. soļa izvadi, releja žurnālu un kļūdu no Darbību žurnāla. <strong>Nesūtiet<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> vai koplietoto noslēpumu.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · apmēram 30 minūtes, vienreiz veic Zabbix administrators",
-"g150": "Vai Zabbix darbojas Docker vidē? Vispirms izlasiet Docker rindu <a href=\"#trouble\">problēmu novēršanas tabulā<\/a>, jo releja adrese ir citāda.",
+"g150": "Vai Zabbix darbojas Docker vidē? Python serverī nav vajadzīgs, jo relejs darbojas savā konteinerā. Izpildiet <a href=\"#docker\">Docker soļus<\/a> 3. daļā. Būs vajadzīgs Docker Compose, un instalēšanas laikā arī izejošs HTTPS uz Docker Hub.",
+"d2": "<strong>Zabbix serveris Docker vidē?<\/strong> Izlaidiet 3.1.–3.7. soli un izpildiet <a href=\"#docker\">Docker soļus<\/a>. Pēc tam turpiniet ar 4. daļu.",
+"d3": "<small>3. daļa · Ja Zabbix darbojas Docker vidē<\/small>Releja instalēšana konteinerā",
+"d4": "Izmantojiet šos soļus 3.1.–3.7. soļa vietā. Relejs darbojas kā atsevišķs Compose projekts blakus Zabbix. Jūsu Zabbix compose fails paliek nemainīts, resursdatorā netiek atvērts neviens ports, un releju var sasniegt tikai konteineri Zabbix tīklā.",
+"d5": "D.1. Atrodiet Zabbix servera konteineru un tā tīklu",
+"d6": "Pirmā komanda izdrukā konteinera nosaukumu. Izmantojiet to <code>zabbix-server<\/code> vietā otrajā komandā un D.6. solī.",
+"d7": "Jums jāredz tīkla nosaukums, piemēram:",
+"d8": "Ja redzami vairāki tīkli, izmantojiet to, kura nosaukumā ir <code>backend<\/code>. Ja redzat tikai <code>host<\/code> vai <code>bridge<\/code>, skatiet Docker rindas sadaļā <a href=\"#trouble\">problēmu novēršana<\/a>.",
+"d9": "D.2. Lejupielādējiet releju",
+"d10": "D.3. Novietojiet privāto atslēgu serverī",
+"d11": "Nokopējiet <code>service-account.json<\/code> uz <code>/opt/zbxview-push-relay/<\/code> tāpat kā <strong>3.3. solī<\/strong>.",
+"d12": "D.4. Izveidojiet konfigurāciju un koplietoto noslēpumu",
+"d13": "Aizstājiet <code>zabbix_default<\/code> ar savu tīklu no D.1. soļa. Šis bloks izveido koplietoto noslēpumu un ieraksta konfigurāciju. <strong>Nokopējiet noslēpumu, ko tas izdrukā<\/strong>, jo tas būs vajadzīgs 4.2. solī. Relejs darbojas kā lietotājs 10001, tāpēc abiem failiem jāpieder šim lietotājam.",
+"d14": "D.5. Izveidojiet un startējiet konteineru",
+"d15": "Izveide aizņem minūti vai divas. Pēc servera restartēšanas konteiners startējas pats.",
+"d16": "D.6. Pārbaudiet, vai Zabbix sasniedz releju",
+"d17": "Izmantojiet konteinera nosaukumu no D.1. soļa. Tests darbojas Zabbix servera konteinerā, tāpēc tas apstiprina arī pareizu tīklu.",
+"d18": "Pēdējai rindai jābūt tieši šādai:",
+"d19": "<strong>Šī “kļūda” nozīmē, ka viss izdevies.<\/strong> Relejs darbojas, tas pieņēma jūsu noslēpumu un sūdzas tikai par to, ka šajā testā nav norādīts neviens tālrunis. <code>401<\/code> nozīmē, ka noslēpums nesakrīt, bet <code>bad address<\/code>, ka abiem konteineriem nav kopīga tīkla. Ja konteinerā nav <code>wget<\/code>, izlaidiet šo pārbaudi, jo 4.3. solis pārbauda to pašu ceļu.",
+"d20": "Tagad turpiniet ar 4. daļu. 4.2. solī iestatiet <code>RelayURL<\/code> uz <code>http://zbxview-push-relay:8090/send<\/code>.",
+"d21": "<strong>Tīmekļa saskarne Docker vidē:<\/strong> moduļu mape atrodas konteinerā, tāpēc modulim jānāk no resursdatora. Vispirms pārbaudiet, vai šī mape jau ir pievienota, izmantojot sava tīmekļa konteinera nosaukumu:",
+"d22": "Ja kāda rinda beidzas tieši ar <code>/usr/share/zabbix/modules<\/code>, kā oficiālajos Zabbix compose failos, izpildiet komandu <code>git clone<\/code> resursdatora mapē, kas norādīta šīs rindas sākumā. Pretējā gadījumā klonējiet moduli resursdatorā:",
+"d23": "Pievienojiet šo rindu zem <code>volumes:<\/code> tīmekļa servisam savā Zabbix compose failā un šī faila mapē izpildiet <code>sudo docker compose up -d<\/code>. Tīmekļa saskarne restartējas, tas aizņem dažas sekundes.",
+"d24": "Pēc tam Zabbix skenējiet direktoriju un iespējojiet moduli, kā aprakstīts iepriekš.",
+"d25": "Ja relejs darbojas Docker vidē, izmantojiet šo:",
+"d26": "D.1. solī redzams tikai <code>host<\/code> vai <code>bridge<\/code>",
+"d27": "Šajos tīklos releju nevar atrast pēc nosaukuma. Izpildiet <code>sudo docker network create zbxview-relay<\/code> un ierakstiet <code>ZABBIX_NETWORK=zbxview-relay<\/code> failā <code>.env<\/code>. Ar <code>bridge<\/code> izpildiet arī <code>sudo docker network connect zbxview-relay zabbix-server<\/code> ar sava konteinera nosaukumu un atkārtojiet to ikreiz, kad konteiners tiek izveidots no jauna. Ar <code>host<\/code> pievienojiet servisam failā <code>docker-compose.yml<\/code> rindu <code>ports: [\"127.0.0.1:8090:8090\"]<\/code> un atstājiet <code>RelayURL<\/code> kā <code>http://127.0.0.1:8090/send<\/code>. Pēc tam izpildiet <code>sudo docker compose up -d<\/code>.",
+"d28": "Docker: <code>IsADirectoryError<\/code> vai <code>PermissionError<\/code> releja žurnālā",
+"d29": "Atslēga startēšanas brīdī nebija pieejama, tāpēc Docker izveidoja mapi ar tādu pašu nosaukumu, vai arī failam ir nepareizs īpašnieks. Mapē <code>/opt/zbxview-push-relay<\/code> izpildiet <code>sudo docker compose down<\/code>. Ja mape pastāv, noņemiet to ar <code>sudo rmdir service-account.json<\/code> un atkārtojiet D.3. soli. Pēc tam izpildiet <code>sudo chown 10001:10001 config.ini service-account.json<\/code> un <code>sudo docker compose up -d<\/code>.",
 "g151": "<strong>Lielākā daļa šo komandu pēc veiksmīgas izpildes izdrukā maz vai neko.<\/strong> Tas ir normāli. 3.6. solis parāda, vai relejs tiešām darbojas.",
 "g153": "Jūsu Zabbix serveris",
 "g154": "multivides tips + darbība",

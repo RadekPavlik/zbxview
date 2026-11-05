@@ -1,0 +1,20 @@
+# ZbxView push relay next to a Zabbix server running in Docker. It is a separate
+# project: your Zabbix compose file stays as it is, and no port is published on
+# the host. Set ZABBIX_NETWORK in .env, then: docker compose up -d --build
+services:
+  zbxview-push-relay:
+    build: .
+    image: zbxview-push-relay:local
+    container_name: zbxview-push-relay
+    restart: unless-stopped
+    volumes:
+      - ./config.ini:/opt/zbxview-push-relay/config.ini:ro
+      - ./service-account.json:/opt/zbxview-push-relay/service-account.json:ro
+    networks:
+      - default   # the way out to Firebase; Zabbix networks are often internal
+      - zabbix    # Zabbix reaches the relay here, as zbxview-push-relay:8090
+
+networks:
+  zabbix:
+    external: true
+    name: ${ZABBIX_NETWORK:?Set ZABBIX_NETWORK in .env}
