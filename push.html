@@ -263,7 +263,7 @@ sudo docker exec zabbix-server wget -O- --header "X-Auth: $SECRET" --post-data '
     <h3 data-i18n="g65">4.2 Enter the shared secret</h3>
     <ol>
       <li data-i18n="g66">Click <strong>ZbxView Push</strong> in the list.</li>
-      <li data-i18n="g67">Replace the value of the <code>Auth</code> parameter with the secret from step 3.4. You can show it again with <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini</code>.</li>
+      <li data-i18n="g67">Replace the value of the <code>Auth</code> parameter with the secret from step 3.4 / D.4. You can show it again with <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini</code>.</li>
       <li data-i18n="g68">Leave <code>RelayURL</code> as <code>http://127.0.0.1:8090/send</code>. If Zabbix runs in Docker, set it to <code>http://zbxview-push-relay:8090/send</code>.</li>
       <li data-i18n="g69">Click <strong>Update</strong>.</li>
     </ol>
@@ -305,7 +305,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
     <p data-i18n="d22">If a line ends with exactly <code>/usr/share/zabbix/modules</code>, as in the official Zabbix compose files, run the <code>git clone</code> command in the host folder shown at the start of that line. Otherwise, clone the module to the host:</p>
     <div class="cmd"><pre><code>sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git /opt/Zabbix-UI-Modules-ZbxView-connect</code></pre></div>
     <p data-i18n="d23">Add this line under <code>volumes:</code> of the web service in your Zabbix compose file, then run <code>sudo docker compose up -d</code> in that file’s folder. The web frontend restarts, which takes a few seconds.</p>
-    <div class="cmd"><pre><code>- /opt/Zabbix-UI-Modules-ZbxView-connect:/usr/share/zabbix/modules/Zabbix-UI-Modules-ZbxView-connect:ro</code></pre></div>
+    <div class="cmd"><pre><code>- /opt/Zabbix-UI-Modules-ZbxView-connect:/usr/share/zabbix/modules/Zabbix-UI-Modules-ZbxView-connect:ro,z</code></pre></div>
     <p data-i18n="d24">Then scan the directory and enable the module in Zabbix, as described above.</p>
 
     <h3 data-i18n="g93">5.2 Load the project</h3>
@@ -372,7 +372,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
       <tr><td data-i18n="g145">Action log says <strong>Sent</strong>, but no notification</td><td data-i18n="g146">Check that notifications for ZbxView are allowed in Android settings, and that battery saving is not restricting the app.</td></tr>
     </table></div>
 
-    <p data-i18n="g147">Still stuck? Use the <a href="index.html#contact">contact form</a> and include the output of step 3.6, the relay log and the error from the Action log. <strong>Do not send</strong> <code>service-account.json</code>, <code>config.ini</code> or the shared secret.</p>
+    <p data-i18n="g147">Still stuck? Use the <a href="index.html#contact">contact form</a> and include the output of step 3.6 / D.6, the relay log and the error from the Action log. <strong>Do not send</strong> <code>service-account.json</code>, <code>config.ini</code> or the shared secret.</p>
 
     <p><a href="https://github.com/RadekPavlik/zbxview/tree/main/tools/push-relay" target="_blank" rel="noopener" data-i18n="push_cta">Relay files on GitHub</a></p>
 
@@ -446,7 +446,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g64": "Soubor je pro Zabbix 7.0 a novější. Ve verzi 6.4 vytvořte ručně typ média webhook s názvem přesně <code>ZbxView Push<\/code>, použijte <a href=\"tools/push-relay/media_type_script.js\">tento skript<\/a> a parametry uvedené na jeho začátku.",
 "g65": "4.2 Zadejte shared secret",
 "g66": "Klikněte v seznamu na <strong>ZbxView Push<\/strong>.",
-"g67": "Hodnotu parametru <code>Auth<\/code> nahraďte secretem z kroku 3.4. Znovu ho zobrazíte příkazem <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
+"g67": "Hodnotu parametru <code>Auth<\/code> nahraďte secretem z kroku 3.4 / D.4. Znovu ho zobrazíte příkazem <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
 "g68": "<code>RelayURL<\/code> nechte na hodnotě <code>http://127.0.0.1:8090/send<\/code>. Pokud Zabbix běží v Dockeru, nastavte ho na <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Klikněte na <strong>Aktualizovat<\/strong>.",
 "g70": "4.3 Otestujte Zabbix → relay",
@@ -526,7 +526,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g144": "Token telefonu už není platný. Vypněte a znovu zapněte přepínač <strong>Push notifikace<\/strong>.",
 "g145": "V Protokoly → Log akcí je stav <strong>Poslat<\/strong>, ale notifikace nepřišla",
 "g146": "Zkontrolujte, že jsou v nastavení Androidu pro ZbxView povolené notifikace a že úspora baterie aplikaci neomezuje.",
-"g147": "Stále si nevíte rady? Napište nám přes <a href=\"index.html#contact\">kontaktní formulář<\/a> a přiložte výstup kroku 3.6, log služby relay a chybu z Protokoly → Log akcí. <strong>Neposílejte<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ani shared secret.",
+"g147": "Stále si nevíte rady? Napište nám přes <a href=\"index.html#contact\">kontaktní formulář<\/a> a přiložte výstup kroku 3.6 / D.6, log služby relay a chybu z Protokoly → Log akcí. <strong>Neposílejte<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ani shared secret.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · asi 30 minut, jednorázově provede správce Zabbixu",
 "g150": "Provozujete Zabbix v Dockeru? Python na serveru nepotřebujete, protože relay poběží jako samostatný kontejner. Postupujte podle <a href=\"#docker\">kroků pro Docker<\/a> v části 3. Budete potřebovat Docker Compose a během instalace také odchozí HTTPS na Docker Hub.",
 "d2": "<strong>Zabbix server v Dockeru?<\/strong> Kroky 3.1 až 3.7 přeskočte a postupujte podle <a href=\"#docker\">kroků pro Docker<\/a>. Potom pokračujte částí 4.",
@@ -658,7 +658,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g64": "Die Datei ist für Zabbix 7.0 und neuer. Unter 6.4 legen Sie von Hand einen Webhook-Medientyp mit genau dem Namen <code>ZbxView Push<\/code> an. Verwenden Sie dazu <a href=\"tools/push-relay/media_type_script.js\">dieses Skript<\/a> und die Parameter, die am Anfang des Skripts aufgeführt sind.",
 "g65": "4.2 Shared Secret eintragen",
 "g66": "Klicken Sie in der Liste auf <strong>ZbxView Push<\/strong>.",
-"g67": "Ersetzen Sie den Wert des Parameters <code>Auth<\/code> durch das Secret aus Schritt 3.4. Sie können es sich mit <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code> erneut anzeigen lassen.",
+"g67": "Ersetzen Sie den Wert des Parameters <code>Auth<\/code> durch das Secret aus Schritt 3.4 / D.4. Sie können es sich mit <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code> erneut anzeigen lassen.",
 "g68": "Lassen Sie <code>RelayURL<\/code> auf <code>http://127.0.0.1:8090/send<\/code>. Läuft Zabbix in Docker, setzen Sie es auf <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Klicken Sie auf <strong>Ändern<\/strong>.",
 "g70": "4.3 Zabbix → Relay testen",
@@ -738,7 +738,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g144": "Der Token des Telefons ist nicht mehr gültig. Schalten Sie den Schalter <strong>Push-Benachrichtigungen<\/strong> aus und wieder ein.",
 "g145": "Das Aktionsprotokoll zeigt <strong>Verschickt<\/strong>, aber es kommt keine Benachrichtigung an",
 "g146": "Prüfen Sie, ob Benachrichtigungen für ZbxView in den Android-Einstellungen erlaubt sind und ob der Energiesparmodus die App nicht einschränkt.",
-"g147": "Kommen Sie nicht weiter? Nutzen Sie das <a href=\"index.html#contact\">Kontaktformular<\/a> und geben Sie die Ausgabe von Schritt 3.6, das Relay-Protokoll und den Fehler aus dem Aktionsprotokoll an. <strong>Senden Sie uns keinesfalls<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> oder das Shared Secret.",
+"g147": "Kommen Sie nicht weiter? Nutzen Sie das <a href=\"index.html#contact\">Kontaktformular<\/a> und geben Sie die Ausgabe von Schritt 3.6 / D.6, das Relay-Protokoll und den Fehler aus dem Aktionsprotokoll an. <strong>Senden Sie uns keinesfalls<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> oder das Shared Secret.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · etwa 30 Minuten, einmalig durch den Zabbix-Admin",
 "g150": "Läuft Ihr Zabbix in Docker? Dann brauchen Sie auf dem Server kein Python, denn das Relay läuft als eigener Container. Folgen Sie den <a href=\"#docker\">Docker-Schritten<\/a> in Teil 3. Sie benötigen Docker Compose und während der Installation auch ausgehendes HTTPS zu Docker Hub.",
 "d2": "<strong>Zabbix-Server in Docker?<\/strong> Überspringen Sie die Schritte 3.1 bis 3.7 und folgen Sie stattdessen den <a href=\"#docker\">Docker-Schritten<\/a>. Machen Sie danach mit Teil 4 weiter.",
@@ -870,7 +870,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g64": "El archivo es para Zabbix 7.0 y posteriores. En 6.4, cree a mano un tipo de medio webhook llamado exactamente <code>ZbxView Push<\/code>, usando <a href=\"tools/push-relay/media_type_script.js\">este script<\/a> y los parámetros que aparecen al principio del mismo.",
 "g65": "4.2 Introducir el secreto compartido",
 "g66": "Haga clic en <strong>ZbxView Push<\/strong> en la lista.",
-"g67": "Sustituya el valor del parámetro <code>Auth<\/code> por el secreto del paso 3.4. Puede volver a verlo con <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
+"g67": "Sustituya el valor del parámetro <code>Auth<\/code> por el secreto del paso 3.4 / D.4. Puede volver a verlo con <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
 "g68": "Deje <code>RelayURL<\/code> como <code>http://127.0.0.1:8090/send<\/code>. Si Zabbix se ejecuta en Docker, establézcalo en <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Haga clic en <strong>Modificar<\/strong>.",
 "g70": "4.3 Probar Zabbix → relay",
@@ -950,7 +950,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g144": "El token del teléfono ya no es válido. Desactive y vuelva a activar el interruptor <strong>Notificaciones push<\/strong>.",
 "g145": "El Registro de acciones indica <strong>Enviado<\/strong>, pero no llega ninguna notificación",
 "g146": "Compruebe que las notificaciones de ZbxView estén permitidas en los ajustes de Android y que el ahorro de batería no esté restringiendo la app.",
-"g147": "¿Sigue sin funcionar? Use el <a href=\"index.html#contact\">formulario de contacto<\/a> e incluya la salida del paso 3.6, el registro del relay y el error del Registro de acciones. <strong>No envíe<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ni el secreto compartido.",
+"g147": "¿Sigue sin funcionar? Use el <a href=\"index.html#contact\">formulario de contacto<\/a> e incluya la salida del paso 3.6 / D.6, el registro del relay y el error del Registro de acciones. <strong>No envíe<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ni el secreto compartido.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · unos 30 minutos, una sola vez, a cargo del administrador de Zabbix",
 "g150": "¿Ejecuta Zabbix en Docker? No necesita Python en el servidor, porque el relay se ejecuta como un contenedor propio. Siga <a href=\"#docker\">los pasos para Docker<\/a> de la parte 3. Necesita Docker Compose y, durante la instalación, también HTTPS saliente hacia Docker Hub.",
 "d2": "<strong>¿Servidor Zabbix en Docker?<\/strong> Omita los pasos 3.1 a 3.7 y siga <a href=\"#docker\">los pasos para Docker<\/a>. Después continúe con la parte 4.",
@@ -1082,7 +1082,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g64": "Ce fichier est destiné à Zabbix 7.0 et plus récent. Sur 6.4, créez à la main un type de média webhook nommé exactement <code>ZbxView Push<\/code>, avec <a href=\"tools/push-relay/media_type_script.js\">ce script<\/a> et les paramètres indiqués en haut du script.",
 "g65": "4.2 Saisir le secret partagé",
 "g66": "Cliquez sur <strong>ZbxView Push<\/strong> dans la liste.",
-"g67": "Remplacez la valeur du paramètre <code>Auth<\/code> par le secret de l’étape 3.4. Vous pouvez l’afficher de nouveau avec <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
+"g67": "Remplacez la valeur du paramètre <code>Auth<\/code> par le secret de l’étape 3.4 / D.4. Vous pouvez l’afficher de nouveau avec <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
 "g68": "Laissez <code>RelayURL<\/code> sur <code>http://127.0.0.1:8090/send<\/code>. Si Zabbix tourne dans Docker, réglez-le sur <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Cliquez sur <strong>Actualiser<\/strong>.",
 "g70": "4.3 Tester Zabbix → relais",
@@ -1162,7 +1162,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g144": "Le jeton du téléphone n’est plus valide. Désactivez et réactivez l’interrupteur <strong>Notifications push<\/strong>.",
 "g145": "Le journal des actions indique <strong>Envoyé<\/strong>, mais aucune notification n’arrive",
 "g146": "Vérifiez que les notifications de ZbxView sont autorisées dans les paramètres Android et que l’économie de batterie ne restreint pas l’app.",
-"g147": "Toujours bloqué ? Utilisez le <a href=\"index.html#contact\">formulaire de contact<\/a> et joignez la sortie de l’étape 3.6, le journal du relais et l’erreur du journal des actions. <strong>N’envoyez pas<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ni le secret partagé.",
+"g147": "Toujours bloqué ? Utilisez le <a href=\"index.html#contact\">formulaire de contact<\/a> et joignez la sortie de l’étape 3.6 / D.6, le journal du relais et l’erreur du journal des actions. <strong>N’envoyez pas<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> ni le secret partagé.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · environ 30 minutes, une seule fois, par l’administrateur Zabbix",
 "g150": "Zabbix tourne dans Docker ? Python n’est pas nécessaire sur le serveur, car le relais s’exécute dans son propre conteneur. Suivez <a href=\"#docker\">les étapes pour Docker<\/a> de la partie 3. Il vous faut Docker Compose et, pendant l’installation, un accès HTTPS sortant vers Docker Hub.",
 "d2": "<strong>Serveur Zabbix dans Docker ?<\/strong> Ignorez les étapes 3.1 à 3.7 et suivez plutôt <a href=\"#docker\">les étapes pour Docker<\/a>. Passez ensuite à la partie 4.",
@@ -1294,7 +1294,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g64": "Fails ir paredzēts Zabbix 7.0 un jaunākām versijām. Versijā 6.4 manuāli izveidojiet webhook multivides tipu ar nosaukumu tieši <code>ZbxView Push<\/code>, izmantojot <a href=\"tools/push-relay/media_type_script.js\">šo skriptu<\/a> un parametrus, kas norādīti tā sākumā.",
 "g65": "4.2. Ievadiet koplietoto noslēpumu",
 "g66": "Sarakstā noklikšķiniet <strong>ZbxView Push<\/strong>.",
-"g67": "Aizstājiet parametra <code>Auth<\/code> vērtību ar noslēpumu no 3.4. soļa. To var parādīt vēlreiz ar <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
+"g67": "Aizstājiet parametra <code>Auth<\/code> vērtību ar noslēpumu no 3.4 / D.4. soļa. To var parādīt vēlreiz ar <code>sudo grep shared_secret /opt/zbxview-push-relay/config.ini<\/code>.",
 "g68": "Atstājiet <code>RelayURL<\/code> kā <code>http://127.0.0.1:8090/send<\/code>. Ja Zabbix darbojas Docker vidē, iestatiet to uz <code>http://zbxview-push-relay:8090/send<\/code>.",
 "g69": "Noklikšķiniet <strong>Atjaunot<\/strong>.",
 "g70": "4.3. Pārbaudiet savienojumu Zabbix → relejs",
@@ -1374,7 +1374,7 @@ sudo git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.
 "g144": "Tālruņa marķieris vairs nav derīgs. Izslēdziet un atkal ieslēdziet slēdzi <strong>Push paziņojumi<\/strong>.",
 "g145": "Darbību žurnālā redzams <strong>Sūtīt (Sent)<\/strong>, bet paziņojuma nav",
 "g146": "Pārbaudiet, vai Android iestatījumos ZbxView paziņojumi ir atļauti un vai akumulatora taupīšana neierobežo lietotni.",
-"g147": "Joprojām neizdodas? Izmantojiet <a href=\"index.html#contact\">saziņas formu<\/a> un pievienojiet 3.6. soļa izvadi, releja žurnālu un kļūdu no Darbību žurnāla. <strong>Nesūtiet<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> vai koplietoto noslēpumu.",
+"g147": "Joprojām neizdodas? Izmantojiet <a href=\"index.html#contact\">saziņas formu<\/a> un pievienojiet 3.6 / D.6. soļa izvadi, releja žurnālu un kļūdu no Darbību žurnāla. <strong>Nesūtiet<\/strong> <code>service-account.json<\/code>, <code>config.ini<\/code> vai koplietoto noslēpumu.",
 "g149": "Android · ZbxView 0.50+ · Zabbix 6.4–8.0 · apmēram 30 minūtes, vienreiz veic Zabbix administrators",
 "g150": "Vai Zabbix darbojas Docker vidē? Python serverī nav vajadzīgs, jo relejs darbojas savā konteinerā. Izpildiet <a href=\"#docker\">Docker soļus<\/a> 3. daļā. Būs vajadzīgs Docker Compose, un instalēšanas laikā arī izejošs HTTPS uz Docker Hub.",
 "d2": "<strong>Zabbix serveris Docker vidē?<\/strong> Izlaidiet 3.1.–3.7. soli un izpildiet <a href=\"#docker\">Docker soļus<\/a>. Pēc tam turpiniet ar 4. daļu.",

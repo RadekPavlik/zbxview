@@ -7,9 +7,9 @@ services:
     image: zbxview-push-relay:local
     container_name: zbxview-push-relay
     restart: unless-stopped
-    volumes:
-      - ./config.ini:/opt/zbxview-push-relay/config.ini:ro
-      - ./service-account.json:/opt/zbxview-push-relay/service-account.json:ro
+    volumes:   # z: lets the container read the files on a host with SELinux
+      - ./config.ini:/opt/zbxview-push-relay/config.ini:ro,z
+      - ./service-account.json:/opt/zbxview-push-relay/service-account.json:ro,z
     networks:
       - default   # the way out to Firebase; Zabbix networks are often internal
       - zabbix    # Zabbix reaches the relay here, as zbxview-push-relay:8090
