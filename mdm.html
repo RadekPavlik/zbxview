@@ -91,6 +91,11 @@
           <td data-i18n="k_bio">Vynutí otisk/obličej (nebo PIN zařízení) při otevření aplikace. Přepínač v Nastavení se uživateli zamkne.</td>
         </tr>
         <tr>
+          <td><code>custom_headers</code></td>
+          <td data-i18n="t_string5">řetězec</td>
+          <td data-i18n="k_hdr">Vlastní HTTP hlavičky, které aplikace posílá s každým požadavkem na server: jedna <code>Název: hodnota</code> na řádek, např. <code>CF-Access-Client-Id</code> a <code>CF-Access-Client-Secret</code> service tokenu Cloudflare Access. Authorization, Content-Type a Host nastavuje aplikace sama. Od verze 0.66. <a href="access.html">Návod</a></td>
+        </tr>
+        <tr>
           <td><code>client_cert</code></td>
           <td data-i18n="t_string5">řetězec</td>
           <td data-i18n="k_ccert">Klientský TLS certifikát pro bránu s mTLS (např. Cloudflare): PEM (i bez zalomení řádků), base64 DER nebo base64 PKCS#12. Klíč může být ve stejném PEM.</td>
@@ -228,6 +233,7 @@ startActivity(i);</code></pre>
       t_string8: 'string',
       t_bool4: 'boolean',
       k_ccert: 'TLS client certificate for an mTLS gateway (e.g. Cloudflare): PEM (line breaks optional), base64 DER or base64 PKCS#12. The key may be in the same PEM.',
+      k_hdr: "Custom HTTP headers the app sends with every request to the server: one <code>Name: value</code> per line, e.g. <code>CF-Access-Client-Id</code> and <code>CF-Access-Client-Secret</code> of a Cloudflare Access service token. Authorization, Content-Type and Host are set by the app itself. From version 0.66. <a href=\"access.html\">Guide</a>",
       k_ckey: 'Private key of the certificate when it is not in <code>client_cert</code> (PEM or base64 DER).',
       k_cpw: 'Password of the PKCS#12 bundle or of an encrypted key.',
       k_chosts: 'Servers the certificate is sent to, comma separated (<code>*.example.com</code> for subdomains). Empty = the server in <code>server_url</code>. It is never sent to any other server.',
@@ -309,6 +315,7 @@ startActivity(i);</code></pre>
       t_string8: "Zeichenkette",
       t_bool4: "ja/nein",
       k_ccert: "TLS-Client-Zertifikat für ein mTLS-Gateway (z. B. Cloudflare): PEM (Zeilenumbrüche optional), Base64-DER oder Base64-PKCS#12. Der Schlüssel darf im selben PEM stehen.",
+      k_hdr: "Eigene HTTP-Header, die die App mit jeder Anfrage an den Server sendet: ein <code>Name: Wert</code> pro Zeile, z. B. <code>CF-Access-Client-Id</code> und <code>CF-Access-Client-Secret</code> eines Cloudflare-Access-Service-Tokens. Authorization, Content-Type und Host setzt die App selbst. Ab Version 0.66. <a href=\"access.html\">Anleitung</a>",
       k_ckey: "Privater Schlüssel des Zertifikats, falls er nicht in <code>client_cert</code> steht (PEM oder Base64-DER).",
       k_cpw: "Passwort des PKCS#12-Pakets bzw. eines verschlüsselten Schlüssels.",
       k_chosts: "Server, an die das Zertifikat geht, durch Komma getrennt (<code>*.example.com</code> für Subdomains). Leer = der Server aus <code>server_url</code>. An andere Server wird es nie gesendet.",
@@ -390,6 +397,7 @@ startActivity(i);</code></pre>
       t_string8: "cadena",
       t_bool4: "sí/no",
       k_ccert: "Certificado TLS de cliente para una pasarela mTLS (p. ej. Cloudflare): PEM (saltos de línea opcionales), DER en base64 o PKCS#12 en base64. La clave puede ir en el mismo PEM.",
+      k_hdr: "Cabeceras HTTP personalizadas que la app envía con cada petición al servidor: una <code>Nombre: valor</code> por línea, p. ej. <code>CF-Access-Client-Id</code> y <code>CF-Access-Client-Secret</code> de un token de servicio de Cloudflare Access. Authorization, Content-Type y Host los pone la propia app. Desde la versión 0.66. <a href=\"access.html\">Guía</a>",
       k_ckey: "Clave privada del certificado si no está en <code>client_cert</code> (PEM o DER en base64).",
       k_cpw: "Contraseña del PKCS#12 o de una clave cifrada.",
       k_chosts: "Servidores a los que se envía el certificado, separados por comas (<code>*.example.com</code> para subdominios). Vacío = el servidor de <code>server_url</code>. Nunca se envía a otro servidor.",
@@ -471,6 +479,7 @@ startActivity(i);</code></pre>
       t_string8: "chaîne",
       t_bool4: "oui/non",
       k_ccert: "Certificat client TLS pour une passerelle mTLS (p. ex. Cloudflare) : PEM (retours à la ligne facultatifs), DER en base64 ou PKCS#12 en base64. La clé peut être dans le même PEM.",
+      k_hdr: "En-têtes HTTP personnalisés que l’app envoie avec chaque requête vers le serveur : un <code>Nom: valeur</code> par ligne, p. ex. <code>CF-Access-Client-Id</code> et <code>CF-Access-Client-Secret</code> d’un jeton de service Cloudflare Access. Authorization, Content-Type et Host sont définis par l’app elle-même. Depuis la version 0.66. <a href=\"access.html\">Guide</a>",
       k_ckey: "Clé privée du certificat si elle n’est pas dans <code>client_cert</code> (PEM ou DER en base64).",
       k_cpw: "Mot de passe du PKCS#12 ou d’une clé chiffrée.",
       k_chosts: "Serveurs auxquels le certificat est envoyé, séparés par des virgules (<code>*.example.com</code> pour les sous-domaines). Vide = le serveur de <code>server_url</code>. Il n’est jamais envoyé à un autre serveur.",
@@ -552,6 +561,7 @@ startActivity(i);</code></pre>
       t_string8: "virkne",
       t_bool4: "jā/nē",
       k_ccert: "Klienta TLS sertifikāts mTLS vārtejai (piem. Cloudflare): PEM (rindiņu pārnesumi nav obligāti), base64 DER vai base64 PKCS#12. Atslēga var būt tajā pašā PEM.",
+      k_hdr: "Pielāgotas HTTP galvenes, ko lietotne sūta ar katru pieprasījumu serverim: viena <code>Nosaukums: vērtība</code> rindā, piem. Cloudflare Access servisa marķiera <code>CF-Access-Client-Id</code> un <code>CF-Access-Client-Secret</code>. Authorization, Content-Type un Host iestata pati lietotne. No versijas 0.66. <a href=\"access.html\">Ceļvedis</a>",
       k_ckey: "Sertifikāta privātā atslēga, ja tās nav <code>client_cert</code> (PEM vai base64 DER).",
       k_cpw: "PKCS#12 vai šifrētas atslēgas parole.",
       k_chosts: "Serveri, kuriem sertifikātu sūta, atdalīti ar komatu (<code>*.example.com</code> apakšdomēniem). Tukšs = serveris no <code>server_url</code>. Citam serverim tas netiek sūtīts nekad.",

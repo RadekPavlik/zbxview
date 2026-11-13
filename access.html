@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ZbxView — Cloudflare Access (Zero Trust) – Google pro web, ZbxView bez přihlašovací stránky</title>
+  <meta name="description" content="Zabbix za Cloudflare Access s přihlášením Googlem v prohlížeči a ZbxView se service tokenem ve vlastních hlavičkách nebo s klientským certifikátem." />
+  <link rel="icon" href="assets/icon.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="doc">
+    <div class="doc-top">
+      <a class="back" href="index.html" data-i18n="back">← zpět na ZbxView</a>
+      <div class="lang-switch">
+        <button class="lang-opt" data-lang="cs">CZ</button>
+        <button class="lang-opt" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="de">DE</button>
+        <button class="lang-opt" data-lang="es">ES</button>
+        <button class="lang-opt" data-lang="fr">FR</button>
+        <button class="lang-opt" data-lang="lv">LV</button>
+      </div>
+    </div>
+
+    <h1 data-i18n="title">Cloudflare Access (Zero Trust) – Google pro web, ZbxView bez přihlašovací stránky</h1>
+    <div class="updated">ZbxView 0.66+ (service token) · 0.46+ (client certificate) · ZbxView connect 1.9+ · Cloudflare Zero Trust</div>
+
+    <p data-i18n="intro">Cloudflare Access postaví před Zabbix přihlášení (Google, Microsoft Entra, GitHub…). V prohlížeči to funguje, ale aplikace volající API Zabbixu přes přihlašovací stránku neprojde – Access by jí místo dat vrátil právě tu stránku. Lidé se proto v prohlížeči dál přihlašují Googlem a ZbxView se prokáže jinak: <strong>service tokenem</strong> ve vlastních HTTP hlavičkách, nebo <strong>klientským certifikátem</strong> na vlastním hostname.</p>
+
+    <h2 data-i18n="s1_h">1. Aplikace Access pro Zabbix</h2>
+    <ol>
+      <li data-i18n="s1_1">V Cloudflare otevřete <em>Zero Trust</em> → <em>Access controls</em> → <em>Applications</em> → <em>Add an application</em> → <em>Self-hosted</em> a zadejte hostname Zabbixu, např. <code>zabbix.example.com</code>.</li>
+      <li data-i18n="s1_2">Přidejte politiku s akcí <strong>Allow</strong> pro lidi, např. <em>Include</em> → <em>Emails ending in</em> → <code>@example.com</code>, a jako způsob přihlášení zvolte Google. Prohlížeč teď před Zabbixem chce přihlášení Googlem.</li>
+    </ol>
+
+    <h2 data-i18n="s2_h">2. Cesta A – service token v hlavičkách (ZbxView 0.66+)</h2>
+    <ol>
+      <li data-i18n="s2_1"><em>Zero Trust</em> → <em>Access controls</em> → <em>Service credentials</em> → <em>Service Tokens</em> → <em>Create Service Token</em>. Zkopírujte <strong>Client ID</strong> a <strong>Client Secret</strong> – secret Cloudflare ukáže jen jednou.</li>
+      <li data-i18n="s2_2">V aplikaci Zabbixu přidejte druhou politiku s akcí <strong>Service Auth</strong> (ne Allow – ta by chtěla přihlášení) a <em>Include</em> → <em>Service Token</em> → váš token.</li>
+      <li data-i18n="s2_3">Token předejte aplikaci jako dvě hlavičky, každou na vlastní řádek. Kudy:</li>
+    </ol>
+    <pre><code>CF-Access-Client-Id: &lt;client-id&gt;.access
+CF-Access-Client-Secret: &lt;client-secret&gt;</code></pre>
+    <ul class="caps">
+      <li><strong data-i18n="s2_app_h">Ručně v aplikaci</strong><br><span data-i18n="s2_app_p">U serveru v sekci <em>Zabezpečení spojení</em> → <em>Vlastní HTTP hlavičky</em>.</span></li>
+      <li><strong data-i18n="s2_qr_h">QR kód z modulu ZbxView connect 1.9+</strong><br><span data-i18n="s2_qr_p"><em>Administrace → Konfigurace telefonu</em> → karta <em>Vlastní HTTP hlavičky</em>. Hlavičky pak nese každý párovací kód. <a href="connect.html">Návod k modulu</a></span></li>
+      <li><strong data-i18n="s2_mdm_h">MDM / Intune</strong><br><span data-i18n="s2_mdm_p">Klíč <code>custom_headers</code> (řetězec, jedna hlavička na řádek). <a href="mdm.html">Tabulka klíčů</a></span></li>
+    </ul>
+    <p data-i18n="s2_note">Token projde jen přes Access. Zabbix dál ověřuje API token nebo heslo každého uživatele, takže každý je v Zabbixu sám za sebe.</p>
+
+    <h2 data-i18n="s3_h">3. Cesta B – klientský certifikát na hostname pro aplikaci (ZbxView 0.46+)</h2>
+    <p data-i18n="s3_p">Access s klientským certifikátem (mTLS v Zero Trust) potřebuje vlastní kořenovou CA a placený plán Zero Trust. Na plánu Free použijte klientské certifikáty zóny: dejte aplikaci vlastní hostname, který v aplikaci Access není.</p>
+    <ol>
+      <li data-i18n="s3_1">V nastavení tunelu přidejte druhý veřejný hostname (<em>Public hostname</em>), např. <code>zabbix-app.example.com</code>, na stejný Zabbix.</li>
+      <li data-i18n="s3_2">Ochraňte ho klientským certifikátem a pravidlem WAF podle návodu <a href="mtls.html">Klientský certifikát (mTLS)</a> a certifikát předejte telefonům (QR, MDM nebo ručně).</li>
+      <li data-i18n="s3_3">V aplikaci zadejte jako adresu serveru <code>https://zabbix-app.example.com</code>. Lidé v prohlížeči zůstávají na <code>zabbix.example.com</code> s přihlášením Googlem.</li>
+    </ol>
+
+    <h2 data-i18n="s4_h">4. Ověření</h2>
+    <p data-i18n="s4_p">Tlačítko <em>Otestovat</em> u serveru v aplikaci musí vrátit verzi Zabbixu. Když místo toho skončí chybou, Access token nepřijal: zkontrolujte politiku Service Auth a názvy obou hlaviček. Prohlížeč bez přihlášení musí dál dostat přihlášení Googlem.</p>
+    <div class="note" data-i18n="note">Se zapnutým <em>Strict service token authentication</em> (u organizací Zero Trust založených od října 2026 výchozí) vrací Access při chybějícím nebo špatném tokenu 401/403 místo přihlašovací stránky, chyba se pak snáz pozná. Secret je v telefonu uložený u serveru stejně jako API token. Token obnovte před koncem platnosti, kterou jste zvolili při jeho vytvoření.</div>
+
+    <p class="doc-foot"><a href="index.html" data-i18n="foot_back">← zpět na hlavní stránku</a></p>
+  </div>
+
+  <script>
+  (function () {
+    var EN = {
+      "title": "Cloudflare Access (Zero Trust) – Google for the web, ZbxView without the login page",
+      "intro": "Cloudflare Access puts a sign-in (Google, Microsoft Entra, GitHub…) in front of Zabbix. That works in a browser, but an app calling the Zabbix API cannot get through a login page – Access would answer it with that page instead of data. So people keep signing in with Google in the browser, and ZbxView proves itself another way: with a <strong>service token</strong> in custom HTTP headers, or with a <strong>client certificate</strong> on a hostname of its own.",
+      "s1_h": "1. Access application for Zabbix",
+      "s1_1": "In Cloudflare open <em>Zero Trust</em> → <em>Access controls</em> → <em>Applications</em> → <em>Add an application</em> → <em>Self-hosted</em> and enter the Zabbix hostname, e.g. <code>zabbix.example.com</code>.",
+      "s1_2": "Add a policy with the action <strong>Allow</strong> for people, e.g. <em>Include</em> → <em>Emails ending in</em> → <code>@example.com</code>, and pick Google as the login method. The browser now asks for a Google sign-in before Zabbix.",
+      "s2_h": "2. Way A – service token in the headers (ZbxView 0.66+)",
+      "s2_1": "<em>Zero Trust</em> → <em>Access controls</em> → <em>Service credentials</em> → <em>Service Tokens</em> → <em>Create Service Token</em>. Copy the <strong>Client ID</strong> and <strong>Client Secret</strong> – Cloudflare shows the secret only once.",
+      "s2_2": "In the Zabbix application add a second policy with the action <strong>Service Auth</strong> (not Allow – that would ask for a login) and <em>Include</em> → <em>Service Token</em> → your token.",
+      "s2_3": "Give the token to the app as two headers, one per line. Where:",
+      "s2_app_h": "Manually in the app",
+      "s2_app_p": "For the server, in <em>Connection security</em> → <em>Custom HTTP headers</em>.",
+      "s2_qr_h": "QR code from the ZbxView connect module 1.9+",
+      "s2_qr_p": "<em>Administration → Mobile configuration</em> → the <em>Custom HTTP headers</em> card. Every pairing code then carries the headers. <a href=\"connect.html\">Module guide</a>",
+      "s2_mdm_h": "MDM / Intune",
+      "s2_mdm_p": "The key <code>custom_headers</code> (string, one header per line). <a href=\"mdm.html\">Key table</a>",
+      "s2_note": "The token only gets the app through Access. Zabbix still checks each user's own API token or password, so everyone is themselves in Zabbix.",
+      "s3_h": "3. Way B – client certificate on a hostname for the app (ZbxView 0.46+)",
+      "s3_p": "Access with a client certificate (mTLS in Zero Trust) needs your own root CA and a paid Zero Trust plan. On the Free plan use the zone's client certificates instead: give the app its own hostname that is not in the Access application.",
+      "s3_1": "In the tunnel's settings add a second <em>Public hostname</em>, e.g. <code>zabbix-app.example.com</code>, pointing to the same Zabbix.",
+      "s3_2": "Protect it with a client certificate and a WAF rule as described in <a href=\"mtls.html\">Client certificate (mTLS)</a> and hand the certificate to the phones (QR, MDM or manually).",
+      "s3_3": "In the app use <code>https://zabbix-app.example.com</code> as the server address. People in the browser stay on <code>zabbix.example.com</code> with the Google sign-in.",
+      "s4_h": "4. Verify",
+      "s4_p": "The <em>Test</em> button of the server in the app must return the Zabbix version. If it fails instead, Access did not accept the token: check the Service Auth policy and the names of both headers. A browser that is not signed in must still get the Google sign-in.",
+      "note": "With <em>Strict service token authentication</em> on (the default for Zero Trust organisations created from October 2026), Access answers a missing or wrong token with 401/403 instead of the login page, which makes the error easier to spot. The secret is stored on the phone with the server, like the API token. Renew the token before the validity you chose when creating it runs out.",
+      "back": "← back to ZbxView",
+      "foot_back": "← back to the main page",
+      "__title": "ZbxView — Cloudflare Access (Zero Trust) – Google for the web, ZbxView without the login page",
+      "__desc": "Zabbix behind Cloudflare Access with Google sign-in in the browser, and ZbxView with a service token in custom headers or with a client certificate."
+    };
+    var DE = {
+      "title": "Cloudflare Access (Zero Trust) – Google fürs Web, ZbxView ohne Anmeldeseite",
+      "intro": "Cloudflare Access stellt eine Anmeldung (Google, Microsoft Entra, GitHub…) vor Zabbix. Im Browser funktioniert das, aber eine App, die die Zabbix-API aufruft, kommt durch keine Anmeldeseite – Access würde ihr statt Daten genau diese Seite liefern. Die Leute melden sich im Browser also weiter mit Google an, und ZbxView weist sich anders aus: mit einem <strong>Service-Token</strong> in eigenen HTTP-Headern oder mit einem <strong>Client-Zertifikat</strong> auf einem eigenen Hostnamen.",
+      "s1_h": "1. Access-Anwendung für Zabbix",
+      "s1_1": "Öffnen Sie in Cloudflare <em>Zero Trust</em> → <em>Access controls</em> → <em>Applications</em> → <em>Add an application</em> → <em>Self-hosted</em> und geben Sie den Zabbix-Hostnamen ein, z. B. <code>zabbix.example.com</code>.",
+      "s1_2": "Fügen Sie eine Policy mit der Aktion <strong>Allow</strong> für Personen hinzu, z. B. <em>Include</em> → <em>Emails ending in</em> → <code>@example.com</code>, und wählen Sie Google als Anmeldemethode. Der Browser verlangt jetzt vor Zabbix eine Google-Anmeldung.",
+      "s2_h": "2. Weg A – Service-Token in den Headern (ZbxView 0.66+)",
+      "s2_1": "<em>Zero Trust</em> → <em>Access controls</em> → <em>Service credentials</em> → <em>Service Tokens</em> → <em>Create Service Token</em>. Kopieren Sie <strong>Client ID</strong> und <strong>Client Secret</strong> – das Secret zeigt Cloudflare nur einmal.",
+      "s2_2": "Fügen Sie in der Zabbix-Anwendung eine zweite Policy mit der Aktion <strong>Service Auth</strong> hinzu (nicht Allow – das würde eine Anmeldung verlangen) und <em>Include</em> → <em>Service Token</em> → Ihr Token.",
+      "s2_3": "Geben Sie der App das Token als zwei Header, je einer pro Zeile. Wo:",
+      "s2_app_h": "Manuell in der App",
+      "s2_app_p": "Beim Server unter <em>Verbindungssicherheit</em> → <em>Eigene HTTP-Header</em>.",
+      "s2_qr_h": "QR-Code aus dem Modul ZbxView connect 1.9+",
+      "s2_qr_p": "<em>Administration → Mobile configuration</em> → Karte <em>Custom HTTP headers</em>. Jeder Kopplungscode trägt dann die Header. <a href=\"connect.html\">Modulanleitung</a>",
+      "s2_mdm_h": "MDM / Intune",
+      "s2_mdm_p": "Der Schlüssel <code>custom_headers</code> (String, ein Header pro Zeile). <a href=\"mdm.html\">Schlüsseltabelle</a>",
+      "s2_note": "Das Token bringt die App nur durch Access. Zabbix prüft weiter das API-Token oder Passwort jedes Nutzers, jeder ist in Zabbix also er selbst.",
+      "s3_h": "3. Weg B – Client-Zertifikat auf einem Hostnamen für die App (ZbxView 0.46+)",
+      "s3_p": "Access mit Client-Zertifikat (mTLS in Zero Trust) braucht eine eigene Root-CA und einen kostenpflichtigen Zero-Trust-Plan. Im Free-Plan nutzen Sie stattdessen die Client-Zertifikate der Zone: Geben Sie der App einen eigenen Hostnamen, der nicht in der Access-Anwendung steht.",
+      "s3_1": "Fügen Sie in den Einstellungen des Tunnels einen zweiten <em>Public hostname</em> hinzu, z. B. <code>zabbix-app.example.com</code>, auf dasselbe Zabbix.",
+      "s3_2": "Schützen Sie ihn mit Client-Zertifikat und WAF-Regel wie in <a href=\"mtls.html\">Client-Zertifikat (mTLS)</a> beschrieben und bringen Sie das Zertifikat auf die Telefone (QR, MDM oder manuell).",
+      "s3_3": "Tragen Sie in der App <code>https://zabbix-app.example.com</code> als Serveradresse ein. Die Leute im Browser bleiben auf <code>zabbix.example.com</code> mit Google-Anmeldung.",
+      "s4_h": "4. Prüfen",
+      "s4_p": "<em>Testen</em> beim Server in der App muss die Zabbix-Version liefern. Schlägt es fehl, hat Access das Token nicht angenommen: Prüfen Sie die Service-Auth-Policy und die Namen beider Header. Ein nicht angemeldeter Browser muss weiter die Google-Anmeldung bekommen.",
+      "note": "Mit <em>Strict service token authentication</em> (Standard bei Zero-Trust-Organisationen, die ab Oktober 2026 angelegt wurden) beantwortet Access ein fehlendes oder falsches Token mit 401/403 statt der Anmeldeseite, der Fehler ist dann leichter zu erkennen. Das Secret ist im Telefon beim Server gespeichert, wie das API-Token. Erneuern Sie das Token vor Ablauf der beim Anlegen gewählten Gültigkeit.",
+      "back": "← zurück zu ZbxView",
+      "foot_back": "← zurück zur Hauptseite",
+      "__title": "ZbxView — Cloudflare Access (Zero Trust) – Google fürs Web, ZbxView ohne Anmeldeseite",
+      "__desc": "Zabbix hinter Cloudflare Access mit Google-Anmeldung im Browser und ZbxView mit Service-Token in eigenen Headern oder mit Client-Zertifikat."
+    };
+    var ES = {
+      "title": "Cloudflare Access (Zero Trust) – Google para la web, ZbxView sin página de inicio de sesión",
+      "intro": "Cloudflare Access pone un inicio de sesión (Google, Microsoft Entra, GitHub…) delante de Zabbix. En el navegador funciona, pero una app que llama a la API de Zabbix no puede pasar por una página de inicio de sesión: Access le devolvería esa página en vez de datos. Así que la gente sigue entrando con Google en el navegador y ZbxView se identifica de otra forma: con un <strong>token de servicio</strong> en cabeceras HTTP personalizadas o con un <strong>certificado de cliente</strong> en un nombre de host propio.",
+      "s1_h": "1. Aplicación de Access para Zabbix",
+      "s1_1": "En Cloudflare abre <em>Zero Trust</em> → <em>Access controls</em> → <em>Applications</em> → <em>Add an application</em> → <em>Self-hosted</em> e introduce el nombre de host de Zabbix, p. ej. <code>zabbix.example.com</code>.",
+      "s1_2": "Añade una política con la acción <strong>Allow</strong> para personas, p. ej. <em>Include</em> → <em>Emails ending in</em> → <code>@example.com</code>, y elige Google como método de inicio de sesión. El navegador pide ahora iniciar sesión con Google antes de Zabbix.",
+      "s2_h": "2. Vía A – token de servicio en las cabeceras (ZbxView 0.66+)",
+      "s2_1": "<em>Zero Trust</em> → <em>Access controls</em> → <em>Service credentials</em> → <em>Service Tokens</em> → <em>Create Service Token</em>. Copia el <strong>Client ID</strong> y el <strong>Client Secret</strong>: Cloudflare muestra el secreto una sola vez.",
+      "s2_2": "En la aplicación de Zabbix añade una segunda política con la acción <strong>Service Auth</strong> (no Allow, que pediría iniciar sesión) e <em>Include</em> → <em>Service Token</em> → tu token.",
+      "s2_3": "Pasa el token a la app como dos cabeceras, una por línea. Dónde:",
+      "s2_app_h": "A mano en la app",
+      "s2_app_p": "En el servidor, en <em>Seguridad de la conexión</em> → <em>Cabeceras HTTP personalizadas</em>.",
+      "s2_qr_h": "Código QR del módulo ZbxView connect 1.9+",
+      "s2_qr_p": "<em>Administración → Mobile configuration</em> → tarjeta <em>Custom HTTP headers</em>. Cada código de emparejamiento lleva entonces las cabeceras. <a href=\"connect.html\">Guía del módulo</a>",
+      "s2_mdm_h": "MDM / Intune",
+      "s2_mdm_p": "La clave <code>custom_headers</code> (cadena, una cabecera por línea). <a href=\"mdm.html\">Tabla de claves</a>",
+      "s2_note": "El token solo hace pasar la app por Access. Zabbix sigue comprobando el token de API o la contraseña de cada usuario, así que cada uno es él mismo en Zabbix.",
+      "s3_h": "3. Vía B – certificado de cliente en un nombre de host para la app (ZbxView 0.46+)",
+      "s3_p": "Access con certificado de cliente (mTLS en Zero Trust) necesita una CA raíz propia y un plan de Zero Trust de pago. En el plan Free usa en su lugar los certificados de cliente de la zona: da a la app un nombre de host propio que no esté en la aplicación de Access.",
+      "s3_1": "En la configuración del túnel añade un segundo <em>Public hostname</em>, p. ej. <code>zabbix-app.example.com</code>, hacia el mismo Zabbix.",
+      "s3_2": "Protégelo con certificado de cliente y una regla WAF como se describe en <a href=\"mtls.html\">Certificado de cliente (mTLS)</a> y entrega el certificado a los teléfonos (QR, MDM o a mano).",
+      "s3_3": "En la app usa <code>https://zabbix-app.example.com</code> como dirección del servidor. La gente en el navegador sigue en <code>zabbix.example.com</code> con inicio de sesión de Google.",
+      "s4_h": "4. Verificación",
+      "s4_p": "El botón <em>Probar</em> del servidor en la app debe devolver la versión de Zabbix. Si falla, Access no aceptó el token: revisa la política Service Auth y los nombres de las dos cabeceras. Un navegador sin sesión debe seguir recibiendo el inicio de sesión de Google.",
+      "note": "Con <em>Strict service token authentication</em> activado (por defecto en las organizaciones de Zero Trust creadas desde octubre de 2026), Access responde a un token ausente o incorrecto con 401/403 en lugar de la página de inicio de sesión, y el error se reconoce mejor. El secreto se guarda en el teléfono junto al servidor, como el token de API. Renueva el token antes de que caduque la validez que elegiste al crearlo.",
+      "back": "← volver a ZbxView",
+      "foot_back": "← volver a la página principal",
+      "__title": "ZbxView — Cloudflare Access (Zero Trust) – Google para la web, ZbxView sin página de inicio de sesión",
+      "__desc": "Zabbix detrás de Cloudflare Access con inicio de sesión de Google en el navegador, y ZbxView con un token de servicio en cabeceras personalizadas o con certificado de cliente."
+    };
+    var FR = {
+      "title": "Cloudflare Access (Zero Trust) – Google pour le web, ZbxView sans page de connexion",
+      "intro": "Cloudflare Access place une connexion (Google, Microsoft Entra, GitHub…) devant Zabbix. Dans un navigateur cela fonctionne, mais une app qui appelle l’API de Zabbix ne peut pas passer une page de connexion : Access lui renverrait cette page au lieu des données. Les utilisateurs continuent donc de se connecter avec Google dans le navigateur, et ZbxView s’identifie autrement : avec un <strong>jeton de service</strong> dans des en-têtes HTTP personnalisés, ou avec un <strong>certificat client</strong> sur son propre nom d’hôte.",
+      "s1_h": "1. Application Access pour Zabbix",
+      "s1_1": "Dans Cloudflare, ouvrez <em>Zero Trust</em> → <em>Access controls</em> → <em>Applications</em> → <em>Add an application</em> → <em>Self-hosted</em> et saisissez le nom d’hôte de Zabbix, p. ex. <code>zabbix.example.com</code>.",
+      "s1_2": "Ajoutez une politique avec l’action <strong>Allow</strong> pour les personnes, p. ex. <em>Include</em> → <em>Emails ending in</em> → <code>@example.com</code>, et choisissez Google comme méthode de connexion. Le navigateur demande désormais une connexion Google avant Zabbix.",
+      "s2_h": "2. Voie A – jeton de service dans les en-têtes (ZbxView 0.66+)",
+      "s2_1": "<em>Zero Trust</em> → <em>Access controls</em> → <em>Service credentials</em> → <em>Service Tokens</em> → <em>Create Service Token</em>. Copiez le <strong>Client ID</strong> et le <strong>Client Secret</strong> – Cloudflare n’affiche le secret qu’une seule fois.",
+      "s2_2": "Dans l’application Zabbix, ajoutez une seconde politique avec l’action <strong>Service Auth</strong> (pas Allow, qui demanderait une connexion) et <em>Include</em> → <em>Service Token</em> → votre jeton.",
+      "s2_3": "Donnez le jeton à l’app sous forme de deux en-têtes, un par ligne. Où :",
+      "s2_app_h": "Manuellement dans l’app",
+      "s2_app_p": "Pour le serveur, dans <em>Sécurité de la connexion</em> → <em>En-têtes HTTP personnalisés</em>.",
+      "s2_qr_h": "QR code du module ZbxView connect 1.9+",
+      "s2_qr_p": "<em>Administration → Mobile configuration</em> → la carte <em>Custom HTTP headers</em>. Chaque code d’appairage transporte alors les en-têtes. <a href=\"connect.html\">Guide du module</a>",
+      "s2_mdm_h": "MDM / Intune",
+      "s2_mdm_p": "La clé <code>custom_headers</code> (chaîne, un en-tête par ligne). <a href=\"mdm.html\">Tableau des clés</a>",
+      "s2_note": "Le jeton ne fait que passer l’app à travers Access. Zabbix vérifie toujours le jeton d’API ou le mot de passe de chaque utilisateur : chacun reste lui-même dans Zabbix.",
+      "s3_h": "3. Voie B – certificat client sur un nom d’hôte pour l’app (ZbxView 0.46+)",
+      "s3_p": "Access avec certificat client (mTLS dans Zero Trust) exige votre propre AC racine et une offre Zero Trust payante. Avec l’offre Free, utilisez plutôt les certificats clients de la zone : donnez à l’app son propre nom d’hôte, absent de l’application Access.",
+      "s3_1": "Dans les paramètres du tunnel, ajoutez un second <em>Public hostname</em>, p. ex. <code>zabbix-app.example.com</code>, vers le même Zabbix.",
+      "s3_2": "Protégez-le avec un certificat client et une règle WAF comme décrit dans <a href=\"mtls.html\">Certificat client (mTLS)</a> et transmettez le certificat aux téléphones (QR, MDM ou manuellement).",
+      "s3_3": "Dans l’app, utilisez <code>https://zabbix-app.example.com</code> comme adresse du serveur. Les utilisateurs du navigateur restent sur <code>zabbix.example.com</code> avec la connexion Google.",
+      "s4_h": "4. Vérification",
+      "s4_p": "Le bouton <em>Tester</em> du serveur dans l’app doit renvoyer la version de Zabbix. S’il échoue, Access n’a pas accepté le jeton : vérifiez la politique Service Auth et le nom des deux en-têtes. Un navigateur non connecté doit toujours recevoir la connexion Google.",
+      "note": "Avec <em>Strict service token authentication</em> activé (par défaut pour les organisations Zero Trust créées depuis octobre 2026), Access répond à un jeton absent ou erroné par 401/403 au lieu de la page de connexion, ce qui rend l’erreur plus facile à repérer. Le secret est stocké sur le téléphone avec le serveur, comme le jeton d’API. Renouvelez le jeton avant la fin de la validité choisie à sa création.",
+      "back": "← retour à ZbxView",
+      "foot_back": "← retour à la page principale",
+      "__title": "ZbxView — Cloudflare Access (Zero Trust) – Google pour le web, ZbxView sans page de connexion",
+      "__desc": "Zabbix derrière Cloudflare Access avec connexion Google dans le navigateur, et ZbxView avec un jeton de service dans des en-têtes personnalisés ou un certificat client."
+    };
+    var LV = {
+      "title": "Cloudflare Access (Zero Trust) – Google tīmeklim, ZbxView bez pieteikšanās lapas",
+      "intro": "Cloudflare Access novieto pieteikšanos (Google, Microsoft Entra, GitHub…) pirms Zabbix. Pārlūkā tas darbojas, bet lietotne, kas izsauc Zabbix API, caur pieteikšanās lapu netiek – Access tai datu vietā atdotu tieši šo lapu. Tāpēc cilvēki pārlūkā joprojām piesakās ar Google, bet ZbxView apliecina sevi citādi: ar <strong>servisa marķieri</strong> pielāgotās HTTP galvenēs vai ar <strong>klienta sertifikātu</strong> savā resursdatora nosaukumā.",
+      "s1_h": "1. Access lietotne Zabbix",
+      "s1_1": "Cloudflare atveriet <em>Zero Trust</em> → <em>Access controls</em> → <em>Applications</em> → <em>Add an application</em> → <em>Self-hosted</em> un ievadiet Zabbix resursdatora nosaukumu, piem. <code>zabbix.example.com</code>.",
+      "s1_2": "Pievienojiet politiku ar darbību <strong>Allow</strong> cilvēkiem, piem. <em>Include</em> → <em>Emails ending in</em> → <code>@example.com</code>, un kā pieteikšanās metodi izvēlieties Google. Pārlūks tagad pirms Zabbix prasa pieteikšanos ar Google.",
+      "s2_h": "2. Ceļš A – servisa marķieris galvenēs (ZbxView 0.66+)",
+      "s2_1": "<em>Zero Trust</em> → <em>Access controls</em> → <em>Service credentials</em> → <em>Service Tokens</em> → <em>Create Service Token</em>. Nokopējiet <strong>Client ID</strong> un <strong>Client Secret</strong> – noslēpumu Cloudflare parāda tikai vienreiz.",
+      "s2_2": "Zabbix lietotnē pievienojiet otru politiku ar darbību <strong>Service Auth</strong> (nevis Allow – tā prasītu pieteikšanos) un <em>Include</em> → <em>Service Token</em> → jūsu marķieris.",
+      "s2_3": "Nododiet marķieri lietotnei kā divas galvenes, katru savā rindā. Kur:",
+      "s2_app_h": "Manuāli lietotnē",
+      "s2_app_p": "Pie servera sadaļā <em>Savienojuma drošība</em> → <em>Pielāgotas HTTP galvenes</em>.",
+      "s2_qr_h": "QR kods no ZbxView connect moduļa 1.9+",
+      "s2_qr_p": "<em>Administrācija → Tālruņa konfigurācija</em> → kartīte <em>Pielāgotas HTTP galvenes</em>. Tad katrs savienošanas kods nes galvenes. <a href=\"connect.html\">Moduļa ceļvedis</a>",
+      "s2_mdm_h": "MDM / Intune",
+      "s2_mdm_p": "Atslēga <code>custom_headers</code> (virkne, viena galvene rindā). <a href=\"mdm.html\">Atslēgu tabula</a>",
+      "s2_note": "Marķieris lietotni tikai ielaiž caur Access. Zabbix joprojām pārbauda katra lietotāja API marķieri vai paroli, tāpēc Zabbix katrs ir pats par sevi.",
+      "s3_h": "3. Ceļš B – klienta sertifikāts lietotnes resursdatora nosaukumā (ZbxView 0.46+)",
+      "s3_p": "Access ar klienta sertifikātu (mTLS Zero Trust vidē) prasa savu saknes CA un maksas Zero Trust plānu. Free plānā tā vietā izmantojiet zonas klienta sertifikātus: piešķiriet lietotnei savu resursdatora nosaukumu, kas nav Access lietotnē.",
+      "s3_1": "Tuneļa iestatījumos pievienojiet otru <em>Public hostname</em>, piem. <code>zabbix-app.example.com</code>, uz to pašu Zabbix.",
+      "s3_2": "Aizsargājiet to ar klienta sertifikātu un WAF noteikumu, kā aprakstīts ceļvedī <a href=\"mtls.html\">Klienta sertifikāts (mTLS)</a>, un nododiet sertifikātu tālruņiem (QR, MDM vai manuāli).",
+      "s3_3": "Lietotnē kā servera adresi izmantojiet <code>https://zabbix-app.example.com</code>. Cilvēki pārlūkā paliek <code>zabbix.example.com</code> ar pieteikšanos ar Google.",
+      "s4_h": "4. Pārbaude",
+      "s4_p": "Pogai <em>Pārbaudīt</em> pie servera lietotnē jāatgriež Zabbix versija. Ja tā beidzas ar kļūdu, Access marķieri nepieņēma: pārbaudiet Service Auth politiku un abu galveņu nosaukumus. Nepieteiktam pārlūkam joprojām jāsaņem pieteikšanās ar Google.",
+      "note": "Ar ieslēgtu <em>Strict service token authentication</em> (noklusējums Zero Trust organizācijām, kas izveidotas kopš 2026. gada oktobra) Access uz trūkstošu vai nepareizu marķieri atbild ar 401/403 pieteikšanās lapas vietā, tāpēc kļūdu ir vieglāk pamanīt. Noslēpums tālrunī tiek glabāts pie servera tāpat kā API marķieris. Atjaunojiet marķieri pirms tā izveidē izvēlētā derīguma beigām.",
+      "back": "← atpakaļ uz ZbxView",
+      "foot_back": "← atpakaļ uz galveno lapu",
+      "__title": "ZbxView — Cloudflare Access (Zero Trust) – Google tīmeklim, ZbxView bez pieteikšanās lapas",
+      "__desc": "Zabbix aiz Cloudflare Access ar pieteikšanos ar Google pārlūkā un ZbxView ar servisa marķieri pielāgotās galvenēs vai ar klienta sertifikātu."
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var htmlEl = document.documentElement;
+    var descEl = document.querySelector('meta[name="description"]');
+    htmlEl.__csTitle = document.title;
+    htmlEl.__csDesc = descEl ? descEl.getAttribute('content') : '';
+
+    function apply(lang) {
+      // cs is the markup itself; a language this page has no text for reads English
+      var dict = DICTS[lang] || (lang === 'cs' ? null : EN);
+      var nodes = document.querySelectorAll('[data-i18n]');
+      for (var i = 0; i < nodes.length; i++) {
+        var el = nodes[i], key = el.getAttribute('data-i18n');
+        if (el.__cs == null) el.__cs = el.innerHTML;
+        el.innerHTML = (dict && dict[key] != null) ? dict[key] : el.__cs;
+      }
+      document.title = dict ? dict.__title : htmlEl.__csTitle;
+      if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
+      htmlEl.lang = lang;
+      try { localStorage.setItem('zbxlang', lang); } catch (e) {}
+      var opts = document.querySelectorAll('.lang-opt');
+      for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
+    }
+    var opts = document.querySelectorAll('.lang-opt');
+    for (var k = 0; k < opts.length; k++) {
+      opts[k].addEventListener('click', function () { apply(this.dataset.lang); });
+    }
+    var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
+    var nav = (navigator.language || '').slice(0, 2).toLowerCase();
+    var lang = saved
+      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+    apply(lang);
+  })();
+  </script>
+</body>
+</html>
