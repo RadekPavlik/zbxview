@@ -369,3 +369,18 @@ footer { border-top: 1px solid var(--line); background: var(--bg-3); }
   html { scroll-behavior: auto; }
   .slide, .eyebrow .dot { transition: none; animation: none; }
 }
+
+/* Zero Trust showcase: phone -> gateway -> Zabbix */
+.zt { width: 100%; max-width: 380px; display: flex; flex-direction: column; }
+.zt-node { display: flex; align-items: center; gap: 12px; padding: 14px 16px; border-radius: 16px; background: var(--card); border: 1px solid var(--line-2); }
+.zt-node .ic { width: 22px; height: 22px; flex-shrink: 0; color: var(--text-2); }
+.zt-node b { font-weight: 600; }
+.zt-node span { margin-left: auto; font-size: 13px; color: var(--muted-2); text-align: right; }
+.zt-gate { border-color: var(--red); background: #1c1416; }
+.zt-gate .ic { color: var(--red-text); }
+.zt-link { position: relative; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 14px 0; }
+.zt-link::before { content: ""; position: absolute; left: 50%; top: 0; bottom: 0; border-left: 2px dashed var(--line-2); }
+.zt-chip { position: relative; font-family: var(--mono); font-size: 12px; padding: 4px 10px; border-radius: 999px; background: var(--bg-3); border: 1px solid var(--ok); color: var(--ok); }
+.zt-chip-dim { border-color: var(--line-2); color: var(--muted-2); }
+.zt-side { margin-top: 18px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px dashed var(--line-2); border-radius: 12px; font-size: 13.5px; color: var(--muted); }
+.zt-side .ic { width: 18px; height: 18px; flex-shrink: 0; color: var(--muted-2); }

@@ -119,6 +119,7 @@
       <span><svg class="ic"><use href="#i-shield"/></svg><span data-i18n="tr3">Jen čtení + potvrzení událostí</span></span>
       <span><svg class="ic"><use href="#i-globe"/></svg><span data-i18n="tr4">11 jazyků</span></span>
       <span><svg class="ic"><use href="#i-building"/></svg><span data-i18n="tr5">Připraveno na MDM / Intune</span></span>
+      <span><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="tr6">Zero Trust: Cloudflare Access + mTLS</span></span>
     </div>
   </section>
 
@@ -203,6 +204,32 @@
         </div>
       </div>
 
+
+      <div class="two-col sc-row" id="zerotrust">
+        <div class="sc-text">
+          <span class="kicker" data-i18n="sc5_tag">05 · Zero Trust</span>
+          <h2 data-i18n="sc5_h">Zabbix za Zero Trust bránou. Aplikace projde i tak.</h2>
+          <p data-i18n="sc5_p">Zabbix nemusí být vidět z internetu. Prohlížeč se přihlásí přes Google nebo Microsoft, aplikace ZbxView se bráně prokáže sama – service tokenem ve vlastních HTTP hlavičkách, nebo klientským certifikátem.</p>
+          <ul class="checks">
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="sc5_b1">Cloudflare Access: service token ve vlastních HTTP hlavičkách</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="sc5_b2">Klientský certifikát (mTLS), který dostanou jen servery, kterým patří</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="sc5_b3">Do telefonů QR kódem ze ZbxView connect nebo hromadně přes MDM</span></li>
+          </ul>
+          <a class="more" href="access.html"><span data-i18n="sc5_link">Návod: Cloudflare Access a Google SSO</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+          <a class="more" href="mtls.html"><span data-i18n="sc5_link2">Návod: klientský certifikát (mTLS)</span><svg class="ic"><use href="#i-arrow"/></svg></a>
+        </div>
+        <div class="sc-media">
+          <div class="zt" aria-hidden="true">
+            <div class="zt-node"><svg class="ic"><use href="#i-phone"/></svg><b>ZbxView</b><span data-i18n="sc5_n1">telefon, tablet, TV</span></div>
+            <div class="zt-link"><span class="zt-chip">CF-Access-Client-Id · Secret</span><span class="zt-chip">mTLS</span></div>
+            <div class="zt-node zt-gate"><svg class="ic"><use href="#i-shield"/></svg><b data-i18n="sc5_n2">Zero Trust brána</b><span>Cloudflare Access</span></div>
+            <div class="zt-link"><span class="zt-chip zt-chip-dim" data-i18n="sc5_tunnel">tunel, žádný otevřený port</span></div>
+            <div class="zt-node"><svg class="ic"><use href="#i-server"/></svg><b>Zabbix</b><span>API · 6.4 – 8.0</span></div>
+            <div class="zt-side"><svg class="ic"><use href="#i-globe"/></svg><span data-i18n="sc5_browser">Prohlížeč: přihlášení přes Google nebo Microsoft</span></div>
+          </div>
+          <p class="sc-cap"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="sc5_cap"><b>Zero Trust</b> · Zabbix není vidět z internetu, aplikace ano</span></p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -569,6 +596,20 @@
       "sc4_b2": "A problem in the widget opens straight in the app",
       "sc4_b3": "Refresh with the app closed (5–60 min) and right after a push notification",
       "sc4_cap": "<b>Widgets</b> · Settings → Widgets sets filters, shortcuts and refresh",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix behind a Zero Trust gateway. The app still gets in.",
+      "sc5_p": "Zabbix does not have to be visible from the internet. The browser signs in with Google or Microsoft, and the ZbxView app proves itself to the gateway on its own – with a service token in custom HTTP headers, or with a client certificate.",
+      "sc5_b1": "Cloudflare Access: a service token in custom HTTP headers",
+      "sc5_b2": "A client certificate (mTLS) sent only to the servers it belongs to",
+      "sc5_b3": "Onto the phones by the ZbxView connect QR code or in bulk through MDM",
+      "sc5_link": "Guide: Cloudflare Access and Google SSO",
+      "sc5_link2": "Guide: client certificate (mTLS)",
+      "sc5_n1": "phone, tablet, TV",
+      "sc5_n2": "Zero Trust gateway",
+      "sc5_tunnel": "tunnel, no open port",
+      "sc5_browser": "Browser: sign-in with Google or Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix is not visible from the internet, the app is",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "The ZbxView connect module adds “Mobile connect” to Zabbix. Nobody types anything or copies tokens.",
       "sc3_s1": "<b>Open Mobile connect</b> in your Zabbix user settings.",
       "sc3_s2": "<b>Scan the QR code</b> in the app: Add server → Scan.",
@@ -722,6 +763,20 @@
       "sc4_b2": "Ein Problem im Widget öffnet sich direkt in der App",
       "sc4_b3": "Aktualisierung auch bei geschlossener App (5–60 Min.) und sofort nach einer Push-Benachrichtigung",
       "sc4_cap": "<b>Widgets</b> · Einstellungen → Widgets legt Filter, Kurzbefehle und Aktualisierung fest",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix hinter einem Zero-Trust-Gateway. Die App kommt trotzdem rein.",
+      "sc5_p": "Zabbix muss aus dem Internet nicht sichtbar sein. Der Browser meldet sich mit Google oder Microsoft an, die App ZbxView weist sich selbst am Gateway aus – mit einem Service-Token in eigenen HTTP-Headern oder mit einem Client-Zertifikat.",
+      "sc5_b1": "Cloudflare Access: Service-Token in eigenen HTTP-Headern",
+      "sc5_b2": "Client-Zertifikat (mTLS), nur an die Server gesendet, zu denen es gehört",
+      "sc5_b3": "Auf die Telefone per QR-Code aus ZbxView connect oder gesammelt per MDM",
+      "sc5_link": "Anleitung: Cloudflare Access und Google SSO",
+      "sc5_link2": "Anleitung: Client-Zertifikat (mTLS)",
+      "sc5_n1": "Telefon, Tablet, TV",
+      "sc5_n2": "Zero-Trust-Gateway",
+      "sc5_tunnel": "Tunnel, kein offener Port",
+      "sc5_browser": "Browser: Anmeldung mit Google oder Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix ist aus dem Internet nicht sichtbar, die App schon",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "Das Modul ZbxView connect ergänzt Zabbix um „Mobile connect“. Niemand tippt etwas ab oder kopiert Tokens.",
       "sc3_s1": "<b>Öffnen Sie Mobile connect</b> in den Zabbix-Benutzereinstellungen.",
       "sc3_s2": "<b>Scannen Sie den QR-Code</b> in der App: Server hinzufügen → Scannen.",
@@ -875,6 +930,20 @@
       "sc4_b2": "Un problema del widget se abre directamente en la app",
       "sc4_b3": "Actualización con la app cerrada (5–60 min) y justo después de una notificación push",
       "sc4_cap": "<b>Widgets</b> · Ajustes → Widgets define filtros, accesos y actualización",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix detrás de una pasarela Zero Trust. La app entra igual.",
+      "sc5_p": "Zabbix no tiene por qué verse desde internet. El navegador inicia sesión con Google o Microsoft y la app ZbxView se identifica sola ante la pasarela: con un token de servicio en cabeceras HTTP personalizadas o con un certificado de cliente.",
+      "sc5_b1": "Cloudflare Access: token de servicio en cabeceras HTTP personalizadas",
+      "sc5_b2": "Certificado de cliente (mTLS) enviado solo a los servidores a los que pertenece",
+      "sc5_b3": "A los teléfonos con el código QR de ZbxView connect o en bloque por MDM",
+      "sc5_link": "Guía: Cloudflare Access y Google SSO",
+      "sc5_link2": "Guía: certificado de cliente (mTLS)",
+      "sc5_n1": "teléfono, tablet, TV",
+      "sc5_n2": "Pasarela Zero Trust",
+      "sc5_tunnel": "túnel, sin puertos abiertos",
+      "sc5_browser": "Navegador: inicio de sesión con Google o Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix no se ve desde internet, la app sí",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "El módulo ZbxView connect añade a Zabbix «Mobile connect». Nadie teclea nada ni copia tokens.",
       "sc3_s1": "<b>Abre Mobile connect</b> en los ajustes de usuario de Zabbix.",
       "sc3_s2": "<b>Escanea el código QR</b> en la app: Añadir servidor → Escanear.",
@@ -1028,6 +1097,20 @@
       "sc4_b2": "Un problème du widget s’ouvre directement dans l’app",
       "sc4_b3": "Actualisation app fermée (5–60 min) et dès une notification push",
       "sc4_cap": "<b>Widgets</b> · Paramètres → Widgets règle filtres, raccourcis et actualisation",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix derrière une passerelle Zero Trust. L’app passe quand même.",
+      "sc5_p": "Zabbix n’a pas besoin d’être visible depuis internet. Le navigateur se connecte avec Google ou Microsoft, et l’app ZbxView s’identifie seule auprès de la passerelle – avec un jeton de service dans des en-têtes HTTP personnalisés ou avec un certificat client.",
+      "sc5_b1": "Cloudflare Access : jeton de service dans des en-têtes HTTP personnalisés",
+      "sc5_b2": "Certificat client (mTLS) envoyé uniquement aux serveurs auxquels il appartient",
+      "sc5_b3": "Sur les téléphones par le QR code de ZbxView connect ou en masse par MDM",
+      "sc5_link": "Guide : Cloudflare Access et Google SSO",
+      "sc5_link2": "Guide : certificat client (mTLS)",
+      "sc5_n1": "téléphone, tablette, TV",
+      "sc5_n2": "Passerelle Zero Trust",
+      "sc5_tunnel": "tunnel, aucun port ouvert",
+      "sc5_browser": "Navigateur : connexion avec Google ou Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix n’est pas visible depuis internet, l’app oui",
+      "tr6": "Zero Trust : Cloudflare Access + mTLS",
       "sc3_p": "Le module ZbxView connect ajoute « Mobile connect » à Zabbix. Personne ne recopie rien ni ne colle de jetons.",
       "sc3_s1": "<b>Ouvrez Mobile connect</b> dans les paramètres utilisateur de Zabbix.",
       "sc3_s2": "<b>Scannez le QR code</b> dans l’app : Ajouter un serveur → Scanner.",
@@ -1181,6 +1264,20 @@
       "sc4_b2": "Problēma logrīkā atveras uzreiz lietotnē",
       "sc4_b3": "Atjaunošana arī ar aizvērtu lietotni (5–60 min) un uzreiz pēc push paziņojuma",
       "sc4_cap": "<b>Logrīki</b> · Iestatījumi → Logrīki nosaka filtrus, saīsnes un atjaunošanu",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix aiz Zero Trust vārtejas. Lietotne tik un tā tiek cauri.",
+      "sc5_p": "Zabbix nav jābūt redzamam no interneta. Pārlūks piesakās ar Google vai Microsoft, bet lietotne ZbxView pati apliecina sevi vārtejai – ar servisa marķieri pielāgotās HTTP galvenēs vai ar klienta sertifikātu.",
+      "sc5_b1": "Cloudflare Access: servisa marķieris pielāgotās HTTP galvenēs",
+      "sc5_b2": "Klienta sertifikāts (mTLS), ko saņem tikai tam paredzētie serveri",
+      "sc5_b3": "Tālruņos ar ZbxView connect QR kodu vai masveidā caur MDM",
+      "sc5_link": "Ceļvedis: Cloudflare Access un Google SSO",
+      "sc5_link2": "Ceļvedis: klienta sertifikāts (mTLS)",
+      "sc5_n1": "tālrunis, planšete, TV",
+      "sc5_n2": "Zero Trust vārteja",
+      "sc5_tunnel": "tunelis, bez atvērta porta",
+      "sc5_browser": "Pārlūks: pieteikšanās ar Google vai Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix nav redzams no interneta, lietotne ir",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "Modulis ZbxView connect pievieno Zabbix “Tālruņa savienojumu”. Neviens neko neraksta un nekopē pilnvaras.",
       "sc3_s1": "<b>Atveriet Tālruņa savienojumu</b> Zabbix lietotāja iestatījumos.",
       "sc3_s2": "<b>Noskenējiet QR kodu</b> lietotnē: Pievienot serveri → Skenēt.",
@@ -1334,6 +1431,20 @@
       "sc4_b2": "Um incidente no widget abre direto no app",
       "sc4_b3": "Atualização com o app fechado (5–60 min) e logo após uma notificação push",
       "sc4_cap": "<b>Widgets</b> · Configurações → Widgets define filtros, atalhos e atualização",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix atrás de um gateway Zero Trust. O app entra mesmo assim.",
+      "sc5_p": "O Zabbix não precisa ficar visível na internet. O navegador entra com Google ou Microsoft, e o app ZbxView se identifica sozinho no gateway – com um token de serviço em cabeçalhos HTTP personalizados ou com um certificado de cliente.",
+      "sc5_b1": "Cloudflare Access: token de serviço em cabeçalhos HTTP personalizados",
+      "sc5_b2": "Certificado de cliente (mTLS) enviado só aos servidores a que pertence",
+      "sc5_b3": "Nos telefones pelo código QR do ZbxView connect ou em massa via MDM",
+      "sc5_link": "Guia: Cloudflare Access e Google SSO",
+      "sc5_link2": "Guia: certificado de cliente (mTLS)",
+      "sc5_n1": "telefone, tablet, TV",
+      "sc5_n2": "Gateway Zero Trust",
+      "sc5_tunnel": "túnel, nenhuma porta aberta",
+      "sc5_browser": "Navegador: login com Google ou Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · o Zabbix não fica visível na internet, o app sim",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "O módulo ZbxView connect adiciona “Mobile connect” ao Zabbix. Ninguém digita nada nem copia tokens.",
       "sc3_s1": "<b>Abra o Mobile connect</b> nas configurações do seu usuário no Zabbix.",
       "sc3_s2": "<b>Leia o código QR</b> no app: Adicionar servidor → Ler.",
@@ -1487,6 +1598,20 @@
       "sc4_b2": "Проблема в виджете открывается сразу в приложении",
       "sc4_b3": "Обновление при закрытом приложении (5–60 мин) и сразу после push-уведомления",
       "sc4_cap": "<b>Виджеты</b> · в Настройки → Виджеты задаются фильтры, ярлыки и обновление",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix за шлюзом Zero Trust. Приложение всё равно проходит.",
+      "sc5_p": "Zabbix не обязан быть виден из интернета. Браузер входит через Google или Microsoft, а приложение ZbxView само подтверждает себя шлюзу – сервисным токеном в пользовательских HTTP-заголовках или клиентским сертификатом.",
+      "sc5_b1": "Cloudflare Access: сервисный токен в пользовательских HTTP-заголовках",
+      "sc5_b2": "Клиентский сертификат (mTLS) отправляется только своим серверам",
+      "sc5_b3": "На телефоны QR-кодом из ZbxView connect или массово через MDM",
+      "sc5_link": "Руководство: Cloudflare Access и Google SSO",
+      "sc5_link2": "Руководство: клиентский сертификат (mTLS)",
+      "sc5_n1": "телефон, планшет, ТВ",
+      "sc5_n2": "Шлюз Zero Trust",
+      "sc5_tunnel": "туннель, без открытых портов",
+      "sc5_browser": "Браузер: вход через Google или Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix не виден из интернета, приложение — да",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "Модуль ZbxView connect добавляет в Zabbix «Mobile connect». Никому не нужно ничего вводить или копировать токены.",
       "sc3_s1": "<b>Откройте Mobile connect</b> в настройках пользователя Zabbix.",
       "sc3_s2": "<b>Отсканируйте QR-код</b> в приложении: Добавить сервер → Сканировать.",
@@ -1640,6 +1765,20 @@
       "sc4_b2": "Un problema nel widget si apre direttamente nell’app",
       "sc4_b3": "Aggiornamento ad app chiusa (5–60 min) e subito dopo una notifica push",
       "sc4_cap": "<b>Widget</b> · Impostazioni → Widget imposta filtri, scorciatoie e aggiornamento",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix dietro un gateway Zero Trust. L’app entra comunque.",
+      "sc5_p": "Zabbix non deve essere visibile da internet. Il browser accede con Google o Microsoft e l’app ZbxView si identifica da sola presso il gateway – con un token di servizio in intestazioni HTTP personalizzate o con un certificato client.",
+      "sc5_b1": "Cloudflare Access: token di servizio in intestazioni HTTP personalizzate",
+      "sc5_b2": "Certificato client (mTLS) inviato solo ai server a cui appartiene",
+      "sc5_b3": "Sui telefoni con il QR di ZbxView connect o in blocco tramite MDM",
+      "sc5_link": "Guida: Cloudflare Access e Google SSO",
+      "sc5_link2": "Guida: certificato client (mTLS)",
+      "sc5_n1": "telefono, tablet, TV",
+      "sc5_n2": "Gateway Zero Trust",
+      "sc5_tunnel": "tunnel, nessuna porta aperta",
+      "sc5_browser": "Browser: accesso con Google o Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix non è visibile da internet, l’app sì",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "Il modulo ZbxView connect aggiunge “Mobile connect” a Zabbix. Nessuno deve digitare nulla o copiare token.",
       "sc3_s1": "<b>Apri Mobile connect</b> nelle impostazioni utente di Zabbix.",
       "sc3_s2": "<b>Scansiona il codice QR</b> nell’app: Aggiungi server → Scansiona.",
@@ -1793,6 +1932,20 @@
       "sc4_b2": "Problem z widżetu otwiera się prosto w aplikacji",
       "sc4_b3": "Odświeżanie przy zamkniętej aplikacji (5–60 min) i zaraz po powiadomieniu push",
       "sc4_cap": "<b>Widżety</b> · Ustawienia → Widżety ustawiają filtry, skróty i odświeżanie",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zabbix za bramą Zero Trust. Aplikacja i tak wejdzie.",
+      "sc5_p": "Zabbix nie musi być widoczny z internetu. Przeglądarka loguje się przez Google lub Microsoft, a aplikacja ZbxView sama potwierdza się bramie – tokenem usługi we własnych nagłówkach HTTP albo certyfikatem klienta.",
+      "sc5_b1": "Cloudflare Access: token usługi we własnych nagłówkach HTTP",
+      "sc5_b2": "Certyfikat klienta (mTLS) wysyłany tylko do serwerów, do których należy",
+      "sc5_b3": "Na telefony kodem QR z ZbxView connect lub zbiorczo przez MDM",
+      "sc5_link": "Przewodnik: Cloudflare Access i Google SSO",
+      "sc5_link2": "Przewodnik: certyfikat klienta (mTLS)",
+      "sc5_n1": "telefon, tablet, TV",
+      "sc5_n2": "Brama Zero Trust",
+      "sc5_tunnel": "tunel, bez otwartego portu",
+      "sc5_browser": "Przeglądarka: logowanie przez Google lub Microsoft",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix nie jest widoczny z internetu, aplikacja tak",
+      "tr6": "Zero Trust: Cloudflare Access + mTLS",
       "sc3_p": "Moduł ZbxView connect dodaje do Zabbixa „Mobile connect”. Nikt niczego nie wpisuje ani nie kopiuje tokenów.",
       "sc3_s1": "<b>Otwórz Mobile connect</b> w ustawieniach użytkownika Zabbixa.",
       "sc3_s2": "<b>Zeskanuj kod QR</b> w aplikacji: Dodaj serwer → Skanuj.",
@@ -1946,6 +2099,20 @@
       "sc4_b2": "ウィジェットの障害をタップするとアプリで直接開きます",
       "sc4_b3": "アプリを閉じていても更新（5–60 分）、プッシュ通知の直後にも更新",
       "sc4_cap": "<b>ウィジェット</b> · 設定 → ウィジェットでフィルター、ショートカット、更新を設定",
+      "sc5_tag": "05 · Zero Trust",
+      "sc5_h": "Zero Trust ゲートウェイの背後の Zabbix にも、アプリは入れます。",
+      "sc5_p": "Zabbix をインターネットに公開する必要はありません。ブラウザーは Google や Microsoft でサインインし、ZbxView アプリはカスタム HTTP ヘッダーのサービストークン、またはクライアント証明書でゲートウェイに自ら認証します。",
+      "sc5_b1": "Cloudflare Access：カスタム HTTP ヘッダーのサービストークン",
+      "sc5_b2": "クライアント証明書（mTLS）は対象のサーバーにだけ送信",
+      "sc5_b3": "ZbxView connect の QR コードや MDM で端末に一括配布",
+      "sc5_link": "ガイド：Cloudflare Access と Google SSO",
+      "sc5_link2": "ガイド：クライアント証明書（mTLS）",
+      "sc5_n1": "スマートフォン、タブレット、TV",
+      "sc5_n2": "Zero Trust ゲートウェイ",
+      "sc5_tunnel": "トンネル、開放ポートなし",
+      "sc5_browser": "ブラウザー：Google または Microsoft でサインイン",
+      "sc5_cap": "<b>Zero Trust</b> · Zabbix はインターネットから見えず、アプリだけが届きます",
+      "tr6": "Zero Trust：Cloudflare Access + mTLS",
       "sc3_p": "ZbxView connect モジュールは Zabbix に「Mobile connect」を追加します。入力やトークンのコピーは一切不要です。",
       "sc3_s1": "Zabbix のユーザー設定で <b>Mobile connect を開きます</b>。",
       "sc3_s2": "アプリで <b>QR コードをスキャンします</b>: サーバーを追加 → スキャン。",
