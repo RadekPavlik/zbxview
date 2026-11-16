@@ -93,9 +93,9 @@ ZbxView je nezávislý klient a není spojen, schvalován ani sponzorován spole
 ---
 
 ## Notes
-- **Screenshots**: Play needs 2–8 phone screenshots (min 320 px). You already
-  have tablet + phone shots in the repo `assets/`. For Play use the *phone*
-  ones (shot17–32_mobile) — ideally without the ad banner for the store images.
+- **Screenshots**: Play takes 2–8 phone screenshots (long side at most 2× the
+  short one). Ready-made 1080×2160 PNGs, English with demo data, are in
+  `store/play-phone/`, numbered in the suggested order (01–08 first).
 - **Feature graphic** (1024×500) is required — a banner with the ZbxView logo
   and tagline. I can generate one if you want.
 - **App icon** 512×512: export from `assets/icon.png`.
