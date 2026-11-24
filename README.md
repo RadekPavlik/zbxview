@@ -18,8 +18,9 @@ The "Podívej se dovnitř" carousel is filled from `assets/screens.json`:
 Current shots are renders of the Design canvas boards, named
 `scr_<tab>_<nn>_<board>.jpg` (phone 1080x2337, TV 1920x1080, watch 454x454,
 JPEG q85) with a thumbnail of the same name in `assets/thumbs/` (max 480 px).
-The hero and feature sections use `shot1_tablet.jpg`, `shot7_mobile.jpg`,
-`shot8_mobile.jpg`, `shot12_mobile.jpg`, `shot33_tv.jpg` and `shot46_watch.jpg`.
+The hero uses `scr_hero_tablet.jpg` (2560x1600 crop of a kiosk board),
+`scr_hero_phone.jpg` and `scr_hero_watch.jpg`; the feature rows use
+`scr_feat_problems.jpg`, `scr_feat_tv.jpg` and `scr_feat_widgets.jpg`.
 
 ## Custom domain (optional, later)
 Buy a domain (e.g. `zbxview.app`), add a `CNAME` file with the domain, and
