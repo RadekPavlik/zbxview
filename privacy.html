@@ -19,6 +19,11 @@
         <button class="lang-opt" data-lang="es">ES</button>
         <button class="lang-opt" data-lang="fr">FR</button>
         <button class="lang-opt" data-lang="lv">LV</button>
+        <button class="lang-opt" data-lang="uk">UA</button>
+        <button class="lang-opt" data-lang="sk">SK</button>
+        <button class="lang-opt" data-lang="tr">TR</button>
+        <button class="lang-opt" data-lang="zh">ZH</button>
+        <button class="lang-opt" data-lang="ko">KO</button>
       </div>
     </div>
     <h1 data-i18n="title">Zásady ochrany osobních údajů</h1>
@@ -235,7 +240,172 @@
       __title: "ZbxView — Privātuma politika",
       __desc: "ZbxView lietotnes privātuma politika (mobilais Zabbix klients).",
     };
-    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var UK = {
+      "back": "← назад до ZbxView",
+      "title": "Політика конфіденційності",
+      "updated": "Застосунок: ZbxView · Останнє оновлення: 19 листопада 2026",
+      "intro": "Ця політика описує, як мобільний застосунок <strong>ZbxView</strong> (далі «застосунок») поводиться з даними. Застосунок розробляє та підтримує <strong>Radek Pavlík</strong> (далі «розробник»). Користуючись застосунком, ви погоджуєтеся з цією політикою.",
+      "s1_h": "1. Коротко",
+      "s1_p": "ZbxView — це клієнт для системи моніторингу Zabbix. Застосунок підключається лише до серверів Zabbix, які ви налаштували самі. <strong>Сам розробник не збирає, не зберігає й не отримує жодних ваших персональних даних чи даних моніторингу.</strong> Єдиний виняток — безкоштовна версія, у якій рекламу показує Google AdMob, що для цього обробляє обмежений обсяг даних (див. розділ 4). Ваші облікові дані та налаштування залишаються лише на вашому пристрої.",
+      "s2_h": "2. Дані, що зберігаються на пристрої",
+      "s2_p": "Застосунок зберігає локально на вашому пристрої такі дані, потрібні для його роботи:",
+      "s2_li1": "<strong>Доступ до сервера</strong> — URL вашого сервера Zabbix, ім’я користувача та токен входу або пароль. Чутливі значення зберігаються в захищеному сховищі Android (Android Keystore / EncryptedSharedPreferences).",
+      "s2_li2": "<strong>Налаштування застосунку</strong> — наприклад, тема, інтервал оновлення, вибраний дашборд.",
+      "s2_p2": "Ці дані не надсилаються з вашого пристрою розробнику чи будь-яким третім особам. Ви видалите їх, видаливши застосунок або сервер у налаштуваннях.",
+      "s3_h": "3. Підключення до вашого сервера Zabbix",
+      "s3_p": "Застосунок спілкується безпосередньо із сервером Zabbix, який ви вкажете. Усі дані моніторингу (хости, проблеми, графіки) завантажуються з цього сервера й показуються лише в застосунку. Обробка на боці сервера регулюється правилами його оператора, а не цією політикою.",
+      "s4_h": "4. Реклама (безкоштовна версія)",
+      "s4_p": "Безкоштовна версія показує рекламу через <strong>Google AdMob</strong>. Для показу й вимірювання реклами AdMob може збирати певні дані (наприклад, рекламний ідентифікатор пристрою, приблизне місцезнаходження, визначене за IP-адресою, і дані про пристрій) відповідно до правил Google. Докладніше:",
+      "s4_li1": "Політика конфіденційності Google",
+      "s4_li2": "Як Google використовує дані із застосунків партнерів",
+      "s4_p2": "Після купівлі версії <strong>Pro</strong> реклама вимикається, і AdMob більше не ініціалізується.",
+      "s4_p3": "Реклама може бути персоналізованою або неперсоналізованою. Персоналізацію можна будь-коли змінити в налаштуваннях Android (Налаштування → Google → Реклама), де можна скинути рекламний ідентифікатор або відмовитися від персоналізації. Там, де цього вимагає закон (наприклад, ЄЕЗ і Велика Британія), перед показом персоналізованої реклами запитується ваша згода.",
+      "s5_h": "5. Покупки в застосунку",
+      "s5_p": "Покупку «Pro» (вимкнення реклами) обробляє <strong>Google Play</strong>. Платіжні дані обробляє Google; розробник не має до них доступу. Регулюється <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">правилами Google</a>.",
+      "s6_h": "6. Дозволи",
+      "s6_p": "Застосунок використовує доступ до інтернету, щоб підключатися до вашого сервера Zabbix і (у безкоштовній версії) завантажувати рекламу. Застосунок не запитує доступу до контактів, фотографій чи точного місцезнаходження.",
+      "s7_h": "7. Діти",
+      "s7_p": "Застосунок призначений для IT-адміністраторів і не орієнтований на дітей віком до 13 років.",
+      "s8_h": "8. Зміни",
+      "s8_p": "Ця політика може час від часу оновлюватися. Актуальна версія завжди доступна на цій сторінці з датою останнього оновлення.",
+      "s9_h": "9. Контакт",
+      "s9_p": "Запитання щодо конфіденційності: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>",
+      "__title": "ZbxView — Політика конфіденційності",
+      "__desc": "Політика конфіденційності застосунку ZbxView (мобільного клієнта Zabbix)."
+    };
+    var SK = {
+      "back": "← späť na ZbxView",
+      "title": "Zásady ochrany súkromia",
+      "updated": "Aplikácia: ZbxView · Posledná aktualizácia: 19. novembra 2026",
+      "intro": "Tieto zásady popisujú, ako mobilná aplikácia <strong>ZbxView</strong> (ďalej „aplikácia“) zaobchádza s dátami. Aplikáciu vyvíja a prevádzkuje <strong>Radek Pavlík</strong> (ďalej „vývojár“). Používaním aplikácie s týmito zásadami súhlasíte.",
+      "s1_h": "1. Zhrnutie",
+      "s1_p": "ZbxView je klient pre monitorovací systém Zabbix. Aplikácia sa pripája len k serverom Zabbix, ktoré si sami nastavíte. <strong>Vývojár sám nezbiera, neukladá ani neprijíma žiadne vaše osobné ani monitorovacie dáta.</strong> Jedinou výnimkou je bezplatná verzia, v ktorej reklamy zobrazuje Google AdMob a na ich zobrazenie spracúva obmedzené dáta (pozri časť 4). Vaše prihlasovacie údaje a nastavenia zostávajú len vo vašom zariadení.",
+      "s2_h": "2. Dáta uložené vo vašom zariadení",
+      "s2_p": "Aplikácia ukladá lokálne vo vašom zariadení tieto dáta potrebné na svoju činnosť:",
+      "s2_li1": "<strong>Prístup k serveru</strong> — URL vášho servera Zabbix, používateľské meno a prihlasovací token alebo heslo. Citlivé hodnoty sú uložené v zabezpečenom úložisku Androidu (Android Keystore / EncryptedSharedPreferences).",
+      "s2_li2": "<strong>Nastavenia aplikácie</strong> — napr. motív, interval obnovovania, zvolený dashboard.",
+      "s2_p2": "Tieto dáta sa z vášho zariadenia neposielajú vývojárovi ani žiadnej tretej strane. Odstránite ich odinštalovaním aplikácie alebo zmazaním servera v nastaveniach.",
+      "s3_h": "3. Pripojenie k vášmu serveru Zabbix",
+      "s3_p": "Aplikácia komunikuje priamo so serverom Zabbix, ktorý zadáte. Všetky monitorovacie dáta (hostitelia, problémy, grafy) sa načítavajú z tohto servera a zobrazujú sa len v aplikácii. Spracovanie na strane servera sa riadi zásadami jeho prevádzkovateľa, nie týmito zásadami.",
+      "s4_h": "4. Reklamy (bezplatná verzia)",
+      "s4_p": "Bezplatná verzia zobrazuje reklamy cez <strong>Google AdMob</strong>. Na zobrazovanie a meranie reklám môže AdMob zbierať určité dáta (napr. reklamný identifikátor zariadenia, približnú polohu odvodenú z IP adresy a údaje o zariadení) v súlade so zásadami spoločnosti Google. Viac informácií:",
+      "s4_li1": "Zásady ochrany súkromia Google",
+      "s4_li2": "Ako Google používa dáta z partnerských aplikácií",
+      "s4_p2": "Kúpou verzie <strong>Pro</strong> sa reklamy vypnú a AdMob sa už neinicializuje.",
+      "s4_p3": "Reklamy môžu byť personalizované alebo nepersonalizované. Personalizáciu môžete kedykoľvek ovládať v nastaveniach Androidu (Nastavenia → Google → Reklamy), kde môžete obnoviť reklamné ID alebo sa z personalizácie odhlásiť. Kde to vyžaduje zákon (napr. EHP a Spojené kráľovstvo), pred zobrazením personalizovaných reklám sa žiada váš súhlas.",
+      "s5_h": "5. Nákupy v aplikácii",
+      "s5_p": "Nákup „Pro“ (odstránenie reklám) spracúva <strong>Google Play</strong>. Platobné údaje spracúva Google; vývojár k nim nemá prístup. Riadi sa <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">zásadami spoločnosti Google</a>.",
+      "s6_h": "6. Oprávnenia",
+      "s6_p": "Aplikácia používa prístup na internet na pripojenie k vášmu serveru Zabbix a (v bezplatnej verzii) na načítanie reklám. Aplikácia nežiada prístup ku kontaktom, fotografiám ani k presnej polohe.",
+      "s7_h": "7. Deti",
+      "s7_p": "Aplikácia je určená pre IT správcov a nie je zameraná na deti mladšie ako 13 rokov.",
+      "s8_h": "8. Zmeny",
+      "s8_p": "Tieto zásady sa môžu priebežne aktualizovať. Aktuálna verzia je vždy k dispozícii na tejto stránke s uvedeným dátumom poslednej aktualizácie.",
+      "s9_h": "9. Kontakt",
+      "s9_p": "Otázky k súkromiu: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>",
+      "__title": "ZbxView — Zásady ochrany súkromia",
+      "__desc": "Zásady ochrany súkromia aplikácie ZbxView (mobilný klient pre Zabbix)."
+    };
+    var TR = {
+      "back": "← ZbxView'a dön",
+      "title": "Gizlilik Politikası",
+      "updated": "Uygulama: ZbxView · Son güncelleme: 19 Kasım 2026",
+      "intro": "Bu politika, <strong>ZbxView</strong> mobil uygulamasının (“uygulama”) verileri nasıl işlediğini açıklar. Uygulama <strong>Radek Pavlík</strong> (“geliştirici”) tarafından geliştirilir ve işletilir. Uygulamayı kullanarak bu politikayı kabul etmiş olursunuz.",
+      "s1_h": "1. Özet",
+      "s1_p": "ZbxView, Zabbix izleme sistemi için bir istemcidir. Uygulama yalnızca sizin yapılandırdığınız Zabbix sunucularına bağlanır. <strong>Geliştiricinin kendisi kişisel verilerinizin veya izleme verilerinizin hiçbirini toplamaz, saklamaz veya almaz.</strong> Tek istisna, reklamların Google AdMob tarafından sunulduğu ücretsiz sürümdür; AdMob reklamları göstermek için sınırlı veri işler (bkz. bölüm 4). Kimlik bilgileriniz ve ayarlarınız yalnızca cihazınızda kalır.",
+      "s2_h": "2. Cihazınızda saklanan veriler",
+      "s2_p": "Uygulama, çalışması için gereken şu verileri yerel olarak cihazınızda saklar:",
+      "s2_li1": "<strong>Sunucu erişimi</strong> — Zabbix sunucunuzun URL'si, kullanıcı adı ve oturum token'ı veya parola. Hassas değerler Android güvenli depolamasında (Android Keystore / EncryptedSharedPreferences) tutulur.",
+      "s2_li2": "<strong>Uygulama ayarları</strong> — örn. tema, yenileme aralığı, seçili pano.",
+      "s2_p2": "Bu veriler cihazınızdan geliştiriciye veya herhangi bir üçüncü tarafa gönderilmez. Uygulamayı kaldırarak veya ayarlarda sunucuyu silerek bunları kaldırabilirsiniz.",
+      "s3_h": "3. Zabbix sunucunuza bağlanma",
+      "s3_p": "Uygulama doğrudan girdiğiniz Zabbix sunucusuyla iletişim kurar. Tüm izleme verileri (host'lar, sorunlar, grafikler) o sunucudan yüklenir ve yalnızca uygulamada gösterilir. Sunucu tarafındaki işleme, bu politikaya değil, o sunucunun işletmecisinin politikalarına tabidir.",
+      "s4_h": "4. Reklamlar (ücretsiz sürüm)",
+      "s4_p": "Ücretsiz sürüm <strong>Google AdMob</strong> aracılığıyla reklam gösterir. Reklamları sunmak ve ölçmek için AdMob, Google'ın politikalarına uygun olarak belirli verileri (örn. cihazın reklam kimliği, IP adresinden türetilen yaklaşık konum ve cihaz verileri) toplayabilir. Daha fazla bilgi:",
+      "s4_li1": "Google Gizlilik Politikası",
+      "s4_li2": "Google'ın iş ortağı uygulamalardan gelen verileri nasıl kullandığı",
+      "s4_p2": "<strong>Pro</strong> sürümünü satın almak reklamları kapatır ve AdMob artık başlatılmaz.",
+      "s4_p3": "Reklamlar kişiselleştirilmiş veya kişiselleştirilmemiş olabilir. Kişiselleştirmeyi Android ayarlarınızdan (Ayarlar → Google → Reklamlar) istediğiniz zaman kontrol edebilir, reklam kimliğinizi sıfırlayabilir veya kişiselleştirmeyi devre dışı bırakabilirsiniz. Yasaların gerektirdiği yerlerde (örn. AEA ve Birleşik Krallık), kişiselleştirilmiş reklamlar gösterilmeden önce onayınız istenir.",
+      "s5_h": "5. Uygulama içi satın alımlar",
+      "s5_p": "“Pro” satın alımı (reklamları kaldırma) <strong>Google Play</strong> tarafından işlenir. Ödeme bilgileri Google tarafından yönetilir; geliştiricinin bunlara erişimi yoktur. <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google'ın politikalarına</a> tabidir.",
+      "s6_h": "6. İzinler",
+      "s6_p": "Uygulama, Zabbix sunucunuza bağlanmak ve (ücretsiz sürümde) reklam yüklemek için internet erişimini kullanır. Uygulama kişilere, fotoğraflara veya kesin konuma erişim istemez.",
+      "s7_h": "7. Çocuklar",
+      "s7_p": "Uygulama BT yöneticilerine yöneliktir ve 13 yaşın altındaki çocuklara yönelik değildir.",
+      "s8_h": "8. Değişiklikler",
+      "s8_p": "Bu politika zaman zaman güncellenebilir. Güncel sürüm, son güncelleme tarihiyle birlikte her zaman bu sayfada bulunur.",
+      "s9_h": "9. İletişim",
+      "s9_p": "Gizlilik soruları: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>",
+      "__title": "ZbxView — Gizlilik Politikası",
+      "__desc": "ZbxView uygulamasının (mobil Zabbix istemcisi) gizlilik politikası."
+    };
+    var ZH = {
+      "back": "← 返回 ZbxView",
+      "title": "隐私政策",
+      "updated": "应用：ZbxView · 最后更新：2026 年 11 月 19 日",
+      "intro": "本政策说明 <strong>ZbxView</strong> 移动应用（“应用”）如何处理数据。应用由 <strong>Radek Pavlík</strong>（“开发者”）开发和运营。使用本应用即表示您同意本政策。",
+      "s1_h": "1. 摘要",
+      "s1_p": "ZbxView 是 Zabbix 监控系统的客户端。应用只连接您自己配置的 Zabbix 服务器。<strong>开发者本身不收集、不存储、也不接收您的任何个人数据或监控数据。</strong>唯一的例外是免费版，其中的广告由 Google AdMob 提供，AdMob 会处理有限的数据以展示广告（参见第 4 节）。您的凭据和设置只保留在您的设备上。",
+      "s2_h": "2. 存储在您设备上的数据",
+      "s2_p": "应用会在您的设备本地存储以下运行所需的数据：",
+      "s2_li1": "<strong>服务器访问</strong> — 您的 Zabbix 服务器 URL、用户名以及登录令牌或密码。敏感信息保存在 Android 安全存储中（Android Keystore / EncryptedSharedPreferences）。",
+      "s2_li2": "<strong>应用设置</strong> — 例如主题、刷新间隔、所选仪表板。",
+      "s2_p2": "这些数据不会从您的设备发送给开发者或任何第三方。卸载应用或在设置中删除服务器即可将其删除。",
+      "s3_h": "3. 连接到您的 Zabbix 服务器",
+      "s3_p": "应用直接与您输入的 Zabbix 服务器通信。所有监控数据（主机、问题、图形）都从该服务器加载，并且只在应用中显示。服务器端的处理受该服务器运营方的政策约束，而非本政策。",
+      "s4_h": "4. 广告（免费版）",
+      "s4_p": "免费版通过 <strong>Google AdMob</strong> 显示广告。为投放和衡量广告，AdMob 可能会按照 Google 的政策收集某些数据（例如设备广告标识符、根据 IP 地址推断的大致位置以及设备数据）。了解更多：",
+      "s4_li1": "Google 隐私政策",
+      "s4_li2": "Google 如何使用合作伙伴应用中的数据",
+      "s4_p2": "购买 <strong>Pro</strong> 版后将关闭广告，且不再初始化 AdMob。",
+      "s4_p3": "广告可能是个性化的，也可能是非个性化的。您可以随时在 Android 设置中控制个性化（设置 → Google → 广告），在那里可以重置广告 ID 或选择停用个性化。在法律要求的地区（例如欧洲经济区和英国），展示个性化广告前会征求您的同意。",
+      "s5_h": "5. 应用内购买",
+      "s5_p": "“Pro”购买（去除广告）由 <strong>Google Play</strong> 处理。付款信息由 Google 处理，开发者无法访问。受 <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 政策</a>约束。",
+      "s6_h": "6. 权限",
+      "s6_p": "应用使用互联网访问权限来连接您的 Zabbix 服务器，并（在免费版中）加载广告。应用不会请求访问通讯录、照片或精确位置。",
+      "s7_h": "7. 儿童",
+      "s7_p": "本应用面向 IT 管理员，不针对 13 岁以下儿童。",
+      "s8_h": "8. 变更",
+      "s8_p": "本政策可能会不时更新。最新版本始终发布在本页面，并注明最后更新日期。",
+      "s9_h": "9. 联系方式",
+      "s9_p": "隐私问题：<a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>",
+      "__title": "ZbxView — 隐私政策",
+      "__desc": "ZbxView 应用（Zabbix 移动客户端）的隐私政策。"
+    };
+    var KO = {
+      "back": "← ZbxView로 돌아가기",
+      "title": "개인정보 처리방침",
+      "updated": "앱: ZbxView · 최종 업데이트: 2026년 11월 19일",
+      "intro": "이 방침은 <strong>ZbxView</strong> 모바일 앱(“앱”)이 데이터를 처리하는 방식을 설명합니다. 앱은 <strong>Radek Pavlík</strong>(“개발자”)가 개발하고 운영합니다. 앱을 사용하면 이 방침에 동의하는 것입니다.",
+      "s1_h": "1. 요약",
+      "s1_p": "ZbxView는 Zabbix 모니터링 시스템용 클라이언트입니다. 앱은 사용자가 직접 구성한 Zabbix 서버에만 연결합니다. <strong>개발자는 사용자의 개인 데이터나 모니터링 데이터를 수집, 저장 또는 수신하지 않습니다.</strong> 유일한 예외는 무료 버전으로, Google AdMob이 광고를 게재하며 이를 위해 제한된 데이터를 처리합니다(4항 참조). 자격 증명과 설정은 사용자의 기기에만 남습니다.",
+      "s2_h": "2. 기기에 저장되는 데이터",
+      "s2_p": "앱은 작동에 필요한 다음 데이터를 기기에 로컬로 저장합니다:",
+      "s2_li1": "<strong>서버 접속 정보</strong> — Zabbix 서버 URL, 사용자 이름, 로그인 토큰 또는 비밀번호. 민감한 값은 Android 보안 저장소(Android Keystore / EncryptedSharedPreferences)에 보관됩니다.",
+      "s2_li2": "<strong>앱 설정</strong> — 예: 테마, 새로 고침 간격, 선택한 대시보드.",
+      "s2_p2": "이 데이터는 기기에서 개발자나 제3자에게 전송되지 않습니다. 앱을 제거하거나 설정에서 서버를 삭제하면 데이터가 지워집니다.",
+      "s3_h": "3. Zabbix 서버 연결",
+      "s3_p": "앱은 사용자가 입력한 Zabbix 서버와 직접 통신합니다. 모든 모니터링 데이터(호스트, 문제, 그래프)는 해당 서버에서 불러와 앱에만 표시됩니다. 서버 측 처리는 이 방침이 아니라 해당 서버 운영자의 정책을 따릅니다.",
+      "s4_h": "4. 광고 (무료 버전)",
+      "s4_p": "무료 버전은 <strong>Google AdMob</strong>을 통해 광고를 표시합니다. 광고 게재와 측정을 위해 AdMob은 Google 정책에 따라 특정 데이터(예: 기기 광고 식별자, IP 주소로 추정한 대략적인 위치, 기기 데이터)를 수집할 수 있습니다. 자세히 알아보기:",
+      "s4_li1": "Google 개인정보처리방침",
+      "s4_li2": "Google이 파트너 앱의 데이터를 사용하는 방법",
+      "s4_p2": "<strong>Pro</strong> 버전을 구매하면 광고가 꺼지고 AdMob이 더 이상 초기화되지 않습니다.",
+      "s4_p3": "광고는 맞춤형이거나 비맞춤형일 수 있습니다. Android 설정(설정 → Google → 광고)에서 언제든지 맞춤 설정을 관리할 수 있으며, 광고 ID를 재설정하거나 맞춤 광고를 거부할 수 있습니다. 법률상 요구되는 경우(예: EEA 및 영국) 맞춤형 광고를 표시하기 전에 동의를 요청합니다.",
+      "s5_h": "5. 인앱 구매",
+      "s5_p": "“Pro” 구매(광고 제거)는 <strong>Google Play</strong>에서 처리됩니다. 결제 정보는 Google이 처리하며 개발자는 접근할 수 없습니다. <a href=\"https://policies.google.com/privacy\" target=\"_blank\" rel=\"noopener\">Google 정책</a>이 적용됩니다.",
+      "s6_h": "6. 권한",
+      "s6_p": "앱은 Zabbix 서버에 연결하고 (무료 버전에서) 광고를 불러오기 위해 인터넷 접근을 사용합니다. 앱은 연락처, 사진 또는 정확한 위치에 대한 접근을 요청하지 않습니다.",
+      "s7_h": "7. 아동",
+      "s7_p": "앱은 IT 관리자를 위한 것이며 13세 미만 아동을 대상으로 하지 않습니다.",
+      "s8_h": "8. 변경",
+      "s8_p": "이 방침은 수시로 업데이트될 수 있습니다. 최신 버전은 최종 업데이트 날짜와 함께 항상 이 페이지에서 확인할 수 있습니다.",
+      "s9_h": "9. 연락처",
+      "s9_p": "개인정보 관련 문의: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>",
+      "__title": "ZbxView — 개인정보 처리방침",
+      "__desc": "ZbxView 앱(모바일 Zabbix 클라이언트)의 개인정보 처리방침."
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV, uk: UK, sk: SK, tr: TR, zh: ZH, ko: KO };
     var htmlEl = document.documentElement;
     var descEl = document.querySelector('meta[name="description"]');
     htmlEl.__csTitle = document.title;
@@ -252,7 +422,7 @@
       }
       document.title = dict ? dict.__title : htmlEl.__csTitle;
       if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
-      htmlEl.lang = lang;
+      htmlEl.lang = lang === 'zh' ? 'zh-Hans' : lang;
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
       var opts = document.querySelectorAll('.lang-opt');
       for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
@@ -264,7 +434,7 @@
     var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
     var nav = (navigator.language || '').slice(0, 2).toLowerCase();
     var lang = saved
-      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+      || (nav === 'cs' ? 'cs' : (DICTS[nav] ? nav : 'en'));
     apply(lang);
   })();
   </script>

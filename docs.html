@@ -19,6 +19,11 @@
         <button class="lang-opt" data-lang="es">ES</button>
         <button class="lang-opt" data-lang="fr">FR</button>
         <button class="lang-opt" data-lang="lv">LV</button>
+        <button class="lang-opt" data-lang="uk">UA</button>
+        <button class="lang-opt" data-lang="sk">SK</button>
+        <button class="lang-opt" data-lang="tr">TR</button>
+        <button class="lang-opt" data-lang="zh">ZH</button>
+        <button class="lang-opt" data-lang="ko">KO</button>
       </div>
     </div>
 
@@ -187,7 +192,152 @@
       d_access_p: "Zabbix aiz Cloudflare Zero Trust ar pieteikšanos ar Google pārlūkā: lietotne tiek cauri ar servisa marķieri pielāgotās galvenēs vai ar klienta sertifikātu savā resursdatora nosaukumā.",
       d_access_l: "Ceļvedis soli pa solim →"
     };
-    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var UK = {
+      "back": "← назад до ZbxView",
+      "title": "Посібники",
+      "updated": "Документація ZbxView · під’єднання, push-сповіщення, MDM, чергування, конфіденційність",
+      "intro": "Усе, що потрібно адміністраторові чи користувачеві для налаштування ZbxView, в одному місці. Кожен посібник — окрема сторінка цього сайту; застосунок посилається сюди зі своїх знаків питання.",
+      "d_connect_h": "Під’єднання телефона через QR-код",
+      "d_connect_p": "Модуль ZbxView connect для Zabbix: користувач відкриває «Mobile connect», сканує код — і вже ввійшов. Кілька телефонів, новий код, видалення пристрою, сертифікат у коді.",
+      "d_connect_l": "Встановлення модуля →",
+      "d_push_h": "Push-сповіщення",
+      "d_push_p": "Проблеми як сповіщення через власний Firebase-проєкт вашої організації: relay на сервері Zabbix, тип оповіщення «ZbxView Push», дія, передача проєкту на телефони через модуль або MDM.",
+      "d_push_l": "Крок за кроком →",
+      "d_mdm_h": "Розгортання через MDM (Intune)",
+      "d_mdm_p": "Масове попереднє заповнення сервера, токена, клієнтського сертифіката й push-проєкту через керовану конфігурацію. Таблиця всіх ключів, Android та iOS, інформаційні екрани без MDM.",
+      "d_mdm_l": "Таблиця ключів →",
+      "d_oncall_h": "Чергування",
+      "d_oncall_p": "Як застосунок показує чергування й телефонні номери об’єктів з інвентаризації хостів і що для цього налаштувати в Zabbix.",
+      "d_oncall_l": "Налаштування →",
+      "d_privacy_h": "Конфіденційність і дані",
+      "d_privacy_p": "Що застосунок надсилає і чого не надсилає, де залишаються ваші дані, політика конфіденційності.",
+      "d_privacy_l": "Політика →",
+      "foot_back": "← назад на головну сторінку",
+      "__title": "ZbxView — Посібники",
+      "d_mtls_h": "Клієнтський сертифікат (mTLS)",
+      "d_mtls_p": "Zabbix за Cloudflare лише для пристроїв із сертифікатом: випуск сертифіката, правило WAF і доставка на телефони QR-кодом, через MDM або вручну.",
+      "d_mtls_l": "Покроковий посібник →",
+      "d_access_h": "Cloudflare Access (Google SSO)",
+      "d_access_p": "Zabbix за Cloudflare Zero Trust із входом через Google у браузері: застосунок проходить із сервісним токеном у власних заголовках або з клієнтським сертифікатом на окремому імені хоста.",
+      "d_access_l": "Покроковий посібник →"
+    };
+    var SK = {
+      "back": "← späť na ZbxView",
+      "title": "Návody",
+      "updated": "Dokumentácia ZbxView · párovanie, push notifikácie, MDM, pohotovosti, súkromie",
+      "intro": "Všetko, čo správca alebo používateľ potrebuje na nastavenie ZbxView, na jednom mieste. Každý návod je stránka tohto webu; aplikácia sem odkazuje zo svojich otáznikov.",
+      "d_connect_h": "Párovanie telefónu QR kódom",
+      "d_connect_p": "Modul ZbxView connect pre Zabbix: používateľ otvorí „Mobile connect“, naskenuje kód a je prihlásený. Viac telefónov, nový kód, odstránenie zariadenia, certifikát v kóde.",
+      "d_connect_l": "Inštalácia modulu →",
+      "d_push_h": "Push notifikácie",
+      "d_push_p": "Problémy ako notifikácie cez vlastný Firebase projekt vašej organizácie: relay na Zabbix serveri, typ média „ZbxView Push“, akcia, odovzdanie projektu telefónom cez modul alebo MDM.",
+      "d_push_l": "Krok za krokom →",
+      "d_mdm_h": "Nasadenie cez MDM (Intune)",
+      "d_mdm_p": "Hromadné predvyplnenie servera, tokenu, klientskeho certifikátu a push projektu cez managed configuration. Tabuľka všetkých kľúčov, Android aj iOS, obrazovky signage bez MDM.",
+      "d_mdm_l": "Tabuľka kľúčov →",
+      "d_oncall_h": "Pohotovosti",
+      "d_oncall_p": "Ako aplikácia zobrazuje pohotovosti a čísla pobočiek z inventára hostiteľov a čo pre to nastaviť v Zabbixe.",
+      "d_oncall_l": "Nastavenie →",
+      "d_privacy_h": "Súkromie a dáta",
+      "d_privacy_p": "Čo aplikácia posiela a čo nie, kde zostávajú vaše dáta, zásady ochrany súkromia.",
+      "d_privacy_l": "Zásady →",
+      "foot_back": "← späť na hlavnú stránku",
+      "__title": "ZbxView — Návody",
+      "d_mtls_h": "Klientsky certifikát (mTLS)",
+      "d_mtls_p": "Zabbix za Cloudflare len pre zariadenia s certifikátom: vydanie certifikátu, pravidlo WAF a doručenie do telefónov QR kódom, cez MDM alebo ručne.",
+      "d_mtls_l": "Návod krok za krokom →",
+      "d_access_h": "Cloudflare Access (Google SSO)",
+      "d_access_p": "Zabbix za Cloudflare Zero Trust s prihlásením cez Google v prehliadači: aplikácia prejde so service tokenom vo vlastných hlavičkách alebo s klientskym certifikátom na vlastnom názve hostiteľa.",
+      "d_access_l": "Návod krok za krokom →"
+    };
+    var TR = {
+      "back": "← ZbxView'a dön",
+      "title": "Kılavuzlar",
+      "updated": "ZbxView belgeleri · eşleştirme, push bildirimleri, MDM, nöbet, gizlilik",
+      "intro": "Bir yöneticinin veya kullanıcının ZbxView'u kurmak için ihtiyaç duyduğu her şey tek yerde. Her kılavuz bu sitede bir sayfadır; uygulama soru işaretlerinden buraya bağlantı verir.",
+      "d_connect_h": "Telefonu QR koduyla eşleştirme",
+      "d_connect_p": "Zabbix için ZbxView connect modülü: kullanıcı “Mobile connect”i açar, kodu tarar ve oturum açılmış olur. Birden çok telefon, yeni kod, cihaz kaldırma, kodda sertifika.",
+      "d_connect_l": "Modülü kurma →",
+      "d_push_h": "Push bildirimleri",
+      "d_push_p": "Kuruluşunuzun kendi Firebase projesi üzerinden bildirim olarak sorunlar: Zabbix sunucusundaki relay, “ZbxView Push” medya türü, eylem, projenin modül veya MDM ile telefonlara verilmesi.",
+      "d_push_l": "Adım adım →",
+      "d_mdm_h": "MDM (Intune) ile dağıtım",
+      "d_mdm_p": "Sunucu, token, istemci sertifikası ve push projesinin managed configuration ile toplu olarak önceden doldurulması. Tüm anahtarların tablosu, Android ve iOS, MDM olmadan bilgi ekranları.",
+      "d_mdm_l": "Anahtar tablosu →",
+      "d_oncall_h": "Nöbet",
+      "d_oncall_p": "Uygulamanın nöbet görevlerini ve host envanterindeki şube numaralarını nasıl gösterdiği ve bunun için Zabbix'te neyin ayarlanması gerektiği.",
+      "d_oncall_l": "Kurulum →",
+      "d_privacy_h": "Gizlilik ve veriler",
+      "d_privacy_p": "Uygulamanın ne gönderdiği ve ne göndermediği, verilerinizin nerede kaldığı, gizlilik politikası.",
+      "d_privacy_l": "Politika →",
+      "foot_back": "← ana sayfaya dön",
+      "__title": "ZbxView — Kılavuzlar",
+      "d_mtls_h": "İstemci sertifikası (mTLS)",
+      "d_mtls_p": "Yalnızca sertifikalı cihazlar için Cloudflare arkasında Zabbix: sertifikayı oluşturma, WAF kuralı ve sertifikayı QR kodu, MDM veya elle telefonlara aktarma.",
+      "d_mtls_l": "Adım adım kılavuz →",
+      "d_access_h": "Cloudflare Access (Google SSO)",
+      "d_access_p": "Tarayıcıda Google ile oturum açılan Cloudflare Zero Trust arkasında Zabbix: uygulama özel başlıklarda bir servis token'ıyla ya da kendine ait bir ana bilgisayar adında istemci sertifikasıyla geçer.",
+      "d_access_l": "Adım adım kılavuz →"
+    };
+    var ZH = {
+      "back": "← 返回 ZbxView",
+      "title": "指南",
+      "updated": "ZbxView 文档 · 配对、推送通知、MDM、值班、隐私",
+      "intro": "管理员或用户设置 ZbxView 所需的一切，尽在此处。每篇指南都是本网站上的一个页面；应用中的问号会链接到这里。",
+      "d_connect_h": "使用二维码配对手机",
+      "d_connect_p": "适用于 Zabbix 的 ZbxView connect 模块：用户打开“Mobile connect”，扫描代码即可登录。多部手机、新代码、移除设备、代码中的证书。",
+      "d_connect_l": "安装模块 →",
+      "d_push_h": "推送通知",
+      "d_push_p": "通过您组织自己的 Firebase 项目将问题作为通知推送：Zabbix 服务器上的 relay、“ZbxView Push”媒介类型、动作，以及通过模块或 MDM 将项目分发到手机。",
+      "d_push_l": "分步说明 →",
+      "d_mdm_h": "使用 MDM (Intune) 部署",
+      "d_mdm_p": "通过托管配置批量预填服务器、令牌、客户端证书和推送项目。所有配置键的表格（Android 和 iOS），以及无 MDM 的标牌屏幕。",
+      "d_mdm_l": "配置键表 →",
+      "d_oncall_h": "值班",
+      "d_oncall_p": "应用如何根据主机资产记录显示值班人员和站点电话号码，以及需要在 Zabbix 中进行哪些设置。",
+      "d_oncall_l": "设置 →",
+      "d_privacy_h": "隐私与数据",
+      "d_privacy_p": "应用发送什么、不发送什么，您的数据保存在哪里，以及隐私政策。",
+      "d_privacy_l": "政策 →",
+      "foot_back": "← 返回主页",
+      "__title": "ZbxView — 指南",
+      "d_mtls_h": "客户端证书 (mTLS)",
+      "d_mtls_p": "Cloudflare 后面的 Zabbix 仅对持有证书的设备开放：签发证书、WAF 规则，以及通过二维码、MDM 或手动方式分发到手机。",
+      "d_mtls_l": "分步指南 →",
+      "d_access_h": "Cloudflare Access (Google SSO)",
+      "d_access_p": "Zabbix 位于 Cloudflare Zero Trust 之后，浏览器使用 Google 登录：应用通过自定义头中的服务令牌，或在专用主机名上使用客户端证书访问。",
+      "d_access_l": "分步指南 →"
+    };
+    var KO = {
+      "back": "← ZbxView로 돌아가기",
+      "title": "가이드",
+      "updated": "ZbxView 문서 · 페어링, 푸시 알림, MDM, 당직, 개인정보",
+      "intro": "관리자나 사용자가 ZbxView를 설정하는 데 필요한 모든 것을 한곳에 모았습니다. 각 가이드는 이 사이트의 페이지이며, 앱의 물음표 아이콘이 이곳으로 연결됩니다.",
+      "d_connect_h": "QR 코드로 휴대폰 페어링",
+      "d_connect_p": "Zabbix용 ZbxView connect 모듈: 사용자가 “Mobile connect”를 열고 코드를 스캔하면 로그인됩니다. 여러 휴대폰, 새 코드, 기기 삭제, 코드에 포함된 인증서.",
+      "d_connect_l": "모듈 설치 →",
+      "d_push_h": "푸시 알림",
+      "d_push_p": "조직의 자체 Firebase 프로젝트를 통해 문제를 알림으로: Zabbix 서버의 릴레이, “ZbxView Push” 미디어 유형, 액션, 모듈이나 MDM으로 프로젝트를 휴대폰에 전달.",
+      "d_push_l": "단계별 안내 →",
+      "d_mdm_h": "MDM(Intune)으로 배포",
+      "d_mdm_p": "관리형 구성으로 서버, 토큰, 클라이언트 인증서, 푸시 프로젝트를 일괄 사전 입력. Android와 iOS의 모든 키 표, MDM 없는 사이니지 화면.",
+      "d_mdm_l": "키 표 →",
+      "d_oncall_h": "당직",
+      "d_oncall_p": "앱이 호스트 인벤토리에서 당직과 사이트 전화번호를 표시하는 방법과 이를 위해 Zabbix에서 설정할 내용.",
+      "d_oncall_l": "설정 →",
+      "d_privacy_h": "개인정보와 데이터",
+      "d_privacy_p": "앱이 보내는 것과 보내지 않는 것, 데이터가 머무는 곳, 개인정보 처리방침.",
+      "d_privacy_l": "방침 →",
+      "foot_back": "← 메인 페이지로 돌아가기",
+      "__title": "ZbxView — 가이드",
+      "d_mtls_h": "클라이언트 인증서 (mTLS)",
+      "d_mtls_p": "인증서가 있는 기기만 접속하는 Cloudflare 뒤의 Zabbix: 인증서 발급, WAF 규칙, QR 코드·MDM·수동으로 휴대폰에 배포.",
+      "d_mtls_l": "단계별 가이드 →",
+      "d_access_h": "Cloudflare Access (Google SSO)",
+      "d_access_p": "브라우저에서 Google 로그인을 사용하는 Cloudflare Zero Trust 뒤의 Zabbix: 앱은 사용자 지정 헤더의 서비스 토큰이나 별도 호스트 이름의 클라이언트 인증서로 통과합니다.",
+      "d_access_l": "단계별 가이드 →"
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV, uk: UK, sk: SK, tr: TR, zh: ZH, ko: KO };
     var htmlEl = document.documentElement;
     var descEl = document.querySelector('meta[name="description"]');
     htmlEl.__csTitle = document.title;
@@ -204,7 +354,7 @@
       }
       document.title = dict ? dict.__title : htmlEl.__csTitle;
       if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
-      htmlEl.lang = lang;
+      htmlEl.lang = lang === 'zh' ? 'zh-Hans' : lang;
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
       var opts = document.querySelectorAll('.lang-opt');
       for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
@@ -216,7 +366,7 @@
     var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
     var nav = (navigator.language || '').slice(0, 2).toLowerCase();
     var lang = saved
-      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+      || (nav === 'cs' ? 'cs' : (DICTS[nav] ? nav : 'en'));
     apply(lang);
   })();
   </script>

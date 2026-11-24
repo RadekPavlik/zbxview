@@ -15,6 +15,11 @@
       <div class="lang-switch">
         <button class="lang-opt" data-lang="cs">CZ</button>
         <button class="lang-opt" data-lang="en">EN</button>
+        <button class="lang-opt" data-lang="uk">UA</button>
+        <button class="lang-opt" data-lang="sk">SK</button>
+        <button class="lang-opt" data-lang="tr">TR</button>
+        <button class="lang-opt" data-lang="zh">ZH</button>
+        <button class="lang-opt" data-lang="ko">KO</button>
       </div>
     </div>
     <h1 data-i18n="title">Podmínky použití</h1>
@@ -62,7 +67,117 @@
       "__title": "ZbxView — Terms of Use",
       "__desc": "Terms of use of the ZbxView app and the ZbxView Pro subscription."
 };
-    var DICTS = { en: EN };
+    var UK = {
+      "back": "← назад до ZbxView",
+      "title": "Умови використання",
+      "updated": "Застосунок: ZbxView · Останнє оновлення: 20 листопада 2026",
+      "intro": "Ці умови стосуються мобільного застосунку <strong>ZbxView</strong> (далі «застосунок») і передплати <strong>ZbxView Pro</strong>. Застосунок розробляє та підтримує <strong>Radek Pavlík</strong> (далі «розробник»). Користуючись застосунком, ви погоджуєтеся з ними.",
+      "s1_h": "1. Застосунок",
+      "s1_p": "ZbxView — це клієнт для системи моніторингу Zabbix. Він підключається лише до серверів, які ви налаштували самі; розробник не відповідає за їхній вміст чи доступність, а також за рішення, ухвалені на основі показаних даних. Застосунок надається «як є», без гарантій, у межах, дозволених законом.",
+      "s2_h": "2. ZbxView Pro",
+      "s2_p": "Безкоштовна версія показує рекламу. <strong>ZbxView Pro</strong> прибирає її з усіх екранів. Pro доступна як щомісячна передплата, щорічна передплата (з 30-денним безкоштовним пробним періодом, якщо магазин його пропонує) або разова покупка «назавжди». Перед підтвердженням застосунок і магазин показують актуальну ціну у вашій валюті.",
+      "s3_h": "3. Передплата, поновлення та скасування",
+      "s3_p": "Оплата списується з вашого облікового запису Google Play або Apple ID у момент підтвердження покупки, а для щорічного тарифу з пробним періодом — після його завершення. <strong>Передплата поновлюється автоматично</strong> на той самий строк і за тією самою ціною, якщо ви не скасуєте її щонайменше за 24 години до кінця поточного періоду. Скасувати можна будь-коли в Google Play (Платежі й підписки) або в Параметрах iPhone (Apple ID → Підписки); Pro залишається активною до кінця оплаченого періоду. Невикористана частина безкоштовного пробного періоду втрачається, коли ви купуєте передплату.",
+      "s4_h": "4. Повернення коштів",
+      "s4_p": "Платежі та повернення коштів обробляє магазин, у якому ви здійснили покупку, за своїми правилами (Google Play або Apple). Будь ласка, просіть про повернення там.",
+      "s5_h": "5. Попередня покупка «Прибрати рекламу»",
+      "s5_p": "Якщо ви раніше купили разову опцію «Прибрати рекламу», ZbxView Pro у вас назавжди без додаткової плати. Щоб повернути її, скористайтеся пунктом «Відновити покупки» в Налаштуваннях.",
+      "s6_h": "6. App Store",
+      "s6_p": "Для застосунку, завантаженого з App Store, також діє <a href=\"https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\">Стандартна ліцензійна угода Apple (EULA)</a>.",
+      "s7_h": "7. Зміни та контакт",
+      "s7_p": "Ці умови можуть оновлюватися; актуальна версія завжди на цій сторінці. Запитання: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>. Див. також <a href=\"privacy.html\">Політику конфіденційності</a>.",
+      "__title": "ZbxView — Умови використання",
+      "__desc": "Умови використання застосунку ZbxView і передплати ZbxView Pro."
+    };
+    var SK = {
+      "back": "← späť na ZbxView",
+      "title": "Podmienky používania",
+      "updated": "Aplikácia: ZbxView · Posledná aktualizácia: 20. novembra 2026",
+      "intro": "Tieto podmienky platia pre mobilnú aplikáciu <strong>ZbxView</strong> (ďalej „aplikácia“) a predplatné <strong>ZbxView Pro</strong>. Aplikáciu vyvíja a prevádzkuje <strong>Radek Pavlík</strong> (ďalej „vývojár“). Používaním aplikácie s nimi súhlasíte.",
+      "s1_h": "1. Aplikácia",
+      "s1_p": "ZbxView je klient pre monitorovací systém Zabbix. Pripája sa len k serverom, ktoré si sami nastavíte; vývojár nezodpovedá za ich obsah ani dostupnosť, ani za rozhodnutia urobené na základe zobrazených dát. Aplikácia sa poskytuje „tak, ako je“, bez záruky, v rozsahu, ktorý zákon dovoľuje.",
+      "s2_h": "2. ZbxView Pro",
+      "s2_p": "Bezplatná verzia zobrazuje reklamy. <strong>ZbxView Pro</strong> ich odstráni na všetkých obrazovkách. Pro je k dispozícii ako mesačné predplatné, ročné predplatné (s 30-dňovou skúšobnou verziou zadarmo, ak ju obchod ponúka) alebo jednorazový nákup „navždy“. Aplikácia a obchod ukážu aktuálnu cenu vo vašej mene pred potvrdením.",
+      "s3_h": "3. Predplatné, obnovenie a zrušenie",
+      "s3_p": "Platba sa strhne z vášho účtu Google Play alebo Apple ID pri potvrdení nákupu, pri ročnom pláne so skúšobnou verziou po jej skončení. <strong>Predplatné sa automaticky obnovuje</strong> na rovnaké obdobie a za rovnakú cenu, pokiaľ ho nezrušíte aspoň 24 hodín pred koncom aktuálneho obdobia. Zrušiť ho môžete kedykoľvek v Google Play (Platby a predplatné) alebo v Nastaveniach iPhonu (Apple ID → Predplatné); Pro potom zostane do konca zaplateného obdobia. Nevyužitá časť skúšobnej verzie zadarmo prepadá zakúpením predplatného.",
+      "s4_h": "4. Vrátenie peňazí",
+      "s4_p": "Platby a vrátenie peňazí vybavuje obchod, v ktorom ste nakúpili, podľa svojich pravidiel (Google Play alebo Apple). O vrátenie peňazí žiadajte tam.",
+      "s5_h": "5. Skorší nákup „Odstrániť reklamy“",
+      "s5_p": "Ak ste si skôr kúpili jednorazové „Odstrániť reklamy“, máte ZbxView Pro navždy bez ďalších nákladov. Obnovíte ho cez „Obnoviť nákupy“ v Nastaveniach.",
+      "s6_h": "6. App Store",
+      "s6_p": "Pre aplikáciu stiahnutú z App Store platí aj <a href=\"https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\">štandardná licenčná zmluva Apple (EULA)</a>.",
+      "s7_h": "7. Zmeny a kontakt",
+      "s7_p": "Tieto podmienky sa môžu aktualizovať; aktuálna verzia je vždy na tejto stránke. Otázky: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>. Pozrite aj <a href=\"privacy.html\">Zásady ochrany súkromia</a>.",
+      "__title": "ZbxView — Podmienky používania",
+      "__desc": "Podmienky používania aplikácie ZbxView a predplatného ZbxView Pro."
+    };
+    var TR = {
+      "back": "← ZbxView'a dön",
+      "title": "Kullanım Koşulları",
+      "updated": "Uygulama: ZbxView · Son güncelleme: 20 Kasım 2026",
+      "intro": "Bu koşullar <strong>ZbxView</strong> mobil uygulaması (“uygulama”) ve <strong>ZbxView Pro</strong> aboneliği için geçerlidir. Uygulama <strong>Radek Pavlík</strong> (“geliştirici”) tarafından geliştirilir ve işletilir. Uygulamayı kullanarak bu koşulları kabul etmiş olursunuz.",
+      "s1_h": "1. Uygulama",
+      "s1_p": "ZbxView, Zabbix izleme sistemi için bir istemcidir. Yalnızca sizin kurduğunuz sunuculara bağlanır; geliştirici bu sunucuların içeriğinden veya erişilebilirliğinden ya da gösterilen verilere dayanarak alınan kararlardan sorumlu değildir. Uygulama, yasaların izin verdiği ölçüde, hiçbir garanti olmaksızın “olduğu gibi” sunulur.",
+      "s2_h": "2. ZbxView Pro",
+      "s2_p": "Ücretsiz sürüm reklam gösterir. <strong>ZbxView Pro</strong> reklamları tüm ekranlardan kaldırır. Pro; aylık abonelik, yıllık abonelik (mağaza sunuyorsa 30 günlük ücretsiz denemeyle) veya tek seferlik “ömür boyu” satın alma olarak sunulur. Uygulama ve mağaza, onaylamadan önce güncel fiyatı kendi para biriminizde gösterir.",
+      "s3_h": "3. Abonelik, yenileme ve iptal",
+      "s3_p": "Ödeme, satın almayı onayladığınızda ya da denemeli yıllık planda deneme süresi sona erdiğinde Google Play hesabınızdan veya Apple ID'nizden tahsil edilir. Mevcut dönem bitmeden en az 24 saat önce iptal etmediğiniz sürece <strong>abonelik aynı süre ve fiyatla otomatik olarak yenilenir</strong>. İstediğiniz zaman Google Play'de (Ödemeler ve abonelikler) veya iPhone Ayarlarında (Apple ID → Abonelikler) iptal edebilirsiniz; Pro bu durumda ödenen dönemin sonuna kadar kalır. Abonelik satın aldığınızda ücretsiz denemenin kullanılmayan kısmı geçersiz olur.",
+      "s4_h": "4. İadeler",
+      "s4_p": "Ödemeler ve iadeler, satın aldığınız mağaza tarafından kendi kurallarına göre (Google Play veya Apple) yürütülür. Lütfen iadeyi orada talep edin.",
+      "s5_h": "5. Önceki “Reklamları kaldır” satın alımı",
+      "s5_p": "Daha önce tek seferlik “Reklamları kaldır” satın aldıysanız, ek ücret ödemeden ZbxView Pro ömür boyu sizindir. Geri almak için Ayarlar'da “Satın alımları geri yükle”yi kullanın.",
+      "s6_h": "6. App Store",
+      "s6_p": "App Store'dan indirilen uygulama için <a href=\"https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\">Apple Standart Lisans Sözleşmesi (EULA)</a> de geçerlidir.",
+      "s7_h": "7. Değişiklikler ve iletişim",
+      "s7_p": "Bu koşullar güncellenebilir; güncel sürüm her zaman bu sayfadadır. Sorular: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>. Ayrıca bkz. <a href=\"privacy.html\">Gizlilik Politikası</a>.",
+      "__title": "ZbxView — Kullanım Koşulları",
+      "__desc": "ZbxView uygulamasının ve ZbxView Pro aboneliğinin kullanım koşulları."
+    };
+    var ZH = {
+      "back": "← 返回 ZbxView",
+      "title": "使用条款",
+      "updated": "应用：ZbxView · 最后更新：2026 年 11 月 20 日",
+      "intro": "本条款适用于 <strong>ZbxView</strong> 移动应用（“应用”）和 <strong>ZbxView Pro</strong> 订阅。应用由 <strong>Radek Pavlík</strong>（“开发者”）开发和运营。使用本应用即表示您同意本条款。",
+      "s1_h": "1. 应用",
+      "s1_p": "ZbxView 是 Zabbix 监控系统的客户端。它只连接您自己设置的服务器；开发者不对这些服务器的内容或可用性负责，也不对基于所显示数据作出的决定负责。在法律允许的范围内，应用按“原样”提供，不附带任何保证。",
+      "s2_h": "2. ZbxView Pro",
+      "s2_p": "免费版会显示广告。<strong>ZbxView Pro</strong> 会在所有屏幕上去除广告。Pro 提供按月订阅、按年订阅（在应用商店提供的情况下含 30 天免费试用）或一次性“永久”购买。在您确认之前，应用和应用商店会以您的货币显示当前价格。",
+      "s3_h": "3. 订阅、续订和取消",
+      "s3_p": "费用在您确认购买时从您的 Google Play 账户或 Apple ID 扣除；对于含试用期的年度订阅，则在试用期结束时扣除。<strong>订阅会自动续订</strong>，周期和价格不变，除非您在当前周期结束前至少 24 小时取消。您可以随时在 Google Play（付款和订阅）或 iPhone 设置（Apple ID → 订阅）中取消；Pro 将保留到已付费周期结束。购买订阅时，免费试用中未使用的部分将作废。",
+      "s4_h": "4. 退款",
+      "s4_p": "付款和退款由您购买所在的应用商店（Google Play 或 Apple）按其规则处理。请在那里申请退款。",
+      "s5_h": "5. 此前购买的“去除广告”",
+      "s5_p": "如果您之前购买过一次性的“去除广告”，您将永久拥有 ZbxView Pro，无需再付费。在设置中使用“恢复购买”即可找回。",
+      "s6_h": "6. App Store",
+      "s6_p": "对于从 App Store 下载的应用，<a href=\"https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\">Apple 标准许可协议 (EULA)</a> 同样适用。",
+      "s7_h": "7. 变更与联系",
+      "s7_p": "本条款可能会更新；最新版本始终发布在本页面。如有疑问：<a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>。另请参阅<a href=\"privacy.html\">隐私政策</a>。",
+      "__title": "ZbxView — 使用条款",
+      "__desc": "ZbxView 应用和 ZbxView Pro 订阅的使用条款。"
+    };
+    var KO = {
+      "back": "← ZbxView로 돌아가기",
+      "title": "이용약관",
+      "updated": "앱: ZbxView · 최종 업데이트: 2026년 11월 20일",
+      "intro": "이 약관은 <strong>ZbxView</strong> 모바일 앱(“앱”)과 <strong>ZbxView Pro</strong> 구독에 적용됩니다. 앱은 <strong>Radek Pavlík</strong>(“개발자”)가 개발하고 운영합니다. 앱을 사용하면 이 약관에 동의하는 것입니다.",
+      "s1_h": "1. 앱",
+      "s1_p": "ZbxView는 Zabbix 모니터링 시스템용 클라이언트입니다. 사용자가 직접 설정한 서버에만 연결하며, 개발자는 해당 서버의 콘텐츠나 가용성, 표시된 데이터를 바탕으로 내린 결정에 대해 책임지지 않습니다. 앱은 법이 허용하는 범위에서 보증 없이 “있는 그대로” 제공됩니다.",
+      "s2_h": "2. ZbxView Pro",
+      "s2_p": "무료 버전에는 광고가 표시됩니다. <strong>ZbxView Pro</strong>는 모든 화면에서 광고를 제거합니다. Pro는 월간 구독, 연간 구독(스토어가 제공하는 경우 30일 무료 체험 포함) 또는 일회성 “평생” 구매로 이용할 수 있습니다. 앱과 스토어는 확인 전에 현지 통화로 현재 가격을 표시합니다.",
+      "s3_h": "3. 구독, 갱신 및 해지",
+      "s3_p": "결제는 구매를 확인할 때, 또는 체험이 포함된 연간 요금제의 경우 체험이 끝날 때 Google Play 계정이나 Apple ID로 청구됩니다. 현재 기간이 끝나기 최소 24시간 전에 해지하지 않으면 <strong>구독은 같은 기간과 가격으로 자동 갱신됩니다</strong>. 언제든지 Google Play(결제 및 구독) 또는 iPhone 설정(Apple ID → 구독)에서 해지할 수 있으며, Pro는 결제한 기간이 끝날 때까지 유지됩니다. 구독을 구매하면 무료 체험의 남은 기간은 소멸됩니다.",
+      "s4_h": "4. 환불",
+      "s4_p": "결제와 환불은 구매한 스토어(Google Play 또는 Apple)가 자체 규정에 따라 처리합니다. 환불은 해당 스토어에 요청하세요.",
+      "s5_h": "5. 이전의 “광고 제거” 구매",
+      "s5_p": "이전에 일회성 “광고 제거”를 구매했다면 추가 비용 없이 ZbxView Pro를 평생 이용할 수 있습니다. 설정의 “구매 복원”으로 다시 받으세요.",
+      "s6_h": "6. App Store",
+      "s6_p": "App Store에서 내려받은 앱에는 <a href=\"https://www.apple.com/legal/internet-services/itunes/dev/stdeula/\">Apple 표준 라이선스 계약(EULA)</a>도 적용됩니다.",
+      "s7_h": "7. 변경 및 연락처",
+      "s7_p": "이 약관은 업데이트될 수 있으며, 최신 버전은 항상 이 페이지에 있습니다. 문의: <a href=\"mailto:pavlikradek@gmail.com\">pavlikradek@gmail.com</a>. <a href=\"privacy.html\">개인정보 처리방침</a>도 참고하세요.",
+      "__title": "ZbxView — 이용약관",
+      "__desc": "ZbxView 앱 및 ZbxView Pro 구독의 이용약관."
+    };
+    var DICTS = { en: EN, uk: UK, sk: SK, tr: TR, zh: ZH, ko: KO };
     var htmlEl = document.documentElement;
     var descEl = document.querySelector('meta[name="description"]');
     htmlEl.__csTitle = document.title;
@@ -79,7 +194,7 @@
       }
       document.title = dict ? dict.__title : htmlEl.__csTitle;
       if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
-      htmlEl.lang = lang;
+      htmlEl.lang = lang === 'zh' ? 'zh-Hans' : lang;
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
       var opts = document.querySelectorAll('.lang-opt');
       for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
@@ -91,7 +206,7 @@
     var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
     var nav = (navigator.language || '').slice(0, 2).toLowerCase();
     var lang = saved
-      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+      || (nav === 'cs' ? 'cs' : (DICTS[nav] ? nav : 'en'));
     apply(lang);
   })();
   </script>

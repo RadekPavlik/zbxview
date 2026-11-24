@@ -19,6 +19,11 @@
         <button class="lang-opt" data-lang="es">ES</button>
         <button class="lang-opt" data-lang="fr">FR</button>
         <button class="lang-opt" data-lang="lv">LV</button>
+        <button class="lang-opt" data-lang="uk">UA</button>
+        <button class="lang-opt" data-lang="sk">SK</button>
+        <button class="lang-opt" data-lang="tr">TR</button>
+        <button class="lang-opt" data-lang="zh">ZH</button>
+        <button class="lang-opt" data-lang="ko">KO</button>
       </div>
     </div>
 
@@ -186,7 +191,137 @@
       "__title": "ZbxView — Klienta sertifikāts (mTLS) – Zabbix aiz Cloudflare",
       "__desc": "Kā novietot Zabbix aiz Cloudflare ar klienta sertifikātu (mTLS) un nogādāt sertifikātu lietotnē ZbxView: ar QR kodu, caur MDM vai manuāli."
     };
-    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var UK = {
+      "title": "Клієнтський сертифікат (mTLS) – Zabbix за Cloudflare",
+      "intro": "Якщо ви відкриваєте Zabbix в інтернет через Cloudflare (наприклад через Cloudflare Tunnel), можна налаштувати Cloudflare так, щоб він пропускав лише пристрої з <strong>клієнтським сертифікатом</strong>. Хто його не має, навіть не дістанеться до сторінки входу в Zabbix. ZbxView уміє надсилати сертифікат: завантажений для сервера, з вашого MDM або прямо в QR-коді ZbxView connect.",
+      "s1_h": "1. Випустіть сертифікат у Cloudflare",
+      "s1_1": "У Cloudflare відкрийте свій домен → <em>SSL/TLS</em> → <em>Client Certificates</em> → <em>Create Certificate</em>.",
+      "s1_2": "Залиште <em>Generate private key and CSR with Cloudflare</em> і виберіть тип ключа <strong>ECDSA (P-256)</strong>. Лише такий ключ поміститься в QR-код ZbxView connect; для MDM і ручного завантаження підійде й RSA. Строк дії задайте відповідно до політики вашої компанії.",
+      "s1_3": "Виберіть формат <em>PEM</em> і збережіть <strong>і сертифікат, і приватний ключ</strong>. Cloudflare показує ключ лише зараз, більше ніколи.",
+      "s1_4": "На тій самій сторінці в розділі <em>Hosts</em> додайте ім’я хоста Zabbix, наприклад <code>zabbix.example.com</code>. Лише тоді Cloudflare почне вимагати від клієнтів сертифікат.",
+      "s2_h": "2. Пропускайте лише пристрої із сертифікатом",
+      "s2_p": "У <em>Security</em> → <em>WAF</em> → <em>Custom rules</em> створіть правило з дією <strong>Block</strong> і таким виразом (<em>Edit expression</em>):",
+      "s2_p2": "Вебінтерфейс Zabbix тоді не відкриється в браузері без сертифіката. Імпортуйте сертифікат у браузери адміністраторів або використовуйте для вебу інше ім’я хоста.",
+      "s3_h": "3. Доставте сертифікат на телефони",
+      "s3_qr_h": "QR-код із модуля ZbxView connect",
+      "s3_qr_p": "Адміністратор завантажує сертифікат із ключем (.p12 / .pfx або .pem, ключ EC) у <em>Administration → Mobile configuration</em>. Телефон отримує його під час під’єднання; код розділяється на три QR-коди, що змінюються по черзі. <a href=\"connect.html\">Посібник до модуля</a>",
+      "s3_mdm_h": "MDM / Intune",
+      "s3_mdm_p": "Ключі <code>client_cert</code>, <code>client_key</code>, <code>client_cert_hosts</code> і за потреби <code>client_cert_locked</code>, щоб користувач не міг його змінити. <a href=\"mdm.html\">Таблиця ключів</a>",
+      "s3_app_h": "Вручну в застосунку",
+      "s3_app_p": "Для сервера в розділі <em>Безпека з’єднання</em> увімкніть клієнтський сертифікат і завантажте файл .p12 / .pfx або вставте PEM. Кожен сервер може мати власний сертифікат.",
+      "s4_h": "4. Перевірте",
+      "s4_p": "Для сервера застосунок показує стан сертифіката (<em>Активний</em>), кому його видано і коли він спливає; кнопка <em>Тест</em> перевіряє з’єднання. І навпаки: браузер без сертифіката має отримати сторінку блокування Cloudflare.",
+      "note": "Застосунок надсилає сертифікат лише на сервери, указані разом із ним (адреса сервера або <code>client_cert_hosts</code>), і ніколи на інші. Ключ залишається у сховищі ключів пристрою. Стежте за строком дії: Cloudflare показує його біля сертифіката, а застосунок — для сервера.",
+      "back": "← назад до ZbxView",
+      "foot_back": "← назад на головну сторінку",
+      "__title": "ZbxView — Клієнтський сертифікат (mTLS) – Zabbix за Cloudflare",
+      "__desc": "Як розмістити Zabbix за Cloudflare із клієнтським сертифікатом (mTLS) і доставити сертифікат у застосунок ZbxView: QR-кодом, через MDM або вручну."
+    };
+    var SK = {
+      "title": "Klientsky certifikát (mTLS) – Zabbix za Cloudflare",
+      "intro": "Keď Zabbix sprístupníte na internet cez Cloudflare (napríklad cez Cloudflare Tunnel), môžete nechať Cloudflare púšťať len zariadenia, ktoré sa preukážu <strong>klientskym certifikátom</strong>. Kto ho nemá, nedostane sa ani na prihlasovaciu stránku Zabbixu. ZbxView certifikát posielať vie: nahraný pri serveri, z vášho MDM alebo priamo v QR kóde ZbxView connect.",
+      "s1_h": "1. Vydajte certifikát v Cloudflare",
+      "s1_1": "V Cloudflare otvorte svoju doménu → <em>SSL/TLS</em> → <em>Client Certificates</em> → <em>Create Certificate</em>.",
+      "s1_2": "Ponechajte <em>Generate private key and CSR with Cloudflare</em> a ako typ kľúča zvoľte <strong>ECDSA (P-256)</strong>. Len taký kľúč sa zmestí do QR kódu ZbxView connect; pre MDM a ručné nahratie by stačilo aj RSA. Platnosť nastavte podľa firemnej politiky.",
+      "s1_3": "Zvoľte formát <em>PEM</em> a uložte si <strong>certifikát aj privátny kľúč</strong>. Kľúč Cloudflare ukáže len teraz, už nikdy viac.",
+      "s1_4": "Na tej istej stránke v časti <em>Hosts</em> pridajte názov hostiteľa Zabbixu, napr. <code>zabbix.example.com</code>. Až potom začne Cloudflare od klientov certifikát vyžadovať.",
+      "s2_h": "2. Púšťajte len zariadenia s certifikátom",
+      "s2_p": "V <em>Security</em> → <em>WAF</em> → <em>Custom rules</em> vytvorte pravidlo s akciou <strong>Block</strong> a týmto výrazom (<em>Edit expression</em>):",
+      "s2_p2": "Webové rozhranie Zabbixu sa potom bez certifikátu v prehliadači neotvorí. Certifikát naimportujte do prehliadačov správcov alebo pre web použite iný názov hostiteľa.",
+      "s3_h": "3. Dostaňte certifikát do telefónov",
+      "s3_qr_h": "QR kód z modulu ZbxView connect",
+      "s3_qr_p": "Správca nahrá certifikát s kľúčom (.p12 / .pfx alebo .pem, kľúč EC) v <em>Administration → Mobile configuration</em>. Telefón ho dostane pri párovaní; kód sa rozdelí do troch striedajúcich sa QR kódov. <a href=\"connect.html\">Návod k modulu</a>",
+      "s3_mdm_h": "MDM / Intune",
+      "s3_mdm_p": "Kľúče <code>client_cert</code>, <code>client_key</code>, <code>client_cert_hosts</code> a voliteľne <code>client_cert_locked</code>, aby ho používateľ nemohol zmeniť. <a href=\"mdm.html\">Tabuľka kľúčov</a>",
+      "s3_app_h": "Ručne v aplikácii",
+      "s3_app_p": "Pri serveri v sekcii <em>Zabezpečenie pripojenia</em> zapnite klientsky certifikát a nahrajte súbor .p12 / .pfx alebo vložte PEM. Každý server môže mať vlastný certifikát.",
+      "s4_h": "4. Overte",
+      "s4_p": "Pri serveri aplikácia ukazuje stav certifikátu (<em>Aktívny</em>), komu bol vydaný a kedy vyprší; tlačidlo <em>Test</em> overí pripojenie. A naopak: prehliadač bez certifikátu musí dostať blokovaciu stránku Cloudflare.",
+      "note": "Aplikácia posiela certifikát len serverom, ku ktorým je uvedený (adresa servera alebo <code>client_cert_hosts</code>), nikdy žiadnemu inému. Kľúč zostáva v keystore zariadenia. Sledujte expiráciu: Cloudflare ukazuje platnosť pri certifikáte a aplikácia pri serveri.",
+      "back": "← späť na ZbxView",
+      "foot_back": "← späť na hlavnú stránku",
+      "__title": "ZbxView — Klientsky certifikát (mTLS) – Zabbix za Cloudflare",
+      "__desc": "Ako dať Zabbix za Cloudflare s klientskym certifikátom (mTLS) a dostať certifikát do aplikácie ZbxView: QR kódom, cez MDM alebo ručne."
+    };
+    var TR = {
+      "title": "İstemci sertifikası (mTLS) – Cloudflare arkasında Zabbix",
+      "intro": "Zabbix'i Cloudflare üzerinden internete açtığınızda (örneğin Cloudflare Tunnel ile), Cloudflare'in yalnızca <strong>istemci sertifikası</strong> sunan cihazları geçirmesini sağlayabilirsiniz. Sertifikası olmayan biri Zabbix giriş sayfasına bile ulaşamaz. ZbxView sertifikayı gönderebilir: sunucu için yüklenmiş olarak, MDM'inizden ya da doğrudan ZbxView connect QR kodunda.",
+      "s1_h": "1. Sertifikayı Cloudflare'de oluşturun",
+      "s1_1": "Cloudflare'de alan adınızı açın → <em>SSL/TLS</em> → <em>Client Certificates</em> → <em>Create Certificate</em>.",
+      "s1_2": "<em>Generate private key and CSR with Cloudflare</em> seçeneğini bırakın ve anahtar türü olarak <strong>ECDSA (P-256)</strong> seçin. Yalnızca böyle bir anahtar ZbxView connect QR koduna sığar; MDM ve elle yükleme için RSA da olur. Geçerlilik süresini şirket politikanıza göre ayarlayın.",
+      "s1_3": "<em>PEM</em> biçimini seçin ve <strong>hem sertifikayı hem de özel anahtarı</strong> kaydedin. Cloudflare anahtarı yalnızca şimdi gösterir, bir daha asla.",
+      "s1_4": "Aynı sayfada, <em>Hosts</em> altında Zabbix ana bilgisayar adını ekleyin, örn. <code>zabbix.example.com</code>. Cloudflare ancak bundan sonra istemcilerden sertifika istemeye başlar.",
+      "s2_h": "2. Yalnızca sertifikalı cihazları geçirin",
+      "s2_p": "<em>Security</em> → <em>WAF</em> → <em>Custom rules</em> içinde eylemi <strong>Block</strong> olan ve şu ifadeyi içeren bir kural oluşturun (<em>Edit expression</em>):",
+      "s2_p2": "Bundan sonra Zabbix web arayüzü sertifikası olmayan bir tarayıcıda açılmaz. Sertifikayı yöneticilerinizin tarayıcılarına aktarın ya da web için farklı bir ana bilgisayar adı kullanın.",
+      "s3_h": "3. Sertifikayı telefonlara aktarın",
+      "s3_qr_h": "ZbxView connect modülünden QR kodu",
+      "s3_qr_p": "Yönetici, sertifikayı anahtarıyla birlikte (.p12 / .pfx veya .pem, EC anahtarı) <em>Administration → Mobile configuration</em> içinde yükler. Telefon onu eşleştirme sırasında alır; kod dönüşümlü üç QR koduna bölünür. <a href=\"connect.html\">Modül kılavuzu</a>",
+      "s3_mdm_h": "MDM / Intune",
+      "s3_mdm_p": "<code>client_cert</code>, <code>client_key</code>, <code>client_cert_hosts</code> anahtarları ve kullanıcının değiştirememesi için isteğe bağlı olarak <code>client_cert_locked</code>. <a href=\"mdm.html\">Anahtar tablosu</a>",
+      "s3_app_h": "Uygulamada elle",
+      "s3_app_p": "Sunucu için <em>Bağlantı güvenliği</em> bölümünde istemci sertifikasını açın ve bir .p12 / .pfx dosyası yükleyin ya da PEM yapıştırın. Her sunucunun kendi sertifikası olabilir.",
+      "s4_h": "4. Doğrulayın",
+      "s4_p": "Uygulama sunucu için sertifika durumunu (<em>Etkin</em>), kime verildiğini ve ne zaman sona ereceğini gösterir; <em>Test</em> düğmesi bağlantıyı denetler. Tersi de geçerli: sertifikası olmayan bir tarayıcı Cloudflare'in engelleme sayfasını almalıdır.",
+      "note": "Uygulama sertifikayı yalnızca onunla birlikte listelenen sunuculara gönderir (sunucu adresi veya <code>client_cert_hosts</code>), başka hiçbirine göndermez. Anahtar cihazın anahtar deposunda kalır. Sona erme tarihini takip edin: Cloudflare geçerliliği sertifikanın yanında, uygulama ise sunucu için gösterir.",
+      "back": "← ZbxView'a dön",
+      "foot_back": "← ana sayfaya dön",
+      "__title": "ZbxView — İstemci sertifikası (mTLS) – Cloudflare arkasında Zabbix",
+      "__desc": "Zabbix'i istemci sertifikasıyla (mTLS) Cloudflare arkasına koyma ve sertifikayı ZbxView uygulamasına aktarma: QR koduyla, MDM ile veya elle."
+    };
+    var ZH = {
+      "title": "客户端证书 (mTLS) – Cloudflare 后面的 Zabbix",
+      "intro": "当您通过 Cloudflare（例如通过 Cloudflare Tunnel）将 Zabbix 暴露到互联网时，可以让 Cloudflare 只放行出示<strong>客户端证书</strong>的设备。没有证书的人连 Zabbix 登录页面都看不到。ZbxView 可以发送该证书：为服务器上传、通过 MDM 下发，或直接包含在 ZbxView connect 二维码中。",
+      "s1_h": "1. 在 Cloudflare 中签发证书",
+      "s1_1": "在 Cloudflare 中打开您的域名 → <em>SSL/TLS</em> → <em>Client Certificates</em> → <em>Create Certificate</em>。",
+      "s1_2": "保留 <em>Generate private key and CSR with Cloudflare</em>，并选择 <strong>ECDSA (P-256)</strong> 作为密钥类型。只有这种密钥才能放进 ZbxView connect 二维码；对于 MDM 和手动上传，RSA 也可以。有效期请按公司政策设置。",
+      "s1_3": "选择 <em>PEM</em> 格式，并保存<strong>证书和私钥</strong>。Cloudflare 只在此时显示私钥，之后再也不会显示。",
+      "s1_4": "在同一页面的 <em>Hosts</em> 下添加 Zabbix 主机名，例如 <code>zabbix.example.com</code>。只有这样 Cloudflare 才会开始向客户端索取证书。",
+      "s2_h": "2. 只放行持有证书的设备",
+      "s2_p": "在 <em>Security</em> → <em>WAF</em> → <em>Custom rules</em> 中创建一条操作为 <strong>Block</strong> 的规则，并使用以下表达式（<em>Edit expression</em>）：",
+      "s2_p2": "此后，没有证书的浏览器将无法打开 Zabbix 网页前端。请将证书导入管理员的浏览器，或为网页使用其他主机名。",
+      "s3_h": "3. 将证书分发到手机",
+      "s3_qr_h": "来自 ZbxView connect 模块的二维码",
+      "s3_qr_p": "管理员在 <em>Administration → Mobile configuration</em> 中上传证书及其密钥（.p12 / .pfx 或 .pem，EC 密钥）。手机在配对时接收证书；代码会拆分为三个轮换显示的二维码。<a href=\"connect.html\">模块指南</a>",
+      "s3_mdm_h": "MDM / Intune",
+      "s3_mdm_p": "配置键 <code>client_cert</code>、<code>client_key</code>、<code>client_cert_hosts</code>，以及可选的 <code>client_cert_locked</code>（使用户无法更改）。<a href=\"mdm.html\">配置键表</a>",
+      "s3_app_h": "在应用中手动设置",
+      "s3_app_p": "在服务器的<em>连接安全</em>部分中开启客户端证书，然后上传 .p12 / .pfx 文件或粘贴 PEM。每台服务器都可以有自己的证书。",
+      "s4_h": "4. 验证",
+      "s4_p": "应用会为服务器显示证书状态（<em>有效</em>）、颁发对象和到期时间；<em>测试</em>按钮可检查连接。反过来，没有证书的浏览器必须看到 Cloudflare 的拦截页面。",
+      "note": "应用只会把证书发送给与之一同列出的服务器（服务器地址或 <code>client_cert_hosts</code>），绝不会发送给其他服务器。密钥保存在设备的密钥库中。请留意到期时间：Cloudflare 在证书旁显示有效期，应用则在服务器中显示。",
+      "back": "← 返回 ZbxView",
+      "foot_back": "← 返回主页",
+      "__title": "ZbxView — 客户端证书 (mTLS) – Cloudflare 后面的 Zabbix",
+      "__desc": "如何使用客户端证书 (mTLS) 将 Zabbix 置于 Cloudflare 之后，并将证书导入 ZbxView 应用：通过二维码、MDM 或手动方式。"
+    };
+    var KO = {
+      "title": "클라이언트 인증서 (mTLS) – Cloudflare 뒤의 Zabbix",
+      "intro": "Cloudflare(예: Cloudflare Tunnel)를 통해 Zabbix를 인터넷에 공개할 때, <strong>클라이언트 인증서</strong>를 제시하는 기기만 통과시키도록 Cloudflare를 설정할 수 있습니다. 인증서가 없는 사람은 Zabbix 로그인 페이지에도 도달하지 못합니다. ZbxView는 서버별로 업로드한 인증서, MDM에서 받은 인증서, 또는 ZbxView connect QR 코드에 포함된 인증서를 전송할 수 있습니다.",
+      "s1_h": "1. Cloudflare에서 인증서 발급",
+      "s1_1": "Cloudflare에서 도메인 → <em>SSL/TLS</em> → <em>Client Certificates</em> → <em>Create Certificate</em>를 엽니다.",
+      "s1_2": "<em>Generate private key and CSR with Cloudflare</em>를 그대로 두고 키 유형으로 <strong>ECDSA (P-256)</strong>을 선택합니다. 이 키만 ZbxView connect QR 코드에 들어갑니다. MDM이나 수동 업로드라면 RSA도 사용할 수 있습니다. 유효 기간은 회사 정책에 맞게 설정하세요.",
+      "s1_3": "<em>PEM</em> 형식을 선택하고 <strong>인증서와 개인 키를 모두</strong> 저장합니다. Cloudflare는 키를 지금 한 번만 보여 줍니다.",
+      "s1_4": "같은 페이지의 <em>Hosts</em>에서 Zabbix 호스트 이름(예: <code>zabbix.example.com</code>)을 추가합니다. 그래야 Cloudflare가 클라이언트에게 인증서를 요구하기 시작합니다.",
+      "s2_h": "2. 인증서가 있는 기기만 통과",
+      "s2_p": "<em>Security</em> → <em>WAF</em> → <em>Custom rules</em>에서 동작이 <strong>Block</strong>이고 다음 표현식(<em>Edit expression</em>)을 가진 규칙을 만듭니다:",
+      "s2_p2": "그러면 인증서가 없는 브라우저에서는 Zabbix 웹 프런트엔드가 열리지 않습니다. 관리자 브라우저에 인증서를 가져오거나, 웹용으로 다른 호스트 이름을 사용하세요.",
+      "s3_h": "3. 휴대폰에 인증서 배포",
+      "s3_qr_h": "ZbxView connect 모듈의 QR 코드",
+      "s3_qr_p": "관리자가 <em>Administration → Mobile configuration</em>에서 키가 포함된 인증서(.p12 / .pfx 또는 .pem, EC 키)를 업로드합니다. 휴대폰은 페어링할 때 인증서를 받으며, 코드는 번갈아 표시되는 QR 코드 세 개로 나뉩니다. <a href=\"connect.html\">모듈 가이드</a>",
+      "s3_mdm_h": "MDM / Intune",
+      "s3_mdm_p": "키 <code>client_cert</code>, <code>client_key</code>, <code>client_cert_hosts</code>, 그리고 사용자가 변경하지 못하게 하려면 선택적으로 <code>client_cert_locked</code>. <a href=\"mdm.html\">키 표</a>",
+      "s3_app_h": "앱에서 수동으로",
+      "s3_app_p": "서버의 <em>연결 보안</em> 섹션에서 클라이언트 인증서를 켜고 .p12 / .pfx 파일을 업로드하거나 PEM을 붙여 넣습니다. 서버마다 고유한 인증서를 사용할 수 있습니다.",
+      "s4_h": "4. 확인",
+      "s4_p": "앱은 서버의 인증서 상태(<em>활성</em>), 발급 대상과 만료일을 표시하며, <em>테스트</em> 버튼으로 연결을 확인합니다. 반대로, 인증서가 없는 브라우저에는 Cloudflare 차단 페이지가 표시되어야 합니다.",
+      "note": "앱은 인증서를 함께 지정된 서버(서버 주소 또는 <code>client_cert_hosts</code>)에만 보내며, 다른 곳에는 절대 보내지 않습니다. 키는 기기 키스토어에 보관됩니다. 만료에 유의하세요. Cloudflare는 인증서 옆에, 앱은 서버에 유효 기간을 표시합니다.",
+      "back": "← ZbxView로 돌아가기",
+      "foot_back": "← 메인 페이지로 돌아가기",
+      "__title": "ZbxView — 클라이언트 인증서 (mTLS) – Cloudflare 뒤의 Zabbix",
+      "__desc": "클라이언트 인증서(mTLS)로 Zabbix를 Cloudflare 뒤에 두고 인증서를 ZbxView 앱에 넣는 방법: QR 코드, MDM 또는 수동."
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV, uk: UK, sk: SK, tr: TR, zh: ZH, ko: KO };
     var htmlEl = document.documentElement;
     var descEl = document.querySelector('meta[name="description"]');
     htmlEl.__csTitle = document.title;
@@ -203,7 +338,7 @@
       }
       document.title = dict ? dict.__title : htmlEl.__csTitle;
       if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
-      htmlEl.lang = lang;
+      htmlEl.lang = lang === 'zh' ? 'zh-Hans' : lang;
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
       var opts = document.querySelectorAll('.lang-opt');
       for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
@@ -215,7 +350,7 @@
     var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
     var nav = (navigator.language || '').slice(0, 2).toLowerCase();
     var lang = saved
-      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+      || (nav === 'cs' ? 'cs' : (DICTS[nav] ? nav : 'en'));
     apply(lang);
   })();
   </script>

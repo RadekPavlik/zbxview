@@ -19,6 +19,11 @@
         <button class="lang-opt" data-lang="es">ES</button>
         <button class="lang-opt" data-lang="fr">FR</button>
         <button class="lang-opt" data-lang="lv">LV</button>
+        <button class="lang-opt" data-lang="uk">UA</button>
+        <button class="lang-opt" data-lang="sk">SK</button>
+        <button class="lang-opt" data-lang="tr">TR</button>
+        <button class="lang-opt" data-lang="zh">ZH</button>
+        <button class="lang-opt" data-lang="ko">KO</button>
       </div>
     </div>
 
@@ -237,7 +242,157 @@
       __title: "ZbxView — Dežūras",
       __desc: "Kā Zabbix sagatavot datus ZbxView Dežūru ekrānam — vienuma nosaukums, atslēga, JSON formāts un piemērs.",
     };
-    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV };
+    var UK = {
+      "back": "← назад до ZbxView",
+      "title": "Чергування",
+      "updated": "Застосунок: ZbxView · Екран «Чергування» в головному меню",
+      "intro": "Застосунок може показувати <strong>графік чергувань</strong> — хто зараз чергує, до котрої, і кнопки, щоб зателефонувати чи написати листа. Він нічого не завантажує ззовні: читає <strong>звичайну метрику (item) у вашому власному Zabbix</strong>, тож заповнюйте її так, як вам зручно.",
+      "s1_h": "1. Що шукає застосунок",
+      "s1_p": "Достатньо однієї метрики. Застосунок бере першу, що відповідає одній із умов:",
+      "s1_li1": "метрика з <strong>назвою</strong> <code>ZbxView on-call</code> (достатньо, щоб назва містила цей текст), або",
+      "s1_li2": "метрика з <strong>ключем</strong> <code>zbxview.oncall</code>.",
+      "s1_p2": "Метрика має бути <strong>активною</strong>, а її останнє значення — <strong>масивом JSON</strong>. Задайте їй текстовий тип (Text або Character). Якщо підходить кілька метрик, використовується та, що має найновіше значення.",
+      "s2_h": "2. Формат даних",
+      "s2_p": "Значення метрики — масив об’єктів. Один об’єкт — одна зміна:",
+      "th_field": "Поле",
+      "th_meaning": "Значення",
+      "k_kat": "Група, до якої належить зміна, — заголовок розділу в застосунку. <code>Cluster101_102</code> читається як «Cluster 101, 102», <code>NetworkInfrastructure</code> — як «Network Infrastructure».",
+      "k_ad": "Адреса електронної пошти, з якої також береться ім’я. З <code>J.Novak@company.com</code> застосунок покаже «J. Novak» і кнопку листа.",
+      "k_mobil": "Номер телефону. Пробіли й дужки допустимі — під час набору вони прибираються.",
+      "k_start": "Початок зміни, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      "k_end": "Кінець зміни, у тому ж форматі. Поточна зміна — та, чий проміжок містить теперішній момент.",
+      "k_hm": "Необов’язково. Номери об’єктів чи філій, розділені пробілом, комою або крапкою з комою; показуються біля контакту. Залиште порожнім, якщо зміна охоплює все. Застосунок читає <code>DIVIZE</code> з версії 0.49; старші версії читають <code>HM</code>, яке й далі працює.",
+      "s3_h": "3. Приклад",
+      "s4_h": "4. Як заповнити метрику",
+      "s4_p": "Застосунку байдуже — важить лише підсумкове значення. Звичайні способи: <strong>HTTP-агент</strong>, спрямований на кінцеву точку, що повертає JSON; <strong>скрипт</strong> (зовнішній або агента Zabbix), який бере графік звідти, де він зберігається; або файл через <code>vfs.file.contents</code> із кроком попередньої обробки, що перетворює CSV на JSON.",
+      "s5_h": "5. Як це виглядає в застосунку",
+      "s5_p": "Зміни згруповано за <code>Kategorie</code>, а та, що триває зараз, стоїть на початку свого розділу. Кожен контакт показує ім’я, номер телефону й e-mail — обидва як кнопки, тож можна зателефонувати чи написати прямо із застосунку. Угорі показано вік значення метрики.",
+      "note_privacy": "<strong>Зважайте на вміст:</strong> ця метрика містить імена, номери телефонів та адреси електронної пошти ваших людей, а її значення може прочитати кожен, кому дозволено бачити цю метрику в Zabbix. Розмістіть її в групі хостів з обмеженим доступом і не додавайте більше, ніж потрібно, щоб зв’язатися з людиною.",
+      "foot_back": "← назад на головну сторінку",
+      "__title": "ZbxView — Чергування",
+      "__desc": "Як підготувати дані в Zabbix для екрана «Чергування» в ZbxView — назва метрики, ключ, формат JSON і приклад."
+    };
+    var SK = {
+      "back": "← späť na ZbxView",
+      "title": "Pohotovosti",
+      "updated": "Aplikácia: ZbxView · Obrazovka Pohotovosti v hlavnom menu",
+      "intro": "Aplikácia vie zobraziť <strong>rozpis pohotovostí</strong> — kto má práve službu, dokedy, a tlačidlá na zavolanie alebo e-mail. Nič nesťahuje zvonku: číta <strong>bežnú položku vo vašom vlastnom Zabbixe</strong>, takže ju plníte, ako vám vyhovuje.",
+      "s1_h": "1. Čo aplikácia hľadá",
+      "s1_p": "Stačí jedna položka. Aplikácia vezme prvú, ktorá zodpovedá jednej z týchto podmienok:",
+      "s1_li1": "položka s <strong>názvom</strong> <code>ZbxView on-call</code> (stačí, aby tento text obsahovala), alebo",
+      "s1_li2": "položka s <strong>kľúčom</strong> <code>zbxview.oncall</code>.",
+      "s1_p2": "Položka musí byť <strong>monitorovaná</strong> a jej posledná hodnota musí byť <strong>pole JSON</strong>. Dajte jej textový typ (Text alebo Character). Ak zodpovedá viac položiek, použije sa tá s najnovšou hodnotou.",
+      "s2_h": "2. Formát dát",
+      "s2_p": "Hodnota položky je pole objektov. Jeden objekt je jedna služba:",
+      "th_field": "Pole",
+      "th_meaning": "Význam",
+      "k_kat": "Skupina, do ktorej služba patrí — nadpis sekcie v aplikácii. <code>Cluster101_102</code> sa zobrazí ako „Cluster 101, 102“, <code>NetworkInfrastructure</code> ako „Network Infrastructure“.",
+      "k_ad": "E-mailová adresa, z ktorej sa odvodí aj meno. Z <code>J.Novak@company.com</code> aplikácia zobrazí „J. Novak“ a tlačidlo e-mailu.",
+      "k_mobil": "Telefónne číslo. Medzery a zátvorky nevadia — pri vytáčaní sa odstránia.",
+      "k_start": "Začiatok služby, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      "k_end": "Koniec služby, rovnaký formát. Aktuálna služba je tá, ktorej rozsah obsahuje práve teraz.",
+      "k_hm": "Nepovinné. Čísla pobočiek alebo prevádzok oddelené medzerou, čiarkou alebo bodkočiarkou; zobrazia sa pri kontakte. Nechajte prázdne, ak služba pokrýva všetko. Aplikácia číta <code>DIVIZE</code> od verzie 0.49; staršie verzie čítajú <code>HM</code>, ktoré naďalej funguje.",
+      "s3_h": "3. Príklad",
+      "s4_h": "4. Ako položku plniť",
+      "s4_p": "Aplikácii je to jedno — záleží len na výslednej hodnote. Bežné spôsoby: <strong>HTTP agent</strong> nasmerovaný na endpoint, ktorý vracia JSON; <strong>skript</strong> (externý alebo Zabbix agent), ktorý stiahne rozpis odtiaľ, kde je uložený; alebo súbor cez <code>vfs.file.contents</code> s krokom predspracovania, ktorý prevedie CSV na JSON.",
+      "s5_h": "5. Ako to vyzerá v aplikácii",
+      "s5_p": "Služby sú zoskupené podľa <code>Kategorie</code> a práve prebiehajúca je navrchu svojej sekcie. Pri každom kontakte je meno, telefónne číslo a e-mail — oboje ako tlačidlá, takže voláte alebo píšete priamo z aplikácie. Navrchu je uvedený vek hodnoty položky.",
+      "note_privacy": "<strong>Dajte pozor, čo tam dávate:</strong> položka obsahuje mená, telefónne čísla a e-mailové adresy vašich ľudí a jej hodnotu si prečíta každý, kto smie položku v Zabbixe vidieť. Dajte ju do skupiny hostiteľov s obmedzeným prístupom a neuvádzajte viac, než je potrebné na zastihnutie človeka.",
+      "foot_back": "← späť na hlavnú stránku",
+      "__title": "ZbxView — Pohotovosti",
+      "__desc": "Ako pripraviť dáta v Zabbixe pre obrazovku Pohotovosti v ZbxView — názov položky, kľúč, formát JSON a príklad."
+    };
+    var TR = {
+      "back": "← ZbxView'a dön",
+      "title": "Nöbet",
+      "updated": "Uygulama: ZbxView · Ana menüdeki Nöbet ekranı",
+      "intro": "Uygulama bir <strong>nöbet çizelgesi</strong> gösterebilir — şu anda kimin nöbette olduğu, ne zamana kadar ve onu aramak veya e-posta göndermek için düğmeler. Dışarıdan hiçbir şey çekmez: <strong>kendi Zabbix'inizdeki sıradan bir öğeyi</strong> okur, böylece onu size uygun şekilde doldurursunuz.",
+      "s1_h": "1. Uygulamanın aradığı şey",
+      "s1_p": "Tek bir öğe yeterlidir. Uygulama, aşağıdakilerden birine uyan ilk öğeyi alır:",
+      "s1_li1": "<strong>adı</strong> <code>ZbxView on-call</code> olan bir öğe (bu metni içermesi yeterli) veya",
+      "s1_li2": "<strong>anahtarı</strong> <code>zbxview.oncall</code> olan bir öğe.",
+      "s1_p2": "Öğe <strong>izleniyor</strong> olmalı ve son değeri bir <strong>JSON dizisi</strong> olmalıdır. Ona metin türü verin (Text veya Character). Birden fazla öğe eşleşirse en yeni değere sahip olan kullanılır.",
+      "s2_h": "2. Veri biçimi",
+      "s2_p": "Öğe değeri bir nesne dizisidir. Bir nesne bir vardiyadır:",
+      "th_field": "Alan",
+      "th_meaning": "Anlamı",
+      "k_kat": "Vardiyanın ait olduğu grup — uygulamadaki bölüm başlığı. <code>Cluster101_102</code> “Cluster 101, 102”, <code>NetworkInfrastructure</code> ise “Network Infrastructure” olarak okunur.",
+      "k_ad": "E-posta adresi; ad da buradan gelir. <code>J.Novak@company.com</code> adresinden uygulama “J. Novak” ve bir e-posta düğmesi gösterir.",
+      "k_mobil": "Telefon numarası. Boşluklar ve parantezler sorun değil — arama için kaldırılırlar.",
+      "k_start": "Vardiyanın başlangıcı, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      "k_end": "Vardiyanın sonu, aynı biçim. Geçerli vardiya, aralığı şu anı içeren vardiyadır.",
+      "k_hm": "İsteğe bağlı. Boşluk, virgül veya noktalı virgülle ayrılmış şube veya lokasyon numaraları; kişinin yanında gösterilir. Vardiya her yeri kapsıyorsa boş bırakın. Uygulama <code>DIVIZE</code> alanını 0.49 sürümünden itibaren okur; eski sürümler <code>HM</code> alanını okur ve bu çalışmaya devam eder.",
+      "s3_h": "3. Örnek",
+      "s4_h": "4. Öğe nasıl doldurulur",
+      "s4_p": "Uygulama için fark etmez — yalnızca ortaya çıkan değer önemlidir. Yaygın yollar: JSON döndüren bir uç noktaya yönlendirilmiş bir <strong>HTTP agent</strong>; çizelgeyi bulunduğu yerden çeken bir <strong>betik</strong> (harici veya Zabbix agent); ya da CSV'yi JSON'a dönüştüren bir ön işleme adımıyla <code>vfs.file.contents</code> üzerinden bir dosya.",
+      "s5_h": "5. Uygulamada nasıl görünür",
+      "s5_p": "Vardiyalar <code>Kategorie</code> alanına göre gruplanır ve şu anda süren vardiya kendi bölümünün en üstündedir. Her kişi için bir ad, telefon numarası ve e-posta gösterilir — ikisi de düğme olarak, böylece doğrudan uygulamadan arayabilir veya yazabilirsiniz. Öğe değerinin yaşı en üstte gösterilir.",
+      "note_privacy": "<strong>İçine ne koyduğunuza dikkat edin:</strong> bu öğe çalışanlarınızın adlarını, telefon numaralarını ve e-posta adreslerini içerir ve değeri Zabbix'te öğeyi görme izni olan herkes tarafından okunabilir. Onu erişimi kısıtlı bir host grubuna koyun ve birine ulaşmak için gerekenden fazlasını eklemeyin.",
+      "foot_back": "← ana sayfaya dön",
+      "__title": "ZbxView — Nöbet",
+      "__desc": "ZbxView'daki Nöbet ekranı için Zabbix'te verilerin nasıl hazırlanacağı — öğe adı, anahtar, JSON biçimi ve bir örnek."
+    };
+    var ZH = {
+      "back": "← 返回 ZbxView",
+      "title": "值班",
+      "updated": "应用：ZbxView · 主菜单中的“值班”屏幕",
+      "intro": "应用可以显示<strong>值班表</strong> — 当前谁在值班、值到什么时候，以及拨打电话或发送邮件的按钮。它不从外部获取任何内容：它读取<strong>您自己 Zabbix 中的一个普通监控项</strong>，因此您可以按任何方便的方式填充它。",
+      "s1_h": "1. 应用查找什么",
+      "s1_p": "一个监控项就够了。应用会采用第一个满足以下任一条件的监控项：",
+      "s1_li1": "<strong>名称</strong>为 <code>ZbxView on-call</code> 的监控项（包含该文本即可），或",
+      "s1_li2": "<strong>键值</strong>为 <code>zbxview.oncall</code> 的监控项。",
+      "s1_p2": "该监控项必须处于<strong>监控</strong>状态，且最新值必须是 <strong>JSON 数组</strong>。请为其设置文本类型（Text 或 Character）。如果有多个监控项匹配，则使用值最新的那个。",
+      "s2_h": "2. 数据格式",
+      "s2_p": "监控项的值是一个对象数组。一个对象代表一个班次：",
+      "th_field": "字段",
+      "th_meaning": "含义",
+      "k_kat": "班次所属的组 — 即应用中的分区标题。<code>Cluster101_102</code> 显示为“Cluster 101, 102”，<code>NetworkInfrastructure</code> 显示为“Network Infrastructure”。",
+      "k_ad": "电子邮件地址，姓名也由此得出。对于 <code>J.Novak@company.com</code>，应用会显示“J. Novak”和一个邮件按钮。",
+      "k_mobil": "电话号码。可以包含空格和括号 — 拨号时会自动去除。",
+      "k_start": "班次开始时间，ISO 8601 格式（<code>2026-09-07T08:00:00</code>）。",
+      "k_end": "班次结束时间，格式相同。当前班次是时间范围包含此刻的那个班次。",
+      "k_hm": "可选。站点或分支编号，用空格、逗号或分号分隔；显示在联系人旁边。如果该班次覆盖全部范围，请留空。应用从 0.49 版起读取 <code>DIVIZE</code>；旧版本读取 <code>HM</code>，它仍然有效。",
+      "s3_h": "3. 示例",
+      "s4_h": "4. 如何填充监控项",
+      "s4_p": "应用并不关心方式 — 只有最终的值才重要。常见做法：指向返回 JSON 的端点的 <strong>HTTP agent</strong>；从值班表所在位置拉取数据的<strong>脚本</strong>（外部脚本或 Zabbix agent）；或者通过 <code>vfs.file.contents</code> 读取文件，并用预处理步骤将 CSV 转换为 JSON。",
+      "s5_h": "5. 在应用中的显示效果",
+      "s5_p": "班次按 <code>Kategorie</code> 分组，当前进行中的班次位于其分区顶部。每个联系人显示姓名、电话号码和电子邮件 — 两者都是按钮，因此可以直接在应用中拨打或写信。监控项值的时效显示在顶部。",
+      "note_privacy": "<strong>注意放入的内容：</strong>该监控项包含您员工的姓名、电话号码和电子邮件地址，任何有权在 Zabbix 中查看该监控项的人都可以读取其值。请将其放在访问受限的主机群组中，并且只包含联系某人所必需的信息。",
+      "foot_back": "← 返回主页",
+      "__title": "ZbxView — 值班",
+      "__desc": "如何在 Zabbix 中为 ZbxView 的“值班”屏幕准备数据 — 监控项名称、键值、JSON 格式和示例。"
+    };
+    var KO = {
+      "back": "← ZbxView로 돌아가기",
+      "title": "당직",
+      "updated": "앱: ZbxView · 메인 메뉴의 당직 화면",
+      "intro": "앱은 <strong>당직 일정</strong>을 보여 줄 수 있습니다. 지금 누가 언제까지 당직인지, 그리고 전화나 이메일을 보내는 버튼까지. 외부에서 아무것도 가져오지 않고 <strong>사용자 자신의 Zabbix에 있는 일반 아이템</strong>을 읽으므로 원하는 방식으로 채우면 됩니다.",
+      "s1_h": "1. 앱이 찾는 것",
+      "s1_p": "아이템 하나면 충분합니다. 앱은 다음 중 하나와 일치하는 첫 번째 아이템을 사용합니다:",
+      "s1_li1": "<strong>이름</strong>이 <code>ZbxView on-call</code>인 아이템(이 텍스트가 포함되기만 하면 됨), 또는",
+      "s1_li2": "<strong>키</strong>가 <code>zbxview.oncall</code>인 아이템.",
+      "s1_p2": "아이템은 <strong>모니터링 중</strong>이어야 하고 마지막 값은 <strong>JSON 배열</strong>이어야 합니다. 텍스트 유형(Text 또는 Character)으로 지정하세요. 여러 아이템이 일치하면 가장 최근 값을 가진 아이템이 사용됩니다.",
+      "s2_h": "2. 데이터 형식",
+      "s2_p": "아이템 값은 객체의 배열입니다. 객체 하나가 근무조 하나입니다:",
+      "th_field": "필드",
+      "th_meaning": "의미",
+      "k_kat": "근무조가 속한 그룹 — 앱의 섹션 제목입니다. <code>Cluster101_102</code>는 “Cluster 101, 102”로, <code>NetworkInfrastructure</code>는 “Network Infrastructure”로 표시됩니다.",
+      "k_ad": "이메일 주소이며 이름도 여기서 가져옵니다. <code>J.Novak@company.com</code>에서 앱은 “J. Novak”과 이메일 버튼을 표시합니다.",
+      "k_mobil": "전화번호. 공백과 괄호는 괜찮습니다. 전화를 걸 때 제거됩니다.",
+      "k_start": "근무 시작, ISO 8601 (<code>2026-09-07T08:00:00</code>).",
+      "k_end": "근무 종료, 같은 형식. 현재 근무조는 지금 시각을 범위에 포함하는 근무조입니다.",
+      "k_hm": "선택 사항. 공백, 쉼표 또는 세미콜론으로 구분한 사이트나 지점 번호로, 연락처 옆에 표시됩니다. 근무조가 전체를 담당하면 비워 두세요. 앱은 0.49 버전부터 <code>DIVIZE</code>를 읽으며, 이전 버전은 <code>HM</code>을 읽고 이 방식도 계속 작동합니다.",
+      "s3_h": "3. 예시",
+      "s4_h": "4. 아이템을 채우는 방법",
+      "s4_p": "앱은 방법을 따지지 않고 결과 값만 중요합니다. 일반적인 방법: JSON을 반환하는 엔드포인트를 가리키는 <strong>HTTP 에이전트</strong>, 당직표가 있는 곳에서 가져오는 <strong>스크립트</strong>(외부 스크립트 또는 Zabbix 에이전트), 또는 CSV를 JSON으로 바꾸는 전처리 단계와 함께 <code>vfs.file.contents</code>로 읽는 파일.",
+      "s5_h": "5. 앱에서 보이는 모습",
+      "s5_p": "근무조는 <code>Kategorie</code>별로 묶이며, 현재 진행 중인 근무조가 섹션 맨 위에 표시됩니다. 각 연락처에는 이름, 전화번호, 이메일이 표시되며 둘 다 버튼이므로 앱에서 바로 전화하거나 메일을 보낼 수 있습니다. 아이템 값의 경과 시간은 맨 위에 표시됩니다.",
+      "note_privacy": "<strong>넣는 내용에 주의하세요:</strong> 이 아이템에는 직원의 이름, 전화번호, 이메일 주소가 담기며, Zabbix에서 이 아이템을 볼 수 있는 사람은 누구나 값을 읽을 수 있습니다. 접근이 제한된 호스트 그룹에 두고, 연락에 필요한 것 이상은 넣지 마세요.",
+      "foot_back": "← 메인 페이지로 돌아가기",
+      "__title": "ZbxView — 당직",
+      "__desc": "ZbxView 당직 화면을 위해 Zabbix에서 데이터를 준비하는 방법 — 아이템 이름, 키, JSON 형식과 예시."
+    };
+    var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV, uk: UK, sk: SK, tr: TR, zh: ZH, ko: KO };
     var htmlEl = document.documentElement;
     var descEl = document.querySelector('meta[name="description"]');
     htmlEl.__csTitle = document.title;
@@ -254,7 +409,7 @@
       }
       document.title = dict ? dict.__title : htmlEl.__csTitle;
       if (descEl) descEl.setAttribute('content', dict ? dict.__desc : htmlEl.__csDesc);
-      htmlEl.lang = lang;
+      htmlEl.lang = lang === 'zh' ? 'zh-Hans' : lang;
       try { localStorage.setItem('zbxlang', lang); } catch (e) {}
       var opts = document.querySelectorAll('.lang-opt');
       for (var j = 0; j < opts.length; j++) opts[j].classList.toggle('active', opts[j].dataset.lang === lang);
@@ -266,7 +421,7 @@
     var saved; try { saved = localStorage.getItem('zbxlang'); } catch (e) {}
     var nav = (navigator.language || '').slice(0, 2).toLowerCase();
     var lang = saved
-      || (nav === 'cs' || nav === 'sk' ? 'cs' : (DICTS[nav] ? nav : 'en'));
+      || (nav === 'cs' ? 'cs' : (DICTS[nav] ? nav : 'en'));
     apply(lang);
   })();
   </script>

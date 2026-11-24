@@ -51,7 +51,7 @@ header.nav {
 @media (max-width: 1240px) { .nav nav { gap: 15px; font-size: 13px; } }
 @media (max-width: 1080px) { .nav nav { display: none; } }
 .nav nav a:hover { color: var(--text); }
-.lang-switch { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex: none; }
+.lang-switch { display: inline-flex; flex-wrap: wrap; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; flex: none; max-width: 100%; }
 .lang-opt { border: none; background: transparent; color: var(--muted); font-family: var(--mono); font-size: 12px; font-weight: 700; padding: 6px 11px; cursor: pointer; transition: color .15s, background .15s; }
 .lang-opt:hover { color: var(--text); }
 .lang-opt.active { background: var(--red); color: #fff; }
@@ -350,7 +350,7 @@ footer .disc { width: 100%; color: #5c6675; font-size: 11px; line-height: 1.5; }
 .doc a { color: var(--red-soft); text-decoration: underline; }
 .back { display: inline-block; margin-bottom: 24px; font-family: var(--mono); font-size: 13px; color: var(--muted); }
 .back:hover { color: var(--text); }
-.doc-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
+.doc-top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 6px; }
 .doc-top .back { margin-bottom: 0; }
 
 /* MDM guide: numbered steps, a key table and a callout. */
