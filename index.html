@@ -100,7 +100,7 @@
           <span><svg class="ic ic-s"><use href="#i-phone"/></svg>Android</span>
           <span><svg class="ic ic-s"><use href="#i-watch"/></svg>Wear OS</span>
           <span><svg class="ic ic-s"><use href="#i-tv"/></svg><span data-i18n="plat_tv">TV a kiosk</span></span>
-          <span class="dim" data-i18n="plat_ios">iOS ve vývoji</span>
+          <span><svg class="ic ic-s"><use href="#i-phone"/></svg><span data-i18n="plat_ios">iPhone, iPad a Apple Watch – brzy v App Store</span></span>
         </div>
       </div>
       <div class="devices" aria-hidden="true">
@@ -171,7 +171,7 @@
           <ol class="steps">
             <li><span class="num">1</span><span data-i18n="sc3_s1"><b>Otevři Připojení telefonu</b> v uživatelském nastavení Zabbixu.</span></li>
             <li><span class="num">2</span><span data-i18n="sc3_s2"><b>Naskenuj QR kód</b> v aplikaci: Přidat server → Naskenovat.</span></li>
-            <li><span class="num">3</span><span data-i18n="sc3_s3"><b>Hotovo.</b> Každý telefon má vlastní API token, který nevyprší.</span></li>
+            <li><span class="num">3</span><span data-i18n="sc3_s3"><b>Hotovo.</b> Každý telefon má vlastní API token, který nevyprší. Zařízení jde kdykoli přejmenovat nebo odebrat.</span></li>
           </ol>
           <a class="more" href="connect.html"><span data-i18n="sc3_link">Návod na instalaci modulu</span><svg class="ic"><use href="#i-arrow"/></svg></a>
         </div>
@@ -234,6 +234,42 @@
   </section>
 
   <!-- FEATURE GROUPS -->
+  <!-- NEWS -->
+  <section class="groups" id="news">
+    <div class="wrap">
+      <div class="head">
+        <h2 data-i18n="nw_h">Novinky</h2>
+        <p data-i18n="nw_p">Co je ve ZbxView nového.</p>
+      </div>
+      <div class="group-grid">
+        <div class="card">
+          <h3><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="nw1_h">iPhone, iPad a Apple Watch</span></h3>
+          <ul>
+            <li><b data-i18n="nw1_a">Aplikace pro iOS</b><span data-i18n="nw1_ad">Odeslaná ke schválení do App Store, brzy ke stažení.</span></li>
+            <li><b data-i18n="nw1_b">Widgety na ploše</b><span data-i18n="nw1_bd">Problémy a pohotovosti i na iPhonu.</span></li>
+            <li><b data-i18n="nw1_c">Apple Watch</b><span data-i18n="nw1_cd">Přehled a potvrzení problémů na hodinkách.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><svg class="ic"><use href="#i-checkc"/></svg><span data-i18n="nw2_h">ZbxView Pro jako předplatné</span></h3>
+          <ul>
+            <li><b data-i18n="nw2_a">Měsíčně nebo ročně</b><span data-i18n="nw2_ad">Roční tarif má prvních 30 dní zdarma.</span></li>
+            <li><b data-i18n="nw2_b">Nebo jednou navždy</b><span data-i18n="nw2_bd">Kdo dřív koupil odebrání reklam, má Pro navždy.</span></li>
+            <li><b data-i18n="nw2_c">Widgety a hodinky v Pro</b><span data-i18n="nw2_cd">Všichni je mají 30 dní zdarma, pak jsou součástí Pro.</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3><svg class="ic"><use href="#i-qr"/></svg><span data-i18n="nw3_h">Připojení telefonu 1.10</span></h3>
+          <ul>
+            <li><b data-i18n="nw3_a">Přejmenování zařízení</b><span data-i18n="nw3_ad">Tužkou u telefonu v Připojení telefonu.</span></li>
+            <li><b data-i18n="nw3_b">Každý telefon zvlášť</b><span data-i18n="nw3_bd">Nový kód ani odebrání neovlivní ostatní.</span></li>
+            <li><b data-i18n="nw3_c">Vlastní HTTP hlavičky</b><span data-i18n="nw3_cd">Pro brány typu Cloudflare Access.</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section class="groups">
     <div class="wrap">
       <div class="head">
@@ -264,7 +300,7 @@
           <ul>
             <li><b data-i18n="f6_h">Více serverů</b><span data-i18n="d_servers">Přepínání jedním klepnutím.</span></li>
             <li><b data-i18n="f9_h">Widget na plochu</b><span data-i18n="d_widget">Počet otevřených problémů na ploše.</span></li>
-            <li><b data-i18n="f17_h">Hodinky</b><span data-i18n="d_watch">Problémy a potvrzení z Wear OS.</span></li>
+            <li><b data-i18n="f17_h">Hodinky</b><span data-i18n="d_watch">Problémy a potvrzení z Wear OS i Apple Watch.</span></li>
             <li><b data-i18n="f11_h">Tmavý režim</b><span data-i18n="d_dark">Pro noční služby a OLED.</span></li>
           </ul>
         </div>
@@ -330,6 +366,7 @@
           <ul class="checks">
             <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="pro_1">Vše z Free</span></li>
             <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="pro_2">Bez reklam</span></li>
+            <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="pro_4">Widgety na ploše a Zabbix na hodinkách</span></li>
             <li><svg class="ic"><use href="#i-check"/></svg><span data-i18n="pro_3">Podpora dalšího vývoje</span></li>
           </ul>
           <a class="btn btn-primary" href="https://play.google.com/store/apps/details?id=app.zbxview" target="_blank" rel="noopener" data-i18n="pro_cta">Odemknout v aplikaci</a>
@@ -486,7 +523,7 @@
       "d_servers": "Switch with one tap.",
       "d_share": "A card to Teams, plain text to SMS.",
       "d_sync": "Settings between phone and tablet.",
-      "d_watch": "Problems and acknowledging from Wear OS.",
+      "d_watch": "Problems and acknowledging from Wear OS and Apple Watch.",
       "d_widget": "Open problems on your home screen.",
       "ent_b1": "Deployment via Intune / MDM",
       "ent_b2": "Server, token and certificate pre-filled",
@@ -566,7 +603,7 @@
       "opt_enterprise": "Interested in: Enterprise licence",
       "opt_general": "General question",
       "opt_pro": "Interested in: Pro (remove ads)",
-      "plat_ios": "iOS in development",
+      "plat_ios": "iPhone, iPad and Apple Watch – coming to the App Store",
       "plat_tv": "TV and kiosk",
       "pr_h": "Free, with optional Pro. Tailored for business.",
       "pr_p": "Every monitoring feature is in every edition.",
@@ -615,7 +652,7 @@
       "sc3_p": "The ZbxView connect module adds “Mobile connect” to Zabbix. Nobody types anything or copies tokens.",
       "sc3_s1": "<b>Open Mobile connect</b> in your Zabbix user settings.",
       "sc3_s2": "<b>Scan the QR code</b> in the app: Add server → Scan.",
-      "sc3_s3": "<b>Done.</b> Every phone gets its own API token that never expires.",
+      "sc3_s3": "<b>Done.</b> Every phone gets its own API token that never expires. Rename or remove a device any time.",
       "sc3_scan": "Scan in the ZbxView app",
       "sc3_tag": "03 · Pairing",
       "sc3_timer": "Code disappears in 4:52",
@@ -632,7 +669,31 @@
       "tr4": "11 languages",
       "tr5": "Ready for MDM / Intune",
       "__title": "ZbxView: Zabbix Client — Zabbix monitoring in your pocket",
-      "__desc": "ZbxView is a mobile client for Zabbix. Watch problems in real time, acknowledge and close events, host maps and dashboards — right from your phone."
+      "__desc": "ZbxView is a mobile client for Zabbix. Watch problems in real time, acknowledge and close events, host maps and dashboards — right from your phone.",
+      "nw_h": "What’s new",
+      "nw_p": "The latest in ZbxView.",
+      "nw1_h": "iPhone, iPad and Apple Watch",
+      "nw1_a": "The iOS app",
+      "nw1_ad": "Submitted to the App Store for review, available soon.",
+      "nw1_b": "Home-screen widgets",
+      "nw1_bd": "Problems and on-call duty on the iPhone too.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Overview and acknowledging problems on your wrist.",
+      "nw2_h": "ZbxView Pro as a subscription",
+      "nw2_a": "Monthly or yearly",
+      "nw2_ad": "The yearly plan starts with 30 days free.",
+      "nw2_b": "Or once for ever",
+      "nw2_bd": "If you removed ads before, you keep Pro for ever.",
+      "nw2_c": "Widgets and watch in Pro",
+      "nw2_cd": "Free for everyone for 30 days, then part of Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Rename a device",
+      "nw3_ad": "With the pencil next to the phone in Mobile connect.",
+      "nw3_b": "Every phone on its own",
+      "nw3_bd": "A new code or removing one does not affect the others.",
+      "nw3_c": "Custom HTTP headers",
+      "nw3_cd": "For gateways such as Cloudflare Access.",
+      "pro_4": "Home-screen widgets and Zabbix on your watch",
     };
     var DE = {
       "about_p3": "Rückmeldungen und Ideen für Funktionen sind willkommen. Melden Sie sich!",
@@ -654,7 +715,7 @@
       "d_servers": "Wechsel mit einem Tippen.",
       "d_share": "Karte in Teams, Klartext per SMS.",
       "d_sync": "Einstellungen zwischen Telefon und Tablet.",
-      "d_watch": "Probleme und Bestätigen auf Wear OS.",
+      "d_watch": "Probleme und Bestätigen von Wear OS und Apple Watch.",
       "d_widget": "Offene Probleme auf dem Startbildschirm.",
       "ent_b1": "Bereitstellung per Intune / MDM",
       "ent_b2": "Server, Token und Zertifikat vorbefüllt",
@@ -734,7 +795,7 @@
       "opt_enterprise": "Interesse an: Enterprise-Lizenz",
       "opt_general": "Allgemeine Frage",
       "opt_pro": "Interesse an: Pro (ohne Werbung)",
-      "plat_ios": "iOS in Entwicklung",
+      "plat_ios": "iPhone, iPad und Apple Watch – bald im App Store",
       "plat_tv": "TV und Kiosk",
       "pr_h": "Kostenlos, mit optionalem Pro. Für Firmen nach Maß.",
       "pr_p": "Alle Überwachungsfunktionen sind in jeder Edition enthalten.",
@@ -783,7 +844,7 @@
       "sc3_p": "Das Modul ZbxView connect ergänzt Zabbix um „Mobile connect“. Niemand tippt etwas ab oder kopiert Tokens.",
       "sc3_s1": "<b>Öffnen Sie Mobile connect</b> in den Zabbix-Benutzereinstellungen.",
       "sc3_s2": "<b>Scannen Sie den QR-Code</b> in der App: Server hinzufügen → Scannen.",
-      "sc3_s3": "<b>Fertig.</b> Jedes Telefon bekommt ein eigenes API-Token ohne Ablauf.",
+      "sc3_s3": "<b>Fertig.</b> Jedes Telefon bekommt ein eigenes API-Token ohne Ablauf. Geräte lassen sich jederzeit umbenennen oder entfernen.",
       "sc3_scan": "In der ZbxView-App scannen",
       "sc3_tag": "03 · Kopplung",
       "sc3_timer": "Code verschwindet in 4:52",
@@ -800,7 +861,31 @@
       "tr4": "11 Sprachen",
       "tr5": "Bereit für MDM / Intune",
       "__title": "ZbxView: Zabbix Client — Zabbix-Monitoring in der Hosentasche",
-      "__desc": "ZbxView ist ein mobiler Client für Zabbix. Probleme in Echtzeit verfolgen, Ereignisse bestätigen und schließen, Hostkarten und Dashboards — direkt vom Handy."
+      "__desc": "ZbxView ist ein mobiler Client für Zabbix. Probleme in Echtzeit verfolgen, Ereignisse bestätigen und schließen, Hostkarten und Dashboards — direkt vom Handy.",
+      "nw_h": "Neuigkeiten",
+      "nw_p": "Das Neueste aus ZbxView.",
+      "nw1_h": "iPhone, iPad und Apple Watch",
+      "nw1_a": "Die iOS-App",
+      "nw1_ad": "Zur Prüfung im App Store eingereicht, bald verfügbar.",
+      "nw1_b": "Widgets auf dem Startbildschirm",
+      "nw1_bd": "Probleme und Bereitschaft auch auf dem iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Übersicht und Bestätigen von Problemen am Handgelenk.",
+      "nw2_h": "ZbxView Pro als Abo",
+      "nw2_a": "Monatlich oder jährlich",
+      "nw2_ad": "Das Jahresabo beginnt mit 30 Tagen gratis.",
+      "nw2_b": "Oder einmalig für immer",
+      "nw2_bd": "Wer die Werbung schon entfernt hat, behält Pro für immer.",
+      "nw2_c": "Widgets und Uhr in Pro",
+      "nw2_cd": "30 Tage gratis für alle, danach Teil von Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Gerät umbenennen",
+      "nw3_ad": "Mit dem Stift neben dem Telefon in Mobile connect.",
+      "nw3_b": "Jedes Telefon für sich",
+      "nw3_bd": "Ein neuer Code oder das Entfernen betrifft die anderen nicht.",
+      "nw3_c": "Eigene HTTP-Header",
+      "nw3_cd": "Für Gateways wie Cloudflare Access.",
+      "pro_4": "Widgets auf dem Startbildschirm und Zabbix auf der Uhr",
     };
     var ES = {
       "about_p3": "Los comentarios y las ideas de nuevas funciones son bienvenidos. ¡Escríbeme!",
@@ -822,7 +907,7 @@
       "d_servers": "Cambia con un toque.",
       "d_share": "Tarjeta a Teams, texto plano por SMS.",
       "d_sync": "Ajustes entre teléfono y tableta.",
-      "d_watch": "Problemas y reconocimiento desde Wear OS.",
+      "d_watch": "Problemas y reconocimiento desde Wear OS y Apple Watch.",
       "d_widget": "Problemas abiertos en la pantalla de inicio.",
       "ent_b1": "Despliegue con Intune / MDM",
       "ent_b2": "Servidor, token y certificado ya rellenados",
@@ -902,7 +987,7 @@
       "opt_enterprise": "Interés en: licencia Enterprise",
       "opt_general": "Consulta general",
       "opt_pro": "Interés en: Pro (quitar anuncios)",
-      "plat_ios": "iOS en desarrollo",
+      "plat_ios": "iPhone, iPad y Apple Watch – pronto en el App Store",
       "plat_tv": "TV y kiosco",
       "pr_h": "Gratis, con Pro opcional. A medida para empresas.",
       "pr_p": "Todas las funciones de supervisión están en todas las ediciones.",
@@ -951,7 +1036,7 @@
       "sc3_p": "El módulo ZbxView connect añade a Zabbix «Mobile connect». Nadie teclea nada ni copia tokens.",
       "sc3_s1": "<b>Abre Mobile connect</b> en los ajustes de usuario de Zabbix.",
       "sc3_s2": "<b>Escanea el código QR</b> en la app: Añadir servidor → Escanear.",
-      "sc3_s3": "<b>Listo.</b> Cada teléfono recibe su propio token de API que no caduca.",
+      "sc3_s3": "<b>Listo.</b> Cada teléfono recibe su propio token de API que no caduca. Puedes renombrar o quitar un dispositivo cuando quieras.",
       "sc3_scan": "Escanéalo en la app ZbxView",
       "sc3_tag": "03 · Emparejamiento",
       "sc3_timer": "El código desaparece en 4:52",
@@ -968,7 +1053,31 @@
       "tr4": "11 idiomas",
       "tr5": "Listo para MDM / Intune",
       "__title": "ZbxView: Zabbix Client — la monitorización Zabbix en tu bolsillo",
-      "__desc": "ZbxView es un cliente móvil para Zabbix. Vigila los problemas en tiempo real, reconoce y cierra eventos, mapas de hosts y paneles, desde el móvil."
+      "__desc": "ZbxView es un cliente móvil para Zabbix. Vigila los problemas en tiempo real, reconoce y cierra eventos, mapas de hosts y paneles, desde el móvil.",
+      "nw_h": "Novedades",
+      "nw_p": "Lo último de ZbxView.",
+      "nw1_h": "iPhone, iPad y Apple Watch",
+      "nw1_a": "La app para iOS",
+      "nw1_ad": "Enviada a revisión en el App Store, disponible pronto.",
+      "nw1_b": "Widgets en la pantalla de inicio",
+      "nw1_bd": "Problemas y guardias también en el iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Resumen y reconocimiento de problemas en la muñeca.",
+      "nw2_h": "ZbxView Pro como suscripción",
+      "nw2_a": "Mensual o anual",
+      "nw2_ad": "El plan anual empieza con 30 días gratis.",
+      "nw2_b": "O un pago único para siempre",
+      "nw2_bd": "Si ya quitaste los anuncios, conservas Pro para siempre.",
+      "nw2_c": "Widgets y reloj en Pro",
+      "nw2_cd": "Gratis para todos 30 días, luego parte de Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Renombrar un dispositivo",
+      "nw3_ad": "Con el lápiz junto al teléfono en Mobile connect.",
+      "nw3_b": "Cada teléfono por separado",
+      "nw3_bd": "Un código nuevo o quitar uno no afecta a los demás.",
+      "nw3_c": "Cabeceras HTTP propias",
+      "nw3_cd": "Para pasarelas como Cloudflare Access.",
+      "pro_4": "Widgets en la pantalla de inicio y Zabbix en el reloj",
     };
     var FR = {
       "about_p3": "Retours et idées de fonctions bienvenus. Écrivez-moi !",
@@ -990,7 +1099,7 @@
       "d_servers": "Changement en un geste.",
       "d_share": "Une carte dans Teams, du texte brut par SMS.",
       "d_sync": "Réglages entre téléphone et tablette.",
-      "d_watch": "Problèmes et acquittement depuis Wear OS.",
+      "d_watch": "Problèmes et acquittement depuis Wear OS et Apple Watch.",
       "d_widget": "Problèmes ouverts sur l’écran d’accueil.",
       "ent_b1": "Déploiement via Intune / MDM",
       "ent_b2": "Serveur, jeton et certificat pré-remplis",
@@ -1070,7 +1179,7 @@
       "opt_enterprise": "Intérêt pour : licence Enterprise",
       "opt_general": "Question générale",
       "opt_pro": "Intérêt pour : Pro (sans publicité)",
-      "plat_ios": "iOS en développement",
+      "plat_ios": "iPhone, iPad et Apple Watch – bientôt sur l’App Store",
       "plat_tv": "TV et kiosque",
       "pr_h": "Gratuit, avec Pro en option. Sur mesure pour les entreprises.",
       "pr_p": "Toutes les fonctions de supervision sont dans chaque édition.",
@@ -1119,7 +1228,7 @@
       "sc3_p": "Le module ZbxView connect ajoute « Mobile connect » à Zabbix. Personne ne recopie rien ni ne colle de jetons.",
       "sc3_s1": "<b>Ouvrez Mobile connect</b> dans les paramètres utilisateur de Zabbix.",
       "sc3_s2": "<b>Scannez le QR code</b> dans l’app : Ajouter un serveur → Scanner.",
-      "sc3_s3": "<b>C’est fait.</b> Chaque téléphone reçoit son propre jeton API sans expiration.",
+      "sc3_s3": "<b>C’est fait.</b> Chaque téléphone reçoit son propre jeton API sans expiration. Renommez ou retirez un appareil à tout moment.",
       "sc3_scan": "Scannez dans l’app ZbxView",
       "sc3_tag": "03 · Appairage",
       "sc3_timer": "Le code disparaît dans 4:52",
@@ -1136,7 +1245,31 @@
       "tr4": "11 langues",
       "tr5": "Prêt pour MDM / Intune",
       "__title": "ZbxView : Zabbix Client — la supervision Zabbix dans votre poche",
-      "__desc": "ZbxView est un client mobile pour Zabbix. Suivez les problèmes en temps réel, acquittez et fermez les événements, cartes des hôtes et tableaux de bord — depuis votre téléphone."
+      "__desc": "ZbxView est un client mobile pour Zabbix. Suivez les problèmes en temps réel, acquittez et fermez les événements, cartes des hôtes et tableaux de bord — depuis votre téléphone.",
+      "nw_h": "Nouveautés",
+      "nw_p": "Les dernières nouveautés de ZbxView.",
+      "nw1_h": "iPhone, iPad et Apple Watch",
+      "nw1_a": "L’app iOS",
+      "nw1_ad": "Soumise à la validation de l’App Store, bientôt disponible.",
+      "nw1_b": "Widgets sur l’écran d’accueil",
+      "nw1_bd": "Problèmes et astreintes aussi sur l’iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Vue d’ensemble et acquittement des problèmes au poignet.",
+      "nw2_h": "ZbxView Pro en abonnement",
+      "nw2_a": "Mensuel ou annuel",
+      "nw2_ad": "L’abonnement annuel commence par 30 jours gratuits.",
+      "nw2_b": "Ou une fois pour toujours",
+      "nw2_bd": "Si vous aviez retiré les publicités, vous gardez Pro à vie.",
+      "nw2_c": "Widgets et montre dans Pro",
+      "nw2_cd": "Gratuits pour tous pendant 30 jours, puis inclus dans Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Renommer un appareil",
+      "nw3_ad": "Avec le crayon à côté du téléphone dans Mobile connect.",
+      "nw3_b": "Chaque téléphone à part",
+      "nw3_bd": "Un nouveau code ou une suppression n’affecte pas les autres.",
+      "nw3_c": "En-têtes HTTP personnalisés",
+      "nw3_cd": "Pour les passerelles comme Cloudflare Access.",
+      "pro_4": "Widgets sur l’écran d’accueil et Zabbix sur la montre",
     };
     var LV = {
       "about_p3": "Atsauksmes un ieteikumi par funkcijām ir laipni gaidīti. Sazinieties!",
@@ -1158,7 +1291,7 @@
       "d_servers": "Pārslēgšana ar vienu pieskārienu.",
       "d_share": "Kartīte uz Teams, vienkāršs teksts SMS.",
       "d_sync": "Iestatījumi starp tālruni un planšeti.",
-      "d_watch": "Problēmas un apstiprināšana no Wear OS.",
+      "d_watch": "Problēmas un apstiprināšana no Wear OS un Apple Watch.",
       "d_widget": "Atvērtās problēmas sākuma ekrānā.",
       "ent_b1": "Izvietošana ar Intune / MDM",
       "ent_b2": "Serveris, pilnvara un sertifikāts jau aizpildīti",
@@ -1238,7 +1371,7 @@
       "opt_enterprise": "Interesē: Enterprise licence",
       "opt_general": "Vispārīgs jautājums",
       "opt_pro": "Interesē: Pro (bez reklāmām)",
-      "plat_ios": "iOS izstrādē",
+      "plat_ios": "iPhone, iPad un Apple Watch – drīz App Store",
       "plat_tv": "TV un kiosks",
       "pr_h": "Bez maksas, ar neobligātu Pro. Uzņēmumiem pēc vajadzības.",
       "pr_p": "Visas uzraudzības funkcijas ir katrā izdevumā.",
@@ -1287,7 +1420,7 @@
       "sc3_p": "Modulis ZbxView connect pievieno Zabbix “Tālruņa savienojumu”. Neviens neko neraksta un nekopē pilnvaras.",
       "sc3_s1": "<b>Atveriet Tālruņa savienojumu</b> Zabbix lietotāja iestatījumos.",
       "sc3_s2": "<b>Noskenējiet QR kodu</b> lietotnē: Pievienot serveri → Skenēt.",
-      "sc3_s3": "<b>Gatavs.</b> Katrs tālrunis saņem savu API pilnvaru bez termiņa.",
+      "sc3_s3": "<b>Gatavs.</b> Katrs tālrunis saņem savu API pilnvaru bez termiņa. Ierīci var jebkurā laikā pārdēvēt vai noņemt.",
       "sc3_scan": "Skenējiet lietotnē ZbxView",
       "sc3_tag": "03 · Savienošana",
       "sc3_timer": "Kods pazudīs pēc 4:52",
@@ -1304,7 +1437,31 @@
       "tr4": "11 valodas",
       "tr5": "Gatavs MDM / Intune",
       "__title": "ZbxView: Zabbix klients — Zabbix uzraudzība jūsu kabatā",
-      "__desc": "ZbxView ir mobilais klients Zabbix sistēmai. Sekojiet problēmām reāllaikā, apstipriniet un slēdziet notikumus, resursdatoru kartes un paneļi — tieši no telefona."
+      "__desc": "ZbxView ir mobilais klients Zabbix sistēmai. Sekojiet problēmām reāllaikā, apstipriniet un slēdziet notikumus, resursdatoru kartes un paneļi — tieši no telefona.",
+      "nw_h": "Jaunumi",
+      "nw_p": "Jaunākais ZbxView.",
+      "nw1_h": "iPhone, iPad un Apple Watch",
+      "nw1_a": "iOS lietotne",
+      "nw1_ad": "Iesniegta App Store pārbaudei, drīz pieejama.",
+      "nw1_b": "Sākuma ekrāna logrīki",
+      "nw1_bd": "Problēmas un dežūras arī iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Pārskats un problēmu apstiprināšana uz plaukstas.",
+      "nw2_h": "ZbxView Pro kā abonements",
+      "nw2_a": "Mēnesī vai gadā",
+      "nw2_ad": "Gada plāns sākas ar 30 bezmaksas dienām.",
+      "nw2_b": "Vai vienreiz uz visiem laikiem",
+      "nw2_bd": "Ja reklāmas jau noņēmāt, Pro paliek uz visiem laikiem.",
+      "nw2_c": "Logrīki un pulkstenis Pro",
+      "nw2_cd": "30 dienas bez maksas visiem, pēc tam Pro daļa.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Ierīces pārdēvēšana",
+      "nw3_ad": "Ar zīmuli pie tālruņa Mobile connect.",
+      "nw3_b": "Katrs tālrunis atsevišķi",
+      "nw3_bd": "Jauns kods vai noņemšana neietekmē citus.",
+      "nw3_c": "Savas HTTP galvenes",
+      "nw3_cd": "Vārtejām, piemēram, Cloudflare Access.",
+      "pro_4": "Sākuma ekrāna logrīki un Zabbix pulkstenī",
     };
     var PT = {
       "about_p3": "Feedback e ideias de recursos são bem-vindos. Fale comigo!",
@@ -1326,7 +1483,7 @@
       "d_servers": "Troque com um toque.",
       "d_share": "Um card para o Teams, texto simples para SMS.",
       "d_sync": "Configurações entre telefone e tablet.",
-      "d_watch": "Incidentes e reconhecimento pelo Wear OS.",
+      "d_watch": "Problemas e reconhecimento no Wear OS e no Apple Watch.",
       "d_widget": "Incidentes abertos na sua tela inicial.",
       "ent_b1": "Implantação via Intune / MDM",
       "ent_b2": "Servidor, token e certificado pré-preenchidos",
@@ -1406,7 +1563,7 @@
       "opt_enterprise": "Interesse em: licença Enterprise",
       "opt_general": "Dúvida geral",
       "opt_pro": "Interesse em: Pro (remover anúncios)",
-      "plat_ios": "iOS em desenvolvimento",
+      "plat_ios": "iPhone, iPad e Apple Watch – em breve na App Store",
       "plat_tv": "TV e quiosque",
       "pr_h": "Grátis, com Pro opcional. Sob medida para empresas.",
       "pr_p": "Todos os recursos de monitoramento estão em todas as edições.",
@@ -1455,7 +1612,7 @@
       "sc3_p": "O módulo ZbxView connect adiciona “Mobile connect” ao Zabbix. Ninguém digita nada nem copia tokens.",
       "sc3_s1": "<b>Abra o Mobile connect</b> nas configurações do seu usuário no Zabbix.",
       "sc3_s2": "<b>Leia o código QR</b> no app: Adicionar servidor → Ler.",
-      "sc3_s3": "<b>Pronto.</b> Cada telefone recebe seu próprio token de API, que nunca expira.",
+      "sc3_s3": "<b>Pronto.</b> Cada telefone recebe seu próprio token de API, que nunca expira. Renomeie ou remova um dispositivo quando quiser.",
       "sc3_scan": "Leia no app ZbxView",
       "sc3_tag": "03 · Pareamento",
       "sc3_timer": "O código some em 4:52",
@@ -1472,7 +1629,31 @@
       "tr4": "11 idiomas",
       "tr5": "Pronto para MDM / Intune",
       "__title": "ZbxView: Cliente Zabbix — monitoramento Zabbix no seu bolso",
-      "__desc": "O ZbxView é um cliente móvel para Zabbix. Acompanhe incidentes em tempo real, reconheça e termine eventos, mapas de hosts e dashboards — direto do seu telefone."
+      "__desc": "O ZbxView é um cliente móvel para Zabbix. Acompanhe incidentes em tempo real, reconheça e termine eventos, mapas de hosts e dashboards — direto do seu telefone.",
+      "nw_h": "Novidades",
+      "nw_p": "O que há de novo no ZbxView.",
+      "nw1_h": "iPhone, iPad e Apple Watch",
+      "nw1_a": "O app para iOS",
+      "nw1_ad": "Enviado para revisão na App Store, disponível em breve.",
+      "nw1_b": "Widgets na tela inicial",
+      "nw1_bd": "Problemas e plantões também no iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Visão geral e reconhecimento de problemas no pulso.",
+      "nw2_h": "ZbxView Pro por assinatura",
+      "nw2_a": "Mensal ou anual",
+      "nw2_ad": "O plano anual começa com 30 dias grátis.",
+      "nw2_b": "Ou pagamento único para sempre",
+      "nw2_bd": "Quem já removeu os anúncios mantém o Pro para sempre.",
+      "nw2_c": "Widgets e relógio no Pro",
+      "nw2_cd": "Grátis para todos por 30 dias, depois fazem parte do Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Renomear um dispositivo",
+      "nw3_ad": "Com o lápis ao lado do telefone no Mobile connect.",
+      "nw3_b": "Cada telefone separado",
+      "nw3_bd": "Um novo código ou remover um não afeta os outros.",
+      "nw3_c": "Cabeçalhos HTTP próprios",
+      "nw3_cd": "Para gateways como o Cloudflare Access.",
+      "pro_4": "Widgets na tela inicial e Zabbix no relógio",
     };
     var RU = {
       "about_p3": "Отзывы и идеи новых функций приветствуются. Напишите мне!",
@@ -1494,7 +1675,7 @@
       "d_servers": "Переключение одним касанием.",
       "d_share": "Карточка в Teams, простой текст в SMS.",
       "d_sync": "Настройки между телефоном и планшетом.",
-      "d_watch": "Проблемы и подтверждение с Wear OS.",
+      "d_watch": "Проблемы и подтверждение с Wear OS и Apple Watch.",
       "d_widget": "Открытые проблемы на главном экране.",
       "ent_b1": "Развертывание через Intune / MDM",
       "ent_b2": "Сервер, токен и сертификат заполнены заранее",
@@ -1574,7 +1755,7 @@
       "opt_enterprise": "Интересует: корпоративная лицензия",
       "opt_general": "Общий вопрос",
       "opt_pro": "Интересует: Pro (без рекламы)",
-      "plat_ios": "iOS в разработке",
+      "plat_ios": "iPhone, iPad и Apple Watch – скоро в App Store",
       "plat_tv": "ТВ и киоск",
       "pr_h": "Бесплатно, с опцией Pro. Индивидуально для бизнеса.",
       "pr_p": "Все функции мониторинга есть в каждой редакции.",
@@ -1623,7 +1804,7 @@
       "sc3_p": "Модуль ZbxView connect добавляет в Zabbix «Mobile connect». Никому не нужно ничего вводить или копировать токены.",
       "sc3_s1": "<b>Откройте Mobile connect</b> в настройках пользователя Zabbix.",
       "sc3_s2": "<b>Отсканируйте QR-код</b> в приложении: Добавить сервер → Сканировать.",
-      "sc3_s3": "<b>Готово.</b> Каждый телефон получает собственный бессрочный API токен.",
+      "sc3_s3": "<b>Готово.</b> Каждый телефон получает собственный бессрочный API токен. Устройство можно в любой момент переименовать или удалить.",
       "sc3_scan": "Отсканируйте в приложении ZbxView",
       "sc3_tag": "03 · Сопряжение",
       "sc3_timer": "Код исчезнет через 4:52",
@@ -1640,7 +1821,31 @@
       "tr4": "11 языков",
       "tr5": "Готово для MDM / Intune",
       "__title": "ZbxView: Zabbix Client — мониторинг Zabbix в кармане",
-      "__desc": "ZbxView — мобильный клиент для Zabbix. Следите за проблемами в реальном времени, подтверждайте и закрывайте события, карты узлов сети и панели — прямо с телефона."
+      "__desc": "ZbxView — мобильный клиент для Zabbix. Следите за проблемами в реальном времени, подтверждайте и закрывайте события, карты узлов сети и панели — прямо с телефона.",
+      "nw_h": "Новости",
+      "nw_p": "Что нового в ZbxView.",
+      "nw1_h": "iPhone, iPad и Apple Watch",
+      "nw1_a": "Приложение для iOS",
+      "nw1_ad": "Отправлено на проверку в App Store, скоро будет доступно.",
+      "nw1_b": "Виджеты на главном экране",
+      "nw1_bd": "Проблемы и дежурства и на iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Обзор и подтверждение проблем на запястье.",
+      "nw2_h": "ZbxView Pro по подписке",
+      "nw2_a": "Помесячно или на год",
+      "nw2_ad": "Годовой тариф начинается с 30 бесплатных дней.",
+      "nw2_b": "Или один раз навсегда",
+      "nw2_bd": "Кто уже отключил рекламу, сохраняет Pro навсегда.",
+      "nw2_c": "Виджеты и часы в Pro",
+      "nw2_cd": "30 дней бесплатно для всех, затем входят в Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Переименование устройства",
+      "nw3_ad": "Карандашом рядом с телефоном в Mobile connect.",
+      "nw3_b": "Каждый телефон отдельно",
+      "nw3_bd": "Новый код или удаление не влияет на остальные.",
+      "nw3_c": "Свои HTTP-заголовки",
+      "nw3_cd": "Для шлюзов вроде Cloudflare Access.",
+      "pro_4": "Виджеты на главном экране и Zabbix на часах",
     };
     var IT = {
       "about_p3": "Feedback e idee per nuove funzioni sono benvenuti. Scrivimi!",
@@ -1662,7 +1867,7 @@
       "d_servers": "Cambia con un tocco.",
       "d_share": "Una scheda in Teams, testo semplice via SMS.",
       "d_sync": "Impostazioni tra telefono e tablet.",
-      "d_watch": "Problemi e presa visione da Wear OS.",
+      "d_watch": "Problemi e conferme da Wear OS e Apple Watch.",
       "d_widget": "Problemi aperti nella schermata Home.",
       "ent_b1": "Distribuzione tramite Intune / MDM",
       "ent_b2": "Server, token e certificato precompilati",
@@ -1742,7 +1947,7 @@
       "opt_enterprise": "Interesse per: licenza Enterprise",
       "opt_general": "Domanda generale",
       "opt_pro": "Interesse per: Pro (senza annunci)",
-      "plat_ios": "iOS in sviluppo",
+      "plat_ios": "iPhone, iPad e Apple Watch – presto sull’App Store",
       "plat_tv": "TV e kiosk",
       "pr_h": "Gratis, con Pro opzionale. Su misura per le aziende.",
       "pr_p": "Ogni funzione di monitoraggio è in ogni edizione.",
@@ -1791,7 +1996,7 @@
       "sc3_p": "Il modulo ZbxView connect aggiunge “Mobile connect” a Zabbix. Nessuno deve digitare nulla o copiare token.",
       "sc3_s1": "<b>Apri Mobile connect</b> nelle impostazioni utente di Zabbix.",
       "sc3_s2": "<b>Scansiona il codice QR</b> nell’app: Aggiungi server → Scansiona.",
-      "sc3_s3": "<b>Fatto.</b> Ogni telefono riceve il proprio token API che non scade mai.",
+      "sc3_s3": "<b>Fatto.</b> Ogni telefono riceve il proprio token API che non scade mai. Puoi rinominare o rimuovere un dispositivo in qualsiasi momento.",
       "sc3_scan": "Scansiona nell’app ZbxView",
       "sc3_tag": "03 · Abbinamento",
       "sc3_timer": "Il codice scompare tra 4:52",
@@ -1808,7 +2013,31 @@
       "tr4": "11 lingue",
       "tr5": "Pronto per MDM / Intune",
       "__title": "ZbxView: client Zabbix — il monitoraggio Zabbix in tasca",
-      "__desc": "ZbxView è un client mobile per Zabbix. Segui i problemi in tempo reale, prendi visione degli eventi e chiudili, mappe degli host e dashboard — direttamente dal telefono."
+      "__desc": "ZbxView è un client mobile per Zabbix. Segui i problemi in tempo reale, prendi visione degli eventi e chiudili, mappe degli host e dashboard — direttamente dal telefono.",
+      "nw_h": "Novità",
+      "nw_p": "Le ultime novità di ZbxView.",
+      "nw1_h": "iPhone, iPad e Apple Watch",
+      "nw1_a": "L’app per iOS",
+      "nw1_ad": "Inviata in revisione all’App Store, presto disponibile.",
+      "nw1_b": "Widget nella schermata Home",
+      "nw1_bd": "Problemi e reperibilità anche su iPhone.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Panoramica e conferma dei problemi al polso.",
+      "nw2_h": "ZbxView Pro in abbonamento",
+      "nw2_a": "Mensile o annuale",
+      "nw2_ad": "Il piano annuale inizia con 30 giorni gratis.",
+      "nw2_b": "Oppure una volta per sempre",
+      "nw2_bd": "Chi aveva già rimosso la pubblicità mantiene Pro per sempre.",
+      "nw2_c": "Widget e orologio in Pro",
+      "nw2_cd": "Gratis per tutti per 30 giorni, poi parte di Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Rinominare un dispositivo",
+      "nw3_ad": "Con la matita accanto al telefono in Mobile connect.",
+      "nw3_b": "Ogni telefono per conto suo",
+      "nw3_bd": "Un nuovo codice o una rimozione non tocca gli altri.",
+      "nw3_c": "Intestazioni HTTP personalizzate",
+      "nw3_cd": "Per gateway come Cloudflare Access.",
+      "pro_4": "Widget nella schermata Home e Zabbix sull’orologio",
     };
     var PL = {
       "about_p3": "Uwagi i pomysły na nowe funkcje są mile widziane. Napisz do mnie!",
@@ -1830,7 +2059,7 @@
       "d_servers": "Przełączanie jednym dotknięciem.",
       "d_share": "Karta do Teams, zwykły tekst do SMS.",
       "d_sync": "Ustawienia między telefonem a tabletem.",
-      "d_watch": "Problemy i potwierdzanie z Wear OS.",
+      "d_watch": "Problemy i potwierdzanie z Wear OS i Apple Watch.",
       "d_widget": "Otwarte problemy na ekranie głównym.",
       "ent_b1": "Wdrożenie przez Intune / MDM",
       "ent_b2": "Serwer, token i certyfikat wstępnie wypełnione",
@@ -1910,7 +2139,7 @@
       "opt_enterprise": "Interesuje mnie: licencja Enterprise",
       "opt_general": "Pytanie ogólne",
       "opt_pro": "Interesuje mnie: Pro (bez reklam)",
-      "plat_ios": "iOS w przygotowaniu",
+      "plat_ios": "iPhone, iPad i Apple Watch – wkrótce w App Store",
       "plat_tv": "TV i kiosk",
       "pr_h": "Za darmo, z opcjonalnym Pro. Na miarę dla firm.",
       "pr_p": "Każda funkcja monitoringu jest w każdej wersji.",
@@ -1959,7 +2188,7 @@
       "sc3_p": "Moduł ZbxView connect dodaje do Zabbixa „Mobile connect”. Nikt niczego nie wpisuje ani nie kopiuje tokenów.",
       "sc3_s1": "<b>Otwórz Mobile connect</b> w ustawieniach użytkownika Zabbixa.",
       "sc3_s2": "<b>Zeskanuj kod QR</b> w aplikacji: Dodaj serwer → Skanuj.",
-      "sc3_s3": "<b>Gotowe.</b> Każdy telefon dostaje własny token API, który nigdy nie wygasa.",
+      "sc3_s3": "<b>Gotowe.</b> Każdy telefon dostaje własny token API, który nigdy nie wygasa. Nazwę urządzenia można w każdej chwili zmienić albo je usunąć.",
       "sc3_scan": "Zeskanuj w aplikacji ZbxView",
       "sc3_tag": "03 · Parowanie",
       "sc3_timer": "Kod zniknie za 4:52",
@@ -1976,7 +2205,31 @@
       "tr4": "11 języków",
       "tr5": "Gotowe na MDM / Intune",
       "__title": "ZbxView: klient Zabbix — monitoring Zabbix w kieszeni",
-      "__desc": "ZbxView to mobilny klient dla Zabbixa. Śledź problemy w czasie rzeczywistym, potwierdzaj i zamykaj zdarzenia, mapy hostów i pulpity — prosto z telefonu."
+      "__desc": "ZbxView to mobilny klient dla Zabbixa. Śledź problemy w czasie rzeczywistym, potwierdzaj i zamykaj zdarzenia, mapy hostów i pulpity — prosto z telefonu.",
+      "nw_h": "Nowości",
+      "nw_p": "Co nowego w ZbxView.",
+      "nw1_h": "iPhone, iPad i Apple Watch",
+      "nw1_a": "Aplikacja na iOS",
+      "nw1_ad": "Wysłana do weryfikacji w App Store, wkrótce dostępna.",
+      "nw1_b": "Widżety na ekranie głównym",
+      "nw1_bd": "Problemy i dyżury także na iPhonie.",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "Przegląd i potwierdzanie problemów na nadgarstku.",
+      "nw2_h": "ZbxView Pro w subskrypcji",
+      "nw2_a": "Miesięcznie lub rocznie",
+      "nw2_ad": "Plan roczny zaczyna się od 30 dni za darmo.",
+      "nw2_b": "Albo raz na zawsze",
+      "nw2_bd": "Kto już usunął reklamy, ma Pro na zawsze.",
+      "nw2_c": "Widżety i zegarek w Pro",
+      "nw2_cd": "Przez 30 dni za darmo dla wszystkich, potem część Pro.",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "Zmiana nazwy urządzenia",
+      "nw3_ad": "Ołówkiem obok telefonu w Mobile connect.",
+      "nw3_b": "Każdy telefon osobno",
+      "nw3_bd": "Nowy kod ani usunięcie nie wpływa na pozostałe.",
+      "nw3_c": "Własne nagłówki HTTP",
+      "nw3_cd": "Dla bram takich jak Cloudflare Access.",
+      "pro_4": "Widżety na ekranie głównym i Zabbix na zegarku",
     };
     var JA = {
       "about_p3": "フィードバックや機能のアイデアを歓迎します。お気軽にご連絡ください！",
@@ -1998,7 +2251,7 @@
       "d_servers": "ワンタップで切り替え。",
       "d_share": "Teams にはカード、SMS にはテキストで。",
       "d_sync": "端末とタブレットの間で設定を同期。",
-      "d_watch": "Wear OS から障害の閲覧と障害確認。",
+      "d_watch": "Wear OS と Apple Watch から問題を確認。",
       "d_widget": "ホーム画面に未解決の障害。",
       "ent_b1": "Intune / MDM による配布",
       "ent_b2": "サーバー、トークン、証明書を事前入力",
@@ -2078,7 +2331,7 @@
       "opt_enterprise": "関心事: Enterprise ライセンス",
       "opt_general": "一般的な質問",
       "opt_pro": "関心事: Pro（広告削除）",
-      "plat_ios": "iOS 版は開発中",
+      "plat_ios": "iPhone・iPad・Apple Watch – まもなく App Store に",
       "plat_tv": "TV とキオスクモード",
       "pr_h": "無料、Pro はオプション。法人向けは個別対応。",
       "pr_p": "すべてのエディションにすべての監視機能が含まれます。",
@@ -2127,7 +2380,7 @@
       "sc3_p": "ZbxView connect モジュールは Zabbix に「Mobile connect」を追加します。入力やトークンのコピーは一切不要です。",
       "sc3_s1": "Zabbix のユーザー設定で <b>Mobile connect を開きます</b>。",
       "sc3_s2": "アプリで <b>QR コードをスキャンします</b>: サーバーを追加 → スキャン。",
-      "sc3_s3": "<b>完了。</b>端末ごとに有効期限のない専用の APIトークンが発行されます。",
+      "sc3_s3": "<b>完了。</b>各電話に有効期限のない専用 API トークンが発行されます。デバイスはいつでも名前の変更や削除ができます。",
       "sc3_scan": "ZbxView アプリでスキャン",
       "sc3_tag": "03 · ペアリング",
       "sc3_timer": "コードは 4:52 後に消えます",
@@ -2144,7 +2397,31 @@
       "tr4": "11 言語",
       "tr5": "MDM / Intune 対応",
       "__title": "ZbxView: Zabbix Client — Zabbix 監視をポケットに",
-      "__desc": "ZbxView は Zabbix 用のモバイルクライアントです。障害をリアルタイムで監視し、イベントの障害確認とクローズ、ホストマップやダッシュボードを端末から直接利用できます。"
+      "__desc": "ZbxView は Zabbix 用のモバイルクライアントです。障害をリアルタイムで監視し、イベントの障害確認とクローズ、ホストマップやダッシュボードを端末から直接利用できます。",
+      "nw_h": "新着情報",
+      "nw_p": "ZbxView の最新情報。",
+      "nw1_h": "iPhone・iPad・Apple Watch",
+      "nw1_a": "iOS アプリ",
+      "nw1_ad": "App Store の審査に提出済み。まもなく公開予定です。",
+      "nw1_b": "ホーム画面ウィジェット",
+      "nw1_bd": "問題とオンコールを iPhone でも。",
+      "nw1_c": "Apple Watch",
+      "nw1_cd": "問題の概要と確認を手首で。",
+      "nw2_h": "サブスクリプションの ZbxView Pro",
+      "nw2_a": "月額または年額",
+      "nw2_ad": "年額プランは最初の 30 日間無料。",
+      "nw2_b": "または買い切り",
+      "nw2_bd": "以前に広告を削除した方は Pro が永久に有効です。",
+      "nw2_c": "ウィジェットとウォッチは Pro に",
+      "nw2_cd": "全員 30 日間無料、その後は Pro の機能に。",
+      "nw3_h": "Mobile connect 1.10",
+      "nw3_a": "デバイス名の変更",
+      "nw3_ad": "Mobile connect の電話の横にある鉛筆ボタンで。",
+      "nw3_b": "電話ごとに独立",
+      "nw3_bd": "新しいコードや削除は他の電話に影響しません。",
+      "nw3_c": "カスタム HTTP ヘッダー",
+      "nw3_cd": "Cloudflare Access などのゲートウェイ向け。",
+      "pro_4": "ホーム画面ウィジェットとウォッチ版 Zabbix",
     };
     var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV, pt: PT, ru: RU, it: IT, pl: PL, ja: JA };
     var CODES = { cs: 'CZ', en: 'EN', de: 'DE', es: 'ES', fr: 'FR', lv: 'LV', pt: 'PT', ru: 'RU', it: 'IT', pl: 'PL', ja: 'JA' };
