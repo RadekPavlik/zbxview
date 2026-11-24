@@ -279,6 +279,8 @@ header.nav { position: sticky; top: 0; z-index: 50; background: rgba(12,15,20,.8
 .car-tablet .slide { border-radius: 18px; } .car-tablet .slide img { border-radius: 10px; }
 .car-tv .slide { border-radius: 12px; } .car-tv .slide img { border-radius: 4px; }
 .car-watch .slide, .car-watch .slide img { border-radius: 50%; }
+/* Apple Watch shots (shape "rect" in screens.json): rounded square, not a circle */
+.car-watch .slide.shape-rect, .car-watch .slide.shape-rect img { border-radius: 22%; }
 .car-arrow { flex: none; position: relative; z-index: 5; width: 52px; height: 52px; border-radius: 50%; border: 1px solid var(--line-2); background: var(--card); color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: border-color .15s, background .15s; }
 .car-arrow:hover { border-color: #48525f; background: var(--card-2); }
 .car-arrow[hidden] { display: none; }

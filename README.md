@@ -9,18 +9,16 @@ Served via GitHub Pages: <https://radekpavlik.github.io/zbxview/>
 - `assets/` — app icon, developer logo; drop screenshots here.
 
 ## How to add screenshots
-Drop images in `assets/` named `shot<N>_<group>.<ext>`, where:
-- `<group>` = `tv` | `mobile` | `tablet` | `watch` (the device tab it appears under),
-- `<ext>` = `jpg`, `png`, `jpeg` or `webp`,
-- `<N>` = any number up to 60; numbering may start anywhere and have gaps
-  (shots are shown in numeric order).
+The "Podívej se dovnitř" carousel is filled from `assets/screens.json`:
+`{"mobile":[{"full":"assets/x.jpg","thumb":"assets/thumbs/x.jpg"}, ...], "tv":[...], "watch":[...]}`
+(shown in that order; a tab with no entries is hidden). Watch entries may add
+`"shape":"rect"` for Apple Watch shots (rounded square instead of a circle).
 
-Examples: `shot1_tablet.jpg`, `shot17_mobile.jpg`, `shot33_tv.jpg`, `shot46_watch.jpg`.
-
-The gallery auto-discovers them: it shows an environment tab (TV / Telefon /
-Tablet / Hodinky) **only** for groups that have at least one file, renders each shot in
-the matching device frame, supports grab-and-drag scrolling, and click-to-zoom
-(lightbox). No HTML editing needed — just add the files, commit and push.
+Current shots are renders of the Design canvas boards, named
+`scr_<tab>_<nn>_<board>.jpg` (phone 1080x2337, TV 1920x1080, watch 454x454,
+JPEG q85) with a thumbnail of the same name in `assets/thumbs/` (max 480 px).
+The hero and feature sections use `shot1_tablet.jpg`, `shot7_mobile.jpg`,
+`shot8_mobile.jpg`, `shot12_mobile.jpg`, `shot33_tv.jpg` and `shot46_watch.jpg`.
 
 ## Custom domain (optional, later)
 Buy a domain (e.g. `zbxview.app`), add a `CNAME` file with the domain, and

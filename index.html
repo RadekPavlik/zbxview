@@ -332,7 +332,6 @@
         </div>
         <div class="tabs" role="tablist" id="shotTabs">
           <button type="button" role="tab" data-key="mobile" data-i18n="tab_mobile">Telefon</button>
-          <button type="button" role="tab" data-key="tablet" data-i18n="tab_tablet">Tablet</button>
           <button type="button" role="tab" data-key="tv" data-i18n="tab_tv">TV</button>
           <button type="button" role="tab" data-key="watch" data-i18n="tab_watch">Hodinky</button>
         </div>
@@ -3613,7 +3612,7 @@
           });
           stage.className = 'car-stage car-' + key;
           stage.innerHTML = imgs.map(function (x, i) {
-            return '<div class="slide"><img src="' + x.thumb + '" alt="ZbxView ' + (i + 1) + '" loading="lazy" draggable="false"></div>';
+            return '<div class="slide' + (x.shape ? ' shape-' + x.shape : '') + '"><img src="' + x.thumb + '" alt="ZbxView ' + (i + 1) + '" loading="lazy" draggable="false"></div>';
           }).join('');
           slides = Array.prototype.slice.call(stage.children);
           slides.forEach(function (el, i) {
