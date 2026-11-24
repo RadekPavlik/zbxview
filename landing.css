@@ -291,6 +291,8 @@ header.nav { position: sticky; top: 0; z-index: 50; background: rgba(12,15,20,.8
 .car-dot { width: 28px; height: 28px; border: none; background: transparent; display: flex; align-items: center; justify-content: center; cursor: pointer; }
 .car-dot span { display: block; width: 8px; height: 8px; border-radius: 4px; background: #3a4452; transition: width .3s, background .3s; }
 .car-dot.active span { width: 24px; background: var(--red-soft); }
+.car-label { margin: 0 0 6px; text-align: center; font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted-2); }
+.car-label[hidden] { display: none; }
 .car-count { text-align: center; font-family: var(--mono); font-size: 13px; color: var(--dim); }
 .shots-empty { text-align: center; color: var(--muted-2); }
 

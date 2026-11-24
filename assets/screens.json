@@ -1,16 +1,16 @@
 {
   "mobile": [
     {
-      "full": "assets/scr_mobile_00_ServerList.jpg",
-      "thumb": "assets/thumbs/scr_mobile_00_ServerList.jpg"
+      "full": "assets/scr_mobile_00_EnServerList.jpg",
+      "thumb": "assets/thumbs/scr_mobile_00_EnServerList.jpg"
     },
     {
-      "full": "assets/scr_mobile_01_SrvQrScan.jpg",
-      "thumb": "assets/thumbs/scr_mobile_01_SrvQrScan.jpg"
+      "full": "assets/scr_mobile_01_EnQrScan.jpg",
+      "thumb": "assets/thumbs/scr_mobile_01_EnQrScan.jpg"
     },
     {
-      "full": "assets/scr_mobile_02_SrvQrOk.jpg",
-      "thumb": "assets/thumbs/scr_mobile_02_SrvQrOk.jpg"
+      "full": "assets/scr_mobile_02_EnQrOk.jpg",
+      "thumb": "assets/thumbs/scr_mobile_02_EnQrOk.jpg"
     },
     {
       "full": "assets/scr_mobile_03_EnOverview.jpg",
@@ -33,12 +33,12 @@
       "thumb": "assets/thumbs/scr_mobile_07_EnHosts.jpg"
     },
     {
-      "full": "assets/scr_mobile_08_Z8SlaReportMulti.jpg",
-      "thumb": "assets/thumbs/scr_mobile_08_Z8SlaReportMulti.jpg"
+      "full": "assets/scr_mobile_08_EnZ8SlaReportMulti.jpg",
+      "thumb": "assets/thumbs/scr_mobile_08_EnZ8SlaReportMulti.jpg"
     },
     {
-      "full": "assets/scr_mobile_09_Z8ActionLog.jpg",
-      "thumb": "assets/thumbs/scr_mobile_09_Z8ActionLog.jpg"
+      "full": "assets/scr_mobile_09_EnZ8ActionLog.jpg",
+      "thumb": "assets/thumbs/scr_mobile_09_EnZ8ActionLog.jpg"
     },
     {
       "full": "assets/scr_mobile_10_EnWidgets.jpg",
@@ -49,60 +49,68 @@
       "thumb": "assets/thumbs/scr_mobile_11_EnPush.jpg"
     },
     {
-      "full": "assets/scr_mobile_12_ApmTraces.jpg",
-      "thumb": "assets/thumbs/scr_mobile_12_ApmTraces.jpg"
+      "full": "assets/scr_mobile_12_EnApmTraces.jpg",
+      "thumb": "assets/thumbs/scr_mobile_12_EnApmTraces.jpg"
     }
   ],
   "tv": [
     {
-      "full": "assets/scr_tv_01_ActionLog_TopTriggers.jpg",
-      "thumb": "assets/thumbs/scr_tv_01_ActionLog_TopTriggers.jpg"
+      "full": "assets/scr_tv_01_KioskGlobalView.jpg",
+      "thumb": "assets/thumbs/scr_tv_01_KioskGlobalView.jpg"
     },
     {
-      "full": "assets/scr_tv_02_TrigOverview.jpg",
-      "thumb": "assets/thumbs/scr_tv_02_TrigOverview.jpg"
+      "full": "assets/scr_tv_02_KioskNetwork.jpg",
+      "thumb": "assets/thumbs/scr_tv_02_KioskNetwork.jpg"
     },
     {
-      "full": "assets/scr_tv_03_GraphPrototype.jpg",
-      "thumb": "assets/thumbs/scr_tv_03_GraphPrototype.jpg"
+      "full": "assets/scr_tv_03_KioskServerHealth.jpg",
+      "thumb": "assets/thumbs/scr_tv_03_KioskServerHealth.jpg"
     }
   ],
   "watch": [
     {
-      "full": "assets/scr_watch_01_AppleOverview.jpg",
-      "thumb": "assets/thumbs/scr_watch_01_AppleOverview.jpg",
+      "full": "assets/scr_watch_01_EnWearOverview.jpg",
+      "thumb": "assets/thumbs/scr_watch_01_EnWearOverview.jpg",
+      "label": "Wear OS"
+    },
+    {
+      "full": "assets/scr_watch_02_EnWearProblems.jpg",
+      "thumb": "assets/thumbs/scr_watch_02_EnWearProblems.jpg",
+      "label": "Wear OS"
+    },
+    {
+      "full": "assets/scr_watch_03_EnWearDetail.jpg",
+      "thumb": "assets/thumbs/scr_watch_03_EnWearDetail.jpg",
+      "label": "Wear OS"
+    },
+    {
+      "full": "assets/scr_watch_04_EnWearAck.jpg",
+      "thumb": "assets/thumbs/scr_watch_04_EnWearAck.jpg",
+      "label": "Wear OS"
+    },
+    {
+      "full": "assets/scr_watch_05_EnAppleOverview.jpg",
+      "thumb": "assets/thumbs/scr_watch_05_EnAppleOverview.jpg",
+      "label": "Apple Watch",
       "shape": "rect"
     },
     {
-      "full": "assets/scr_watch_02_AppleProblems.jpg",
-      "thumb": "assets/thumbs/scr_watch_02_AppleProblems.jpg",
+      "full": "assets/scr_watch_06_EnAppleProblems.jpg",
+      "thumb": "assets/thumbs/scr_watch_06_EnAppleProblems.jpg",
+      "label": "Apple Watch",
       "shape": "rect"
     },
     {
-      "full": "assets/scr_watch_03_AppleUnacked.jpg",
-      "thumb": "assets/thumbs/scr_watch_03_AppleUnacked.jpg",
+      "full": "assets/scr_watch_07_EnAppleUnacked.jpg",
+      "thumb": "assets/thumbs/scr_watch_07_EnAppleUnacked.jpg",
+      "label": "Apple Watch",
       "shape": "rect"
     },
     {
-      "full": "assets/scr_watch_04_AppleDetail.jpg",
-      "thumb": "assets/thumbs/scr_watch_04_AppleDetail.jpg",
+      "full": "assets/scr_watch_08_EnAppleDetail.jpg",
+      "thumb": "assets/thumbs/scr_watch_08_EnAppleDetail.jpg",
+      "label": "Apple Watch",
       "shape": "rect"
-    },
-    {
-      "full": "assets/scr_watch_05_WearOverview.jpg",
-      "thumb": "assets/thumbs/scr_watch_05_WearOverview.jpg"
-    },
-    {
-      "full": "assets/scr_watch_06_WearProblems.jpg",
-      "thumb": "assets/thumbs/scr_watch_06_WearProblems.jpg"
-    },
-    {
-      "full": "assets/scr_watch_07_WearDetail.jpg",
-      "thumb": "assets/thumbs/scr_watch_07_WearDetail.jpg"
-    },
-    {
-      "full": "assets/scr_watch_08_WearAck.jpg",
-      "thumb": "assets/thumbs/scr_watch_08_WearAck.jpg"
     }
   ]
 }

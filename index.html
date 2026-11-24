@@ -336,6 +336,7 @@
           <button type="button" role="tab" data-key="watch" data-i18n="tab_watch">Hodinky</button>
         </div>
       </div>
+      <p class="car-label" id="carLabel" hidden></p>
       <div class="car" id="car">
         <button type="button" class="car-arrow" id="carPrev" aria-label="‹"><svg class="ic"><use href="#i-left"/></svg></button>
         <div class="car-stage" id="carStage"></div>
@@ -3549,6 +3550,7 @@
     var stage = document.getElementById('carStage');
     var dotsEl = document.getElementById('carDots');
     var countEl = document.getElementById('carCount');
+    var labelEl = document.getElementById('carLabel');
     var car = document.getElementById('car');
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -3593,6 +3595,9 @@
           });
           Array.prototype.forEach.call(dotsEl.children, function (d, i) { d.classList.toggle('active', i === idx); });
           countEl.textContent = (idx + 1) + ' / ' + n;
+          var lab = imgs[idx] && imgs[idx].label;
+          labelEl.hidden = !lab;
+          labelEl.textContent = lab || '';
         }
         function go(i) {
           var n = imgs.length;

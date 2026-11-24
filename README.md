@@ -12,7 +12,8 @@ Served via GitHub Pages: <https://radekpavlik.github.io/zbxview/>
 The "Podívej se dovnitř" carousel is filled from `assets/screens.json`:
 `{"mobile":[{"full":"assets/x.jpg","thumb":"assets/thumbs/x.jpg"}, ...], "tv":[...], "watch":[...]}`
 (shown in that order; a tab with no entries is hidden). Watch entries may add
-`"shape":"rect"` for Apple Watch shots (rounded square instead of a circle).
+`"shape":"rect"` for Apple Watch shots (rounded square instead of a circle) and
+`"label"` (e.g. "Wear OS", "Apple Watch"), shown above the slide.
 
 Current shots are renders of the Design canvas boards, named
 `scr_<tab>_<nn>_<board>.jpg` (phone 1080x2337, TV 1920x1080, watch 454x454,
