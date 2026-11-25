@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ZbxView — Telefon připojený k Zabbixu za pár vteřin</title>
-  <meta name="description" content="Modul ZbxView connect do Zabbixu (6.4–8.0) přidá v Uživatelském nastavení položku „Připojení telefonu“. Nikdo nic nevypisuje ani neopisuje tokeny." />
+  <meta name="description" content="Modul ZbxView connect do Zabbixu (6.4–8.x) přidá v Uživatelském nastavení položku „Připojení telefonu“. Nikdo nic nevypisuje ani neopisuje tokeny." />
   <link rel="icon" href="assets/icon.png" />
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -28,9 +28,9 @@
     </div>
 
     <h1 data-i18n="conn_h2">Telefon připojený k Zabbixu za pár vteřin</h1>
-    <div class="updated">ZbxView connect · Zabbix 6.4 – 8.0</div>
+    <div class="updated">ZbxView connect · Zabbix 6.4 – 8.x</div>
 
-    <p data-i18n="conn_p">Modul <strong>ZbxView connect</strong> do Zabbixu (6.4–8.0) přidá v Uživatelském nastavení položku „Připojení telefonu“. Nikdo nic nevypisuje ani neopisuje tokeny.</p>
+    <p data-i18n="conn_p">Modul <strong>ZbxView connect</strong> do Zabbixu (6.4–8.x) přidá v Uživatelském nastavení položku „Připojení telefonu“. Nikdo nic nevypisuje ani neopisuje tokeny.</p>
     <ul class="caps">
       <li><strong data-i18n="conn_s1_h">Otevřete „Připojení telefonu“</strong><br><span data-i18n="conn_s1_p">Hned se zobrazí QR kód pro první zařízení. Každý telefon dostane vlastní API token, který nevyprší.</span></li>
       <li><strong data-i18n="conn_s2_h">Naskenujte v aplikaci</strong><br><span data-i18n="conn_s2_p">Přidat server → Naskenovat QR kód. Aplikace ukáže, co kód obsahuje, a server přidá i s přihlášením.</span></li>
@@ -54,7 +54,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       <li data-i18n="cs_s3">V <strong>Administrace → Konfigurace telefonu</strong> nastavte adresu, na které telefony Zabbix najdou (např. přes Cloudflare), název serveru a certifikát serveru. Pokud je Zabbix za bránou s mTLS, nahrajte tam i klientský certifikát (klíč EC) — modul ho zkontroluje.</li>
       <li data-i18n="cs_s4">Uživatelé pak otevřou <strong>Uživatelské nastavení → Připojení telefonu</strong> a v aplikaci zvolí <strong>Přidat server → Naskenovat QR kód</strong>. Hotovo.</li>
     </ol>
-    <div class="note" data-i18n="cs_req">Požadavky: Zabbix 6.4–8.0; role uživatele musí povolovat <strong>Správu API tokenů</strong> a <strong>přístup k API</strong>. Certifikát v QR kódu umí aplikace od verze 0.49. Novější verzi modulu stáhnete příkazem <code>git pull</code> v jeho adresáři.</div>
+    <div class="note" data-i18n="cs_req">Požadavky: Zabbix 6.4–8.x; role uživatele musí povolovat <strong>Správu API tokenů</strong> a <strong>přístup k API</strong>. Certifikát v QR kódu umí aplikace od verze 0.49. Novější verzi modulu stáhnete příkazem <code>git pull</code> v jeho adresáři.</div>
     <p><a href="https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect" target="_blank" rel="noopener" data-i18n="conn_cta">Modul ZbxView connect na GitHubu</a></p>
 
     <p class="doc-foot"><a href="index.html" data-i18n="foot_back">← zpět na hlavní stránku</a></p>
@@ -65,7 +65,7 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
     var EN = {
       "conn_tag": "Pairing",
       "conn_h2": "A phone connected to Zabbix in seconds",
-      "conn_p": "The <strong>ZbxView connect</strong> module for Zabbix (6.4–8.0) adds “Mobile connect” to User settings. Nobody types anything or copies tokens.",
+      "conn_p": "The <strong>ZbxView connect</strong> module for Zabbix (6.4–8.x) adds “Mobile connect” to User settings. Nobody types anything or copies tokens.",
       "conn_s1_h": "Open “Mobile connect”",
       "conn_s1_p": "The QR code for the first device appears right away. Every phone gets its own API token that never expires.",
       "conn_s2_h": "Scan it in the app",
@@ -88,17 +88,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "In Zabbix open <strong>Administration → General → Modules</strong>, click <strong>Scan directory</strong> and enable <strong>ZbxView connect</strong>.",
       "cs_s3": "In <strong>Administration → Mobile configuration</strong> set the address phones reach Zabbix at (e.g. through Cloudflare), the server name and the server certificate. If Zabbix sits behind an mTLS gateway, upload the client certificate (EC key) there too — the module checks it.",
       "cs_s4": "Users then open <strong>User settings → Mobile connect</strong> and in the app choose <strong>Add server → Scan QR code</strong>. Done.",
-      "cs_req": "Requirements: Zabbix 6.4–8.0; the user role must allow <strong>Manage API tokens</strong> and <strong>API access</strong>. The certificate in the QR code needs app version 0.49 or newer. Get a newer module version with <code>git pull</code> in its directory.",
+      "cs_req": "Requirements: Zabbix 6.4–8.x; the user role must allow <strong>Manage API tokens</strong> and <strong>API access</strong>. The certificate in the QR code needs app version 0.49 or newer. Get a newer module version with <code>git pull</code> in its directory.",
       "conn_cta": "ZbxView connect module on GitHub",
       "back": "← back to ZbxView",
       "foot_back": "← back to the main page",
       "__title": "ZbxView — A phone connected to Zabbix in seconds",
-      "__desc": "The ZbxView connect module for Zabbix (6.4–8.0) adds “Mobile connect” to User settings. Nobody types anything or copies tokens."
+      "__desc": "The ZbxView connect module for Zabbix (6.4–8.x) adds “Mobile connect” to User settings. Nobody types anything or copies tokens."
     };
     var DE = {
       "conn_tag": "Koppeln",
       "conn_h2": "Das Telefon in Sekunden mit Zabbix verbunden",
-      "conn_p": "Das Modul <strong>ZbxView connect</strong> für Zabbix (6.4–8.0) fügt in den Benutzereinstellungen „Mobile connect“ hinzu. Niemand tippt etwas oder kopiert Tokens.",
+      "conn_p": "Das Modul <strong>ZbxView connect</strong> für Zabbix (6.4–8.x) fügt in den Benutzereinstellungen „Mobile connect“ hinzu. Niemand tippt etwas oder kopiert Tokens.",
       "conn_s1_h": "„Mobile connect“ öffnen",
       "conn_s1_p": "Der QR-Code für das erste Gerät erscheint sofort. Jedes Telefon bekommt einen eigenen API-Token ohne Ablauf.",
       "conn_s2_h": "In der App scannen",
@@ -121,17 +121,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "Öffnen Sie in Zabbix <strong>Administration → Allgemein → Module</strong>, klicken Sie auf <strong>Verzeichnis scannen</strong> und aktivieren Sie <strong>ZbxView connect</strong>.",
       "cs_s3": "Unter <strong>Administration → Mobile configuration</strong> legen Sie die Adresse fest, unter der Telefone Zabbix erreichen (z. B. über Cloudflare), den Servernamen und das Serverzertifikat. Steht Zabbix hinter einem mTLS-Gateway, laden Sie dort auch das Client-Zertifikat (EC-Schlüssel) hoch — das Modul prüft es.",
       "cs_s4": "Benutzer öffnen dann <strong>Benutzereinstellungen → Mobile connect</strong> und wählen in der App <strong>Server hinzufügen → QR-Code scannen</strong>. Fertig.",
-      "cs_req": "Voraussetzungen: Zabbix 6.4–8.0; die Benutzerrolle muss <strong>Verwalten von API-Tokens</strong> und <strong>API-Zugriff</strong> erlauben. Das Zertifikat im QR-Code braucht App-Version 0.49 oder neuer. Eine neuere Modulversion holen Sie mit <code>git pull</code> im Modulverzeichnis.",
+      "cs_req": "Voraussetzungen: Zabbix 6.4–8.x; die Benutzerrolle muss <strong>Verwalten von API-Tokens</strong> und <strong>API-Zugriff</strong> erlauben. Das Zertifikat im QR-Code braucht App-Version 0.49 oder neuer. Eine neuere Modulversion holen Sie mit <code>git pull</code> im Modulverzeichnis.",
       "conn_cta": "Modul ZbxView connect auf GitHub",
       "back": "← zurück zu ZbxView",
       "foot_back": "← zurück zur Hauptseite",
       "__title": "ZbxView — Das Telefon in Sekunden mit Zabbix verbunden",
-      "__desc": "Das Modul ZbxView connect für Zabbix (6.4–8.0) fügt in den Benutzereinstellungen „Mobile connect“ hinzu. Niemand tippt etwas oder kopiert Tokens."
+      "__desc": "Das Modul ZbxView connect für Zabbix (6.4–8.x) fügt in den Benutzereinstellungen „Mobile connect“ hinzu. Niemand tippt etwas oder kopiert Tokens."
     };
     var ES = {
       "conn_tag": "Emparejar",
       "conn_h2": "El teléfono conectado a Zabbix en segundos",
-      "conn_p": "El módulo <strong>ZbxView connect</strong> para Zabbix (6.4–8.0) añade «Mobile connect» en la configuración de usuario. Nadie escribe nada ni copia tokens.",
+      "conn_p": "El módulo <strong>ZbxView connect</strong> para Zabbix (6.4–8.x) añade «Mobile connect» en la configuración de usuario. Nadie escribe nada ni copia tokens.",
       "conn_s1_h": "Abra «Mobile connect»",
       "conn_s1_p": "El código QR del primer dispositivo aparece al instante. Cada teléfono recibe su propio token de API que no caduca.",
       "conn_s2_h": "Escanéelo en la app",
@@ -154,17 +154,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "En Zabbix abra <strong>Administración → Zabbix → Módulos</strong>, pulse <strong>Directorio de escaneo</strong> y active <strong>ZbxView connect</strong>.",
       "cs_s3": "En <strong>Administración → Mobile configuration</strong> indique la dirección por la que los teléfonos llegan a Zabbix (p. ej. vía Cloudflare), el nombre del servidor y su certificado. Si Zabbix está detrás de una pasarela mTLS, suba allí también el certificado de cliente (clave EC); el módulo lo comprueba.",
       "cs_s4": "Los usuarios abren <strong>Configuración de usuario → Mobile connect</strong> y en la app eligen <strong>Añadir servidor → Escanear código QR</strong>. Listo.",
-      "cs_req": "Requisitos: Zabbix 6.4–8.0; el rol del usuario debe permitir <strong>Administrar tokens de API</strong> y el <strong>acceso a la API</strong>. El certificado en el código QR requiere la app 0.49 o posterior. Actualice el módulo con <code>git pull</code> en su directorio.",
+      "cs_req": "Requisitos: Zabbix 6.4–8.x; el rol del usuario debe permitir <strong>Administrar tokens de API</strong> y el <strong>acceso a la API</strong>. El certificado en el código QR requiere la app 0.49 o posterior. Actualice el módulo con <code>git pull</code> en su directorio.",
       "conn_cta": "Módulo ZbxView connect en GitHub",
       "back": "← volver a ZbxView",
       "foot_back": "← volver a la página principal",
       "__title": "ZbxView — El teléfono conectado a Zabbix en segundos",
-      "__desc": "El módulo ZbxView connect para Zabbix (6.4–8.0) añade «Mobile connect» en la configuración de usuario. Nadie escribe nada ni copia tokens."
+      "__desc": "El módulo ZbxView connect para Zabbix (6.4–8.x) añade «Mobile connect» en la configuración de usuario. Nadie escribe nada ni copia tokens."
     };
     var FR = {
       "conn_tag": "Appairage",
       "conn_h2": "Un téléphone relié à Zabbix en quelques secondes",
-      "conn_p": "Le module <strong>ZbxView connect</strong> pour Zabbix (6.4–8.0) ajoute « Mobile connect » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton.",
+      "conn_p": "Le module <strong>ZbxView connect</strong> pour Zabbix (6.4–8.x) ajoute « Mobile connect » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton.",
       "conn_s1_h": "Ouvrez « Mobile connect »",
       "conn_s1_p": "Le QR code du premier appareil s’affiche aussitôt. Chaque téléphone reçoit son propre jeton API sans expiration.",
       "conn_s2_h": "Scannez-le dans l’app",
@@ -187,17 +187,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "Dans Zabbix, ouvrez <strong>Administration → Général → Modules</strong>, cliquez sur <strong>Analyser le répertoire</strong> et activez <strong>ZbxView connect</strong>.",
       "cs_s3": "Dans <strong>Administration → Mobile configuration</strong>, indiquez l’adresse par laquelle les téléphones joignent Zabbix (p. ex. via Cloudflare), le nom du serveur et son certificat. Si Zabbix est derrière une passerelle mTLS, téléversez-y aussi le certificat client (clé EC) — le module le vérifie.",
       "cs_s4": "Les utilisateurs ouvrent ensuite <strong>Paramètres utilisateur → Mobile connect</strong> et choisissent dans l’app <strong>Ajouter un serveur → Scanner un QR code</strong>. C’est tout.",
-      "cs_req": "Prérequis : Zabbix 6.4–8.0 ; le rôle de l’utilisateur doit autoriser <strong>Gérer les Tokens API</strong> et l’<strong>accès à l’API</strong>. Le certificat dans le QR code nécessite l’app 0.49 ou plus récente. Mettez le module à jour avec <code>git pull</code> dans son répertoire.",
+      "cs_req": "Prérequis : Zabbix 6.4–8.x ; le rôle de l’utilisateur doit autoriser <strong>Gérer les Tokens API</strong> et l’<strong>accès à l’API</strong>. Le certificat dans le QR code nécessite l’app 0.49 ou plus récente. Mettez le module à jour avec <code>git pull</code> dans son répertoire.",
       "conn_cta": "Module ZbxView connect sur GitHub",
       "back": "← retour à ZbxView",
       "foot_back": "← retour à la page principale",
       "__title": "ZbxView — Un téléphone relié à Zabbix en quelques secondes",
-      "__desc": "Le module ZbxView connect pour Zabbix (6.4–8.0) ajoute « Mobile connect » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton."
+      "__desc": "Le module ZbxView connect pour Zabbix (6.4–8.x) ajoute « Mobile connect » dans les paramètres utilisateur. Personne ne tape rien ni ne recopie de jeton."
     };
     var LV = {
       "conn_tag": "Savienošana",
       "conn_h2": "Tālrunis savienots ar Zabbix dažās sekundēs",
-      "conn_p": "Modulis <strong>ZbxView connect</strong> priekš Zabbix (6.4–8.0) lietotāja iestatījumos pievieno “Tālruņa savienojums”. Neviens neko neraksta un nekopē marķierus.",
+      "conn_p": "Modulis <strong>ZbxView connect</strong> priekš Zabbix (6.4–8.x) lietotāja iestatījumos pievieno “Tālruņa savienojums”. Neviens neko neraksta un nekopē marķierus.",
       "conn_s1_h": "Atveriet “Tālruņa savienojums”",
       "conn_s1_p": "Pirmās ierīces QR kods parādās uzreiz. Katrs tālrunis saņem savu API marķieri bez termiņa.",
       "conn_s2_h": "Noskenējiet lietotnē",
@@ -220,17 +220,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "Zabbix atveriet <strong>Administrācija → General → Moduļi</strong>, noklikšķiniet <strong>Skenēt direktoriju</strong> un ieslēdziet <strong>ZbxView connect</strong>.",
       "cs_s3": "Sadaļā <strong>Administrācija → Tālruņa konfigurācija</strong> iestatiet adresi, pa kuru tālruņi sasniedz Zabbix (piem. caur Cloudflare), servera nosaukumu un servera sertifikātu. Ja Zabbix ir aiz mTLS vārtejas, augšupielādējiet tur arī klienta sertifikātu (EC atslēga) — modulis to pārbauda.",
       "cs_s4": "Lietotāji pēc tam atver <strong>User settings → Tālruņa savienojums</strong> un lietotnē izvēlas <strong>Pievienot serveri → Skenēt QR kodu</strong>. Gatavs.",
-      "cs_req": "Prasības: Zabbix 6.4–8.0; lietotāja lomai jāatļauj <strong>Manage API tokens</strong> un <strong>API piekļuve</strong>. Sertifikātam QR kodā vajadzīga lietotnes versija 0.49 vai jaunāka. Jaunāku moduļa versiju iegūstiet ar <code>git pull</code> tā direktorijā.",
+      "cs_req": "Prasības: Zabbix 6.4–8.x; lietotāja lomai jāatļauj <strong>Manage API tokens</strong> un <strong>API piekļuve</strong>. Sertifikātam QR kodā vajadzīga lietotnes versija 0.49 vai jaunāka. Jaunāku moduļa versiju iegūstiet ar <code>git pull</code> tā direktorijā.",
       "conn_cta": "Modulis ZbxView connect GitHub",
       "back": "← atpakaļ uz ZbxView",
       "foot_back": "← atpakaļ uz galveno lapu",
       "__title": "ZbxView — Tālrunis savienots ar Zabbix dažās sekundēs",
-      "__desc": "Modulis ZbxView connect priekš Zabbix (6.4–8.0) lietotāja iestatījumos pievieno “Tālruņa savienojums”. Neviens neko neraksta un nekopē marķierus."
+      "__desc": "Modulis ZbxView connect priekš Zabbix (6.4–8.x) lietotāja iestatījumos pievieno “Tālruņa savienojums”. Neviens neko neraksta un nekopē marķierus."
     };
     var UK = {
       "conn_tag": "Під’єднання",
       "conn_h2": "Телефон, підключений до Zabbix за лічені секунди",
-      "conn_p": "Модуль <strong>ZbxView connect</strong> для Zabbix (6.4–8.0) додає «Mobile connect» у налаштування користувача. Ніхто нічого не вводить і не копіює токени.",
+      "conn_p": "Модуль <strong>ZbxView connect</strong> для Zabbix (6.4–8.x) додає «Mobile connect» у налаштування користувача. Ніхто нічого не вводить і не копіює токени.",
       "conn_s1_h": "Відкрийте «Mobile connect»",
       "conn_s1_p": "QR-код для першого пристрою з’являється одразу. Кожен телефон отримує власний API-токен, який ніколи не спливає.",
       "conn_s2_h": "Скануйте його в застосунку",
@@ -253,17 +253,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "У Zabbix відкрийте <strong>Адміністрування → Загальні → Модулі</strong>, натисніть <strong>Сканувати каталог</strong> і ввімкніть <strong>ZbxView connect</strong>.",
       "cs_s3": "У <strong>Administration → Mobile configuration</strong> задайте адресу, за якою телефони досягають Zabbix (наприклад через Cloudflare), назву сервера й сертифікат сервера. Якщо Zabbix стоїть за шлюзом mTLS, завантажте туди й клієнтський сертифікат (ключ EC) — модуль його перевірить.",
       "cs_s4": "Користувачі потім відкривають <strong>Налаштування користувача → Mobile connect</strong>, а в застосунку вибирають <strong>Додати сервер → Сканувати QR-код</strong>. Готово.",
-      "cs_req": "Вимоги: Zabbix 6.4–8.0; роль користувача має дозволяти <strong>Керування токенами API</strong> і <strong>Доступ до API</strong>. Сертифікат у QR-коді потребує застосунку версії 0.49 або новішої. Новішу версію модуля отримаєте командою <code>git pull</code> у його каталозі.",
+      "cs_req": "Вимоги: Zabbix 6.4–8.x; роль користувача має дозволяти <strong>Керування токенами API</strong> і <strong>Доступ до API</strong>. Сертифікат у QR-коді потребує застосунку версії 0.49 або новішої. Новішу версію модуля отримаєте командою <code>git pull</code> у його каталозі.",
       "conn_cta": "Модуль ZbxView connect на GitHub",
       "back": "← назад до ZbxView",
       "foot_back": "← назад на головну сторінку",
       "__title": "ZbxView — Телефон, підключений до Zabbix за лічені секунди",
-      "__desc": "Модуль ZbxView connect для Zabbix (6.4–8.0) додає «Mobile connect» у налаштування користувача. Ніхто нічого не вводить і не копіює токени."
+      "__desc": "Модуль ZbxView connect для Zabbix (6.4–8.x) додає «Mobile connect» у налаштування користувача. Ніхто нічого не вводить і не копіює токени."
     };
     var SK = {
       "conn_tag": "Párovanie",
       "conn_h2": "Telefón pripojený k Zabbixu za pár sekúnd",
-      "conn_p": "Modul <strong>ZbxView connect</strong> pre Zabbix (6.4–8.0) pridá do nastavení používateľa „Mobile connect“. Nikto nič neprepisuje ani nekopíruje tokeny.",
+      "conn_p": "Modul <strong>ZbxView connect</strong> pre Zabbix (6.4–8.x) pridá do nastavení používateľa „Mobile connect“. Nikto nič neprepisuje ani nekopíruje tokeny.",
       "conn_s1_h": "Otvorte „Mobile connect“",
       "conn_s1_p": "QR kód pre prvé zariadenie sa zobrazí hneď. Každý telefón dostane vlastný API token, ktorý nikdy nevyprší.",
       "conn_s2_h": "Naskenujte ho v aplikácii",
@@ -286,17 +286,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "V Zabbixe otvorte <strong>Administration → General → Modules</strong>, kliknite na <strong>Scan directory</strong> a zapnite <strong>ZbxView connect</strong>.",
       "cs_s3": "V <strong>Administration → Mobile configuration</strong> nastavte adresu, na ktorej telefóny Zabbix dosiahnu (napr. cez Cloudflare), názov servera a certifikát servera. Ak je Zabbix za bránou mTLS, nahrajte tam aj klientsky certifikát (kľúč EC) — modul ho skontroluje.",
       "cs_s4": "Používatelia potom otvoria <strong>User settings → Mobile connect</strong> a v aplikácii zvolia <strong>Pridať server → Skenovať QR kód</strong>. Hotovo.",
-      "cs_req": "Požiadavky: Zabbix 6.4–8.0; rola používateľa musí povoľovať <strong>Manage API tokens</strong> a <strong>API access</strong>. Certifikát v QR kóde vyžaduje aplikáciu vo verzii 0.49 alebo novšej. Novšiu verziu modulu získate príkazom <code>git pull</code> v jeho adresári.",
+      "cs_req": "Požiadavky: Zabbix 6.4–8.x; rola používateľa musí povoľovať <strong>Manage API tokens</strong> a <strong>API access</strong>. Certifikát v QR kóde vyžaduje aplikáciu vo verzii 0.49 alebo novšej. Novšiu verziu modulu získate príkazom <code>git pull</code> v jeho adresári.",
       "conn_cta": "Modul ZbxView connect na GitHube",
       "back": "← späť na ZbxView",
       "foot_back": "← späť na hlavnú stránku",
       "__title": "ZbxView — Telefón pripojený k Zabbixu za pár sekúnd",
-      "__desc": "Modul ZbxView connect pre Zabbix (6.4–8.0) pridá do nastavení používateľa „Mobile connect“. Nikto nič neprepisuje ani nekopíruje tokeny."
+      "__desc": "Modul ZbxView connect pre Zabbix (6.4–8.x) pridá do nastavení používateľa „Mobile connect“. Nikto nič neprepisuje ani nekopíruje tokeny."
     };
     var TR = {
       "conn_tag": "Eşleştirme",
       "conn_h2": "Telefonunuz saniyeler içinde Zabbix'e bağlı",
-      "conn_p": "Zabbix (6.4–8.0) için <strong>ZbxView connect</strong> modülü, Kullanıcı ayarlarına “Mobile connect” ekler. Kimse bir şey yazmaz ya da token kopyalamaz.",
+      "conn_p": "Zabbix (6.4–8.x) için <strong>ZbxView connect</strong> modülü, Kullanıcı ayarlarına “Mobile connect” ekler. Kimse bir şey yazmaz ya da token kopyalamaz.",
       "conn_s1_h": "“Mobile connect”i açın",
       "conn_s1_p": "İlk cihazın QR kodu hemen görünür. Her telefon, süresi hiç dolmayan kendi API token'ını alır.",
       "conn_s2_h": "Uygulamada tarayın",
@@ -319,17 +319,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "Zabbix'te <strong>Yönetim → Genel → Modüller</strong> menüsünü açın, <strong>Dizini tara</strong>'ya tıklayın ve <strong>ZbxView connect</strong>'i etkinleştirin.",
       "cs_s3": "<strong>Administration → Mobile configuration</strong> içinde telefonların Zabbix'e ulaştığı adresi (örn. Cloudflare üzerinden), sunucu adını ve sunucu sertifikasını ayarlayın. Zabbix bir mTLS ağ geçidinin arkasındaysa istemci sertifikasını (EC anahtarı) da oraya yükleyin — modül onu denetler.",
       "cs_s4": "Kullanıcılar ardından <strong>Kullanıcı ayarları → Mobile connect</strong>'i açar ve uygulamada <strong>Sunucu ekle → QR kodunu tara</strong>'yı seçer. Bitti.",
-      "cs_req": "Gereksinimler: Zabbix 6.4–8.0; kullanıcı rolü <strong>API token'larını yönetme</strong> ve <strong>API erişimi</strong> izinlerini vermelidir. QR kodundaki sertifika için uygulamanın 0.49 veya daha yeni sürümü gerekir. Modülün daha yeni sürümünü, dizininde <code>git pull</code> ile alın.",
+      "cs_req": "Gereksinimler: Zabbix 6.4–8.x; kullanıcı rolü <strong>API token'larını yönetme</strong> ve <strong>API erişimi</strong> izinlerini vermelidir. QR kodundaki sertifika için uygulamanın 0.49 veya daha yeni sürümü gerekir. Modülün daha yeni sürümünü, dizininde <code>git pull</code> ile alın.",
       "conn_cta": "GitHub'da ZbxView connect modülü",
       "back": "← ZbxView'a dön",
       "foot_back": "← ana sayfaya dön",
       "__title": "ZbxView — Telefonunuz saniyeler içinde Zabbix'e bağlı",
-      "__desc": "Zabbix (6.4–8.0) için ZbxView connect modülü, Kullanıcı ayarlarına “Mobile connect” ekler. Kimse bir şey yazmaz ya da token kopyalamaz."
+      "__desc": "Zabbix (6.4–8.x) için ZbxView connect modülü, Kullanıcı ayarlarına “Mobile connect” ekler. Kimse bir şey yazmaz ya da token kopyalamaz."
     };
     var ZH = {
       "conn_tag": "配对",
       "conn_h2": "几秒钟内将手机连接到 Zabbix",
-      "conn_p": "适用于 Zabbix (6.4–8.0) 的 <strong>ZbxView connect</strong> 模块会在用户设置中添加“Mobile connect”。无需输入任何内容，也无需复制令牌。",
+      "conn_p": "适用于 Zabbix (6.4–8.x) 的 <strong>ZbxView connect</strong> 模块会在用户设置中添加“Mobile connect”。无需输入任何内容，也无需复制令牌。",
       "conn_s1_h": "打开“Mobile connect”",
       "conn_s1_p": "第一台设备的二维码会立即显示。每部手机都有自己的永不过期的 API 令牌。",
       "conn_s2_h": "在应用中扫描",
@@ -352,17 +352,17 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "在 Zabbix 中打开 <strong>管理 → 一般 → 模块</strong>，点击 <strong>扫描目录</strong>，然后启用 <strong>ZbxView connect</strong>。",
       "cs_s3": "在 <strong>Administration → Mobile configuration</strong> 中设置手机访问 Zabbix 的地址（例如通过 Cloudflare）、服务器名称和服务器证书。如果 Zabbix 位于 mTLS 网关之后，也请在那里上传客户端证书（EC 密钥）— 模块会对其进行检查。",
       "cs_s4": "之后用户打开 <strong>用户设置 → Mobile connect</strong>，并在应用中选择 <strong>添加服务器 → 扫描二维码</strong>。完成。",
-      "cs_req": "要求：Zabbix 6.4–8.0；用户角色必须允许 <strong>管理 API 令牌</strong> 和 <strong>API 访问</strong>。二维码中的证书需要应用 0.49 或更高版本。在模块目录中执行 <code>git pull</code> 即可获取更新版本。",
+      "cs_req": "要求：Zabbix 6.4–8.x；用户角色必须允许 <strong>管理 API 令牌</strong> 和 <strong>API 访问</strong>。二维码中的证书需要应用 0.49 或更高版本。在模块目录中执行 <code>git pull</code> 即可获取更新版本。",
       "conn_cta": "GitHub 上的 ZbxView connect 模块",
       "back": "← 返回 ZbxView",
       "foot_back": "← 返回主页",
       "__title": "ZbxView — 几秒钟内将手机连接到 Zabbix",
-      "__desc": "适用于 Zabbix (6.4–8.0) 的 ZbxView connect 模块会在用户设置中添加“Mobile connect”。无需输入任何内容，也无需复制令牌。"
+      "__desc": "适用于 Zabbix (6.4–8.x) 的 ZbxView connect 模块会在用户设置中添加“Mobile connect”。无需输入任何内容，也无需复制令牌。"
     };
     var KO = {
       "conn_tag": "페어링",
       "conn_h2": "몇 초 만에 Zabbix에 연결되는 휴대폰",
-      "conn_p": "Zabbix(6.4–8.0)용 <strong>ZbxView connect</strong> 모듈은 사용자 설정에 “Mobile connect”를 추가합니다. 아무것도 입력하거나 토큰을 복사할 필요가 없습니다.",
+      "conn_p": "Zabbix(6.4–8.x)용 <strong>ZbxView connect</strong> 모듈은 사용자 설정에 “Mobile connect”를 추가합니다. 아무것도 입력하거나 토큰을 복사할 필요가 없습니다.",
       "conn_s1_h": "“Mobile connect” 열기",
       "conn_s1_p": "첫 번째 기기용 QR 코드가 바로 표시됩니다. 휴대폰마다 만료되지 않는 고유 API 토큰을 받습니다.",
       "conn_s2_h": "앱에서 스캔",
@@ -385,12 +385,12 @@ git clone https://github.com/RadekPavlik/Zabbix-UI-Modules-ZbxView-connect.git</
       "cs_s2": "Zabbix에서 <strong>Administration → General → Modules</strong>를 열고 <strong>Scan directory</strong>를 클릭한 다음 <strong>ZbxView connect</strong>를 활성화합니다.",
       "cs_s3": "<strong>Administration → Mobile configuration</strong>에서 휴대폰이 Zabbix에 접속하는 주소(예: Cloudflare 경유), 서버 이름, 서버 인증서를 설정합니다. Zabbix가 mTLS 게이트웨이 뒤에 있다면 클라이언트 인증서(EC 키)도 여기에 업로드하세요. 모듈이 검사합니다.",
       "cs_s4": "이후 사용자는 <strong>User settings → Mobile connect</strong>를 열고 앱에서 <strong>서버 추가 → QR 코드 스캔</strong>을 선택합니다. 끝.",
-      "cs_req": "요구 사항: Zabbix 6.4–8.0, 사용자 역할에 <strong>Manage API tokens</strong>와 <strong>API access</strong> 권한이 있어야 합니다. QR 코드 속 인증서는 앱 0.49 이상이 필요합니다. 모듈 디렉터리에서 <code>git pull</code>로 새 버전을 받으세요.",
+      "cs_req": "요구 사항: Zabbix 6.4–8.x, 사용자 역할에 <strong>Manage API tokens</strong>와 <strong>API access</strong> 권한이 있어야 합니다. QR 코드 속 인증서는 앱 0.49 이상이 필요합니다. 모듈 디렉터리에서 <code>git pull</code>로 새 버전을 받으세요.",
       "conn_cta": "GitHub의 ZbxView connect 모듈",
       "back": "← ZbxView로 돌아가기",
       "foot_back": "← 메인 페이지로 돌아가기",
       "__title": "ZbxView — 몇 초 만에 Zabbix에 연결되는 휴대폰",
-      "__desc": "Zabbix(6.4–8.0)용 ZbxView connect 모듈은 사용자 설정에 “Mobile connect”를 추가합니다. 아무것도 입력하거나 토큰을 복사할 필요가 없습니다."
+      "__desc": "Zabbix(6.4–8.x)용 ZbxView connect 모듈은 사용자 설정에 “Mobile connect”를 추가합니다. 아무것도 입력하거나 토큰을 복사할 필요가 없습니다."
     };
     var DICTS = { en: EN, de: DE, es: ES, fr: FR, lv: LV, uk: UK, sk: SK, tr: TR, zh: ZH, ko: KO };
     var htmlEl = document.documentElement;
