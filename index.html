@@ -26,6 +26,7 @@
   <!-- Icon sprite: line icons in the style of Tabler/Lucide (MIT). -->
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
+      <symbol id="i-apple" viewBox="0 0 24 24"><path d="M16.37 12.6c-.02-2.2 1.8-3.26 1.88-3.31-1.03-1.5-2.62-1.7-3.18-1.72-1.35-.14-2.64.8-3.33.8-.69 0-1.74-.78-2.86-.76-1.47.02-2.83.86-3.59 2.17-1.53 2.66-.39 6.6 1.1 8.76.73 1.06 1.6 2.24 2.73 2.2 1.1-.05 1.51-.71 2.84-.71 1.32 0 1.7.71 2.85.69 1.18-.02 1.93-1.07 2.65-2.13.84-1.22 1.18-2.41 1.2-2.47-.03-.01-2.3-.88-2.33-3.52zM14.2 6.13c.6-.73 1.01-1.75.9-2.76-.87.04-1.92.58-2.54 1.31-.56.64-1.05 1.67-.92 2.66.97.08 1.96-.49 2.56-1.21z" fill="currentColor" stroke="none"/></symbol>
       <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4v16l14-8L6 4z" fill="currentColor" stroke="none"/></symbol>
       <symbol id="i-qr" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM17 20h4v-3"/></symbol>
       <symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></symbol>
@@ -99,13 +100,14 @@
         <p class="lead" data-i18n="hero_lead2">Problémy v reálném čase, potvrzování událostí, dashboardy i mapa hostů. Přímo z tvého Zabbixu do telefonu, bez cloudu uprostřed.</p>
         <div class="cta">
           <a class="btn btn-primary btn-lg" href="https://play.google.com/store/apps/details?id=app.zbxview" target="_blank" rel="noopener"><svg class="ic ic-s"><use href="#i-play"/></svg><span data-i18n="hero_cta2">Získat na Google Play</span></a>
+          <a class="btn btn-ghost btn-lg" href="https://apps.apple.com/app/id6837195762" target="_blank" rel="noopener"><svg class="ic ic-s"><use href="#i-apple"/></svg><span>App Store</span></a>
           <a class="btn btn-ghost btn-lg" href="#connect"><svg class="ic"><use href="#i-qr"/></svg><span data-i18n="hero_qr">Připojit QR kódem</span></a>
         </div>
         <div class="platforms">
           <span><svg class="ic ic-s"><use href="#i-phone"/></svg>Android</span>
           <span><svg class="ic ic-s"><use href="#i-watch"/></svg>Wear OS</span>
           <span><svg class="ic ic-s"><use href="#i-tv"/></svg><span data-i18n="plat_tv">TV a kiosk</span></span>
-          <span><svg class="ic ic-s"><use href="#i-phone"/></svg><span data-i18n="plat_ios">iPhone, iPad a Apple Watch – brzy v App Store</span></span>
+          <a href="https://apps.apple.com/app/id6837195762" target="_blank" rel="noopener" style="color:inherit;display:inline-flex;align-items:center;gap:6px;text-decoration:none"><svg class="ic ic-s"><use href="#i-phone"/></svg><span data-i18n="plat_ios">iPhone, iPad a Apple Watch – v App Store</span></a>
         </div>
       </div>
       <div class="devices" aria-hidden="true">
@@ -250,7 +252,7 @@
         <div class="card">
           <h3><svg class="ic"><use href="#i-phone"/></svg><span data-i18n="nw1_h">iPhone, iPad a Apple Watch</span></h3>
           <ul>
-            <li><b data-i18n="nw1_a">Aplikace pro iOS</b><span data-i18n="nw1_ad">Odeslaná ke schválení do App Store, brzy ke stažení.</span></li>
+            <li><b data-i18n="nw1_a">Aplikace pro iOS</b><span data-i18n="nw1_ad">Je v App Store. V zemích EU se objeví během pár dní.</span></li>
             <li><b data-i18n="nw1_b">Widgety na ploše</b><span data-i18n="nw1_bd">Problémy a pohotovosti i na iPhonu.</span></li>
             <li><b data-i18n="nw1_c">Apple Watch</b><span data-i18n="nw1_cd">Přehled a potvrzení problémů na hodinkách.</span></li>
           </ul>
@@ -610,7 +612,7 @@
       "opt_enterprise": "Interested in: Enterprise licence",
       "opt_general": "General question",
       "opt_pro": "Interested in: Pro (remove ads)",
-      "plat_ios": "iPhone, iPad and Apple Watch – coming to the App Store",
+      "plat_ios": "iPhone, iPad and Apple Watch – on the App Store",
       "plat_tv": "TV and kiosk",
       "pr_h": "Free, with optional Pro. Tailored for business.",
       "pr_p": "Every monitoring feature is in every edition.",
@@ -681,7 +683,7 @@
       "nw_p": "The latest in ZbxView.",
       "nw1_h": "iPhone, iPad and Apple Watch",
       "nw1_a": "The iOS app",
-      "nw1_ad": "Submitted to the App Store for review, available soon.",
+      "nw1_ad": "Now on the App Store. In EU countries it appears within a few days.",
       "nw1_b": "Home-screen widgets",
       "nw1_bd": "Problems and on-call duty on the iPhone too.",
       "nw1_c": "Apple Watch",
@@ -803,7 +805,7 @@
       "opt_enterprise": "Interesse an: Enterprise-Lizenz",
       "opt_general": "Allgemeine Frage",
       "opt_pro": "Interesse an: Pro (ohne Werbung)",
-      "plat_ios": "iPhone, iPad und Apple Watch – bald im App Store",
+      "plat_ios": "iPhone, iPad und Apple Watch – im App Store",
       "plat_tv": "TV und Kiosk",
       "pr_h": "Kostenlos, mit optionalem Pro. Für Firmen nach Maß.",
       "pr_p": "Alle Überwachungsfunktionen sind in jeder Edition enthalten.",
@@ -874,7 +876,7 @@
       "nw_p": "Das Neueste aus ZbxView.",
       "nw1_h": "iPhone, iPad und Apple Watch",
       "nw1_a": "Die iOS-App",
-      "nw1_ad": "Zur Prüfung im App Store eingereicht, bald verfügbar.",
+      "nw1_ad": "Jetzt im App Store. In EU-Ländern erscheint sie in wenigen Tagen.",
       "nw1_b": "Widgets auf dem Startbildschirm",
       "nw1_bd": "Probleme und Bereitschaft auch auf dem iPhone.",
       "nw1_c": "Apple Watch",
@@ -996,7 +998,7 @@
       "opt_enterprise": "Interés en: licencia Enterprise",
       "opt_general": "Consulta general",
       "opt_pro": "Interés en: Pro (quitar anuncios)",
-      "plat_ios": "iPhone, iPad y Apple Watch – pronto en el App Store",
+      "plat_ios": "iPhone, iPad y Apple Watch – en el App Store",
       "plat_tv": "TV y kiosco",
       "pr_h": "Gratis, con Pro opcional. A medida para empresas.",
       "pr_p": "Todas las funciones de supervisión están en todas las ediciones.",
@@ -1067,7 +1069,7 @@
       "nw_p": "Lo último de ZbxView.",
       "nw1_h": "iPhone, iPad y Apple Watch",
       "nw1_a": "La app para iOS",
-      "nw1_ad": "Enviada a revisión en el App Store, disponible pronto.",
+      "nw1_ad": "Ya en el App Store. En los países de la UE aparecerá en unos días.",
       "nw1_b": "Widgets en la pantalla de inicio",
       "nw1_bd": "Problemas y guardias también en el iPhone.",
       "nw1_c": "Apple Watch",
@@ -1189,7 +1191,7 @@
       "opt_enterprise": "Intérêt pour : licence Enterprise",
       "opt_general": "Question générale",
       "opt_pro": "Intérêt pour : Pro (sans publicité)",
-      "plat_ios": "iPhone, iPad et Apple Watch – bientôt sur l’App Store",
+      "plat_ios": "iPhone, iPad et Apple Watch – sur l’App Store",
       "plat_tv": "TV et kiosque",
       "pr_h": "Gratuit, avec Pro en option. Sur mesure pour les entreprises.",
       "pr_p": "Toutes les fonctions de supervision sont dans chaque édition.",
@@ -1260,7 +1262,7 @@
       "nw_p": "Les dernières nouveautés de ZbxView.",
       "nw1_h": "iPhone, iPad et Apple Watch",
       "nw1_a": "L’app iOS",
-      "nw1_ad": "Soumise à la validation de l’App Store, bientôt disponible.",
+      "nw1_ad": "Désormais sur l’App Store. Dans les pays de l’UE, elle apparaîtra d’ici quelques jours.",
       "nw1_b": "Widgets sur l’écran d’accueil",
       "nw1_bd": "Problèmes et astreintes aussi sur l’iPhone.",
       "nw1_c": "Apple Watch",
@@ -1382,7 +1384,7 @@
       "opt_enterprise": "Interesē: Enterprise licence",
       "opt_general": "Vispārīgs jautājums",
       "opt_pro": "Interesē: Pro (bez reklāmām)",
-      "plat_ios": "iPhone, iPad un Apple Watch – drīz App Store",
+      "plat_ios": "iPhone, iPad un Apple Watch – App Store",
       "plat_tv": "TV un kiosks",
       "pr_h": "Bez maksas, ar neobligātu Pro. Uzņēmumiem pēc vajadzības.",
       "pr_p": "Visas uzraudzības funkcijas ir katrā izdevumā.",
@@ -1453,7 +1455,7 @@
       "nw_p": "Jaunākais ZbxView.",
       "nw1_h": "iPhone, iPad un Apple Watch",
       "nw1_a": "iOS lietotne",
-      "nw1_ad": "Iesniegta App Store pārbaudei, drīz pieejama.",
+      "nw1_ad": "Jau App Store. ES valstīs parādīsies dažu dienu laikā.",
       "nw1_b": "Sākuma ekrāna logrīki",
       "nw1_bd": "Problēmas un dežūras arī iPhone.",
       "nw1_c": "Apple Watch",
@@ -1575,7 +1577,7 @@
       "opt_enterprise": "Interesse em: licença Enterprise",
       "opt_general": "Dúvida geral",
       "opt_pro": "Interesse em: Pro (remover anúncios)",
-      "plat_ios": "iPhone, iPad e Apple Watch – em breve na App Store",
+      "plat_ios": "iPhone, iPad e Apple Watch – na App Store",
       "plat_tv": "TV e quiosque",
       "pr_h": "Grátis, com Pro opcional. Sob medida para empresas.",
       "pr_p": "Todos os recursos de monitoramento estão em todas as edições.",
@@ -1646,7 +1648,7 @@
       "nw_p": "O que há de novo no ZbxView.",
       "nw1_h": "iPhone, iPad e Apple Watch",
       "nw1_a": "O app para iOS",
-      "nw1_ad": "Enviado para revisão na App Store, disponível em breve.",
+      "nw1_ad": "Já na App Store. Nos países da UE aparece em poucos dias.",
       "nw1_b": "Widgets na tela inicial",
       "nw1_bd": "Problemas e plantões também no iPhone.",
       "nw1_c": "Apple Watch",
@@ -1768,7 +1770,7 @@
       "opt_enterprise": "Интересует: корпоративная лицензия",
       "opt_general": "Общий вопрос",
       "opt_pro": "Интересует: Pro (без рекламы)",
-      "plat_ios": "iPhone, iPad и Apple Watch – скоро в App Store",
+      "plat_ios": "iPhone, iPad и Apple Watch – в App Store",
       "plat_tv": "ТВ и киоск",
       "pr_h": "Бесплатно, с опцией Pro. Индивидуально для бизнеса.",
       "pr_p": "Все функции мониторинга есть в каждой редакции.",
@@ -1839,7 +1841,7 @@
       "nw_p": "Что нового в ZbxView.",
       "nw1_h": "iPhone, iPad и Apple Watch",
       "nw1_a": "Приложение для iOS",
-      "nw1_ad": "Отправлено на проверку в App Store, скоро будет доступно.",
+      "nw1_ad": "Уже в App Store. В странах ЕС появится в ближайшие дни.",
       "nw1_b": "Виджеты на главном экране",
       "nw1_bd": "Проблемы и дежурства и на iPhone.",
       "nw1_c": "Apple Watch",
@@ -1961,7 +1963,7 @@
       "opt_enterprise": "Interesse per: licenza Enterprise",
       "opt_general": "Domanda generale",
       "opt_pro": "Interesse per: Pro (senza annunci)",
-      "plat_ios": "iPhone, iPad e Apple Watch – presto sull’App Store",
+      "plat_ios": "iPhone, iPad e Apple Watch – sull’App Store",
       "plat_tv": "TV e kiosk",
       "pr_h": "Gratis, con Pro opzionale. Su misura per le aziende.",
       "pr_p": "Ogni funzione di monitoraggio è in ogni edizione.",
@@ -2032,7 +2034,7 @@
       "nw_p": "Le ultime novità di ZbxView.",
       "nw1_h": "iPhone, iPad e Apple Watch",
       "nw1_a": "L’app per iOS",
-      "nw1_ad": "Inviata in revisione all’App Store, presto disponibile.",
+      "nw1_ad": "Ora sull’App Store. Nei paesi dell’UE arriva entro pochi giorni.",
       "nw1_b": "Widget nella schermata Home",
       "nw1_bd": "Problemi e reperibilità anche su iPhone.",
       "nw1_c": "Apple Watch",
@@ -2154,7 +2156,7 @@
       "opt_enterprise": "Interesuje mnie: licencja Enterprise",
       "opt_general": "Pytanie ogólne",
       "opt_pro": "Interesuje mnie: Pro (bez reklam)",
-      "plat_ios": "iPhone, iPad i Apple Watch – wkrótce w App Store",
+      "plat_ios": "iPhone, iPad i Apple Watch – w App Store",
       "plat_tv": "TV i kiosk",
       "pr_h": "Za darmo, z opcjonalnym Pro. Na miarę dla firm.",
       "pr_p": "Każda funkcja monitoringu jest w każdej wersji.",
@@ -2225,7 +2227,7 @@
       "nw_p": "Co nowego w ZbxView.",
       "nw1_h": "iPhone, iPad i Apple Watch",
       "nw1_a": "Aplikacja na iOS",
-      "nw1_ad": "Wysłana do weryfikacji w App Store, wkrótce dostępna.",
+      "nw1_ad": "Już w App Store. W krajach UE pojawi się w ciągu kilku dni.",
       "nw1_b": "Widżety na ekranie głównym",
       "nw1_bd": "Problemy i dyżury także na iPhonie.",
       "nw1_c": "Apple Watch",
@@ -2347,7 +2349,7 @@
       "opt_enterprise": "関心事: Enterprise ライセンス",
       "opt_general": "一般的な質問",
       "opt_pro": "関心事: Pro（広告削除）",
-      "plat_ios": "iPhone・iPad・Apple Watch – まもなく App Store に",
+      "plat_ios": "iPhone・iPad・Apple Watch – App Store で配信中",
       "plat_tv": "TV とキオスクモード",
       "pr_h": "無料、Pro はオプション。法人向けは個別対応。",
       "pr_p": "すべてのエディションにすべての監視機能が含まれます。",
@@ -2418,7 +2420,7 @@
       "nw_p": "ZbxView の最新情報。",
       "nw1_h": "iPhone・iPad・Apple Watch",
       "nw1_a": "iOS アプリ",
-      "nw1_ad": "App Store の審査に提出済み。まもなく公開予定です。",
+      "nw1_ad": "App Store で配信中。EU 諸国では数日以内に公開されます。",
       "nw1_b": "ホーム画面ウィジェット",
       "nw1_bd": "問題とオンコールを iPhone でも。",
       "nw1_c": "Apple Watch",
@@ -2540,7 +2542,7 @@
       "opt_enterprise": "Цікавить: ліцензія Enterprise",
       "opt_general": "Загальне питання",
       "opt_pro": "Цікавить: Pro (без реклами)",
-      "plat_ios": "iPhone, iPad і Apple Watch – незабаром в App Store",
+      "plat_ios": "iPhone, iPad і Apple Watch – в App Store",
       "plat_tv": "ТБ і кіоск",
       "pr_h": "Безкоштовно, з необов’язковим Pro. Індивідуально для бізнесу.",
       "pr_p": "Усі функції моніторингу є в кожній версії.",
@@ -2611,7 +2613,7 @@
       "nw_p": "Останні новинки в ZbxView.",
       "nw1_h": "iPhone, iPad і Apple Watch",
       "nw1_a": "Застосунок для iOS",
-      "nw1_ad": "Надіслано на перевірку в App Store, незабаром буде доступний.",
+      "nw1_ad": "Уже в App Store. У країнах ЄС з’явиться протягом кількох днів.",
       "nw1_b": "Віджети головного екрана",
       "nw1_bd": "Проблеми й чергування також на iPhone.",
       "nw1_c": "Apple Watch",
@@ -2733,7 +2735,7 @@
       "opt_enterprise": "Zaujíma ma: licencia Enterprise",
       "opt_general": "Všeobecná otázka",
       "opt_pro": "Zaujíma ma: Pro (odstránenie reklám)",
-      "plat_ios": "iPhone, iPad a Apple Watch – čoskoro v App Store",
+      "plat_ios": "iPhone, iPad a Apple Watch – v App Store",
       "plat_tv": "TV a kiosk",
       "pr_h": "Zadarmo, s voliteľným Pro. Pre firmy na mieru.",
       "pr_p": "Všetky funkcie monitoringu sú v každej edícii.",
@@ -2804,7 +2806,7 @@
       "nw_p": "Najnovšie v ZbxView.",
       "nw1_h": "iPhone, iPad a Apple Watch",
       "nw1_a": "Aplikácia pre iOS",
-      "nw1_ad": "Odoslaná na schválenie do App Store, čoskoro k dispozícii.",
+      "nw1_ad": "Je v App Store. V krajinách EÚ sa objaví v priebehu pár dní.",
       "nw1_b": "Widgety na ploche",
       "nw1_bd": "Problémy a pohotovosti aj na iPhone.",
       "nw1_c": "Apple Watch",
@@ -2926,7 +2928,7 @@
       "opt_enterprise": "İlgilendiğim: Enterprise lisansı",
       "opt_general": "Genel soru",
       "opt_pro": "İlgilendiğim: Pro (reklamları kaldırma)",
-      "plat_ios": "iPhone, iPad ve Apple Watch – yakında App Store'da",
+      "plat_ios": "iPhone, iPad ve Apple Watch – App Store’da",
       "plat_tv": "TV ve kiosk",
       "pr_h": "Ücretsiz, isteğe bağlı Pro ile. İşletmelere özel.",
       "pr_p": "Tüm izleme özellikleri her sürümde var.",
@@ -2997,7 +2999,7 @@
       "nw_p": "ZbxView'daki en son gelişmeler.",
       "nw1_h": "iPhone, iPad ve Apple Watch",
       "nw1_a": "iOS uygulaması",
-      "nw1_ad": "İnceleme için App Store'a gönderildi, yakında kullanılabilir.",
+      "nw1_ad": "Artık App Store’da. AB ülkelerinde birkaç gün içinde yayınlanacak.",
       "nw1_b": "Ana ekran widget'ları",
       "nw1_bd": "Sorunlar ve nöbet bilgisi artık iPhone'da da.",
       "nw1_c": "Apple Watch",
@@ -3119,7 +3121,7 @@
       "opt_enterprise": "感兴趣：Enterprise 许可",
       "opt_general": "一般问题",
       "opt_pro": "感兴趣：Pro（去除广告）",
-      "plat_ios": "iPhone、iPad 和 Apple Watch – 即将登陆 App Store",
+      "plat_ios": "iPhone、iPad 和 Apple Watch – 已登陆 App Store",
       "plat_tv": "电视和信息亭",
       "pr_h": "免费使用，可选 Pro。为企业量身定制。",
       "pr_p": "每个版本都包含全部监控功能。",
@@ -3190,7 +3192,7 @@
       "nw_p": "ZbxView 的最新动态。",
       "nw1_h": "iPhone、iPad 和 Apple Watch",
       "nw1_a": "iOS 应用",
-      "nw1_ad": "已提交 App Store 审核，即将上线。",
+      "nw1_ad": "已登陆 App Store。欧盟国家将在几天内上架。",
       "nw1_b": "主屏幕小部件",
       "nw1_bd": "在 iPhone 上同样可查看问题和值班。",
       "nw1_c": "Apple Watch",
@@ -3312,7 +3314,7 @@
       "opt_enterprise": "관심 사항: Enterprise 라이선스",
       "opt_general": "일반 문의",
       "opt_pro": "관심 사항: Pro (광고 제거)",
-      "plat_ios": "iPhone, iPad, Apple Watch – App Store 출시 예정",
+      "plat_ios": "iPhone, iPad, Apple Watch – App Store에서 제공",
       "plat_tv": "TV와 키오스크",
       "pr_h": "무료, 선택형 Pro. 기업에는 맞춤형.",
       "pr_p": "모든 모니터링 기능은 모든 에디션에 포함됩니다.",
@@ -3383,7 +3385,7 @@
       "nw_p": "ZbxView의 최신 소식.",
       "nw1_h": "iPhone, iPad, Apple Watch",
       "nw1_a": "iOS 앱",
-      "nw1_ad": "App Store 심사를 위해 제출했으며 곧 출시됩니다.",
+      "nw1_ad": "이제 App Store에서 만나보세요. EU 국가에서는 며칠 내에 제공됩니다.",
       "nw1_b": "홈 화면 위젯",
       "nw1_bd": "iPhone에서도 문제와 당직 정보를.",
       "nw1_c": "Apple Watch",
