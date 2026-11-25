@@ -388,3 +388,19 @@ footer { border-top: 1px solid var(--line); background: var(--bg-3); }
 .zt-chip-dim { border-color: var(--line-2); color: var(--muted-2); }
 .zt-side { margin-top: 18px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px dashed var(--line-2); border-radius: 12px; font-size: 13.5px; color: var(--muted); }
 .zt-side .ic { width: 18px; height: 18px; flex-shrink: 0; color: var(--muted-2); }
+
+/* Store buttons: both stores side by side in one frame with a slowly turning gradient line */
+@property --stores-a { syntax: '<angle>'; inherits: false; initial-value: 0deg; }
+.stores { position: relative; display: inline-flex; flex-direction: column; gap: 10px; margin-top: 28px; padding: 14px 16px 16px; border-radius: 18px; background: var(--card); isolation: isolate; max-width: 100%; box-sizing: border-box; }
+.stores::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; background: conic-gradient(from var(--stores-a), #d40000, #ff8a3d, #ffc859, #4796c4, #7c5cff, #d40000); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask-composite: exclude; animation: stores-spin 8s linear infinite; z-index: -1; }
+.stores::after { content: ""; position: absolute; inset: -18px; border-radius: 30px; background: radial-gradient(60% 60% at 50% 50%, rgba(212,0,0,.18), transparent 70%); filter: blur(12px); z-index: -2; animation: stores-glow 4s ease-in-out infinite alternate; }
+.stores-label { font-family: var(--mono, monospace); font-size: 12.5px; letter-spacing: .04em; color: var(--muted, #9aa4b2); }
+.stores-row { display: flex; gap: 10px; flex-wrap: wrap; }
+.store-btn { flex: 1 1 220px; justify-content: center; transition: transform .15s ease, box-shadow .15s ease; }
+.store-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 22px rgba(212,0,0,.35); }
+.cta-sub { margin-top: 14px; }
+@keyframes stores-spin { to { --stores-a: 360deg; } }
+@keyframes stores-glow { from { opacity: .55; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .stores::before, .stores::after { animation: none; } }
+@media (max-width: 520px) { .stores { display: flex; } .store-btn { flex-basis: 100%; } }
+@media (max-width: 860px) { .nav-appstore { display: none; } }
